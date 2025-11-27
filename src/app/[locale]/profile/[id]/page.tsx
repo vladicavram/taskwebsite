@@ -264,7 +264,7 @@ export default function ProfilePage({ params }: Props) {
               <div className="card" style={{ padding: '32px', marginBottom: '24px' }}>
                 <h2 style={{ marginBottom: '24px' }}>{t('profile.recentTasks') || 'Recent Tasks'}</h2>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                  {(user.tasks || []).map((task) => (
+                  {(user.tasks || []).map((task: any) => (
                     <Link
                       key={task.id}
                       href={`/${params.locale}/tasks/${task.id}`}
