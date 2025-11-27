@@ -1,0 +1,251 @@
+{
+  "home.title": "Bine ați venit la TaskSite",
+  "home.hero": "Găsește Servicii Locale",
+  "home.heroSubtitle": "Primește ajutor cu sarcinile zilnice de la tasker-i de încredere",
+  "home.browseBtn": "Caută Sarcini",
+  "home.postBtn": "Postează o Sarcină",
+  "home.howItWorks": "Cum funcționează",
+  "home.stats.furniture": "Asamblări de Mobilier",
+  "home.stats.moving": "Sarcini de Mutare",
+  "home.stats.cleaning": "Case Curățate",
+  "home.stats.repairs": "Reparații Casnice",
+  "home.popularTitle": "Proiecte Populare",
+  "home.popularSubtitle": "Primește ajutor rapid cu servicii în aceeași zi",
+  "home.project.furnitureAssembly": "Asamblare Mobilier",
+  "home.project.mountTV": "Montare TV",
+  "home.project.moving": "Ajutor la Mutare",
+  "home.project.cleaning": "Curățenie Casă",
+  "home.project.repairs": "Reparații Minore",
+  "home.project.hangPictures": "Agățat Tablouri",
+  "home.project.startingAt": "Începând de la",
+  "home.guaranteeTitle": "Satisfacția ta, garantată",
+  "home.happiness.title": "Promisiunea Fericirii",
+  "home.happiness.text": "Dacă nu ești mulțumit, vom lucra pentru a rezolva problema.",
+  "home.vetted.title": "Tasker-i Verificați",
+  "home.vetted.text": "Tasker-ii sunt întotdeauna verificați înainte de a se alătura platformei.",
+  "home.support.title": "Suport Dedicat",
+  "home.support.text": "Serviciu prietenos când ai nevoie de noi – în fiecare zi a săptămânii.",
+  "home.testimonialsTitle": "Vezi ce spun clienții mulțumiți",
+  "home.howItWorksTitle": "Cum funcționează",
+  "home.step1.title": "Alege un Tasker",
+  "home.step1.text": "După preț, abilități și recenzii",
+  "home.step2.title": "Programează un Tasker",
+  "home.step2.text": "Chiar și astăzi",
+  "home.step3.title": "Conversație, plată, bacșiș, recenzie",
+  "home.step3.text": "Totul într-un singur loc",
+  "home.earnTitle": "Câștigă bani în felul tău",
+  "home.earnSubtitle": "Fii propriul tău șef. Lucrează când vrei, stabilește-ți propriile tarife și construiește-ți afacerea.",
+  "home.becomeTasker": "Devino un Tasker",
+  "home.ctaTitle": "Gata să Începi?",
+  "home.ctaSubtitle": "Alătură-te miilor de oameni care rezolvă treburi în fiecare zi",
+  "home.ctaButton": "Postează Prima Ta Sarcină",
+  "tasks.title": "Caută Sarcini",
+  "tasks.allCategories": "Toate Categoriile",
+  "tasks.postTask": "Postează o Sarcină",
+  "tasks.noTasksYet": "Nu sunt sarcini disponibile încă",
+  "tasks.beFirst": "Fii primul care postează o sarcină!",
+  "create.title": "Postează o Sarcină",
+  "create.taskTitle": "Titlul Sarcinii",
+  "create.description": "Descriere",
+  "create.category": "Categorie",
+  "create.price": "Preț",
+  "create.location": "Locație",
+  "create.submit": "Creează Sarcina",
+  "create.cancel": "Anulează",
+  "auth.login": "Autentificare",
+  "auth.logout": "Deconectare",
+  "auth.signup": "Înregistrare",
+  "auth.username": "Nume utilizator",
+  "auth.email": "Email",
+  "auth.password": "Parolă",
+  "auth.name": "Nume Complet",
+  "account.settings": "Setări Cont",
+  "account.profile": "Profil",
+  "account.myTasks": "Sarcinile Mele",
+  "account.createdTasks": "Sarcini Create",
+  "account.completedTasks": "Sarcini Completate",
+  "account.saveChanges": "Salvează Modificările",
+  "account.saving": "Se salvează...",
+  "profile.location": "Locație",
+  "profile.bio": "Biografie",
+  "profile.skills": "Abilități",
+  "task.apply": "Aplică pentru Sarcină",
+  "task.yourOffer": "Oferta Ta",
+  "task.applyNow": "Aplică Acum",
+  "task.applying": "Se aplică...",
+  "task.originalPrice": "Preț original",
+  "task.delete": "Șterge Sarcina",
+  "task.deleting": "Se șterge...",
+  "task.confirmDelete": "Da, Șterge",
+  "task.viewTask": "Vezi Sarcina",
+  "task.reviews": "Recenzii",
+  "task.description": "Descriere",
+  "task.postedBy": "Postat De",
+  "task.taskBudget": "Buget Sarcină",
+  "task.negotiable": "Negociabil",
+  "task.viewProfile": "Vezi Profilul",
+  "application.status": "Status",
+  "application.pending": "În așteptare",
+  "application.accepted": "Acceptat",
+  "application.declined": "Refuzat",
+  "application.accept": "Acceptă",
+  "application.decline": "Refuză",
+  "application.counterOffer": "Contra-Ofertă",
+  "application.sendCounterOffer": "Trimite Contra-Ofertă",
+  "application.offerSent": "Ofertă Trimisă",
+  "application.updatePrice": "Actualizează Oferta de Preț",
+  "notifications.title": "Notificări",
+  "notifications.markAllRead": "Marchează toate ca citite",
+  "notifications.noNew": "Nicio notificare nouă",
+  "footer.about": "Despre",
+  "footer.contact": "Contact",
+  "footer.terms": "Termeni",
+  "footer.privacy": "Confidențialitate"
+  ,"header.account": "Cont"
+  ,"header.logout": "Deconectare"
+  ,"header.credits.title": "Creditele Tale"
+  ,"header.credits.unit": "Credite"
+  ,"header.credits.exchange": "1 credit = valoare sarcină de 100$"
+  ,"header.credits.purchase": "Cumpără Credite"
+  ,"header.credits.history": "Vezi Istoricul"
+  ,"header.messages.title": "Mesaje"
+  ,"header.messages.inbox": "Mergi la Mesaje →"
+  ,"header.messages.empty": "Încă nu există conversații"
+  ,"header.notifications.title": "Notificări"
+  ,"header.notifications.markAllRead": "Marchează toate ca citite"
+  ,"header.notifications.empty": "Încă nu există notificări"
+  ,"notification.applicationReceived": "{{user}} a aplicat pentru sarcina ta \"{{task}}\""
+  ,"notification.jobOffer": "Ai primit o ofertă de angajare pentru \"{{task}}\" - ${{price}}"
+  ,"notification.applicationAccepted": "Aplicația ta pentru \"{{task}}\" a fost acceptată!"
+  ,"notification.applicationDeclined": "Aplicația ta pentru \"{{task}}\" a fost refuzată."
+  ,"notification.priceCounterOffer.creator": "{{sender}} a propus o contraofertă de ${{price}} pentru \"{{task}}\""
+  ,"notification.priceCounterOffer.applicant": "{{sender}} a propus un preț de ${{price}} pentru \"{{task}}\""
+  ,"create.editTitle": "Editează Sarcina"
+  ,"create.saving": "Se salvează..."
+  ,"create.creating": "Se creează..."
+  ,"create.saveChanges": "✓ Salvează Modificările"
+  ,"create.createTask": "✓ Creează Sarcina"
+  ,"create.back": "Înapoi"
+  ,"create.help.subtitle": "Spune-ne ce ai nevoie și primești oferte de la profesioniști pricepuți"
+  ,"create.taskTitleLabel": "Titlul Sarcinii *"
+  ,"create.taskTitlePlaceholder": "ex.: Am nevoie de ajutor la mutat mobilierul"
+  ,"create.taskTitleHelp": "Fii specific și clar despre ce ai nevoie"
+  ,"create.taskTitleRequired": "Te rugăm să introduci un titlu."
+  ,"create.descriptionLabel": "Descriere *"
+  ,"create.descriptionPlaceholder": "Descrie sarcina în detaliu. Include cerințe specifice, locație, timp, etc."
+  ,"create.descriptionHelp": "Oferă cât mai multe detalii pentru oferte corecte"
+  ,"create.descriptionRequired": "Te rugăm să introduci o descriere."
+  ,"create.budgetLabel": "Buget (Opțional)"
+  ,"create.budgetHelp": "Setează un buget sau lasă gol pentru a primi oferte"
+  ,"create.locationLabel": "Locație *"
+  ,"create.locationPlaceholder": "Oraș sau zonă"
+  ,"create.locationRequired": "Te rugăm să introduci o locație."
+  ,"create.locationExample": "Exemplu: București, Centru, sau Remote"
+  ,"create.photoLabel": "Adaugă o Fotografie (Opțional)"
+  ,"create.photoHelp": "Suportate: JPG, PNG, WEBP. Max ~5MB."
+  ,"create.tips.title": "💡 Sfaturi pentru o Postare Reușită"
+  ,"create.tips.item1": "Fii specific despre ce ai nevoie"
+  ,"create.tips.item2": "Include cerințe de locație și timp"
+  ,"create.tips.item3": "Stabilește un buget realist conform pieței"
+  ,"create.tips.item4": "Adaugă fotografii dacă ajută explicația"
+  ,"create.tips.item5": "Răspunde rapid ofertelor și întrebărilor"
+  ,"tasks.browse.title": "Caută Sarcini"
+  ,"tasks.browse.postTask": "+ Postează o Sarcină"
+  ,"tasks.browse.searchPlaceholder": "Caută sarcini..."
+  ,"tasks.browse.minPrice": "Preț minim"
+  ,"tasks.browse.maxPrice": "Preț maxim"
+  ,"tasks.browse.locationPlaceholder": "Locație"
+  ,"tasks.browse.loading": "Se încarcă..."
+  ,"tasks.browse.noResults": "Nicio sarcină nu corespunde filtrelor tale."
+  ,"tasks.viewDetails": "Vezi Detalii"
+  ,"taskDetail.notFound.title": "Sarcina nu a fost găsită"
+  ,"taskDetail.notFound.description": "Sarcina pe care o cauți nu există sau a fost ștearsă."
+  ,"taskDetail.notFound.backButton": "Înapoi la Sarcini"
+  ,"taskDetail.changesSaved": "✓ Modificările au fost salvate"
+  ,"taskDetail.yourTask": "✓ Aceasta este sarcina ta"
+  ,"taskDetail.taskBudget": "Buget Sarcină"
+  ,"taskDetail.negotiable": "Negociabil"
+  ,"taskDetail.postedBy": "Postat De"
+  ,"taskDetail.viewProfile": "Vezi Profilul"
+  ,"taskDetail.anonymous": "Anonim"
+  ,"taskDetail.applyForTask": "Aplică pentru această Sarcină"
+  ,"taskDetail.reviews": "Recenzii"
+  ,"taskDetail.noReviews": "Încă nu există recenzii"
+  ,"taskDetail.apply.yourOffer": "Oferta Ta:"
+  ,"taskDetail.apply.usd": "USD"
+  ,"taskDetail.apply.pricePlaceholder": "Preț"
+  ,"taskDetail.apply.applyNow": "Aplică Acum"
+  ,"taskDetail.apply.applying": "Se aplică..."
+  ,"taskDetail.apply.originalPrice": "Preț original:"
+  ,"taskDetail.apply.requiredCredits": "Credite necesare: {{credits}} (1 credit = 100$)"
+  ,"taskDetail.apply.yourBalance": "Soldul tău: {{credits}} credit{{plural}}"
+  ,"taskDetail.apply.insufficientCredits": "Credite insuficiente. Ai nevoie de {{required}} credit{{requiredPlural}} dar ai doar {{current}}. Cumpără mai multe credite pentru a aplica."
+  ,"taskDetail.apply.successAlert": "Aplicația a fost trimisă! Creatorul sarcinii va fi notificat."
+  ,"taskDetail.apply.errorAlert": "Nu s-a putut trimite aplicația"
+  ,"taskDetail.apply.alreadyApplied": "✓ Ai aplicat deja pentru această sarcină"
+  ,"taskDetail.applicants.title": "Aplicanți"
+  ,"taskDetail.applicants.noApplicants": "Încă nu există aplicanți"
+  ,"taskDetail.applicants.proposed": "Propus:"
+  ,"taskDetail.applicants.noPrice": "Niciun preț propus"
+  ,"taskDetail.applicants.accept": "Acceptă"
+  ,"taskDetail.applicants.decline": "Refuză"
+  ,"taskDetail.applicants.updateError": "Nu s-a putut actualiza aplicația. Te rugăm să încerci din nou."
+  ,"taskDetail.delete.button": "Șterge"
+  ,"taskDetail.delete.confirmText": "Ești sigur? Această acțiune nu poate fi anulată. Toate aplicațiile și notificările vor fi șterse."
+  ,"taskDetail.delete.confirmButton": "Șterge"
+  ,"taskDetail.delete.deleting": "Se șterge..."
+  ,"taskDetail.delete.cancel": "Anulează"
+  ,"taskDetail.delete.successAlert": "Sarcina a fost ștearsă"
+  ,"taskDetail.delete.errorAlert": "Nu s-a putut șterge sarcina"
+  ,"taskDetail.edit.title": "Titlu"
+  ,"taskDetail.edit.description": "Descriere"
+  ,"taskDetail.edit.location": "Locație"
+  ,"taskDetail.edit.budget": "Buget (opțional)"
+  ,"taskDetail.edit.save": "✓ Salvează"
+  ,"taskDetail.edit.saving": "Se salvează..."
+  ,"taskDetail.edit.cancel": "Anulează"
+  ,"taskDetail.edit.errorAlert": "Nu s-a putut actualiza sarcina. Te rugăm să încerci din nou."
+  ,"profile.loading": "Se încarcă..."
+  ,"profile.notFound.title": "Profil negăsit"
+  ,"profile.notFound.description": "Acest profil de utilizator nu există sau a fost șters."
+  ,"profile.notFound.browseTasks": "Răsfoire Sarcini"
+  ,"profile.verified": "Verificat"
+  ,"profile.tasksPosted": "Sarcini Postate"
+  ,"profile.rating": "Evaluare"
+  ,"profile.reviews": "Recenzii"
+  ,"profile.hire": "Angajează"
+  ,"profile.about": "Despre"
+  ,"profile.noBio": "Nicio biografie furnizată încă"
+  ,"profile.skills": "Aptitudini"
+  ,"profile.recentTasks": "Sarcini Recente"
+  ,"profile.reviewsTitle": "Recenzii"
+  ,"profile.noReviews": "Nicio recenzie încă"
+  ,"profile.verifiedUser": "Utilizator Verificat"
+  ,"profile.verifiedDescription": "Acest utilizator a fost verificat și este de încredere în comunitate"
+  ,"review.rateUser": "Evaluează"
+  ,"review.rating": "Evaluare"
+  ,"review.comment": "Comentariu"
+  ,"review.optional": "opțional"
+  ,"review.commentPlaceholder": "Împărtășește-ți experiența..."
+  ,"review.submit": "Trimite Recenzia"
+  ,"review.submitting": "Se trimite..."
+  ,"review.selectRating": "Te rugăm să selectezi o evaluare"
+  ,"review.thankYou": "Mulțumim pentru recenzia ta!"
+  ,"review.canReview": "Poți evalua acum acest utilizator"
+  ,"header.myTasks": "Sarcinile mele"
+  ,"auth.loginRequired": "Trebuie să te autentifici"
+  ,"common.userNotFound": "Utilizator negăsit"
+  ,"common.open": "Deschide"
+  ,"myTasks.title": "Sarcinile mele"
+  ,"myTasks.createdByMe.title": "Create de mine"
+  ,"myTasks.createdByMe.empty": "Nu ai creat încă nicio sarcină."
+  ,"myTasks.accepted.title": "Sarcini acceptate"
+  ,"myTasks.accepted.empty": "Nicio sarcină acceptată încă."
+  ,"myTasks.completed.title": "Sarcini finalizate"
+  ,"myTasks.completed.empty": "Nicio sarcină finalizată încă."
+  ,"myTasks.completed.badge": "Finalizat"
+  ,"myTasks.requested.title": "Sarcini solicitate"
+  ,"taskDetail.alreadyAccepted": "✓ Ești acceptat pentru această sarcină"
+  ,"taskDetail.markCompleted": "Marchează ca Finalizat (+0.1 credite)"
+  ,"taskDetail.completedSuccess": "✓ Ai finalizat această sarcină"
+ }

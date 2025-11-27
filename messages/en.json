@@ -1,0 +1,251 @@
+{
+  "home.title": "Welcome to TaskSite",
+  "home.hero": "Find Local Services",
+  "home.heroSubtitle": "Get help with everyday tasks from trusted taskers",
+  "home.browseBtn": "Browse Tasks",
+  "home.postBtn": "Post a Task",
+  "home.howItWorks": "How it works",
+  "home.stats.furniture": "Furniture Assemblies",
+  "home.stats.moving": "Moving Tasks",
+  "home.stats.cleaning": "Homes Cleaned",
+  "home.stats.repairs": "Home Repairs",
+  "home.popularTitle": "Popular Projects",
+  "home.popularSubtitle": "Get help fast with same-day service",
+  "home.project.furnitureAssembly": "Furniture Assembly",
+  "home.project.mountTV": "Mount a TV",
+  "home.project.moving": "Help Moving",
+  "home.project.cleaning": "Home Cleaning",
+  "home.project.repairs": "Minor Repairs",
+  "home.project.hangPictures": "Hang Pictures",
+  "home.project.startingAt": "Starting at",
+  "home.guaranteeTitle": "Your satisfaction, guaranteed",
+  "home.happiness.title": "Happiness Pledge",
+  "home.happiness.text": "If you're not satisfied, we'll work to make it right.",
+  "home.vetted.title": "Vetted Taskers",
+  "home.vetted.text": "Taskers are always background checked before joining the platform.",
+  "home.support.title": "Dedicated Support",
+  "home.support.text": "Friendly service when you need us – every day of the week.",
+  "home.testimonialsTitle": "See what happy customers are saying",
+  "home.howItWorksTitle": "How it works",
+  "home.step1.title": "Choose a Tasker",
+  "home.step1.text": "By price, skills, and reviews",
+  "home.step2.title": "Schedule a Tasker",
+  "home.step2.text": "As early as today",
+  "home.step3.title": "Chat, pay, tip, review",
+  "home.step3.text": "All in one place",
+  "home.earnTitle": "Earn money your way",
+  "home.earnSubtitle": "Be your own boss. Work when you want, set your own rates, and build your business.",
+  "home.becomeTasker": "Become a Tasker",
+  "home.ctaTitle": "Ready to Get Started?",
+  "home.ctaSubtitle": "Join thousands of people getting things done every day",
+  "home.ctaButton": "Post Your First Task",
+  "tasks.title": "Browse Tasks",
+  "tasks.allCategories": "All Categories",
+  "tasks.postTask": "Post a Task",
+  "tasks.noTasksYet": "No tasks available yet",
+  "tasks.beFirst": "Be the first to post a task!",
+  "create.title": "Post a Task",
+  "create.taskTitle": "Task Title",
+  "create.description": "Description",
+  "create.category": "Category",
+  "create.price": "Price",
+  "create.location": "Location",
+  "create.submit": "Create Task",
+  "create.cancel": "Cancel",
+  "auth.login": "Log in",
+  "auth.logout": "Logout",
+  "auth.signup": "Sign Up",
+  "auth.username": "Username",
+  "auth.email": "Email",
+  "auth.password": "Password",
+  "auth.name": "Full Name",
+  "account.settings": "Account Settings",
+  "account.profile": "Profile",
+  "account.myTasks": "My Tasks",
+  "account.createdTasks": "Created Tasks",
+  "account.completedTasks": "Completed Tasks",
+  "account.saveChanges": "Save Changes",
+  "account.saving": "Saving...",
+  "profile.location": "Location",
+  "profile.bio": "Bio",
+  "profile.skills": "Skills",
+  "task.apply": "Apply for Task",
+  "task.yourOffer": "Your Offer",
+  "task.applyNow": "Apply Now",
+  "task.applying": "Applying...",
+  "task.originalPrice": "Original price",
+  "task.delete": "Delete Task",
+  "task.deleting": "Deleting...",
+  "task.confirmDelete": "Yes, Delete",
+  "task.viewTask": "View Task",
+  "task.reviews": "Reviews",
+  "task.description": "Description",
+  "task.postedBy": "Posted By",
+  "task.taskBudget": "Task Budget",
+  "task.negotiable": "Negotiable",
+  "task.viewProfile": "View Profile",
+  "application.status": "Status",
+  "application.pending": "Pending",
+  "application.accepted": "Accepted",
+  "application.declined": "Declined",
+  "application.accept": "Accept",
+  "application.decline": "Decline",
+  "application.counterOffer": "Counter-Offer",
+  "application.sendCounterOffer": "Send Counter-Offer",
+  "application.offerSent": "Offer Sent",
+  "application.updatePrice": "Update Price Offer",
+  "notifications.title": "Notifications",
+  "notifications.markAllRead": "Mark all read",
+  "notifications.noNew": "No new notifications",
+  "footer.about": "About",
+  "footer.contact": "Contact",
+  "footer.terms": "Terms",
+  "footer.privacy": "Privacy"
+  ,"header.account": "Account"
+  ,"header.logout": "Log out"
+  ,"header.credits.title": "Your Credits"
+  ,"header.credits.unit": "Credits"
+  ,"header.credits.exchange": "1 credit = $100 task value"
+  ,"header.credits.purchase": "Purchase Credits"
+  ,"header.credits.history": "View History"
+  ,"header.messages.title": "Messages"
+  ,"header.messages.inbox": "Go to Inbox →"
+  ,"header.messages.empty": "No conversations yet"
+  ,"header.notifications.title": "Notifications"
+  ,"header.notifications.markAllRead": "Mark all read"
+  ,"header.notifications.empty": "No notifications yet"
+  ,"header.myTasks": "My Tasks"
+  ,"notification.applicationReceived": "{{user}} applied to your task \"{{task}}\""
+  ,"notification.jobOffer": "You received a job offer for \"{{task}}\" - ${{price}}"
+  ,"notification.applicationAccepted": "Your application for \"{{task}}\" has been accepted!"
+  ,"notification.applicationDeclined": "Your application for \"{{task}}\" was declined."
+  ,"notification.priceCounterOffer.creator": "{{sender}} proposed a counter-offer of ${{price}} for \"{{task}}\""
+  ,"notification.priceCounterOffer.applicant": "{{sender}} proposed a price of ${{price}} for \"{{task}}\""
+  ,"create.editTitle": "Edit Task"
+  ,"create.saving": "Saving..."
+  ,"create.creating": "Creating..."
+  ,"create.saveChanges": "✓ Save Changes"
+  ,"create.createTask": "✓ Create Task"
+  ,"create.back": "Back"
+  ,"create.help.subtitle": "Tell us what you need and get offers from skilled professionals"
+  ,"create.taskTitleLabel": "Task Title *"
+  ,"create.taskTitlePlaceholder": "e.g., Need help moving furniture"
+  ,"create.taskTitleHelp": "Be specific and clear about what you need"
+  ,"create.taskTitleRequired": "Please enter a task title."
+  ,"create.descriptionLabel": "Description *"
+  ,"create.descriptionPlaceholder": "Describe your task in detail. Include any specific requirements, location, timing, etc."
+  ,"create.descriptionHelp": "Provide as much detail as possible to get accurate quotes"
+  ,"create.descriptionRequired": "Please enter a description."
+  ,"create.budgetLabel": "Budget (Optional)"
+  ,"create.budgetHelp": "Set a budget or leave blank to receive offers"
+  ,"create.locationLabel": "Location *"
+  ,"create.locationPlaceholder": "City or area"
+  ,"create.locationRequired": "Please enter a location."
+  ,"create.locationExample": "Example: San Francisco, Downtown, or Remote"
+  ,"create.photoLabel": "Add a Photo (Optional)"
+  ,"create.photoHelp": "Supported: JPG, PNG, WEBP. Max ~5MB."
+  ,"create.tips.title": "💡 Tips for a Great Task Post"
+  ,"create.tips.item1": "Be specific about what you need done"
+  ,"create.tips.item2": "Include location and timing requirements"
+  ,"create.tips.item3": "Set a realistic budget based on market rates"
+  ,"create.tips.item4": "Add photos if they help explain the task"
+  ,"create.tips.item5": "Respond promptly to offers and questions"
+  ,"tasks.browse.title": "Browse Tasks"
+  ,"tasks.browse.postTask": "+ Post a Task"
+  ,"tasks.browse.searchPlaceholder": "Search tasks..."
+  ,"tasks.browse.minPrice": "Min price"
+  ,"tasks.browse.maxPrice": "Max price"
+  ,"tasks.browse.locationPlaceholder": "Location"
+  ,"tasks.browse.loading": "Loading..."
+  ,"tasks.browse.noResults": "No tasks match your filters."
+  ,"tasks.viewDetails": "View Details"
+  ,"taskDetail.notFound.title": "Task not found"
+  ,"taskDetail.notFound.description": "The task you're looking for doesn't exist or has been removed."
+  ,"taskDetail.notFound.backButton": "Back to Tasks"
+  ,"taskDetail.changesSaved": "✓ Changes saved successfully"
+  ,"taskDetail.yourTask": "✓ This is your task"
+  ,"taskDetail.taskBudget": "Task Budget"
+  ,"taskDetail.negotiable": "Negotiable"
+  ,"taskDetail.postedBy": "Posted By"
+  ,"taskDetail.viewProfile": "View Profile"
+  ,"taskDetail.anonymous": "Anonymous"
+  ,"taskDetail.applyForTask": "Apply for this Task"
+  ,"taskDetail.reviews": "Reviews"
+  ,"taskDetail.noReviews": "No reviews yet"
+  ,"taskDetail.apply.yourOffer": "Your Offer:"
+  ,"taskDetail.apply.usd": "USD"
+  ,"taskDetail.apply.pricePlaceholder": "Price"
+  ,"taskDetail.apply.applyNow": "Apply Now"
+  ,"taskDetail.apply.applying": "Applying..."
+  ,"taskDetail.apply.originalPrice": "Original price:"
+  ,"taskDetail.apply.requiredCredits": "Required credits: {{credits}} (1 credit = $100)"
+  ,"taskDetail.apply.yourBalance": "Your balance: {{credits}} credit{{plural}}"
+  ,"taskDetail.apply.insufficientCredits": "Insufficient credits. You need {{required}} credit{{requiredPlural}} but only have {{current}}. Purchase more credits to apply."
+  ,"taskDetail.apply.successAlert": "Application submitted successfully! The task creator will be notified."
+  ,"taskDetail.apply.errorAlert": "Failed to submit application"
+  ,"taskDetail.apply.alreadyApplied": "✓ You have already applied for this task"
+  ,"taskDetail.applicants.title": "Applicants"
+  ,"taskDetail.applicants.noApplicants": "No applicants yet"
+  ,"taskDetail.applicants.proposed": "Proposed:"
+  ,"taskDetail.applicants.noPrice": "No price proposed"
+  ,"taskDetail.applicants.accept": "Accept"
+  ,"taskDetail.applicants.decline": "Decline"
+  ,"taskDetail.applicants.updateError": "Could not update application. Please try again."
+  ,"taskDetail.delete.button": "Delete"
+  ,"taskDetail.delete.confirmText": "Are you sure? This action cannot be undone. All applications and notifications will be deleted."
+  ,"taskDetail.delete.confirmButton": "Delete"
+  ,"taskDetail.delete.deleting": "Deleting..."
+  ,"taskDetail.delete.cancel": "Cancel"
+  ,"taskDetail.delete.successAlert": "Task deleted successfully"
+  ,"taskDetail.delete.errorAlert": "Failed to delete task"
+  ,"taskDetail.edit.title": "Title"
+  ,"taskDetail.edit.description": "Description"
+  ,"taskDetail.edit.location": "Location"
+  ,"taskDetail.edit.budget": "Budget (optional)"
+  ,"taskDetail.edit.save": "✓ Save"
+  ,"taskDetail.edit.saving": "Saving..."
+  ,"taskDetail.edit.cancel": "Cancel"
+  ,"taskDetail.edit.errorAlert": "Failed to update task. Please try again."
+  ,"profile.loading": "Loading..."
+  ,"profile.notFound.title": "Profile not found"
+  ,"profile.notFound.description": "This user profile doesn't exist or has been removed."
+  ,"profile.notFound.browseTasks": "Browse Tasks"
+  ,"profile.verified": "Verified"
+  ,"profile.tasksPosted": "Tasks Posted"
+  ,"profile.rating": "Rating"
+  ,"profile.reviews": "Reviews"
+  ,"profile.hire": "Hire"
+  ,"profile.about": "About"
+  ,"profile.noBio": "No bio provided yet"
+  ,"profile.skills": "Skills"
+  ,"profile.recentTasks": "Recent Tasks"
+  ,"profile.reviewsTitle": "Reviews"
+  ,"profile.noReviews": "No reviews yet"
+  ,"profile.verifiedUser": "Verified User"
+  ,"profile.verifiedDescription": "This user has been verified and is trusted by the community"
+  ,"review.rateUser": "Rate"
+  ,"review.rating": "Rating"
+  ,"review.comment": "Comment"
+  ,"review.optional": "optional"
+  ,"review.commentPlaceholder": "Share your experience..."
+  ,"review.submit": "Submit Review"
+  ,"review.submitting": "Submitting..."
+  ,"review.selectRating": "Please select a rating"
+  ,"review.thankYou": "Thank you for your review!"
+  ,"review.canReview": "You can now review this user"
+  ,"auth.loginRequired": "You need to log in"
+  ,"common.userNotFound": "User not found"
+  ,"common.open": "Open"
+  ,"myTasks.title": "My Tasks"
+  ,"myTasks.createdByMe.title": "Created by me"
+  ,"myTasks.createdByMe.empty": "You haven't created any tasks yet."
+  ,"myTasks.accepted.title": "Accepted tasks"
+  ,"myTasks.accepted.empty": "No accepted tasks yet."
+  ,"myTasks.completed.title": "Completed tasks"
+  ,"myTasks.completed.empty": "No completed tasks yet."
+  ,"myTasks.completed.badge": "Completed"
+  ,"myTasks.requested.title": "Requested tasks"
+  ,"taskDetail.alreadyAccepted": "✓ You are accepted for this task"
+  ,"taskDetail.markCompleted": "Mark as Completed (+0.1 credits)"
+  ,"taskDetail.completedSuccess": "✓ You have completed this task"
+ }

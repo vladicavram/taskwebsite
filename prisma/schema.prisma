@@ -1,0 +1,133 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                    String          @id @default(cuid())
+  email                 String          @unique
+  username              String?         @unique
+  name                  String?
+  password              String?         // hashed for credential-provider seeds; null for OAuth
+  phone                 String?
+  image                 String?
+  credits               Float           @default(10)
+  isAdmin               Boolean         @default(false)
+  role                  String          @default("user") // user, moderator, admin
+  profile               Profile?
+  tasks                 Task[]
+  reviews               Review[]        @relation("ReviewAuthor")
+  reviewsReceived       Review[]        @relation("ReviewRecipient")
+  applications          Application[]
+  notifications         Notification[]
+  creditTransactions    CreditTransaction[]
+  createdAt             DateTime        @default(now())
+  blocked               Boolean         @default(false)
+}
+
+model Profile {
+  id        String  @id @default(cuid())
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String  @unique
+  bio       String?
+  location  String?
+  skills    String?
+  verified  Boolean @default(false)
+}
+
+model Category {
+  id    String @id @default(cuid())
+  name  String @unique
+  tasks Task[]
+}
+
+model Task {
+  id           String        @id @default(cuid())
+  title        String
+  description  String
+  price        Float?
+  location     String?
+  isOpen       Boolean       @default(true)
+  creator      User          @relation(fields: [creatorId], references: [id])
+  creatorId    String
+  category     Category?     @relation(fields: [categoryId], references: [id])
+  categoryId   String?
+  reviews      Review[]
+  applications Application[]
+  createdAt    DateTime      @default(now())
+  completedAt  DateTime?
+}
+
+model Review {
+  id          String   @id @default(cuid())
+  rating      Int
+  comment     String?
+  author      User     @relation("ReviewAuthor", fields: [authorId], references: [id])
+  authorId    String
+  recipient   User     @relation("ReviewRecipient", fields: [recipientId], references: [id])
+  recipientId String
+  task        Task     @relation(fields: [taskId], references: [id])
+  taskId      String
+  createdAt   DateTime @default(now())
+
+  @@unique([authorId, recipientId, taskId])
+}
+
+model Application {
+  id            String         @id @default(cuid())
+  task          Task           @relation(fields: [taskId], references: [id])
+  taskId        String
+  applicant     User           @relation(fields: [applicantId], references: [id])
+  applicantId   String
+  status        String         @default("pending") // pending, accepted, declined
+  message       String?
+  proposedPrice Float?
+  lastProposedBy String?       // userId of who last proposed price
+  agreementText String?
+  agreementAcceptedAt DateTime?
+  notifications Notification[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@unique([taskId, applicantId])
+}
+
+model Notification {
+  id            String       @id @default(cuid())
+  user          User         @relation(fields: [userId], references: [id])
+  userId        String
+  type          String       // application_received, application_accepted, application_declined
+  content       String
+  taskId        String?
+  application   Application? @relation(fields: [applicationId], references: [id])
+  applicationId String?
+  read          Boolean      @default(false)
+  createdAt     DateTime     @default(now())
+}
+
+model Message {
+  id            String      @id @default(cuid())
+  content       String
+  senderId      String
+  receiverId    String
+  taskId        String
+  applicationId String
+  read          Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+}
+
+model CreditTransaction {
+  id              String   @id @default(cuid())
+  user            User     @relation(fields: [userId], references: [id])
+  userId          String
+  amount          Float
+  type            String   // purchase, spent, refund, reward
+  description     String
+  paymentIntentId String?
+  relatedTaskId   String?
+  createdAt       DateTime @default(now())
+}

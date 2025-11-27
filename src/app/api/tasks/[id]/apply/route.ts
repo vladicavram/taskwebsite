@@ -1,0 +1,112 @@
+import { NextResponse } from 'next/server'
+import { getServerSession } from 'next-auth/next'
+import { authOptions } from '../../../auth/[...nextauth]/authOptions'
+import { prisma } from '../../../../../lib/prisma'
+
+export async function POST(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const session: any = await getServerSession(authOptions as any)
+    if (!session?.user?.email) {
+      return NextResponse.json({ error: 'Unauthorized - please log in' }, { status: 401 })
+    }
+
+    const applicant = await prisma.user.findUnique({ 
+      where: { email: session.user.email } 
+    })
+    
+    if (!applicant) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 })
+    }
+
+    // Get the task and check if user is trying to apply to their own task
+    const task = await prisma.task.findUnique({
+      where: { id: params.id },
+      include: { creator: true }
+    })
+
+    if (!task) {
+      return NextResponse.json({ error: 'Task not found' }, { status: 404 })
+    }
+
+    if (task.creatorId === applicant.id) {
+      return NextResponse.json({ error: 'You cannot apply to your own task' }, { status: 400 })
+    }
+
+    const body = await req.json()
+    const { message, proposedPrice, agree, agreementText } = body
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('[APPLY] Incoming body', { message, proposedPrice, agree, agreementTextLen: agreementText?.length })
+    }
+
+    // Check if user already applied
+    const existingApplication = await prisma.application.findUnique({
+      where: {
+        taskId_applicantId: {
+          taskId: params.id,
+          applicantId: applicant.id
+        }
+      }
+    })
+
+    if (existingApplication) {
+      return NextResponse.json({ error: 'You have already applied to this task' }, { status: 400 })
+    }
+
+    if (!agree || !agreementText || agreementText.trim().length < 10) {
+      return NextResponse.json({ error: 'Agreement acceptance and contract text are required' }, { status: 400 })
+    }
+
+    // Enforce fractional credits: required = price/100
+    const effectivePrice = typeof proposedPrice === 'number' && proposedPrice > 0 ? proposedPrice : (task.price || 0)
+    const requiredCredits = effectivePrice / 100
+    if (applicant.credits < requiredCredits) {
+      return NextResponse.json({ error: `Insufficient credits. Required ${requiredCredits.toFixed(2)}, you have ${applicant.credits}.` }, { status: 400 })
+    }
+
+    // Create application
+    // Create application without agreement fields to avoid Prisma client type mismatch
+    const application = await prisma.application.create({
+      data: {
+        taskId: params.id,
+        applicantId: applicant.id,
+        message: message || null,
+        proposedPrice: effectivePrice || null,
+        lastProposedBy: applicant.id,
+        status: 'pending'
+      }
+    })
+
+    // Attempt raw SQL update to set agreement fields if columns exist
+    try {
+      // Using parameterized raw query for safety
+      await prisma.$executeRawUnsafe(
+        `UPDATE "Application" SET "agreementText" = $1, "agreementAcceptedAt" = $2 WHERE id = $3`,
+        agreementText,
+        new Date(),
+        application.id
+      )
+    } catch (e) {
+      console.warn('[APPLY] Could not set agreementText via raw SQL:', e)
+    }
+
+    // Create notification for task creator
+    await prisma.notification.create({
+      data: {
+        userId: task.creatorId,
+        type: 'application_received',
+        content: `${applicant.name || applicant.email} applied to your task "${task.title}"`,
+        taskId: task.id,
+        applicationId: application.id
+      }
+    })
+
+    return NextResponse.json(application, { status: 201 })
+  } catch (error) {
+    console.error('Application error:', error)
+    const message = (error as any)?.message || 'Failed to submit application'
+    return NextResponse.json({ error: message }, { status: 500 })
+  }
+}

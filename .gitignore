@@ -1,0 +1,48 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Next.js
+.next/
+out/
+.vercel/
+
+# Local env files
+.env
+.env.*.local
+.env.local
+
+# Prisma
+prisma/migrations/
+
+# Public uploads (do NOT commit uploaded images)
+public/uploads/
+
+# Build output
+dist/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor directories and files
+.vscode/
+.idea/
+
+# Logs
+logs/
+*.log
+
+# Coverage
+coverage/
+
+# Misc
+.cache/
+.next
+node_modules
+.env.local
+dist
+coverage
+db-data
