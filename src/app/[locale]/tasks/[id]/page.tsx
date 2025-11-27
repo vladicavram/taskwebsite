@@ -120,8 +120,6 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                   const nameMatch = imgUrl.match(/\/([^/?#]+)(?:\?v=\d+)?$/)
                   const imageName = nameMatch ? nameMatch[1] : undefined
                   return (
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-expect-error Server Component importing Client Component
                     <ThumbnailWithDelete key={imgUrl} src={imgUrl} alt={task.title} taskId={params.id} canEdit={isCreator} imageName={imageName} />
                   )
                 })}
