@@ -238,7 +238,7 @@ export default function ProfilePage({ params }: Props) {
                   <div style={{ marginTop: '16px' }}>
                     <h4 style={{ marginBottom: '12px' }}>{t('profile.skills') || 'Skills'}</h4>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                      {profile.skills.split(',').map((skill, i) => (
+                      {(profile.skills || '').split(',').map((skill: string, i: number) => (
                         <span 
                           key={i}
                           style={{
