@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { prisma } from '../../../lib/prisma'
 import { getServerSession } from 'next-auth/next'
 import type { Session } from 'next-auth'
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 import { authOptions } from '../auth/[...nextauth]/authOptions'
 
 export async function GET(req: Request) {

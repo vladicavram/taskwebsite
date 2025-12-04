@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../../auth/[...nextauth]/authOptions'
 import { prisma } from '../../../../lib/prisma'
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 import bcrypt from 'bcryptjs'
 
 export async function GET() {
