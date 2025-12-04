@@ -3,8 +3,6 @@ export const revalidate = 0
 
 import ImageLightbox from '../../../../components/ImageLightbox'
 import { prisma } from '../../../../lib/prisma'
-import fs from 'fs'
-import path from 'path'
 import Link from 'next/link'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../../../api/auth/[...nextauth]/authOptions'
@@ -20,12 +18,6 @@ import { revalidatePath } from 'next/cache'
 import MarkCompleteButton from './MarkCompleteButton'
 
 type Props = { params: { id: string; locale: string } }
-
-const placeholderImages = [
-  'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&h=500&fit=crop',
-  'https://images.unsplash.com/photo-1581578949510-fa7315c4c350?w=800&h=500&fit=crop',
-  'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&h=500&fit=crop',
-]
 
 export default async function TaskDetail({ params, searchParams }: Props & { searchParams?: Record<string, string> }) {
   const session: any = await getServerSession(authOptions as any)
@@ -54,18 +46,8 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
     )
   }
 
-  const randomImage = placeholderImages[0]
-  // Collect all images in the task's upload folder
-  const uploadsDir = path.join(process.cwd(), 'public', 'uploads', 'tasks', params.id)
-  let images: string[] = []
-  try {
-    const files = fs.readdirSync(uploadsDir)
-    const allowed = files.filter(f => /\.(png|jpg|jpeg|webp)$/i.test(f))
-    images = allowed.map(f => `/uploads/tasks/${params.id}/${f}?v=${Date.now()}`)
-  } catch {}
-  if (images.length === 0) {
-    images = [randomImage]
-  }
+  // Use imageUrl from database (stored in Vercel Blob)
+  const images: string[] = (task as any).imageUrl ? [(task as any).imageUrl] : []
 
   const isCreator = session?.user?.email === task.creator.email
   const acceptedApps = (task as any).applications.filter((app: any) => app.status === 'accepted')
@@ -118,16 +100,18 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
 
               <h1 style={{ fontSize: '2.5rem', marginBottom: '24px' }}>{task.title}</h1>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px', flexWrap: 'wrap' }}>
-                {images.map((imgUrl) => {
-                  const nameMatch = imgUrl.match(/\/([^/?#]+)(?:\?v=\d+)?$/)
-                  const imageName = nameMatch ? nameMatch[1] : undefined
-                  return (
-                    <ThumbnailWithDelete key={imgUrl} src={imgUrl} alt={task.title} taskId={params.id} canEdit={isCreator} imageName={imageName} />
-                  )
-                })}
-                <TaskImageControls taskId={params.id} canEdit={isCreator} showAddOnly />
-              </div>
+              {(images.length > 0 || isCreator) && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px', flexWrap: 'wrap' }}>
+                  {images.map((imgUrl) => {
+                    const nameMatch = imgUrl.match(/\/([^/?#]+)(?:\?v=\d+)?$/)
+                    const imageName = nameMatch ? nameMatch[1] : undefined
+                    return (
+                      <ThumbnailWithDelete key={imgUrl} src={imgUrl} alt={task.title} taskId={params.id} canEdit={isCreator} imageName={imageName} />
+                    )
+                  })}
+                  {isCreator && <TaskImageControls taskId={params.id} canEdit={isCreator} showAddOnly />}
+                </div>
+              )}
               {!isCreator ? (
                 <p style={{ lineHeight: '1.8', color: 'var(--text-secondary)', marginBottom: '24px' }}>{task.description}</p>
               ) : (
