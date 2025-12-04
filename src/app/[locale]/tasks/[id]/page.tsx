@@ -123,16 +123,12 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                     <ThumbnailWithDelete key={imgUrl} src={imgUrl} alt={task.title} taskId={params.id} canEdit={isCreator} imageName={imageName} />
                   )
                 })}
-                {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-                {/* @ts-expect-error Server Component importing Client Component */}
                 <TaskImageControls taskId={params.id} canEdit={isCreator} showAddOnly />
               </div>
               {!isCreator ? (
                 <p style={{ lineHeight: '1.8', color: 'var(--text-secondary)', marginBottom: '24px' }}>{task.description}</p>
               ) : (
                 <div style={{ marginBottom: '24px' }}>
-                  {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-                  {/* @ts-expect-error Server Component importing Client Component */}
                   <EditTaskInline
                     locale={params.locale}
                     taskId={params.id}
@@ -184,8 +180,6 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                       }}>
                         <span>{getTranslation(params.locale, 'taskDetail.alreadyAccepted') || '✓ You are accepted for this task'}</span>
                         {acceptedApps.length > 0 && (
-                          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                          // @ts-expect-error Server Component importing Client Component
                           <MarkCompleteButton taskId={params.id} locale={params.locale} />
                         )}
                       </div>
