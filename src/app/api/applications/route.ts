@@ -20,11 +20,11 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Task ID and User ID required' }, { status: 400 })
     }
 
-    // Create an application/offer
+    // Create an application/offer (uses applicantId per schema)
     const application = await prisma.application.create({
       data: {
         taskId,
-        userId,
+        applicantId: userId,
         proposedPrice: proposedPrice || null,
         message: message || '',
         status: 'pending'
@@ -40,10 +40,10 @@ export async function POST(req: Request) {
       const notification = await prisma.notification.create({
         data: {
           userId: userId,
-          type: 'job_offer',
+          type: 'application_received',
           taskId: taskId,
           applicationId: application.id,
-          message: `You received a job offer: ${task.title}`
+          content: `You received a job offer: ${task.title}`
         }
       })
       console.log('Notification created:', notification.id)

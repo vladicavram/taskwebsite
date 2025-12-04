@@ -14,10 +14,20 @@ echo "Git status:"
 git --no-pager status --porcelain --branch || true
 
 echo "Showing diffs for edited files (if any):"
-git --no-pager diff -- "src/app/[locale]/profile/[id]/page.tsx" "src/app/[locale]/tasks/[id]/page.tsx" "src/app/api/users/credits/add/route.ts" || true
+git --no-pager diff -- \
+  "src/app/[locale]/profile/[id]/page.tsx" \
+  "src/app/[locale]/tasks/[id]/page.tsx" \
+  "src/app/api/users/credits/add/route.ts" \
+  "src/app/api/applications/route.ts" \
+  "src/app/api/profiles/route.ts" || true
 
 # Stage files (quoted to avoid zsh globbing)
-git add "src/app/[locale]/profile/[id]/page.tsx" "src/app/[locale]/tasks/[id]/page.tsx" "src/app/api/users/credits/add/route.ts" || echo "git add failed or files not found"
+git add \
+  "src/app/[locale]/profile/[id]/page.tsx" \
+  "src/app/[locale]/tasks/[id]/page.tsx" \
+  "src/app/api/users/credits/add/route.ts" \
+  "src/app/api/applications/route.ts" \
+  "src/app/api/profiles/route.ts" || echo "git add failed or files not found"
 
 # Commit if changes exist
 if git diff --cached --quiet; then

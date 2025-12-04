@@ -46,3 +46,5 @@ node_modules
 dist
 coverage
 db-data
+.vercel
+.env*.local
