@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import Modal from '../../../components/Modal'
 import useLocale from '../../../lib/locale'
 import { signIn } from 'next-auth/react'
@@ -7,7 +7,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 
 export const dynamic = 'force-dynamic'
 
-export default function LoginPage() {
+function LoginContent() {
   const { locale, t } = useLocale()
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -210,5 +210,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="container" style={{ textAlign: 'center', padding: '100px 0' }}>Loading...</div>}>
+      <LoginContent />
+    </Suspense>
   )
 }
