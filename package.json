@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -H 0.0.0.0",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start -p $PORT",
     "lint": "next lint",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
@@ -24,10 +24,7 @@
     "next-auth": "^4.22.1",
     "next-intl": "^2.0.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "stripe": "20.0.0",
-    "@stripe/stripe-js": "8.5.3",
-    "@stripe/react-stripe-js": "5.4.1"
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.0.0",
