@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../../../auth/[...nextauth]/authOptions'
 import { prisma } from '../../../../../lib/prisma'
-import fs from 'fs'
-import path from 'path'
+import { put, del } from '@vercel/blob'
+
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
@@ -21,11 +21,10 @@ export async function POST(
     if (!task) {
       return NextResponse.json({ error: 'Task not found' }, { status: 404 })
     }
-    if (task.creatorId) {
-      const user = await prisma.user.findUnique({ where: { email: session.user.email } })
-      if (!user || user.id !== task.creatorId) {
-        return NextResponse.json({ error: 'Only the task creator can upload images' }, { status: 403 })
-      }
+    
+    const user = await prisma.user.findUnique({ where: { email: session.user.email } })
+    if (!user || user.id !== task.creatorId) {
+      return NextResponse.json({ error: 'Only the task creator can upload images' }, { status: 403 })
     }
 
     const form = await req.formData()
@@ -34,22 +33,65 @@ export async function POST(
       return NextResponse.json({ error: 'No image file provided' }, { status: 400 })
     }
 
-    const arrayBuffer = await file.arrayBuffer()
-    const buffer = Buffer.from(arrayBuffer)
-    const mime = file.type || 'image/jpeg'
-    const ext = mime.includes('png') ? 'png' : mime.includes('webp') ? 'webp' : 'jpg'
+    // Delete old image if exists
+    if (task.imageUrl) {
+      try {
+        await del(task.imageUrl)
+      } catch (e) {
+        console.log('Could not delete old image:', e)
+      }
+    }
 
-    const uploadsDir = path.join(process.cwd(), 'public', 'uploads', 'tasks', params.id)
-    await fs.promises.mkdir(uploadsDir, { recursive: true })
-    const filename = `image-${Date.now()}.${ext}`
-    const targetPath = path.join(uploadsDir, filename)
-    await fs.promises.writeFile(targetPath, buffer)
+    // Upload to Vercel Blob
+    const blob = await put(`tasks/${params.id}/${file.name}`, file, {
+      access: 'public',
+      addRandomSuffix: true
+    })
 
-    return NextResponse.json({ ok: true, path: `/uploads/tasks/${params.id}/${filename}` })
+    // Update task with new image URL
+    await prisma.task.update({
+      where: { id: params.id },
+      data: { imageUrl: blob.url }
+    })
+
+    return NextResponse.json({ ok: true, url: blob.url })
   } catch (err) {
     console.error('Image upload error:', err)
     return NextResponse.json({ error: 'Failed to upload image' }, { status: 500 })
   }
 }
 
-// DELETE all images is not supported here anymore; use /api/tasks/images/[imageId]
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const session: any = await getServerSession(authOptions as any)
+    if (!session?.user?.email) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    const task = await prisma.task.findUnique({ where: { id: params.id } })
+    if (!task) {
+      return NextResponse.json({ error: 'Task not found' }, { status: 404 })
+    }
+    
+    const user = await prisma.user.findUnique({ where: { email: session.user.email } })
+    if (!user || user.id !== task.creatorId) {
+      return NextResponse.json({ error: 'Only the task creator can delete images' }, { status: 403 })
+    }
+
+    if (task.imageUrl) {
+      await del(task.imageUrl)
+      await prisma.task.update({
+        where: { id: params.id },
+        data: { imageUrl: null }
+      })
+    }
+
+    return NextResponse.json({ ok: true })
+  } catch (err) {
+    console.error('Image delete error:', err)
+    return NextResponse.json({ error: 'Failed to delete image' }, { status: 500 })
+  }
+}

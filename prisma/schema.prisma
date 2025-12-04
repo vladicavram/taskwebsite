@@ -51,6 +51,7 @@ model Task {
   description  String
   price        Float?
   location     String?
+  imageUrl     String?       // URL to task image stored in Vercel Blob
   isOpen       Boolean       @default(true)
   creator      User          @relation(fields: [creatorId], references: [id])
   creatorId    String
