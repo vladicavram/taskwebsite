@@ -1,3 +1,6 @@
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 import ImageLightbox from '../../../../components/ImageLightbox'
 import { prisma } from '../../../../lib/prisma'
 import fs from 'fs'
