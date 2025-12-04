@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '../../../../lib/prisma'
 
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 // This endpoint handles Stripe webhooks
 // In production, verify the webhook signature from Stripe
 export async function POST(req: NextRequest) {
