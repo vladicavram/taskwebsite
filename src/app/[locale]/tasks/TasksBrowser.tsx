@@ -85,7 +85,7 @@ export default function TasksBrowser({ locale, initialTasks }: { locale: string,
 						onChange={(e) => setLocation(e.target.value)}
 						style={{ padding: '12px', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--bg-secondary)' }}
 					>
-						<option value="">{t('tasks.browse.allLocations') || 'All locations'}</option>
+						<option value="">{t('common.allLocations') || 'All locations'}</option>
 						{MOLDOVA_CITIES.map(city => (
 							<option key={city} value={city}>{city}</option>
 						))}
