@@ -15,7 +15,7 @@ const CREDIT_PACKAGES = [
 ]
 
 export default function PurchaseCreditsPage() {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const router = useRouter()
   const { locale, t }= useLocale()
   const [selectedPackage, setSelectedPackage] = useState(CREDIT_PACKAGES[1])
@@ -27,12 +27,13 @@ export default function PurchaseCreditsPage() {
   }
 
   useEffect(() => {
-    if (!session?.user) {
+    if (status === 'loading') return
+    if (status === 'unauthenticated') {
       router.push(`/${locale}/login`)
       return
     }
     fetchCredits()
-  }, [session])
+  }, [status, locale])
 
   const fetchCredits = async () => {
     try {
