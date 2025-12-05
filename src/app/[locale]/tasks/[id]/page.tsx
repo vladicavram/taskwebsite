@@ -278,7 +278,7 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                   textAlign: 'center',
                   marginBottom: '8px'
                 }}>
-                  {task.isOpen ? (getTranslation(params.locale, 'taskDetail.open') || 'Open') : (getTranslation(params.locale, 'taskDetail.closed') || 'Closed')}
+                  {task.isOpen ? 'Open' : 'Closed'}
                 </div>
               )}
             </div>
