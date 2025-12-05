@@ -1,19 +1,17 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useParams } from 'next/navigation'
 import { useSession } from 'next-auth/react'
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
 
 import Link from 'next/link'
 import { MapPin, CheckCircle2 } from 'lucide-react'
 import useLocale from '../../../../lib/locale'
 import { CURRENCY_SYMBOL } from '../../../../lib/constants'
 
-type Props = { params: { id: string; locale: string } }
-
-export default function ProfilePage({ params }: Props) {
+export default function ProfilePage() {
+  const params = useParams()
+  const profileId = params?.id as string
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [currentUser, setCurrentUser] = useState<any>(null)
@@ -23,8 +21,9 @@ export default function ProfilePage({ params }: Props) {
 
   useEffect(() => {
     async function fetchUser() {
+      if (!profileId) return
       try {
-        const response = await fetch(`/api/profiles?id=${params.id}`)
+        const response = await fetch(`/api/profiles?id=${profileId}`)
         if (!response.ok) {
           setUser(null)
           return
@@ -38,7 +37,7 @@ export default function ProfilePage({ params }: Props) {
       }
     }
     fetchUser()
-  }, [params.id])
+  }, [profileId])
 
   useEffect(() => {
     async function fetchCurrentUser() {
@@ -59,16 +58,16 @@ export default function ProfilePage({ params }: Props) {
     // Require login before navigating to create task
     if (session?.user) {
       // Store the hired user ID in sessionStorage and navigate to create task
-      sessionStorage.setItem('hiredUserId', params.id)
+      sessionStorage.setItem('hiredUserId', profileId)
       sessionStorage.setItem('hiredUserName', user?.name || user?.email || 'User')
-      router.push(`/${params.locale}/tasks/create`)
+      router.push(`/${locale}/tasks/create`)
     } else {
       // Not logged in — redirect to login
-      router.push(`/${params.locale}/login`)
+      router.push(`/${locale}/login`)
     }
   }
 
-  const isOwnProfile = currentUser?.id === params.id
+  const isOwnProfile = currentUser?.id === profileId
 
   if (loading) {
     return (
@@ -87,7 +86,7 @@ export default function ProfilePage({ params }: Props) {
           <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>
             {t('profile.notFound.description') || 'This user profile doesn\'t exist or has been removed.'}
           </p>
-          <Link href={`/${params.locale}/tasks`} className="btn">
+          <Link href={`/${locale}/tasks`} className="btn">
             {t('profile.notFound.browseTasks') || 'Browse Tasks'}
           </Link>
         </div>
@@ -271,7 +270,7 @@ export default function ProfilePage({ params }: Props) {
                   {(user.tasks || []).map((task: any) => (
                     <Link
                       key={task.id}
-                      href={`/${params.locale}/tasks/${task.id}`}
+                      href={`/${locale}/tasks/${task.id}`}
                       style={{
                         display: 'block',
                         padding: '20px',
