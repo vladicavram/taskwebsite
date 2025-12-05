@@ -345,4 +345,5 @@
   ,"agreement.applying": "Подача заявки..."
   ,"agreement.mustAgree": "Вы должны согласиться с условиями, чтобы продолжить"
   ,"notification.reviewReceived": "оставил вам отзыв"
+  ,"taskDetail.completedLocked": "✓ Эта задача завершена. Изменения больше не возможны."
  }

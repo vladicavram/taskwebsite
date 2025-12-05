@@ -45,6 +45,9 @@ export async function PUT(
     if (existing.creatorId !== user.id) {
       return NextResponse.json({ error: 'Only the creator can update this task' }, { status: 403 })
     }
+    if (existing.completedAt) {
+      return NextResponse.json({ error: 'Cannot edit a completed task' }, { status: 400 })
+    }
 
     const body = await req.json()
     const { title, description, price, location, categoryId, isOpen } = body
@@ -102,6 +105,11 @@ export async function DELETE(
     // Verify that the current user is the task creator
     if (task.creatorId !== user.id) {
       return NextResponse.json({ error: 'Only the task creator can delete this task' }, { status: 403 })
+    }
+
+    // Prevent deleting completed tasks
+    if (task.completedAt) {
+      return NextResponse.json({ error: 'Cannot delete a completed task' }, { status: 400 })
     }
 
     // Delete related records first

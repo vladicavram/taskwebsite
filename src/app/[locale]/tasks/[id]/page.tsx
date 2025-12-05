@@ -114,6 +114,21 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
               )}
               {!isCreator ? (
                 <p style={{ lineHeight: '1.8', color: 'var(--text-secondary)', marginBottom: '24px' }}>{task.description}</p>
+              ) : completedAt ? (
+                <div style={{ marginBottom: '24px' }}>
+                  <div style={{
+                    padding: '12px 16px',
+                    background: '#d1fae5',
+                    border: '1px solid #10b981',
+                    borderRadius: '8px',
+                    color: '#065f46',
+                    fontWeight: 500,
+                    marginBottom: '16px'
+                  }}>
+                    {getTranslation(params.locale, 'taskDetail.completedLocked') || '✓ This task is completed. No further changes can be made.'}
+                  </div>
+                  <p style={{ lineHeight: '1.8', color: 'var(--text-secondary)' }}>{task.description}</p>
+                </div>
               ) : acceptedApps.length > 0 ? (
                 <div style={{ marginBottom: '24px' }}>
                   <div style={{
@@ -146,10 +161,12 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
 
               {isCreator ? (
                 <div>
-                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '16px' }}>
-                    <DeleteTaskButton taskId={params.id} locale={params.locale} />
-                  </div>
-                  <ApplicantsList applications={(task as any).applications} locale={params.locale} />
+                  {!completedAt && (
+                    <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '16px' }}>
+                      <DeleteTaskButton taskId={params.id} locale={params.locale} />
+                    </div>
+                  )}
+                  {!completedAt && <ApplicantsList applications={(task as any).applications} locale={params.locale} />}
                 </div>
               ) : (
                 <div>

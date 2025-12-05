@@ -37,6 +37,11 @@ export async function POST(
       return NextResponse.json({ error: 'You cannot apply to your own task' }, { status: 400 })
     }
 
+    // Prevent applying to completed tasks
+    if ((task as any).completedAt) {
+      return NextResponse.json({ error: 'Cannot apply to a completed task' }, { status: 400 })
+    }
+
     const body = await req.json()
     const { message, proposedPrice, agree, agreementText } = body
     if (process.env.NODE_ENV !== 'production') {

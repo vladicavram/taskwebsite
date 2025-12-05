@@ -45,6 +45,11 @@ export async function PATCH(
       return NextResponse.json({ error: 'Unauthorized to manage this application' }, { status: 403 })
     }
 
+    // Prevent changes on completed tasks
+    if ((application.task as any).completedAt) {
+      return NextResponse.json({ error: 'Cannot modify applications on a completed task' }, { status: 400 })
+    }
+
     const body = await req.json()
     const { status } = body
 
