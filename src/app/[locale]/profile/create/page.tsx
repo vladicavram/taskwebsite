@@ -286,7 +286,11 @@ export default function CreateProfilePage() {
     }
   }
 
-  const nextStep = () => {
+  const nextStep = (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
     if (step === 1) {
       if (!formData.username || !formData.name || !formData.dateOfBirth || !formData.email || !formData.password || !formData.confirmPassword) {
         setError('Please fill in all required fields.')
@@ -397,7 +401,12 @@ export default function CreateProfilePage() {
         </div>
 
         <div className="card" style={{ padding: '40px' }}>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} onKeyDown={(e) => {
+            // Prevent form submission on Enter key except on step 3
+            if (e.key === 'Enter' && step < 3) {
+              e.preventDefault()
+            }
+          }}>
             {error && (
               <div style={{
                 padding: '16px',
@@ -1055,7 +1064,7 @@ export default function CreateProfilePage() {
               {step < 3 ? (
                 <button 
                   type="button"
-                  onClick={nextStep}
+                  onClick={(e) => nextStep(e)}
                   className="btn"
                   style={{ 
                     flex: 1,
