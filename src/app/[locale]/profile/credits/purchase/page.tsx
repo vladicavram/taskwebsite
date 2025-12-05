@@ -5,6 +5,10 @@ import { useRouter } from 'next/navigation'
 import useLocale from '../../../../../lib/locale'
 import { Coins, CreditCard, Check } from 'lucide-react'
 import { CURRENCY_SYMBOL } from '../../../../../lib/constants'
+import { loadStripe } from '@stripe/stripe-js'
+import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
 const CREDIT_PACKAGES = [
   { amount: 5, price: 50, popular: false },
@@ -14,6 +18,65 @@ const CREDIT_PACKAGES = [
   { amount: 100, price: 750, popular: false, save: '25%' }
 ]
 
+// Payment Form Component
+function CheckoutForm({ clientSecret, amount, price, currency, locale, t, interpolate, onSuccess }: any) {
+  const stripe = useStripe()
+  const elements = useElements()
+  const [processing, setProcessing] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!stripe || !elements) return
+
+    setProcessing(true)
+    setError(null)
+
+    const { error: submitError } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: `${window.location.origin}/${locale}/profile/credits/history?success=true&credits=${amount}`
+      }
+    })
+
+    if (submitError) {
+      setError(submitError.message || 'Payment failed')
+      setProcessing(false)
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <PaymentElement />
+      {error && (
+        <div style={{ color: 'var(--error)', marginTop: '16px', padding: '12px', background: 'var(--error-light)', borderRadius: '8px' }}>
+          {error}
+        </div>
+      )}
+      <button
+        type="submit"
+        disabled={!stripe || processing}
+        className="btn"
+        style={{
+          width: '100%',
+          padding: '16px',
+          fontSize: '1.125rem',
+          marginTop: '24px'
+        }}
+      >
+        {processing 
+          ? (t('purchaseCredits.processing') || 'Processing...') 
+          : interpolate(t('purchaseCredits.purchaseButton') || 'Purchase {{amount}} Credits for {{price}} {{currency}}', { 
+              amount: amount, 
+              price: price, 
+              currency: currency 
+            })
+        }
+      </button>
+    </form>
+  )
+}
+
 export default function PurchaseCreditsPage() {
   const { data: session, status } = useSession()
   const router = useRouter()
@@ -21,6 +84,8 @@ export default function PurchaseCreditsPage() {
   const [selectedPackage, setSelectedPackage] = useState(CREDIT_PACKAGES[1])
   const [processing, setProcessing] = useState(false)
   const [balance, setBalance] = useState(0)
+  const [clientSecret, setClientSecret] = useState<string | null>(null)
+  const [showPayment, setShowPayment] = useState(false)
 
   const interpolate = (str: string, vars: Record<string, any>) => {
     return str.replace(/\{\{(\w+)\}\}/g, (_, key) => vars[key] ?? '')
@@ -61,9 +126,8 @@ export default function PurchaseCreditsPage() {
 
       if (res.ok) {
         const data = await res.json()
-        // In a real app, redirect to Stripe or show payment form
-        alert(`Payment intent created! In production, you would be redirected to complete payment for ${selectedPackage.amount} credits (${selectedPackage.price} ${CURRENCY_SYMBOL})`)
-        router.push(`/${locale}/profile/credits/history`)
+        setClientSecret(data.clientSecret)
+        setShowPayment(true)
       } else {
         throw new Error('Failed to create payment intent')
       }
@@ -271,27 +335,74 @@ export default function PurchaseCreditsPage() {
           </div>
         </div>
 
-        {/* Purchase Button */}
-        <button
-          onClick={handlePurchase}
-          disabled={processing}
-          className="btn"
-          style={{
-            width: '100%',
-            padding: '16px',
-            fontSize: '1.125rem',
-            marginBottom: '16px'
-          }}
-        >
-          {processing 
-            ? (t('purchaseCredits.processing') || 'Processing...') 
-            : interpolate(t('purchaseCredits.purchaseButton') || 'Purchase {{amount}} Credits for {{price}} {{currency}}', { 
-                amount: selectedPackage.amount, 
-                price: selectedPackage.price, 
-                currency: CURRENCY_SYMBOL 
-              })
-          }
-        </button>
+        {/* Stripe Payment Form */}
+        {showPayment && clientSecret ? (
+          <div className="card" style={{ padding: '32px', marginBottom: '24px' }}>
+            <h3 style={{ marginBottom: '24px' }}>{t('purchaseCredits.paymentDetails') || 'Payment Details'}</h3>
+            <Elements 
+              stripe={stripePromise} 
+              options={{ 
+                clientSecret,
+                appearance: {
+                  theme: 'stripe',
+                  variables: {
+                    colorPrimary: '#3b82f6'
+                  }
+                }
+              }}
+            >
+              <CheckoutForm 
+                clientSecret={clientSecret}
+                amount={selectedPackage.amount}
+                price={selectedPackage.price}
+                currency={CURRENCY_SYMBOL}
+                locale={locale}
+                t={t}
+                interpolate={interpolate}
+                onSuccess={() => router.push(`/${locale}/profile/credits/history?success=true`)}
+              />
+            </Elements>
+            <button
+              onClick={() => { setShowPayment(false); setClientSecret(null) }}
+              style={{
+                width: '100%',
+                padding: '12px',
+                marginTop: '16px',
+                background: 'transparent',
+                border: '1px solid var(--border)',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                color: 'var(--text-muted)'
+              }}
+            >
+              {t('common.cancel') || 'Cancel'}
+            </button>
+          </div>
+        ) : (
+          <>
+            {/* Purchase Button */}
+            <button
+              onClick={handlePurchase}
+              disabled={processing}
+              className="btn"
+              style={{
+                width: '100%',
+                padding: '16px',
+                fontSize: '1.125rem',
+                marginBottom: '16px'
+              }}
+            >
+              {processing 
+                ? (t('purchaseCredits.processing') || 'Processing...') 
+                : interpolate(t('purchaseCredits.purchaseButton') || 'Purchase {{amount}} Credits for {{price}} {{currency}}', { 
+                    amount: selectedPackage.amount, 
+                    price: selectedPackage.price, 
+                    currency: CURRENCY_SYMBOL 
+                  })
+              }
+            </button>
+          </>
+        )}
 
         {/* Payment Info */}
         <div style={{ textAlign: 'center', fontSize: '0.875rem', color: 'var(--text-muted)' }}>

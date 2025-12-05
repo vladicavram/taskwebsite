@@ -1,9 +1,9 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import useLocale from '../../../../../lib/locale'
-import { Coins, ArrowUpCircle, ArrowDownCircle } from 'lucide-react'
+import { Coins, ArrowUpCircle, ArrowDownCircle, CheckCircle } from 'lucide-react'
 
 interface CreditTransaction {
   id: string
@@ -15,21 +15,35 @@ interface CreditTransaction {
 }
 
 export default function CreditHistoryPage() {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const router = useRouter()
-  const { locale } = useLocale()
+  const searchParams = useSearchParams()
+  const { locale, t } = useLocale()
   const [transactions, setTransactions] = useState<CreditTransaction[]>([])
   const [loading, setLoading] = useState(true)
   const [balance, setBalance] = useState(0)
+  const [showSuccess, setShowSuccess] = useState(false)
+  const successCredits = searchParams.get('credits')
 
   useEffect(() => {
-    if (!session?.user) {
+    if (status === 'loading') return
+    if (status === 'unauthenticated') {
       router.push(`/${locale}/login`)
       return
     }
+    
+    // Check if returning from successful payment
+    if (searchParams.get('success') === 'true') {
+      setShowSuccess(true)
+      // Clear the URL params after showing success
+      setTimeout(() => {
+        router.replace(`/${locale}/profile/credits/history`)
+      }, 5000)
+    }
+    
     fetchCredits()
     fetchHistory()
-  }, [session])
+  }, [status, locale])
 
   const fetchCredits = async () => {
     try {
@@ -93,15 +107,41 @@ export default function CreditHistoryPage() {
         <div className="container">
           <h1 style={{ fontSize: '2.5rem', marginBottom: '12px', color: 'var(--text)', display: 'flex', alignItems: 'center', gap: '10px' }}>
             <Coins size={28} />
-            Credit History
+            {t('creditHistory.title') || 'Credit History'}
           </h1>
           <p style={{ fontSize: '1.1rem', opacity: 0.95 }}>
-            View all your credit transactions
+            {t('creditHistory.subtitle') || 'View all your credit transactions'}
           </p>
         </div>
       </section>
 
       <div className="container" style={{ maxWidth: '900px' }}>
+        {/* Success Message */}
+        {showSuccess && (
+          <div style={{
+            background: 'var(--success-light)',
+            border: '1px solid var(--success)',
+            borderRadius: '12px',
+            padding: '20px',
+            marginBottom: '24px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px'
+          }}>
+            <CheckCircle size={24} style={{ color: 'var(--success)' }} />
+            <div>
+              <div style={{ fontWeight: 600, color: 'var(--success)' }}>
+                {t('creditHistory.paymentSuccess') || 'Payment Successful!'}
+              </div>
+              <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
+                {successCredits 
+                  ? `${successCredits} ${t('creditHistory.creditsAdded') || 'credits have been added to your account'}`
+                  : (t('creditHistory.creditsProcessing') || 'Your credits will be added shortly')}
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Current Balance Card */}
         <div className="card" style={{ padding: '32px', marginBottom: '32px', textAlign: 'center' }}>
           <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginBottom: '8px', fontWeight: 500 }}>

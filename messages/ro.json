@@ -365,4 +365,11 @@
   ,"purchaseCredits.purchaseButton": "Cumpără {{amount}} Credite pentru {{price}} {{currency}}"
   ,"purchaseCredits.securePayment": "🔒 Plată securizată prin Stripe"
   ,"purchaseCredits.creditsNeverExpire": "Creditele nu expiră niciodată și pot fi folosite pentru orice sarcină pe Dozo"
+  ,"purchaseCredits.paymentDetails": "Detalii Plată"
+  ,"creditHistory.title": "Istoricul Creditelor"
+  ,"creditHistory.subtitle": "Vezi toate tranzacțiile tale de credite"
+  ,"creditHistory.paymentSuccess": "Plată Reușită!"
+  ,"creditHistory.creditsAdded": "credite au fost adăugate în contul tău"
+  ,"creditHistory.creditsProcessing": "Creditele tale vor fi adăugate în curând"
+  ,"common.cancel": "Anulează"
  }

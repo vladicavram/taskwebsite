@@ -365,4 +365,11 @@
   ,"purchaseCredits.purchaseButton": "Purchase {{amount}} Credits for {{price}} {{currency}}"
   ,"purchaseCredits.securePayment": "🔒 Secure payment powered by Stripe"
   ,"purchaseCredits.creditsNeverExpire": "Credits never expire and can be used for any task on Dozo"
+  ,"purchaseCredits.paymentDetails": "Payment Details"
+  ,"creditHistory.title": "Credit History"
+  ,"creditHistory.subtitle": "View all your credit transactions"
+  ,"creditHistory.paymentSuccess": "Payment Successful!"
+  ,"creditHistory.creditsAdded": "credits have been added to your account"
+  ,"creditHistory.creditsProcessing": "Your credits will be added shortly"
+  ,"common.cancel": "Cancel"
  }

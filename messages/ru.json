@@ -365,4 +365,11 @@
   ,"purchaseCredits.purchaseButton": "Купить {{amount}} Кредитов за {{price}} {{currency}}"
   ,"purchaseCredits.securePayment": "🔒 Безопасная оплата через Stripe"
   ,"purchaseCredits.creditsNeverExpire": "Кредиты не имеют срока действия и могут использоваться для любой задачи на Dozo"
+  ,"purchaseCredits.paymentDetails": "Детали Оплаты"
+  ,"creditHistory.title": "История Кредитов"
+  ,"creditHistory.subtitle": "Просмотр всех ваших кредитных транзакций"
+  ,"creditHistory.paymentSuccess": "Оплата Успешна!"
+  ,"creditHistory.creditsAdded": "кредитов было добавлено на ваш счет"
+  ,"creditHistory.creditsProcessing": "Ваши кредиты будут добавлены в ближайшее время"
+  ,"common.cancel": "Отмена"
  }
