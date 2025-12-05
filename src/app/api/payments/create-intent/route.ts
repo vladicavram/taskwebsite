@@ -3,13 +3,19 @@ import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../../auth/[...nextauth]/authOptions'
 import Stripe from 'stripe'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
-
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
 export async function POST(req: NextRequest) {
   try {
+    // Check if Stripe key is configured
+    if (!process.env.STRIPE_SECRET_KEY) {
+      console.error('STRIPE_SECRET_KEY is not configured')
+      return NextResponse.json({ error: 'Payment system not configured' }, { status: 500 })
+    }
+
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+    
     const session: any = await getServerSession(authOptions as any)
     if (!session?.user?.email) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -48,7 +54,7 @@ export async function POST(req: NextRequest) {
       credits: amount
     })
   } catch (error: any) {
-    console.error('Error creating payment intent:', error)
+    console.error('Error creating payment intent:', error.message, error.type)
     return NextResponse.json({ error: error.message || 'Failed to create payment intent' }, { status: 500 })
   }
 }
