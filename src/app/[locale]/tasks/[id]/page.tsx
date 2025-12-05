@@ -270,15 +270,15 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
               ) : (
                 <div style={{
                   padding: '12px',
-                  background: 'var(--bg-secondary)',
-                  border: '1px solid var(--border)',
+                  background: task.isOpen ? '#d1fae5' : 'var(--bg-secondary)',
+                  border: task.isOpen ? '1px solid #10b981' : '1px solid var(--border)',
                   borderRadius: 'var(--radius-sm)',
-                  color: 'var(--text-muted)',
+                  color: task.isOpen ? '#065f46' : 'var(--text-muted)',
                   fontWeight: 500,
                   textAlign: 'center',
                   marginBottom: '8px'
                 }}>
-                  {getTranslation(params.locale, 'taskDetail.openForApplications') || 'Open for Applications'}
+                  {task.isOpen ? (getTranslation(params.locale, 'taskDetail.open') || 'Open') : (getTranslation(params.locale, 'taskDetail.closed') || 'Closed')}
                 </div>
               )}
             </div>

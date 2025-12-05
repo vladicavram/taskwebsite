@@ -197,10 +197,10 @@ export default function ApplyButton({
         marginTop: '8px'
       }}>
         <div style={{ fontWeight: 600, marginBottom: '4px' }}>
-          ⏳ {t('taskDetail.apply.pendingApproval') || 'Account Pending Approval'}
+          ⏳ Pending Approval
         </div>
         <p style={{ margin: 0, fontSize: '0.9rem' }}>
-          {t('taskDetail.apply.pendingApprovalMessage') || 'Your account is being reviewed by our team. You will be able to apply for tasks once approved.'}
+          Your account is being reviewed by our team. You will be able to apply for tasks once approved.
         </p>
       </div>
     )
