@@ -153,6 +153,81 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* How It Works */}
+      <section style={{ background: 'white', padding: '80px 24px', borderTop: '1px solid var(--border)' }}>
+        <div className="container" style={{ maxWidth: '1000px' }}>
+          <h2 style={{ textAlign: 'center', marginBottom: '56px', fontSize: '2.25rem' }}>
+            {t('home.howItWorksTitle') || 'How it works'}
+          </h2>
+          <div style={{ 
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+            gap: '48px',
+            marginBottom: '48px'
+          }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ 
+                width: '80px', 
+                height: '80px', 
+                background: 'var(--accent-light)', 
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 20px',
+                fontSize: '2rem',
+                fontWeight: 700,
+                color: 'var(--accent)'
+              }}>1</div>
+              <h3 style={{ marginBottom: '12px', fontSize: '1.25rem' }}>{t('home.step1.title') || 'Choose a Tasker'}</h3>
+              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.7' }}>
+                {t('home.step1.text') || 'By price, skills, and reviews'}
+              </p>
+            </div>
+
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ 
+                width: '80px', 
+                height: '80px', 
+                background: 'var(--accent-light)', 
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 20px',
+                fontSize: '2rem',
+                fontWeight: 700,
+                color: 'var(--accent)'
+              }}>2</div>
+              <h3 style={{ marginBottom: '12px', fontSize: '1.25rem' }}>{t('home.step2.title') || 'Schedule a Tasker'}</h3>
+              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.7' }}>
+                {t('home.step2.text') || 'As early as today'}
+              </p>
+            </div>
+
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ 
+                width: '80px', 
+                height: '80px', 
+                background: 'var(--accent-light)', 
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 20px',
+                fontSize: '2rem',
+                fontWeight: 700,
+                color: 'var(--accent)'
+              }}>3</div>
+              <h3 style={{ marginBottom: '12px', fontSize: '1.25rem' }}>{t('home.step3.title') || 'Chat, pay, tip, review'}</h3>
+              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.7' }}>
+                {t('home.step3.text') || 'All in one place'}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Trust Badges */}
       <section style={{ background: 'var(--bg-secondary)', padding: '80px 24px' }}>
         <div className="container">
@@ -302,81 +377,6 @@ export default function HomePage() {
               </p>
             </div>
           ))}
-        </div>
-      </section>
-
-      {/* How It Works with Image */}
-      <section style={{ background: 'white', padding: '80px 24px', borderTop: '1px solid var(--border)' }}>
-        <div className="container" style={{ maxWidth: '1000px' }}>
-          <h2 style={{ textAlign: 'center', marginBottom: '56px', fontSize: '2.25rem' }}>
-            {t('home.howItWorksTitle') || 'How it works'}
-          </h2>
-          <div style={{ 
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-            gap: '48px',
-            marginBottom: '48px'
-          }}>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ 
-                width: '80px', 
-                height: '80px', 
-                background: 'var(--accent-light)', 
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: '0 auto 20px',
-                fontSize: '2rem',
-                fontWeight: 700,
-                color: 'var(--accent)'
-              }}>1</div>
-              <h3 style={{ marginBottom: '12px', fontSize: '1.25rem' }}>{t('home.step1.title') || 'Choose a Tasker'}</h3>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.7' }}>
-                {t('home.step1.text') || 'By price, skills, and reviews'}
-              </p>
-            </div>
-
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ 
-                width: '80px', 
-                height: '80px', 
-                background: 'var(--accent-light)', 
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: '0 auto 20px',
-                fontSize: '2rem',
-                fontWeight: 700,
-                color: 'var(--accent)'
-              }}>2</div>
-              <h3 style={{ marginBottom: '12px', fontSize: '1.25rem' }}>{t('home.step2.title') || 'Schedule a Tasker'}</h3>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.7' }}>
-                {t('home.step2.text') || 'As early as today'}
-              </p>
-            </div>
-
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ 
-                width: '80px', 
-                height: '80px', 
-                background: 'var(--accent-light)', 
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: '0 auto 20px',
-                fontSize: '2rem',
-                fontWeight: 700,
-                color: 'var(--accent)'
-              }}>3</div>
-              <h3 style={{ marginBottom: '12px', fontSize: '1.25rem' }}>{t('home.step3.title') || 'Chat, pay, tip, review'}</h3>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.7' }}>
-                {t('home.step3.text') || 'All in one place'}
-              </p>
-            </div>
-          </div>
         </div>
       </section>
 
