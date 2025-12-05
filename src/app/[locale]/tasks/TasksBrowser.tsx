@@ -2,6 +2,7 @@
 import { useEffect, useState, useRef } from 'react'
 import TaskCard from '../../../components/TaskCard'
 import useLocale from '../../../lib/locale'
+import { MOLDOVA_CITIES } from '../../../lib/constants'
 
 type Task = {
 	id: string
@@ -79,12 +80,16 @@ export default function TasksBrowser({ locale, initialTasks }: { locale: string,
 						min="0"
 						step="0.01"
 					/>
-					<input
-						type="text"
-						placeholder={t('tasks.browse.locationPlaceholder') || 'Location'}
+					<select
 						value={location}
 						onChange={(e) => setLocation(e.target.value)}
-					/>
+						style={{ padding: '12px', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--bg-secondary)' }}
+					>
+						<option value="">{t('tasks.browse.allLocations') || 'All locations'}</option>
+						{MOLDOVA_CITIES.map(city => (
+							<option key={city} value={city}>{city}</option>
+						))}
+					</select>
 				</div>
 			</div>
 
