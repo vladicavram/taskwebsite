@@ -20,7 +20,6 @@ export default function ApplicationDetailPage() {
   const [counterOfferPrice, setCounterOfferPrice] = useState('')
   const [showCounterOffer, setShowCounterOffer] = useState(false)
   const [offerSent, setOfferSent] = useState(false)
-  const locale = params?.locale || 'ro'
   const applicationId = params?.id
 
   useEffect(() => {
