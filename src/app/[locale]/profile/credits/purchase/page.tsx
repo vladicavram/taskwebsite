@@ -17,10 +17,14 @@ const CREDIT_PACKAGES = [
 export default function PurchaseCreditsPage() {
   const { data: session } = useSession()
   const router = useRouter()
-  const { locale } = useLocale()
+  const { locale, t }= useLocale()
   const [selectedPackage, setSelectedPackage] = useState(CREDIT_PACKAGES[1])
   const [processing, setProcessing] = useState(false)
   const [balance, setBalance] = useState(0)
+
+  const interpolate = (str: string, vars: Record<string, any>) => {
+    return str.replace(/\{\{(\w+)\}\}/g, (_, key) => vars[key] ?? '')
+  }
 
   useEffect(() => {
     if (!session?.user) {
@@ -79,10 +83,10 @@ export default function PurchaseCreditsPage() {
         <div className="container">
           <h1 style={{ fontSize: '2.5rem', marginBottom: '12px', color: 'var(--text)', display: 'flex', alignItems: 'center', gap: '10px' }}>
             <CreditCard size={28} />
-            Purchase Credits
+            {t('purchaseCredits.title') || 'Purchase Credits'}
           </h1>
           <p style={{ fontSize: '1.1rem', opacity: 0.95 }}>
-            Buy credits to apply for tasks (1 credit = 100 {CURRENCY_SYMBOL} task value)
+            {interpolate(t('purchaseCredits.subtitle') || 'Buy credits to apply for tasks (1 credit = 100 {{currency}} task value)', { currency: CURRENCY_SYMBOL })}
           </p>
         </div>
       </section>
@@ -91,7 +95,7 @@ export default function PurchaseCreditsPage() {
         {/* Current Balance */}
         <div className="card" style={{ padding: '24px', marginBottom: '32px', textAlign: 'center', background: 'var(--accent-light)' }}>
           <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginBottom: '8px' }}>
-            Current Balance
+            {t('purchaseCredits.currentBalance') || 'Current Balance'}
           </div>
           <div style={{ 
             fontSize: '2.5rem', 
@@ -108,7 +112,7 @@ export default function PurchaseCreditsPage() {
         </div>
 
         {/* Package Selection */}
-        <h2 style={{ marginBottom: '24px', textAlign: 'center' }}>Choose a Package</h2>
+        <h2 style={{ marginBottom: '24px', textAlign: 'center' }}>{t('purchaseCredits.choosePackage') || 'Choose a Package'}</h2>
         
         <div style={{ 
           display: 'grid', 
@@ -160,7 +164,7 @@ export default function PurchaseCreditsPage() {
                   fontSize: '0.75rem',
                   fontWeight: 600
                 }}>
-                  POPULAR
+                  {t('purchaseCredits.popular') || 'POPULAR'}
                 </div>
               )}
 
@@ -205,7 +209,7 @@ export default function PurchaseCreditsPage() {
               </div>
 
               <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-                {(pkg.price / pkg.amount).toFixed(0)} {CURRENCY_SYMBOL} per credit
+                {interpolate(t('purchaseCredits.perCredit') || '{{price}} {{currency}} per credit', { price: (pkg.price / pkg.amount).toFixed(0), currency: CURRENCY_SYMBOL })}
               </div>
 
               {pkg.save && (
@@ -218,7 +222,7 @@ export default function PurchaseCreditsPage() {
                   fontSize: '0.75rem',
                   fontWeight: 600
                 }}>
-                  Save {pkg.save}
+                  {interpolate(t('purchaseCredits.save') || 'Save {{percent}}', { percent: pkg.save })}
                 </div>
               )}
             </div>
@@ -227,15 +231,15 @@ export default function PurchaseCreditsPage() {
 
         {/* Purchase Summary */}
         <div className="card" style={{ padding: '32px', marginBottom: '24px' }}>
-          <h3 style={{ marginBottom: '24px' }}>Order Summary</h3>
+          <h3 style={{ marginBottom: '24px' }}>{t('purchaseCredits.orderSummary') || 'Order Summary'}</h3>
           
           <div style={{ marginBottom: '16px', display: 'flex', justifyContent: 'space-between' }}>
-            <span>Credits</span>
+            <span>{t('purchaseCredits.credits') || 'Credits'}</span>
             <span style={{ fontWeight: 600 }}>{Number(selectedPackage.amount).toFixed(2)}</span>
           </div>
 
           <div style={{ marginBottom: '16px', display: 'flex', justifyContent: 'space-between' }}>
-            <span>Price per credit</span>
+            <span>{t('purchaseCredits.pricePerCredit') || 'Price per credit'}</span>
             <span>{(selectedPackage.price / selectedPackage.amount).toFixed(0)} {CURRENCY_SYMBOL}</span>
           </div>
 
@@ -247,8 +251,8 @@ export default function PurchaseCreditsPage() {
               color: 'var(--success)',
               fontWeight: 600
             }}>
-              <span>Savings</span>
-              <span>-{((selectedPackage.amount * 90) - selectedPackage.price).toFixed(0)} {CURRENCY_SYMBOL}</span>
+              <span>{t('purchaseCredits.savings') || 'Savings'}</span>
+              <span>-{((selectedPackage.amount * 10) - selectedPackage.price).toFixed(0)} {CURRENCY_SYMBOL}</span>
             </div>
           )}
 
@@ -261,7 +265,7 @@ export default function PurchaseCreditsPage() {
             fontSize: '1.25rem',
             fontWeight: 700
           }}>
-            <span>Total</span>
+            <span>{t('purchaseCredits.total') || 'Total'}</span>
             <span style={{ color: 'var(--accent)' }}>{selectedPackage.price} {CURRENCY_SYMBOL}</span>
           </div>
         </div>
@@ -278,16 +282,23 @@ export default function PurchaseCreditsPage() {
             marginBottom: '16px'
           }}
         >
-                    {processing ? 'Processing...' : `Purchase ${selectedPackage.amount} Credits for ${selectedPackage.price} ${CURRENCY_SYMBOL}`}
+          {processing 
+            ? (t('purchaseCredits.processing') || 'Processing...') 
+            : interpolate(t('purchaseCredits.purchaseButton') || 'Purchase {{amount}} Credits for {{price}} {{currency}}', { 
+                amount: selectedPackage.amount, 
+                price: selectedPackage.price, 
+                currency: CURRENCY_SYMBOL 
+              })
+          }
         </button>
 
         {/* Payment Info */}
         <div style={{ textAlign: 'center', fontSize: '0.875rem', color: 'var(--text-muted)' }}>
           <p style={{ marginBottom: '8px' }}>
-            🔒 Secure payment powered by Stripe
+            {t('purchaseCredits.securePayment') || '🔒 Secure payment powered by Stripe'}
           </p>
           <p>
-            Credits never expire and can be used for any task on Dozo
+            {t('purchaseCredits.creditsNeverExpire') || 'Credits never expire and can be used for any task on Dozo'}
           </p>
         </div>
       </div>
