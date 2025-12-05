@@ -347,4 +347,5 @@
   ,"notification.reviewReceived": "left you a review"
   ,"taskDetail.completedLocked": "✓ This task is completed. No further changes can be made."
   ,"taskDetail.taskCompleted": "Task Completed"
+  ,"taskDetail.postSimilarTask": "📋 Post Similar Task"
  }

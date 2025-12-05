@@ -24,6 +24,7 @@ export default function CreateTaskPage() {
   const { locale, t } = useLocale()
 
   const editId = useMemo(() => searchParams.get('edit') || '', [searchParams])
+  const copyId = useMemo(() => searchParams.get('copy') || '', [searchParams])
 
   useEffect(() => {
     // Check if we're hiring someone
@@ -38,6 +39,7 @@ export default function CreateTaskPage() {
     }
   }, [])
 
+  // Load task for editing
   useEffect(() => {
     if (!editId) return
     ;(async () => {
@@ -58,6 +60,29 @@ export default function CreateTaskPage() {
       }
     })()
   }, [editId])
+
+  // Load task for copying (similar task)
+  useEffect(() => {
+    if (!copyId || editId) return // Don't copy if we're editing
+    ;(async () => {
+      try {
+        setLoading(true)
+        const res = await fetch(`/api/tasks/${copyId}`)
+        if (!res.ok) throw new Error('Failed to load task')
+        const task = await res.json()
+        setTitle(task.title || '')
+        setDescription(task.description || '')
+        setLocation(task.location || '')
+        setPrice(task.price != null ? String(Number(task.price).toFixed(2)) : '')
+        // Note: We intentionally don't copy the image
+        setError('')
+      } catch (e) {
+        setError('Failed to load task for copying.')
+      } finally {
+        setLoading(false)
+      }
+    })()
+  }, [copyId, editId])
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
