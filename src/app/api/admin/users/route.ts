@@ -21,6 +21,7 @@ export async function GET() {
         blocked: true,
         canApply: true,
         idPhotoUrl: true,
+        selfieUrl: true,
         createdAt: true,
         _count: {
           select: {

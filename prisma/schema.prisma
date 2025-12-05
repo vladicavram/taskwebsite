@@ -16,6 +16,7 @@ model User {
   phone                 String?
   image                 String?
   idPhotoUrl            String?         // URL to uploaded ID photo for verification
+  selfieUrl             String?         // URL to uploaded selfie for verification
   credits               Float           @default(10)
   isAdmin               Boolean         @default(false)
   canApply              Boolean         @default(false) // Whether user can apply to tasks (requires admin approval)

@@ -26,13 +26,18 @@ export default function CreateProfilePage() {
   
   const [idFile, setIdFile] = useState<File | null>(null)
   const [idPreview, setIdPreview] = useState<string | null>(null)
+  const [selfieFile, setSelfieFile] = useState<File | null>(null)
+  const [selfiePreview, setSelfiePreview] = useState<string | null>(null)
   const [showCamera, setShowCamera] = useState(false)
+  const [showSelfieCamera, setShowSelfieCamera] = useState(false)
   const [photoFile, setPhotoFile] = useState<File | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [step, setStep] = useState(1)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const selfieVideoRef = useRef<HTMLVideoElement>(null)
   const streamRef = useRef<MediaStream | null>(null)
+  const selfieStreamRef = useRef<MediaStream | null>(null)
 
   const calculateAge = (dob: string) => {
     if (!dob) return 0
@@ -69,12 +74,73 @@ export default function CreateProfilePage() {
     }
   }, [showCamera])
 
+  // Set selfie video source when showSelfieCamera changes
+  useEffect(() => {
+    if (showSelfieCamera && selfieVideoRef.current && selfieStreamRef.current) {
+      selfieVideoRef.current.srcObject = selfieStreamRef.current
+    }
+  }, [showSelfieCamera])
+
   const stopCamera = () => {
     if (streamRef.current) {
       streamRef.current.getTracks().forEach(track => track.stop())
       streamRef.current = null
     }
     setShowCamera(false)
+  }
+
+  // Selfie camera functions
+  const startSelfieCamera = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        video: { facingMode: 'user' } // Front camera for selfie
+      })
+      selfieStreamRef.current = stream
+      setShowSelfieCamera(true)
+    } catch (err) {
+      console.error('Error accessing camera:', err)
+      alert('Could not access camera. Please check permissions or use file upload.')
+    }
+  }
+
+  const stopSelfieCamera = () => {
+    if (selfieStreamRef.current) {
+      selfieStreamRef.current.getTracks().forEach(track => track.stop())
+      selfieStreamRef.current = null
+    }
+    setShowSelfieCamera(false)
+  }
+
+  const captureSelfie = () => {
+    if (selfieVideoRef.current) {
+      const canvas = document.createElement('canvas')
+      canvas.width = selfieVideoRef.current.videoWidth
+      canvas.height = selfieVideoRef.current.videoHeight
+      const ctx = canvas.getContext('2d')
+      if (ctx) {
+        ctx.drawImage(selfieVideoRef.current, 0, 0)
+        canvas.toBlob((blob) => {
+          if (blob) {
+            const file = new File([blob], 'selfie.jpg', { type: 'image/jpeg' })
+            setSelfieFile(file)
+            setSelfiePreview(canvas.toDataURL('image/jpeg'))
+            stopSelfieCamera()
+          }
+        }, 'image/jpeg', 0.9)
+      }
+    }
+  }
+
+  const handleSelfieFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setSelfieFile(file)
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setSelfiePreview(reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
   }
 
   const capturePhoto = () => {
@@ -179,10 +245,15 @@ export default function CreateProfilePage() {
         throw new Error(profileError.error || 'Failed to create profile')
       }
       
-      // Upload ID photo
-      if (idFile) {
+      // Upload ID photo and selfie
+      if (idFile || selfieFile) {
         const formDataUpload = new FormData()
-        formDataUpload.append('idPhoto', idFile)
+        if (idFile) {
+          formDataUpload.append('idPhoto', idFile)
+        }
+        if (selfieFile) {
+          formDataUpload.append('selfie', selfieFile)
+        }
         formDataUpload.append('userId', userData.id)
         
         const uploadResponse = await fetch('/api/users/upload-id', {
@@ -191,7 +262,7 @@ export default function CreateProfilePage() {
         })
         
         if (!uploadResponse.ok) {
-          console.error('ID upload failed')
+          console.error('Photo upload failed')
           // Don't fail registration, but log the error
         }
       }
@@ -225,6 +296,10 @@ export default function CreateProfilePage() {
     }
     if (step === 2 && (!formData.idType || !formData.idNumber || !idFile)) {
       setError('Please provide your ID information and upload a photo of your ID.')
+      return
+    }
+    if (step === 2 && !selfieFile) {
+      setError('Please upload a selfie photo for identity verification.')
       return
     }
     setError('')
@@ -690,6 +765,136 @@ export default function CreateProfilePage() {
                     marginTop: '12px'
                   }}>
                     Take a clear photo of your ID document (passport, driver's license, or national ID)
+                  </p>
+                </div>
+
+                {/* Selfie Upload Section */}
+                <div>
+                  <label style={{ 
+                    display: 'block', 
+                    fontWeight: 600,
+                    marginBottom: '8px',
+                    color: 'var(--text)'
+                  }}>
+                    Upload Selfie *
+                  </label>
+                  
+                  {showSelfieCamera ? (
+                    <div style={{ marginBottom: '16px' }}>
+                      <video 
+                        ref={selfieVideoRef}
+                        autoPlay 
+                        playsInline
+                        style={{ 
+                          width: '100%', 
+                          maxHeight: '300px',
+                          borderRadius: 'var(--radius-sm)',
+                          background: '#000',
+                          transform: 'scaleX(-1)' // Mirror for selfie
+                        }}
+                      />
+                      <div style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
+                        <button
+                          type="button"
+                          onClick={captureSelfie}
+                          className="btn"
+                          style={{ flex: 1 }}
+                        >
+                          📸 Capture Selfie
+                        </button>
+                        <button
+                          type="button"
+                          onClick={stopSelfieCamera}
+                          className="btn btn-secondary"
+                          style={{ flex: 1 }}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  ) : selfiePreview ? (
+                    <div style={{ marginBottom: '16px' }}>
+                      <img 
+                        src={selfiePreview} 
+                        alt="Selfie Preview"
+                        style={{ 
+                          width: '100%', 
+                          maxHeight: '300px',
+                          objectFit: 'contain',
+                          borderRadius: 'var(--radius-sm)',
+                          border: '2px solid var(--accent)'
+                        }}
+                      />
+                      <div style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSelfieFile(null)
+                            setSelfiePreview(null)
+                          }}
+                          className="btn btn-secondary"
+                          style={{ flex: 1 }}
+                        >
+                          Remove & Take New
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                      <div 
+                        style={{
+                          flex: 1,
+                          minWidth: '150px',
+                          border: '2px dashed var(--border)',
+                          borderRadius: 'var(--radius-sm)',
+                          padding: '24px 16px',
+                          textAlign: 'center',
+                          background: 'var(--bg-secondary)',
+                          cursor: 'pointer'
+                        }}
+                        onClick={() => document.getElementById('selfieUpload')?.click()}
+                      >
+                        <div style={{ fontSize: '2.5rem', marginBottom: '8px' }}>🤳</div>
+                        <p style={{ color: 'var(--text-secondary)', margin: 0, fontSize: '0.9rem' }}>
+                          Upload from device
+                        </p>
+                      </div>
+                      <div 
+                        style={{
+                          flex: 1,
+                          minWidth: '150px',
+                          border: '2px dashed var(--accent)',
+                          borderRadius: 'var(--radius-sm)',
+                          padding: '24px 16px',
+                          textAlign: 'center',
+                          background: 'var(--accent-light)',
+                          cursor: 'pointer'
+                        }}
+                        onClick={startSelfieCamera}
+                      >
+                        <div style={{ fontSize: '2.5rem', marginBottom: '8px' }}>📷</div>
+                        <p style={{ color: 'var(--accent)', margin: 0, fontSize: '0.9rem', fontWeight: 600 }}>
+                          Take a selfie
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  
+                  <input 
+                    id="selfieUpload"
+                    type="file"
+                    accept="image/*"
+                    capture="user"
+                    onChange={handleSelfieFileChange}
+                    style={{ display: 'none' }}
+                  />
+                  
+                  <p style={{ 
+                    fontSize: '0.875rem', 
+                    color: 'var(--text-muted)',
+                    marginTop: '12px'
+                  }}>
+                    Take a clear selfie of your face. This helps us verify your identity matches your ID.
                   </p>
                 </div>
 

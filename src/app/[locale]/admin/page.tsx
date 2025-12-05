@@ -258,13 +258,34 @@ export default function AdminPage() {
                                 color: 'white',
                                 borderRadius: 4,
                                 fontSize: '0.8rem',
+                                textDecoration: 'none',
+                                marginRight: '4px'
+                              }}
+                            >
+                              📷 ID
+                            </a>
+                          ) : (
+                            <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginRight: '4px' }}>No ID</span>
+                          )}
+                          {user.selfieUrl ? (
+                            <a 
+                              href={user.selfieUrl} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              style={{ 
+                                display: 'inline-block',
+                                padding: '4px 8px',
+                                background: '#8b5cf6',
+                                color: 'white',
+                                borderRadius: 4,
+                                fontSize: '0.8rem',
                                 textDecoration: 'none'
                               }}
                             >
-                              📷 View ID
+                              🤳 Selfie
                             </a>
                           ) : (
-                            <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>No ID</span>
+                            <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>No Selfie</span>
                           )}
                         </td>
                         <td style={{ padding: 12, textAlign: 'center' }}>
