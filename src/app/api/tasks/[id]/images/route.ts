@@ -22,6 +22,11 @@ export async function POST(
       return NextResponse.json({ error: 'Task not found' }, { status: 404 })
     }
     
+    // Prevent image changes on completed tasks
+    if ((task as any).completedAt) {
+      return NextResponse.json({ error: 'Cannot modify images on a completed task' }, { status: 400 })
+    }
+    
     const user = await prisma.user.findUnique({ where: { email: session.user.email } })
     if (!user || user.id !== task.creatorId) {
       return NextResponse.json({ error: 'Only the task creator can upload images' }, { status: 403 })
@@ -74,6 +79,11 @@ export async function DELETE(
     const task = await prisma.task.findUnique({ where: { id: params.id } })
     if (!task) {
       return NextResponse.json({ error: 'Task not found' }, { status: 404 })
+    }
+    
+    // Prevent image changes on completed tasks
+    if ((task as any).completedAt) {
+      return NextResponse.json({ error: 'Cannot modify images on a completed task' }, { status: 400 })
     }
     
     const user = await prisma.user.findUnique({ where: { email: session.user.email } })

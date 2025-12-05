@@ -100,16 +100,16 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
 
               <h1 style={{ fontSize: '2.5rem', marginBottom: '24px' }}>{task.title}</h1>
 
-              {(images.length > 0 || isCreator) && (
+              {(images.length > 0 || (isCreator && !completedAt)) && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px', flexWrap: 'wrap' }}>
                   {images.map((imgUrl) => {
                     const nameMatch = imgUrl.match(/\/([^/?#]+)(?:\?v=\d+)?$/)
                     const imageName = nameMatch ? nameMatch[1] : undefined
                     return (
-                      <ThumbnailWithDelete key={imgUrl} src={imgUrl} alt={task.title} taskId={params.id} canEdit={isCreator} imageName={imageName} />
+                      <ThumbnailWithDelete key={imgUrl} src={imgUrl} alt={task.title} taskId={params.id} canEdit={isCreator && !completedAt} imageName={imageName} />
                     )
                   })}
-                  {isCreator && <TaskImageControls taskId={params.id} canEdit={isCreator} showAddOnly />}
+                  {isCreator && !completedAt && <TaskImageControls taskId={params.id} canEdit={isCreator} showAddOnly />}
                 </div>
               )}
               {!isCreator ? (
@@ -258,7 +258,20 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
               </div>
               
               {/* Task Status */}
-              {acceptedApps.length > 0 ? (
+              {completedAt ? (
+                <div style={{
+                  padding: '12px',
+                  background: '#d1fae5',
+                  border: '1px solid #10b981',
+                  borderRadius: 'var(--radius-sm)',
+                  color: '#065f46',
+                  fontWeight: 600,
+                  textAlign: 'center',
+                  marginBottom: '8px'
+                }}>
+                  ✓ {getTranslation(params.locale, 'taskDetail.taskCompleted') || 'Task Completed'}
+                </div>
+              ) : acceptedApps.length > 0 ? (
                 <div style={{
                   padding: '12px',
                   background: '#d1fae5',
