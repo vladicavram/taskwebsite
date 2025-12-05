@@ -72,27 +72,27 @@ export default function ApplyButton({
     const nowIso = now.toISOString()
     const humanDate = now.toLocaleString()
     const applicantName = (session?.user?.name || session?.user?.email || 'Applicant') as string
-    const creator = taskCreatorName || 'Task Creator'
-    const title = taskTitle || 'Task'
+    const creator = taskCreatorName || t('agreement.taskCreator') || 'Task Creator'
+    const title = taskTitle || t('agreement.task') || 'Task'
 
-    let text = `Application Agreement\n\n` +
-      `Between:\n` +
-      `- Task Creator: ${creator}\n` +
-      `- Applicant: ${applicantName}\n\n` +
-      `Task: ${title}\n` +
-      `Task ID: ${taskId}\n` +
-      `Application Date: ${humanDate} (${nowIso})\n\n` +
-      `Terms:\n` +
-      `1) The Applicant agrees to perform the task for the posted amount of $${amountStr}.\n` +
-      `2) The Applicant is not obligated to perform the task if material circumstances arise that were not reasonably known at the time of applying (e.g., substantially different scope, unsafe conditions, or missing information).\n` +
-      `3) This agreement is not an employment contract and does not create an employer-employee relationship.\n` +
-      `4) Messaging within the platform should be used to clarify scope and logistics.\n` +
-      `5) Either party may cancel before work begins if a mutual understanding cannot be reached.\n\n`
+    let text = `${t('agreement.title') || 'Application Agreement'}\n\n` +
+      `${t('agreement.between') || 'Between'}:\n` +
+      `- ${t('agreement.taskCreatorLabel') || 'Task Creator'}: ${creator}\n` +
+      `- ${t('agreement.applicantLabel') || 'Applicant'}: ${applicantName}\n\n` +
+      `${t('agreement.task') || 'Task'}: ${title}\n` +
+      `${t('agreement.taskId') || 'Task ID'}: ${taskId}\n` +
+      `${t('agreement.applicationDate') || 'Application Date'}: ${humanDate} (${nowIso})\n\n` +
+      `${t('agreement.terms') || 'Terms'}:\n` +
+      `1) ${t('agreement.term1') || `The Applicant agrees to perform the task for the posted amount of ${amountStr} MDL.`}\n` +
+      `2) ${t('agreement.term2') || 'The Applicant is not obligated to perform the task if material circumstances arise that were not reasonably known at the time of applying (e.g., substantially different scope, unsafe conditions, or missing information).'}\n` +
+      `3) ${t('agreement.term3') || 'This agreement is not an employment contract and does not create an employer-employee relationship.'}\n` +
+      `4) ${t('agreement.term4') || 'Messaging within the platform should be used to clarify scope and logistics.'}\n` +
+      `5) ${t('agreement.term5') || 'Either party may cancel before work begins if a mutual understanding cannot be reached.'}\n\n`
 
     if (includeSignature) {
-      text += `Signatures:\n` +
-        `Applicant: ${applicantName}\n` +
-        `Signed At: ${humanDate} (${nowIso})\n`
+      text += `${t('agreement.signatures') || 'Signatures'}:\n` +
+        `${t('agreement.applicantLabel') || 'Applicant'}: ${applicantName}\n` +
+        `${t('agreement.signedAt') || 'Signed At'}: ${humanDate} (${nowIso})\n`
     }
 
     return text
@@ -123,7 +123,7 @@ export default function ApplyButton({
 
   const confirmApply = async () => {
     if (!agree) {
-      setError('You need to agree before proceeding')
+      setError(t('agreement.mustAgree') || 'You must agree to the terms before proceeding')
       setShake(true)
       setTimeout(() => setShake(false), 600)
       return
@@ -303,7 +303,7 @@ export default function ApplyButton({
         display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50
       }}>
         <div className="card" style={{ maxWidth: 600, width: '90%', padding: 20, background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 8 }}>
-          <h3 style={{ marginTop: 0, marginBottom: 12 }}>Agreement</h3>
+          <h3 style={{ marginTop: 0, marginBottom: 12 }}>{t('agreement.title') || 'Agreement'}</h3>
           {error && (
             <div style={{
               padding: '12px',
@@ -328,14 +328,14 @@ export default function ApplyButton({
               style={{ width: 20, height: 20 }}
               ref={agreeRef}
             />
-            <span style={{ fontWeight: 600 }}>Agree</span>
+            <span style={{ fontWeight: 600 }}>{t('agreement.agree') || 'I agree to the terms'}</span>
           </label>
           <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
             <button type="button" className="btn btn-secondary" onClick={() => { setShowContract(false); setAgree(false) }}>
-              Cancel
+              {t('agreement.cancel') || 'Cancel'}
             </button>
             <button type="button" className={`btn${shake ? ' apply-shake' : ''}`} disabled={loading} onClick={confirmApply}>
-              {loading ? 'Applying...' : 'Apply'}
+              {loading ? (t('agreement.applying') || 'Applying...') : (t('agreement.apply') || 'Apply')}
             </button>
           </div>
           <style>{`

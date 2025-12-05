@@ -118,6 +118,21 @@ export async function POST(req: Request) {
       }
     })
 
+    // Create notification for the recipient
+    try {
+      await prisma.notification.create({
+        data: {
+          userId: recipientId,
+          type: 'review_received',
+          content: `${currentUser.name || currentUser.email} left you a ${rating}-star review`,
+          taskId
+        }
+      })
+    } catch (notifError) {
+      console.error('Failed to create review notification:', notifError)
+      // Don't fail the review creation if notification fails
+    }
+
     return NextResponse.json(review)
   } catch (error) {
     console.error('Error creating review:', error)
