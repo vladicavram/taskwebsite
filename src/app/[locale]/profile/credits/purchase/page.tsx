@@ -4,12 +4,13 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import useLocale from '../../../../../lib/locale'
 import { Coins, CreditCard, Check } from 'lucide-react'
+import { CURRENCY_SYMBOL } from '../../../../../lib/constants'
 
 const CREDIT_PACKAGES = [
-  { amount: 1, price: 5, popular: false },
-  { amount: 5, price: 22.5, popular: true, save: '10%' },
-  { amount: 10, price: 40, popular: false, save: '20%' },
-  { amount: 25, price: 93.75, popular: false, save: '25%' }
+  { amount: 1, price: 90, popular: false },
+  { amount: 5, price: 405, popular: true, save: '10%' },
+  { amount: 10, price: 720, popular: false, save: '20%' },
+  { amount: 25, price: 1687, popular: false, save: '25%' }
 ]
 
 export default function PurchaseCreditsPage() {
@@ -55,7 +56,7 @@ export default function PurchaseCreditsPage() {
       if (res.ok) {
         const data = await res.json()
         // In a real app, redirect to Stripe or show payment form
-        alert(`Payment intent created! In production, you would be redirected to complete payment for ${selectedPackage.amount} credits ($${selectedPackage.price})`)
+        alert(`Payment intent created! In production, you would be redirected to complete payment for ${selectedPackage.amount} credits (${selectedPackage.price} ${CURRENCY_SYMBOL})`)
         router.push(`/${locale}/profile/credits/history`)
       } else {
         throw new Error('Failed to create payment intent')
@@ -80,7 +81,7 @@ export default function PurchaseCreditsPage() {
             Purchase Credits
           </h1>
           <p style={{ fontSize: '1.1rem', opacity: 0.95 }}>
-            Buy credits to apply for tasks (1 credit = $100 task value)
+            Buy credits to apply for tasks (1 credit = 1800 {CURRENCY_SYMBOL} task value)
           </p>
         </div>
       </section>
@@ -199,11 +200,11 @@ export default function PurchaseCreditsPage() {
                 fontWeight: 600,
                 marginBottom: '8px'
               }}>
-                ${pkg.price}
+                {pkg.price} {CURRENCY_SYMBOL}
               </div>
 
               <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-                ${(pkg.price / pkg.amount).toFixed(2)} per credit
+                {(pkg.price / pkg.amount).toFixed(0)} {CURRENCY_SYMBOL} per credit
               </div>
 
               {pkg.save && (
@@ -234,7 +235,7 @@ export default function PurchaseCreditsPage() {
 
           <div style={{ marginBottom: '16px', display: 'flex', justifyContent: 'space-between' }}>
             <span>Price per credit</span>
-            <span>${(selectedPackage.price / selectedPackage.amount).toFixed(2)}</span>
+            <span>{(selectedPackage.price / selectedPackage.amount).toFixed(0)} {CURRENCY_SYMBOL}</span>
           </div>
 
           {selectedPackage.save && (
@@ -246,7 +247,7 @@ export default function PurchaseCreditsPage() {
               fontWeight: 600
             }}>
               <span>Savings</span>
-              <span>-${((selectedPackage.amount * 5) - selectedPackage.price).toFixed(2)}</span>
+              <span>-{((selectedPackage.amount * 90) - selectedPackage.price).toFixed(0)} {CURRENCY_SYMBOL}</span>
             </div>
           )}
 
@@ -260,7 +261,7 @@ export default function PurchaseCreditsPage() {
             fontWeight: 700
           }}>
             <span>Total</span>
-            <span style={{ color: 'var(--accent)' }}>${selectedPackage.price.toFixed(2)}</span>
+            <span style={{ color: 'var(--accent)' }}>{selectedPackage.price} {CURRENCY_SYMBOL}</span>
           </div>
         </div>
 
@@ -276,7 +277,7 @@ export default function PurchaseCreditsPage() {
             marginBottom: '16px'
           }}
         >
-          {processing ? 'Processing...' : `Purchase ${selectedPackage.amount} Credits for $${selectedPackage.price}`}
+                    {processing ? 'Processing...' : `Purchase ${selectedPackage.amount} Credits for ${selectedPackage.price} ${CURRENCY_SYMBOL}`}
         </button>
 
         {/* Payment Info */}

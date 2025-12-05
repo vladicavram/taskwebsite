@@ -15,8 +15,10 @@ model User {
   password              String?         // hashed for credential-provider seeds; null for OAuth
   phone                 String?
   image                 String?
+  idPhotoUrl            String?         // URL to uploaded ID photo for verification
   credits               Float           @default(10)
   isAdmin               Boolean         @default(false)
+  canApply              Boolean         @default(false) // Whether user can apply to tasks (requires admin approval)
   role                  String          @default("user") // user, moderator, admin
   profile               Profile?
   tasks                 Task[]
@@ -84,12 +86,14 @@ model Application {
   taskId        String
   applicant     User           @relation(fields: [applicantId], references: [id])
   applicantId   String
-  status        String         @default("pending") // pending, accepted, declined
+  status        String         @default("pending") // pending, accepted, declined, removed
   message       String?
   proposedPrice Float?
   lastProposedBy String?       // userId of who last proposed price
   agreementText String?
   agreementAcceptedAt DateTime?
+  selectedAt    DateTime?      // When this applicant was selected by task creator
+  removedAt     DateTime?      // When this applicant was removed
   notifications Notification[]
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt

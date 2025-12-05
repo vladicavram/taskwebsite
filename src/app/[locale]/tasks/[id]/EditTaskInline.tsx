@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import useLocale from '../../../../lib/locale'
+import { CURRENCY_SYMBOL, MOLDOVA_CITIES } from '../../../../lib/constants'
 
 type Props = {
   locale: string
@@ -73,13 +74,23 @@ export default function EditTaskInline({ locale, taskId, initial }: Props) {
       </div>
       <div>
         <label style={{ display: 'block', fontWeight: 600, marginBottom: 6 }}>{t('taskDetail.edit.location') || 'Location'}</label>
-        <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} required />
+        <select 
+          value={location} 
+          onChange={(e) => setLocation(e.target.value)} 
+          required
+          style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--bg-secondary)' }}
+        >
+          <option value="">{t('profile.create.selectCity') || 'Select a city'}</option>
+          {MOLDOVA_CITIES.map(city => (
+            <option key={city} value={city}>{city}</option>
+          ))}
+        </select>
       </div>
       <div>
         <label style={{ display: 'block', fontWeight: 600, marginBottom: 6 }}>{t('taskDetail.edit.budget') || 'Budget (optional)'}</label>
         <div style={{ position: 'relative' }}>
-          <span style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }}>$</span>
-          <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} step="0.01" min="0" style={{ paddingLeft: 24 }} />
+          <span style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }}>{CURRENCY_SYMBOL}</span>
+          <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} step="0.01" min="0" style={{ paddingLeft: 40 }} />
         </div>
       </div>
       <div style={{ display: 'flex', gap: 12 }}>

@@ -116,12 +116,12 @@ export default function HomePage() {
           gap: '24px'
         }}>
           {[
-            { Icon: Hammer, name: t('home.project.furnitureAssembly') || 'Furniture Assembly', price: 49 },
-            { Icon: Monitor, name: t('home.project.mountTV') || 'Mount a TV', price: 69 },
-            { Icon: Truck, name: t('home.project.moving') || 'Help Moving', price: 67 },
-            { Icon: Sparkles, name: t('home.project.cleaning') || 'Home Cleaning', price: 49 },
-            { Icon: Wrench, name: t('home.project.repairs') || 'Minor Repairs', price: 74 },
-            { Icon: ImageIcon, name: t('home.project.hangPictures') || 'Hang Pictures', price: 65 },
+            { Icon: Hammer, name: t('home.project.furnitureAssembly') || 'Furniture Assembly', price: 900 },
+            { Icon: Monitor, name: t('home.project.mountTV') || 'Mount a TV', price: 1200 },
+            { Icon: Truck, name: t('home.project.moving') || 'Help Moving', price: 1100 },
+            { Icon: Sparkles, name: t('home.project.cleaning') || 'Home Cleaning', price: 900 },
+            { Icon: Wrench, name: t('home.project.repairs') || 'Minor Repairs', price: 1300 },
+            { Icon: ImageIcon, name: t('home.project.hangPictures') || 'Hang Pictures', price: 1100 },
           ].map((project) => (
             <Link 
               key={project.name}
@@ -146,7 +146,7 @@ export default function HomePage() {
                 fontWeight: 600,
                 fontSize: '1.1rem'
               }}>
-                {t('home.project.startingAt') || 'Starting at'} ${project.price}
+                {t('home.project.startingAt') || 'Starting at'} {project.price} MDL
               </div>
             </Link>
           ))}

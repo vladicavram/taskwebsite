@@ -66,6 +66,24 @@ export default function AdminPage() {
     }
   }
 
+  async function toggleUserApproval(userId: string, currentStatus: boolean) {
+    try {
+      const res = await fetch(`/api/admin/users/${userId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ canApply: !currentStatus })
+      })
+      if (res.ok) {
+        loadData()
+        alert(currentStatus ? 'User application rights revoked' : 'User approved to apply for tasks')
+      } else {
+        alert('Failed to update user approval status')
+      }
+    } catch (err) {
+      alert('Error updating user approval')
+    }
+  }
+
   async function deleteTask(id: string) {
     if (!confirm('Are you sure you want to delete this task?')) return
     try {
@@ -214,6 +232,8 @@ export default function AdminPage() {
                       <th style={{ padding: 12, textAlign: 'left' }}>Name</th>
                       <th style={{ padding: 12, textAlign: 'left' }}>Email</th>
                       <th style={{ padding: 12, textAlign: 'left' }}>Username</th>
+                      <th style={{ padding: 12, textAlign: 'center' }}>ID Photo</th>
+                      <th style={{ padding: 12, textAlign: 'center' }}>Can Apply</th>
                       <th style={{ padding: 12, textAlign: 'right' }}>Credits</th>
                       <th style={{ padding: 12, textAlign: 'center' }}>Role</th>
                       <th style={{ padding: 12, textAlign: 'center' }}>Actions</th>
@@ -225,6 +245,45 @@ export default function AdminPage() {
                         <td style={{ padding: 12 }}>{user.name || '-'}</td>
                         <td style={{ padding: 12 }}>{user.email}</td>
                         <td style={{ padding: 12 }}>{user.username || '-'}</td>
+                        <td style={{ padding: 12, textAlign: 'center' }}>
+                          {user.idPhotoUrl ? (
+                            <a 
+                              href={user.idPhotoUrl} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              style={{ 
+                                display: 'inline-block',
+                                padding: '4px 8px',
+                                background: '#0ea5e9',
+                                color: 'white',
+                                borderRadius: 4,
+                                fontSize: '0.8rem',
+                                textDecoration: 'none'
+                              }}
+                            >
+                              📷 View ID
+                            </a>
+                          ) : (
+                            <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>No ID</span>
+                          )}
+                        </td>
+                        <td style={{ padding: 12, textAlign: 'center' }}>
+                          <button
+                            onClick={() => toggleUserApproval(user.id, user.canApply)}
+                            style={{
+                              padding: '4px 12px',
+                              borderRadius: 4,
+                              fontSize: '0.8rem',
+                              fontWeight: 600,
+                              border: 'none',
+                              cursor: 'pointer',
+                              background: user.canApply ? '#10b981' : '#ef4444',
+                              color: 'white'
+                            }}
+                          >
+                            {user.canApply ? '✅ Approved' : '❌ Pending'}
+                          </button>
+                        </td>
                         <td style={{ padding: 12, textAlign: 'right' }}>{user.credits.toFixed(1)}</td>
                         <td style={{ padding: 12, textAlign: 'center' }}>
                           <span style={{
@@ -290,7 +349,7 @@ export default function AdminPage() {
                         <td style={{ padding: 12 }}>{task.title}</td>
                         <td style={{ padding: 12 }}>{task.creator?.name || task.creator?.email || '-'}</td>
                         <td style={{ padding: 12 }}>{task.location || '-'}</td>
-                        <td style={{ padding: 12, textAlign: 'right' }}>{task.price ? `$${task.price}` : '-'}</td>
+                        <td style={{ padding: 12, textAlign: 'right' }}>{task.price ? `${task.price} MDL` : '-'}</td>
                         <td style={{ padding: 12, textAlign: 'center' }}>
                           {task.completedAt ? '✓ Done' : task.isOpen ? '◯ Open' : '✕ Closed'}
                         </td>

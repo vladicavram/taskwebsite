@@ -10,7 +10,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
     await requireModerator()
     
     const body = await req.json()
-    const { name, email, username, credits, isAdmin, role, blocked } = body
+    const { name, email, username, credits, isAdmin, role, blocked, canApply } = body
     
     const user = await prisma.user.update({
       where: { id: params.id },
@@ -21,7 +21,8 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
         credits,
         isAdmin,
         role: role || 'user',
-        blocked: blocked === undefined ? undefined : !!blocked
+        blocked: blocked === undefined ? undefined : !!blocked,
+        canApply: canApply === undefined ? undefined : !!canApply
       }
     })
     

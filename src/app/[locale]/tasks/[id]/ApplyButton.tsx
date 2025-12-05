@@ -25,6 +25,7 @@ export default function ApplyButton({
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [credits, setCredits] = useState(0)
+  const [canApply, setCanApply] = useState(true)
   const [applied, setApplied] = useState(hasAlreadyApplied)
   const [showContract, setShowContract] = useState(false)
   const [agree, setAgree] = useState(false)
@@ -44,6 +45,7 @@ export default function ApplyButton({
       if (response.ok) {
         const data = await response.json()
         setCredits(data.credits || 0)
+        setCanApply(data.canApply !== false)
       }
     } catch (error) {
       console.error('Failed to fetch credits:', error)
@@ -184,6 +186,26 @@ export default function ApplyButton({
     )
   }
 
+  if (!canApply) {
+    return (
+      <div style={{
+        padding: '16px',
+        background: '#fef3c7',
+        border: '1px solid #f59e0b',
+        borderRadius: '8px',
+        color: '#92400e',
+        marginTop: '8px'
+      }}>
+        <div style={{ fontWeight: 600, marginBottom: '4px' }}>
+          ⏳ {t('taskDetail.apply.pendingApproval') || 'Account Pending Approval'}
+        </div>
+        <p style={{ margin: 0, fontSize: '0.9rem' }}>
+          {t('taskDetail.apply.pendingApprovalMessage') || 'Your account is being reviewed by our team. You will be able to apply for tasks once approved.'}
+        </p>
+      </div>
+    )
+  }
+
   return (
     <>
     <form onSubmit={startApply} style={{ marginTop: '8px' }}>
@@ -256,7 +278,7 @@ export default function ApplyButton({
       }}>
         {taskPrice && (
           <p style={{ color: 'var(--text-muted)', margin: 0 }}>
-            {t('taskDetail.apply.originalPrice') || 'Original price:'} ${taskPrice}
+            {t('taskDetail.apply.originalPrice') || 'Original price:'} {taskPrice} MDL
           </p>
         )}
         {currentPrice > 0 && (

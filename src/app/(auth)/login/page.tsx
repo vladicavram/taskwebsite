@@ -24,7 +24,11 @@ function LoginContent() {
 
   useEffect(() => {
     if (searchParams.get('registered') === 'true') {
-      setSuccessMessage('Account created successfully! Please log in.')
+      if (searchParams.get('pending') === 'true') {
+        setSuccessMessage('Account created successfully! Your account is pending admin approval before you can apply for tasks. Please log in.')
+      } else {
+        setSuccessMessage('Account created successfully! Please log in.')
+      }
     }
   }, [searchParams])
 

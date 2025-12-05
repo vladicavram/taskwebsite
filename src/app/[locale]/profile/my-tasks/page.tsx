@@ -75,7 +75,7 @@ export default async function MyTasksPage({ params, searchParams }: { params: { 
             </h3>
             <p style={{ color: 'var(--text-secondary)', marginTop: 6 }}>{item.description}</p>
             <div style={{ display: 'flex', gap: 16, color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-              {item.price && <span>💰 ${item.price}</span>}
+              {item.price && <span>💰 {item.price} MDL</span>}
               {item.location && <span>📍 {item.location}</span>}
               {item.category && <span>🏷️ {item.category.name}</span>}
               {item.completedAt && <span>✅ {t('myTasks.completed.badge') || 'Completed'}</span>}

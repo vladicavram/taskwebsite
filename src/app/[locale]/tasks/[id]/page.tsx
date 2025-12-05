@@ -114,6 +114,21 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
               )}
               {!isCreator ? (
                 <p style={{ lineHeight: '1.8', color: 'var(--text-secondary)', marginBottom: '24px' }}>{task.description}</p>
+              ) : acceptedApps.length > 0 ? (
+                <div style={{ marginBottom: '24px' }}>
+                  <div style={{
+                    padding: '12px 16px',
+                    background: '#fef3c7',
+                    border: '1px solid #f59e0b',
+                    borderRadius: '8px',
+                    color: '#92400e',
+                    fontWeight: 500,
+                    marginBottom: '16px'
+                  }}>
+                    {getTranslation(params.locale, 'taskDetail.editLocked') || '🔒 Editing is locked while an applicant is assigned. Remove the applicant to edit.'}
+                  </div>
+                  <p style={{ lineHeight: '1.8', color: 'var(--text-secondary)' }}>{task.description}</p>
+                </div>
               ) : (
                 <div style={{ marginBottom: '24px' }}>
                   <EditTaskInline
@@ -222,8 +237,50 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
             <div className="card" style={{ padding: '24px', marginBottom: '24px' }}>
               <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginBottom: '8px' }}>{getTranslation(params.locale, 'taskDetail.taskBudget') || 'Task Budget'}</div>
               <div style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--accent)', marginBottom: '16px' }}>
-                {task.price ? `$${task.price}` : (getTranslation(params.locale, 'taskDetail.negotiable') || 'Negotiable')}
+                {task.price ? `${task.price} MDL` : (getTranslation(params.locale, 'taskDetail.negotiable') || 'Negotiable')}
               </div>
+              
+              {/* Task Status */}
+              {acceptedApps.length > 0 ? (
+                <div style={{
+                  padding: '12px',
+                  background: '#d1fae5',
+                  border: '1px solid #10b981',
+                  borderRadius: 'var(--radius-sm)',
+                  color: '#065f46',
+                  fontWeight: 600,
+                  textAlign: 'center',
+                  marginBottom: '8px'
+                }}>
+                  ✓ {getTranslation(params.locale, 'taskDetail.taskAccepted') || 'Task Accepted'}
+                </div>
+              ) : (task as any).applications.length > 0 ? (
+                <div style={{
+                  padding: '12px',
+                  background: '#fef3c7',
+                  border: '1px solid #f59e0b',
+                  borderRadius: 'var(--radius-sm)',
+                  color: '#92400e',
+                  fontWeight: 600,
+                  textAlign: 'center',
+                  marginBottom: '8px'
+                }}>
+                  📋 {(task as any).applications.length} {getTranslation(params.locale, 'taskDetail.applicants') || 'Applicant(s)'}
+                </div>
+              ) : (
+                <div style={{
+                  padding: '12px',
+                  background: 'var(--bg-secondary)',
+                  border: '1px solid var(--border)',
+                  borderRadius: 'var(--radius-sm)',
+                  color: 'var(--text-muted)',
+                  fontWeight: 500,
+                  textAlign: 'center',
+                  marginBottom: '8px'
+                }}>
+                  {getTranslation(params.locale, 'taskDetail.openForApplications') || 'Open for Applications'}
+                </div>
+              )}
             </div>
 
             <div className="card" style={{ padding: '24px' }}>

@@ -11,7 +11,17 @@ export async function GET() {
   if (!session?.user?.email) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   const user = await prisma.user.findUnique({ where: { email: session.user.email } })
   if (!user) return NextResponse.json({ error: 'Not found' }, { status: 404 })
-  return NextResponse.json({ id: user.id, username: user.username, email: user.email, name: user.name, image: user.image, isAdmin: user.isAdmin, role: user.role })
+  return NextResponse.json({ 
+    id: user.id, 
+    username: user.username, 
+    email: user.email, 
+    name: user.name, 
+    image: user.image, 
+    isAdmin: user.isAdmin, 
+    role: user.role,
+    canApply: user.canApply,
+    idPhotoUrl: user.idPhotoUrl
+  })
 }
 
 export async function PUT(req: Request) {

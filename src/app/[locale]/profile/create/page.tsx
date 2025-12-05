@@ -1,7 +1,8 @@
 "use client"
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
+import { MOLDOVA_CITIES } from '../../../../lib/constants'
 
 export default function CreateProfilePage() {
   const router = useRouter()
@@ -24,10 +25,14 @@ export default function CreateProfilePage() {
   })
   
   const [idFile, setIdFile] = useState<File | null>(null)
+  const [idPreview, setIdPreview] = useState<string | null>(null)
+  const [showCamera, setShowCamera] = useState(false)
   const [photoFile, setPhotoFile] = useState<File | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [step, setStep] = useState(1)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const streamRef = useRef<MediaStream | null>(null)
 
   const calculateAge = (dob: string) => {
     if (!dob) return 0
@@ -42,6 +47,63 @@ export default function CreateProfilePage() {
   }
 
   const age = calculateAge(formData.dateOfBirth)
+
+  // Camera functions
+  const startCamera = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        video: { facingMode: 'environment' } 
+      })
+      streamRef.current = stream
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream
+      }
+      setShowCamera(true)
+    } catch (err) {
+      console.error('Error accessing camera:', err)
+      alert('Could not access camera. Please check permissions or use file upload.')
+    }
+  }
+
+  const stopCamera = () => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop())
+      streamRef.current = null
+    }
+    setShowCamera(false)
+  }
+
+  const capturePhoto = () => {
+    if (videoRef.current) {
+      const canvas = document.createElement('canvas')
+      canvas.width = videoRef.current.videoWidth
+      canvas.height = videoRef.current.videoHeight
+      const ctx = canvas.getContext('2d')
+      if (ctx) {
+        ctx.drawImage(videoRef.current, 0, 0)
+        canvas.toBlob((blob) => {
+          if (blob) {
+            const file = new File([blob], 'id-photo.jpg', { type: 'image/jpeg' })
+            setIdFile(file)
+            setIdPreview(canvas.toDataURL('image/jpeg'))
+            stopCamera()
+          }
+        }, 'image/jpeg', 0.9)
+      }
+    }
+  }
+
+  const handleIdFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setIdFile(file)
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setIdPreview(reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
@@ -113,10 +175,25 @@ export default function CreateProfilePage() {
         throw new Error(profileError.error || 'Failed to create profile')
       }
       
-      // TODO: Implement file upload for ID and photo
+      // Upload ID photo
+      if (idFile) {
+        const formDataUpload = new FormData()
+        formDataUpload.append('idPhoto', idFile)
+        formDataUpload.append('userId', userData.id)
+        
+        const uploadResponse = await fetch('/api/users/upload-id', {
+          method: 'POST',
+          body: formDataUpload
+        })
+        
+        if (!uploadResponse.ok) {
+          console.error('ID upload failed')
+          // Don't fail registration, but log the error
+        }
+      }
       
-      // Redirect to login page
-      router.push(`/${locale}/login?registered=true`)
+      // Redirect to login page with message about pending approval
+      router.push(`/${locale}/login?registered=true&pending=true`)
     } catch (err: any) {
       setError(err.message || 'Failed to create profile. Please try again.')
       setLoading(false)
@@ -142,8 +219,8 @@ export default function CreateProfilePage() {
         return
       }
     }
-    if (step === 2 && (!formData.idType || !formData.idNumber)) {
-      setError('Please provide your ID information.')
+    if (step === 2 && (!formData.idType || !formData.idNumber || !idFile)) {
+      setError('Please provide your ID information and upload a photo of your ID.')
       return
     }
     setError('')
@@ -413,13 +490,17 @@ export default function CreateProfilePage() {
                   }}>
                     Location
                   </label>
-                  <input 
-                    type="text"
+                  <select 
                     name="location"
                     value={formData.location}
                     onChange={handleInputChange}
-                    placeholder="City, State/Country"
-                  />
+                    style={{ width: '100%' }}
+                  >
+                    <option value="">Select your city</option>
+                    {MOLDOVA_CITIES.map((city) => (
+                      <option key={city} value={city}>{city}</option>
+                    ))}
+                  </select>
                 </div>
               </div>
             )}
@@ -487,33 +568,125 @@ export default function CreateProfilePage() {
                     marginBottom: '8px',
                     color: 'var(--text)'
                   }}>
-                    Upload ID Document *
+                    Upload ID *
                   </label>
-                  <div style={{
-                    border: '2px dashed var(--border)',
-                    borderRadius: 'var(--radius-sm)',
-                    padding: '32px 24px',
-                    textAlign: 'center',
-                    background: 'var(--bg-secondary)',
-                    cursor: 'pointer'
-                  }}
-                  onClick={() => document.getElementById('idUpload')?.click()}
-                  >
-                    <div style={{ fontSize: '3rem', marginBottom: '12px' }}>📄</div>
-                    <p style={{ color: 'var(--text-secondary)', margin: 0 }}>
-                      {idFile ? idFile.name : 'Click to upload or drag and drop'}
-                    </p>
-                    <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginTop: '8px' }}>
-                      JPG, PNG or PDF (max 10MB)
-                    </p>
-                  </div>
+                  
+                  {showCamera ? (
+                    <div style={{ marginBottom: '16px' }}>
+                      <video 
+                        ref={videoRef}
+                        autoPlay 
+                        playsInline
+                        style={{ 
+                          width: '100%', 
+                          maxHeight: '300px',
+                          borderRadius: 'var(--radius-sm)',
+                          background: '#000'
+                        }}
+                      />
+                      <div style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
+                        <button
+                          type="button"
+                          onClick={capturePhoto}
+                          className="btn"
+                          style={{ flex: 1 }}
+                        >
+                          📸 Capture Photo
+                        </button>
+                        <button
+                          type="button"
+                          onClick={stopCamera}
+                          className="btn btn-secondary"
+                          style={{ flex: 1 }}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  ) : idPreview ? (
+                    <div style={{ marginBottom: '16px' }}>
+                      <img 
+                        src={idPreview} 
+                        alt="ID Preview"
+                        style={{ 
+                          width: '100%', 
+                          maxHeight: '300px',
+                          objectFit: 'contain',
+                          borderRadius: 'var(--radius-sm)',
+                          border: '2px solid var(--accent)'
+                        }}
+                      />
+                      <div style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setIdFile(null)
+                            setIdPreview(null)
+                          }}
+                          className="btn btn-secondary"
+                          style={{ flex: 1 }}
+                        >
+                          Remove & Upload New
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                      <div 
+                        style={{
+                          flex: 1,
+                          minWidth: '150px',
+                          border: '2px dashed var(--border)',
+                          borderRadius: 'var(--radius-sm)',
+                          padding: '24px 16px',
+                          textAlign: 'center',
+                          background: 'var(--bg-secondary)',
+                          cursor: 'pointer'
+                        }}
+                        onClick={() => document.getElementById('idUpload')?.click()}
+                      >
+                        <div style={{ fontSize: '2.5rem', marginBottom: '8px' }}>📄</div>
+                        <p style={{ color: 'var(--text-secondary)', margin: 0, fontSize: '0.9rem' }}>
+                          Upload from device
+                        </p>
+                      </div>
+                      <div 
+                        style={{
+                          flex: 1,
+                          minWidth: '150px',
+                          border: '2px dashed var(--accent)',
+                          borderRadius: 'var(--radius-sm)',
+                          padding: '24px 16px',
+                          textAlign: 'center',
+                          background: 'var(--accent-light)',
+                          cursor: 'pointer'
+                        }}
+                        onClick={startCamera}
+                      >
+                        <div style={{ fontSize: '2.5rem', marginBottom: '8px' }}>📷</div>
+                        <p style={{ color: 'var(--accent)', margin: 0, fontSize: '0.9rem', fontWeight: 600 }}>
+                          Take a photo
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  
                   <input 
                     id="idUpload"
                     type="file"
-                    accept="image/*,.pdf"
-                    onChange={(e) => setIdFile(e.target.files?.[0] || null)}
+                    accept="image/*"
+                    capture="environment"
+                    onChange={handleIdFileChange}
                     style={{ display: 'none' }}
                   />
+                  
+                  <p style={{ 
+                    fontSize: '0.875rem', 
+                    color: 'var(--text-muted)',
+                    marginTop: '12px'
+                  }}>
+                    Take a clear photo of your ID document (passport, driver's license, or national ID)
+                  </p>
                 </div>
 
                 <div style={{

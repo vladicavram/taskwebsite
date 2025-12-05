@@ -69,7 +69,7 @@ export default function TaskCard({ id, title, description, price, category, imag
               color: 'var(--accent)',
               boxShadow: 'var(--shadow)'
             }}>
-              ${price}
+              {price} MDL
             </div>
           )}
         </div>
@@ -88,7 +88,7 @@ export default function TaskCard({ id, title, description, price, category, imag
               fontWeight: 600,
               color: 'var(--accent)'
             }}>
-              ${price}
+              {price} MDL
             </span>
           </div>
         )

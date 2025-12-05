@@ -69,8 +69,8 @@ export async function PATCH(
     const recipientId = isCreator ? application.applicantId : application.task.creatorId
     const senderName = user.name || user.email
     const notificationContent = isCreator
-      ? `${senderName} proposed a counter-offer of $${proposedPrice} for "${application.task.title}"`
-      : `${senderName} proposed a price of $${proposedPrice} for "${application.task.title}"`
+      ? `${senderName} proposed a counter-offer of ${proposedPrice} MDL for "${application.task.title}"`
+      : `${senderName} proposed a price of ${proposedPrice} MDL for "${application.task.title}"`
 
     await prisma.notification.create({
       data: {

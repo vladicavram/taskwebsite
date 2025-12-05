@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useSession } from 'next-auth/react'
 import Chat from '../../../../components/Chat'
 import { MessageCircle, User, Mail, Phone } from 'lucide-react'
+import { CURRENCY_SYMBOL } from '../../../../lib/constants'
 
 export default function ApplicationDetailPage() {
   const params = useParams()
@@ -188,7 +189,7 @@ export default function ApplicationDetailPage() {
                   color: 'var(--text-muted)',
                   textDecoration: application.proposedPrice ? 'line-through' : 'none'
                 }}>
-                  ${application.task.price}
+                  {application.task.price} {CURRENCY_SYMBOL}
                 </div>
               </div>
             )}
@@ -202,7 +203,7 @@ export default function ApplicationDetailPage() {
                   fontWeight: 700,
                   color: 'var(--accent)'
                 }}>
-                  ${application.proposedPrice}
+                  {application.proposedPrice} {CURRENCY_SYMBOL}
                 </div>
               </div>
             )}
@@ -276,7 +277,7 @@ export default function ApplicationDetailPage() {
               <>
                 <h3 style={{ marginBottom: '16px' }}>Review Application</h3>
                 <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>
-                  Accept the proposed price of ${application.proposedPrice || application.task.price}, make a counter-offer, or decline the application.
+                  Accept the proposed price of {application.proposedPrice || application.task.price} {CURRENCY_SYMBOL}, make a counter-offer, or decline the application.
                 </p>
                 
                 {!showCounterOffer ? (
@@ -292,7 +293,7 @@ export default function ApplicationDetailPage() {
                         opacity: actionLoading ? 0.6 : 1
                       }}
                     >
-                      ✓ Accept ${application.proposedPrice || application.task.price}
+                      ✓ Accept {application.proposedPrice || application.task.price} {CURRENCY_SYMBOL}
                     </button>
                     <button
                       onClick={() => setShowCounterOffer(true)}
@@ -496,8 +497,8 @@ export default function ApplicationDetailPage() {
                 </h3>
                 <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>
                   {receivedCounterOffer
-                    ? `The task creator proposed: $${application.proposedPrice}. You can accept, decline, or send a counter-offer.`
-                    : `Your application is being reviewed. Current proposed price: $${application.proposedPrice || application.task.price}`
+                    ? `The task creator proposed: ${application.proposedPrice} ${CURRENCY_SYMBOL}. You can accept, decline, or send a counter-offer.`
+                    : `Your application is being reviewed. Current proposed price: ${application.proposedPrice || application.task.price} ${CURRENCY_SYMBOL}`
                   }
                 </p>
                 
@@ -516,7 +517,7 @@ export default function ApplicationDetailPage() {
                             opacity: actionLoading ? 0.6 : 1
                           }}
                         >
-                          ✓ Accept ${application.proposedPrice}
+                          ✓ Accept {application.proposedPrice} {CURRENCY_SYMBOL}
                         </button>
                         <button
                           onClick={() => setShowCounterOffer(true)}

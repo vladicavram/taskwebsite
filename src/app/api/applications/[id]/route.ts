@@ -48,47 +48,54 @@ export async function PATCH(
     const body = await req.json()
     const { status } = body
 
-    if (!['accepted', 'declined'].includes(status)) {
+    if (!['accepted', 'declined', 'removed'].includes(status)) {
       return NextResponse.json({ error: 'Invalid status' }, { status: 400 })
     }
 
-    // Only the task creator can accept an application
-    if (status === 'accepted' && !isTaskCreator) {
-      return NextResponse.json({ error: 'Only the task creator can accept applications' }, { status: 403 })
+    // Only the task creator can accept or remove an application
+    if ((status === 'accepted' || status === 'removed') && !isTaskCreator) {
+      return NextResponse.json({ error: 'Only the task creator can accept or remove applications' }, { status: 403 })
     }
 
     // Perform updates in a transaction
     const result = await prisma.$transaction(async (tx: any) => {
-      // If accepting, close the task and decline others
+      // If removing an accepted applicant
+      if (status === 'removed') {
+        const updated = await tx.application.update({
+          where: { id: params.id },
+          data: { 
+            status: 'removed',
+            removedAt: new Date()
+          }
+        })
+
+        // Re-open the task for applications
+        await tx.task.update({ where: { id: application.taskId }, data: { isOpen: true } })
+
+        // Notify the removed applicant
+        await tx.notification.create({
+          data: {
+            userId: application.applicantId,
+            type: 'application_removed',
+            content: `You have been removed from the task "${application.task.title}". The task is now open for other applicants.`,
+            taskId: application.taskId,
+            applicationId: application.id
+          }
+        })
+
+        return updated
+      }
+      
+      // If accepting, close the task but don't decline others (keep them as pending alternatives)
       if (status === 'accepted') {
         // Update this application to accepted
         const updated = await tx.application.update({
           where: { id: params.id },
-          data: { status: 'accepted' }
+          data: { 
+            status: 'accepted',
+            selectedAt: new Date()
+          }
         })
-
-        // Find other applications to decline
-        const others = await tx.application.findMany({
-          where: { taskId: application.taskId, id: { not: application.id }, status: { not: 'declined' } },
-          select: { id: true, applicantId: true }
-        })
-
-        if (others.length > 0) {
-          await tx.application.updateMany({
-            where: { taskId: application.taskId, id: { not: application.id } },
-            data: { status: 'declined' }
-          })
-
-          await tx.notification.createMany({
-            data: others.map((o: any) => ({
-              userId: o.applicantId,
-              type: 'application_declined',
-              content: `Your application for "${application.task.title}" was declined.`,
-              taskId: application.taskId,
-              applicationId: o.id
-            }))
-          })
-        }
 
         // Close the task for further applications
         await tx.task.update({ where: { id: application.taskId }, data: { isOpen: false } })

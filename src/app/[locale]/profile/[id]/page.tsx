@@ -9,6 +9,7 @@ export const revalidate = 0
 import Link from 'next/link'
 import { MapPin, CheckCircle2 } from 'lucide-react'
 import useLocale from '../../../../lib/locale'
+import { CURRENCY_SYMBOL } from '../../../../lib/constants'
 
 type Props = { params: { id: string; locale: string } }
 
@@ -303,7 +304,7 @@ export default function ProfilePage({ params }: Props) {
                             fontWeight: 600,
                             color: 'var(--accent)'
                           }}>
-                            ${task.price}
+                            {task.price} {CURRENCY_SYMBOL}
                           </span>
                         )}
                       </div>

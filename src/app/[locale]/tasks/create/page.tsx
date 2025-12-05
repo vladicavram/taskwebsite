@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import useLocale from '../../../../lib/locale'
+import { MOLDOVA_CITIES, CURRENCY_SYMBOL } from '../../../../lib/constants'
 
 export default function CreateTaskPage() {
   const [title, setTitle] = useState('')
@@ -256,7 +257,7 @@ export default function CreateTaskPage() {
                   color: 'var(--text-muted)',
                   fontWeight: 600
                 }}>
-                  $
+                  {CURRENCY_SYMBOL}
                 </span>
                 <input 
                   type="number"
@@ -265,7 +266,7 @@ export default function CreateTaskPage() {
                   placeholder="0.00"
                   min="0"
                   step="0.01"
-                  style={{ paddingLeft: '32px', fontSize: '1rem' }}
+                  style={{ paddingLeft: '48px', fontSize: '1rem' }}
                 />
               </div>
               <p style={{ 
@@ -286,23 +287,23 @@ export default function CreateTaskPage() {
               }}>
                 {t('create.locationLabel') || 'Location *'}
               </label>
-              <input 
-                type="text"
+              <select 
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 onBlur={() => setLocationTouched(true)}
-                placeholder={t('create.locationPlaceholder') || 'City or area'}
                 required
-                style={{ fontSize: '1rem' }}
-              />
+                style={{ fontSize: '1rem', width: '100%' }}
+              >
+                <option value="">{t('create.locationPlaceholder') || 'Select a city'}</option>
+                {MOLDOVA_CITIES.map((city) => (
+                  <option key={city} value={city}>{city}</option>
+                ))}
+              </select>
               {locationTouched && !location && (
                 <p style={{ fontSize: '0.875rem', color: 'var(--danger)', marginTop: '6px', fontWeight: 600 }}>
-                  {t('create.locationRequired') || 'Please enter a location.'}
+                  {t('create.locationRequired') || 'Please select a location.'}
                 </p>
               )}
-              <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginTop: '6px' }}>
-                {t('create.locationExample') || 'Example: San Francisco, Downtown, or Remote'}
-              </p>
             </div>
 
             

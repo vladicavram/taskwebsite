@@ -19,6 +19,8 @@ export async function GET() {
         isAdmin: true,
         role: true,
         blocked: true,
+        canApply: true,
+        idPhotoUrl: true,
         createdAt: true,
         _count: {
           select: {

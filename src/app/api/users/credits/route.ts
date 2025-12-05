@@ -14,14 +14,14 @@ export async function GET() {
 
     const user = await prisma.user.findUnique({
       where: { email: session.user.email },
-      select: { credits: true }
+      select: { credits: true, canApply: true }
     })
 
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 })
     }
 
-    return NextResponse.json({ credits: user.credits || 0 })
+    return NextResponse.json({ credits: user.credits || 0, canApply: user.canApply })
   } catch (error) {
     console.error('Error fetching credits:', error)
     return NextResponse.json({ error: 'Failed to fetch credits' }, { status: 500 })
