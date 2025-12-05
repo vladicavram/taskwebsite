@@ -228,74 +228,42 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Trust Badges */}
-      <section style={{ background: 'var(--bg-secondary)', padding: '80px 24px' }}>
-        <div className="container">
-          <h2 style={{ textAlign: 'center', marginBottom: '56px', fontSize: '2.25rem' }}>
-            {t('home.guaranteeTitle') || 'Your satisfaction, guaranteed'}
+      {/* Become a Tasker CTA */}
+      <section className="liquid-hero" style={{
+        padding: '80px 24px',
+        textAlign: 'center'
+      }}>
+        <div className="container" style={{ maxWidth: '800px', position: 'relative', zIndex: 1 }}>
+          <h2 style={{ fontSize: '2.5rem', marginBottom: '16px', color: 'var(--text)' }}>
+            {t('home.earnTitle') || 'Earn money your way'}
           </h2>
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
-            gap: '48px'
+          <p style={{ fontSize: '1.2rem', marginBottom: '32px', color: 'var(--text-secondary)' }}>
+            {t('home.earnSubtitle') || 'Be your own boss. Work when you want, set your own rates, and build your business.'}
+          </p>
+          <Link href={`/${locale}/tasks`} className="btn" style={{ 
+            background: 'var(--accent)',
+            color: 'white',
+            fontSize: '1.1rem',
+            padding: '16px 40px',
+            fontWeight: 600
           }}>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ 
-                width: '80px',
-                height: '80px',
-                background: 'var(--accent)',
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: '0 auto 24px'
-              }}>
-                <Smile size={36} color="#fff" />
-              </div>
-              <h3 style={{ marginBottom: '12px', fontSize: '1.5rem' }}>{t('home.happiness.title') || 'Happiness Pledge'}</h3>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.7' }}>
-                {t('home.happiness.text') || "If you're not satisfied, we'll work to make it right."}
-              </p>
-            </div>
+            {t('home.becomeTasker') || 'Become a Tasker'}
+          </Link>
+        </div>
+      </section>
 
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ 
-                width: '80px',
-                height: '80px',
-                background: 'var(--accent)',
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: '0 auto 24px'
-              }}>
-                <BadgeCheck size={36} color="#fff" />
-              </div>
-              <h3 style={{ marginBottom: '12px', fontSize: '1.5rem' }}>{t('home.vetted.title') || 'Vetted Taskers'}</h3>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.7' }}>
-                {t('home.vetted.text') || 'Taskers are always background checked before joining the platform.'}
-              </p>
-            </div>
-
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ 
-                width: '80px',
-                height: '80px',
-                background: 'var(--accent)',
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: '0 auto 24px'
-              }}>
-                <Headphones size={36} color="#fff" />
-              </div>
-              <h3 style={{ marginBottom: '12px', fontSize: '1.5rem' }}>{t('home.support.title') || 'Dedicated Support'}</h3>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.7' }}>
-                {t('home.support.text') || 'Friendly service when you need us – every day of the week.'}
-              </p>
-            </div>
-          </div>
+      {/* CTA Section */}
+      <section style={{
+        background: 'var(--bg)',
+        padding: '80px 24px',
+        textAlign: 'center'
+      }}>
+        <div className="container">
+          <h2 style={{ marginBottom: '16px', fontSize: '2.25rem' }}>{t('home.ctaTitle') || 'Ready to Get Started?'}</h2>
+          <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', marginBottom: '32px' }}>
+            {t('home.ctaSubtitle') || 'Join thousands of people getting things done every day'}
+          </p>
+          <PostTaskButton label={t('home.ctaButton') || 'Post Your First Task'} style={{ fontSize: '1.1rem', padding: '16px 40px', fontWeight: 600 }} />
         </div>
       </section>
 
@@ -380,42 +348,74 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Become a Tasker CTA */}
-      <section className="liquid-hero" style={{
-        padding: '80px 24px',
-        textAlign: 'center'
-      }}>
-        <div className="container" style={{ maxWidth: '800px', position: 'relative', zIndex: 1 }}>
-          <h2 style={{ fontSize: '2.5rem', marginBottom: '16px', color: 'var(--text)' }}>
-            {t('home.earnTitle') || 'Earn money your way'}
-          </h2>
-          <p style={{ fontSize: '1.2rem', marginBottom: '32px', color: 'var(--text-secondary)' }}>
-            {t('home.earnSubtitle') || 'Be your own boss. Work when you want, set your own rates, and build your business.'}
-          </p>
-          <Link href={`/${locale}/tasks`} className="btn" style={{ 
-            background: 'var(--accent)',
-            color: 'white',
-            fontSize: '1.1rem',
-            padding: '16px 40px',
-            fontWeight: 600
-          }}>
-            {t('home.becomeTasker') || 'Become a Tasker'}
-          </Link>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section style={{
-        background: 'var(--bg)',
-        padding: '80px 24px',
-        textAlign: 'center'
-      }}>
+      {/* Trust Badges */}
+      <section style={{ background: 'var(--bg-secondary)', padding: '80px 24px' }}>
         <div className="container">
-          <h2 style={{ marginBottom: '16px', fontSize: '2.25rem' }}>{t('home.ctaTitle') || 'Ready to Get Started?'}</h2>
-          <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', marginBottom: '32px' }}>
-            {t('home.ctaSubtitle') || 'Join thousands of people getting things done every day'}
-          </p>
-          <PostTaskButton label={t('home.ctaButton') || 'Post Your First Task'} style={{ fontSize: '1.1rem', padding: '16px 40px', fontWeight: 600 }} />
+          <h2 style={{ textAlign: 'center', marginBottom: '56px', fontSize: '2.25rem' }}>
+            {t('home.guaranteeTitle') || 'Your satisfaction, guaranteed'}
+          </h2>
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
+            gap: '48px'
+          }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ 
+                width: '80px',
+                height: '80px',
+                background: 'var(--accent)',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 24px'
+              }}>
+                <Smile size={36} color="#fff" />
+              </div>
+              <h3 style={{ marginBottom: '12px', fontSize: '1.5rem' }}>{t('home.happiness.title') || 'Happiness Pledge'}</h3>
+              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.7' }}>
+                {t('home.happiness.text') || "If you're not satisfied, we'll work to make it right."}
+              </p>
+            </div>
+
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ 
+                width: '80px',
+                height: '80px',
+                background: 'var(--accent)',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 24px'
+              }}>
+                <BadgeCheck size={36} color="#fff" />
+              </div>
+              <h3 style={{ marginBottom: '12px', fontSize: '1.5rem' }}>{t('home.vetted.title') || 'Vetted Taskers'}</h3>
+              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.7' }}>
+                {t('home.vetted.text') || 'Taskers are always background checked before joining the platform.'}
+              </p>
+            </div>
+
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ 
+                width: '80px',
+                height: '80px',
+                background: 'var(--accent)',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 24px'
+              }}>
+                <Headphones size={36} color="#fff" />
+              </div>
+              <h3 style={{ marginBottom: '12px', fontSize: '1.5rem' }}>{t('home.support.title') || 'Dedicated Support'}</h3>
+              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.7' }}>
+                {t('home.support.text') || 'Friendly service when you need us – every day of the week.'}
+              </p>
+            </div>
+          </div>
         </div>
       </section>
     </div>
