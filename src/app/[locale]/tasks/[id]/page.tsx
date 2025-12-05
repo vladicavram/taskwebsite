@@ -103,9 +103,9 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                 <Link 
                   href={`/${params.locale}/tasks/create?copy=${task.id}`} 
                   className="btn btn-secondary" 
-                  style={{ whiteSpace: 'nowrap', fontSize: '0.875rem' }}
+                  style={{ whiteSpace: 'nowrap', fontSize: '0.75rem', padding: '6px 12px' }}
                 >
-                  {getTranslation(params.locale, 'taskDetail.postSimilarTask') || '📋 Post Similar Task'}
+                  {getTranslation(params.locale, 'taskDetail.postSimilarTask') || 'Post Similar Task'}
                 </Link>
               </div>
 
