@@ -1,5 +1,5 @@
 "use client"
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { MOLDOVA_CITIES } from '../../../../lib/constants'
@@ -55,15 +55,19 @@ export default function CreateProfilePage() {
         video: { facingMode: 'environment' } 
       })
       streamRef.current = stream
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream
-      }
       setShowCamera(true)
     } catch (err) {
       console.error('Error accessing camera:', err)
       alert('Could not access camera. Please check permissions or use file upload.')
     }
   }
+
+  // Set video source when showCamera changes and video element is available
+  useEffect(() => {
+    if (showCamera && videoRef.current && streamRef.current) {
+      videoRef.current.srcObject = streamRef.current
+    }
+  }, [showCamera])
 
   const stopCamera = () => {
     if (streamRef.current) {
