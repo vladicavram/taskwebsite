@@ -53,8 +53,9 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
   const acceptedApps = (task as any).applications.filter((app: any) => app.status === 'accepted')
   const isAcceptedApplicantServer = !!acceptedApps.find((app: any) => app.applicant.id === session?.user?.id)
   const hasAlreadyApplied = !!(task as any).applications.find((app: any) => app.applicant.id === session?.user?.id)
-  const showReviewForms = isCreator || isAcceptedApplicantServer
   const completedAt = (task as any).completedAt as Date | undefined
+  // Only show review forms if task has accepted applicant or is completed
+  const showReviewForms = (isCreator || isAcceptedApplicantServer) && (acceptedApps.length > 0 || !!completedAt)
 
   return (
     <div>
@@ -236,6 +237,8 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
               )}
             </div>
 
+            {/* Reviews Section - only show if task has accepted applicant or is completed */}
+            {(acceptedApps.length > 0 || completedAt) && (
             <div className="card" style={{ padding: '32px' }}>
               <h2 style={{ marginBottom: '24px' }}>{getTranslation(params.locale, 'taskDetail.reviews') || 'Reviews'} ({task.reviews.length})</h2>
               {task.reviews.length === 0 ? (
@@ -257,6 +260,7 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                 </div>
               )}
             </div>
+            )}
           </div>
 
           <div style={{ position: 'sticky', top: '100px' }}>

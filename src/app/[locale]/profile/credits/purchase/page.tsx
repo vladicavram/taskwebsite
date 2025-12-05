@@ -81,7 +81,7 @@ export default function PurchaseCreditsPage() {
             Purchase Credits
           </h1>
           <p style={{ fontSize: '1.1rem', opacity: 0.95 }}>
-            Buy credits to apply for tasks (1 credit = 1800 {CURRENCY_SYMBOL} task value)
+            Buy credits to apply for tasks (1 credit = 100 {CURRENCY_SYMBOL} task value)
           </p>
         </div>
       </section>

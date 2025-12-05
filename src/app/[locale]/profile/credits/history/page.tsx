@@ -121,7 +121,7 @@ export default function CreditHistoryPage() {
             {Number(balance).toFixed(2)}
           </div>
           <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-            = $100 task value per credit
+            = 100 MDL task value per credit
           </div>
         </div>
 

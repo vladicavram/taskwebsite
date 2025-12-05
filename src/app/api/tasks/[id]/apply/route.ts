@@ -66,7 +66,7 @@ export async function POST(
       return NextResponse.json({ error: 'Agreement acceptance and contract text are required' }, { status: 400 })
     }
 
-    // Enforce fractional credits: required = price/100
+    // Enforce fractional credits: required = price/100 (1 credit = 100 MDL)
     const effectivePrice = typeof proposedPrice === 'number' && proposedPrice > 0 ? proposedPrice : (task.price || 0)
     const requiredCredits = effectivePrice / 100
     if (applicant.credits < requiredCredits) {

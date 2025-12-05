@@ -57,7 +57,7 @@ export default function ApplyButton({
   }
 
   const calculateRequiredCredits = (price: number) => {
-    // 1 credit = $100, fractional credits allowed
+    // 1 credit = 100 MDL, fractional credits allowed
     return price / 100
   }
 
@@ -287,7 +287,7 @@ export default function ApplyButton({
             margin: 0,
             fontWeight: hasEnoughCredits ? 400 : 600
           }}>
-            {interpolate(t('taskDetail.apply.requiredCredits') || 'Required credits: {{credits}} (1 credit = $100)', { credits: requiredCredits.toFixed(2) })}
+            {interpolate(t('taskDetail.apply.requiredCredits') || 'Required credits: {{credits}} (1 credit = 100 MDL)', { credits: requiredCredits.toFixed(2) })}
           </p>
         )}
         {session?.user && (

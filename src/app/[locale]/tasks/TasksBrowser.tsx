@@ -20,6 +20,7 @@ export default function TasksBrowser({ locale, initialTasks }: { locale: string,
 	const [priceMin, setPriceMin] = useState('')
 	const [priceMax, setPriceMax] = useState('')
 	const [location, setLocation] = useState('')
+	const [showCompleted, setShowCompleted] = useState(false)
 	const [tasks, setTasks] = useState<Task[]>(initialTasks || [])
 	const [loading, setLoading] = useState(false)
 
@@ -32,6 +33,7 @@ export default function TasksBrowser({ locale, initialTasks }: { locale: string,
 		if (priceMin) params.set('priceMin', priceMin)
 		if (priceMax) params.set('priceMax', priceMax)
 		if (location) params.set('location', location)
+		if (showCompleted) params.set('completed', 'true')
 		const res = await fetch(`/api/tasks?${params.toString()}`)
 		const data = await res.json()
 		setTasks(data)
@@ -39,7 +41,7 @@ export default function TasksBrowser({ locale, initialTasks }: { locale: string,
 	}
 
 	useEffect(() => {
-		const shouldSkip = firstRender.current && !q && !priceMin && !priceMax && !location && initialTasks && initialTasks.length > 0
+		const shouldSkip = firstRender.current && !q && !priceMin && !priceMax && !location && !showCompleted && initialTasks && initialTasks.length > 0
 		if (shouldSkip) {
 			firstRender.current = false
 			return
@@ -47,7 +49,7 @@ export default function TasksBrowser({ locale, initialTasks }: { locale: string,
 		const id = setTimeout(fetchTasks, 250)
 		firstRender.current = false
 		return () => clearTimeout(id)
-	}, [q, priceMin, priceMax, location, initialTasks])
+	}, [q, priceMin, priceMax, location, showCompleted, initialTasks])
 
 	useEffect(() => {
 		// If there are no initial tasks passed from server, fetch on mount
@@ -90,6 +92,17 @@ export default function TasksBrowser({ locale, initialTasks }: { locale: string,
 							<option key={city} value={city}>{city}</option>
 						))}
 					</select>
+				</div>
+				<div style={{ marginTop: '12px' }}>
+					<label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '0.9rem' }}>
+						<input
+							type="checkbox"
+							checked={showCompleted}
+							onChange={(e) => setShowCompleted(e.target.checked)}
+							style={{ width: '16px', height: '16px' }}
+						/>
+						{t('tasks.browse.showCompleted') || 'Show completed tasks only'}
+					</label>
 				</div>
 			</div>
 

@@ -12,16 +12,21 @@ export async function GET(req: Request) {
   const priceMin = searchParams.get('priceMin')
   const priceMax = searchParams.get('priceMax')
   const location = searchParams.get('location') || undefined
+  const showCompleted = searchParams.get('completed') === 'true'
 
-  const where: any = { 
-    isOpen: true,
-    completedAt: null,
-    applications: {
-      none: {
-        status: 'accepted'
+  const where: any = showCompleted 
+    ? { 
+        completedAt: { not: null }
       }
-    }
-  }
+    : { 
+        isOpen: true,
+        completedAt: null,
+        applications: {
+          none: {
+            status: 'accepted'
+          }
+        }
+      }
   if (q) {
     where.OR = [
       { title: { contains: q, mode: 'insensitive' } },
