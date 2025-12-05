@@ -8,9 +8,11 @@ import { CURRENCY_SYMBOL } from '../../../../../lib/constants'
 
 const CREDIT_PACKAGES = [
   { amount: 1, price: 10, popular: false },
-  { amount: 5, price: 45, popular: true, save: '10%' },
-  { amount: 10, price: 80, popular: false, save: '20%' },
-  { amount: 25, price: 187, popular: false, save: '25%' }
+  { amount: 5, price: 50, popular: false },
+  { amount: 10, price: 100, popular: true },
+  { amount: 20, price: 180, popular: false, save: '10%' },
+  { amount: 50, price: 400, popular: false, save: '20%' },
+  { amount: 100, price: 750, popular: false, save: '25%' }
 ]
 
 export default function PurchaseCreditsPage() {
