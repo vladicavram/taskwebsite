@@ -3,9 +3,7 @@ import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../../auth/[...nextauth]/authOptions'
 import Stripe from 'stripe'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-11-17.clover'
-})
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -24,14 +22,18 @@ export async function POST(req: NextRequest) {
     }
 
     // Create a real Stripe payment intent
-    // Price is in MDL, convert to smallest unit (bani = 1/100 MDL)
+    // Price is in MDL - Stripe doesn't support MDL, so we use EUR as proxy
+    // 1 EUR ≈ 19.5 MDL, so we convert: MDL / 19.5 = EUR
+    const eurAmount = Math.round((price / 19.5) * 100) // Convert to cents
+    
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: Math.round(price * 100), // Convert MDL to bani
-      currency: 'mdl',
+      amount: eurAmount,
+      currency: 'eur',
       metadata: {
         userId: session.user.id,
         userEmail: session.user.email,
-        credits: amount.toString()
+        credits: amount.toString(),
+        mdlPrice: price.toString()
       },
       automatic_payment_methods: {
         enabled: true
@@ -45,8 +47,8 @@ export async function POST(req: NextRequest) {
       currency: paymentIntent.currency,
       credits: amount
     })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error creating payment intent:', error)
-    return NextResponse.json({ error: 'Failed to create payment intent' }, { status: 500 })
+    return NextResponse.json({ error: error.message || 'Failed to create payment intent' }, { status: 500 })
   }
 }

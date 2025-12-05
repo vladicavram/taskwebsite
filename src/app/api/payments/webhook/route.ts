@@ -2,9 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '../../../../lib/prisma'
 import Stripe from 'stripe'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-11-17.clover'
-})
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
