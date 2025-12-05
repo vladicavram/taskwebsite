@@ -124,16 +124,17 @@ export default function PurchaseCreditsPage() {
         })
       })
 
-      if (res.ok) {
-        const data = await res.json()
+      const data = await res.json()
+      
+      if (res.ok && data.clientSecret) {
         setClientSecret(data.clientSecret)
         setShowPayment(true)
       } else {
-        throw new Error('Failed to create payment intent')
+        throw new Error(data.error || 'Failed to create payment intent')
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Purchase error:', error)
-      alert('Failed to process payment. Please try again.')
+      alert(`Payment error: ${error.message || 'Please try again.'}`)
     } finally {
       setProcessing(false)
     }
