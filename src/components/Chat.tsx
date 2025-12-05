@@ -103,10 +103,10 @@ export default function Chat({ applicationId, taskId, receiverId, receiverName }
     const hours = Math.floor(diff / 3600000)
     const days = Math.floor(diff / 86400000)
 
-    if (minutes < 1) return 'Just now'
-    if (minutes < 60) return `${minutes}m ago`
-    if (hours < 24) return `${hours}h ago`
-    if (days < 7) return `${days}d ago`
+    if (minutes < 1) return t('chat.justNow') || 'Just now'
+    if (minutes < 60) return `${minutes}${t('chat.minutesAgo')?.includes('{{count}}') ? t('chat.minutesAgo').replace('{{count}}', String(minutes)) : 'm ago'}`
+    if (hours < 24) return `${hours}${t('chat.hoursAgo')?.includes('{{count}}') ? t('chat.hoursAgo').replace('{{count}}', String(hours)) : 'h ago'}`
+    if (days < 7) return `${days}${t('chat.daysAgo')?.includes('{{count}}') ? t('chat.daysAgo').replace('{{count}}', String(days)) : 'd ago'}`
     return date.toLocaleDateString()
   }
 
@@ -128,7 +128,7 @@ export default function Chat({ applicationId, taskId, receiverId, receiverName }
         borderBottom: '1px solid var(--border)',
         background: 'var(--bg-secondary)'
       }}>
-        <h3 style={{ margin: 0, fontSize: '1.1rem' }}>💬 Chat with {receiverName}</h3>
+        <h3 style={{ margin: 0, fontSize: '1.1rem' }}>💬 {t('chat.chatWith') || 'Chat with'} {receiverName}</h3>
       </div>
 
       {/* Messages Area */}
@@ -147,7 +147,7 @@ export default function Chat({ applicationId, taskId, receiverId, receiverName }
             color: 'var(--text-muted)'
           }}>
             <div style={{ fontSize: '3rem', marginBottom: '12px' }}>💬</div>
-            <p>No messages yet. Start the conversation!</p>
+            <p>{t('chat.noMessages') || 'No messages yet. Start the conversation!'}</p>
           </div>
         ) : (
           messages.map((msg) => {
@@ -197,7 +197,7 @@ export default function Chat({ applicationId, taskId, receiverId, receiverName }
             type="text"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
-            placeholder="Type a message..."
+            placeholder={t('chat.typePlaceholder') || "Type a message..."}
             disabled={loading}
             style={{
               flex: 1,
@@ -217,7 +217,7 @@ export default function Chat({ applicationId, taskId, receiverId, receiverName }
               cursor: loading || !newMessage.trim() ? 'not-allowed' : 'pointer'
             }}
           >
-            {loading ? '...' : 'Send'}
+            {loading ? '...' : (t('chat.send') || 'Send')}
           </button>
         </div>
       </form>

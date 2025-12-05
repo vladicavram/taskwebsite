@@ -100,7 +100,33 @@
   "footer.about": "О нас",
   "footer.contact": "Контакты",
   "footer.terms": "Условия",
-  "footer.privacy": "Конфиденциальность"
+  "footer.privacy": "Конфиденциальность",
+  "footer.discover": "Открыть",
+  "footer.browseTasks": "Просмотреть Задачи",
+  "footer.becomeTasker": "Стать Исполнителем",
+  "footer.servicesByCity": "Услуги по Городам",
+  "footer.allServices": "Все Услуги",
+  "footer.eliteTaskers": "Элитные Исполнители",
+  "footer.company": "Компания",
+  "footer.aboutUs": "О Нас",
+  "footer.careers": "Карьера",
+  "footer.press": "Пресса",
+  "footer.blog": "Блог",
+  "footer.partnerWithUs": "Сотрудничество",
+  "footer.support": "Поддержка",
+  "footer.helpCenter": "Центр Помощи",
+  "footer.safety": "Безопасность",
+  "footer.contactUs": "Связаться с Нами",
+  "footer.communityGuidelines": "Правила Сообщества",
+  "footer.trustSafety": "Доверие и Безопасность",
+  "footer.downloadApp": "Скачайте наше приложение",
+  "footer.tackleToDoList": "Решайте свои задачи где бы вы ни были",
+  "footer.downloadOn": "Скачать в",
+  "footer.getItOn": "Скачать в",
+  "footer.followUs": "Подписывайтесь! Мы дружелюбные:",
+  "footer.allRightsReserved": "© 2025 Dozo. Все права защищены.",
+  "footer.legal": "Правовая информация",
+  "footer.doNotSell": "Не продавайте мои данные"
   ,"header.account": "Аккаунт"
   ,"header.logout": "Выйти"
   ,"header.credits.title": "Ваши Кредиты"
@@ -248,4 +274,45 @@
   ,"taskDetail.alreadyAccepted": "✓ Вы приняты на это задание"
   ,"taskDetail.markCompleted": "Отметить как выполнено (+0.1 кредита)"
   ,"taskDetail.completedSuccess": "✓ Вы выполнили это задание"
+  ,"chat.chatWith": "Чат с"
+  ,"chat.noMessages": "Пока нет сообщений. Начните разговор!"
+  ,"chat.typePlaceholder": "Напишите сообщение..."
+  ,"chat.send": "Отправить"
+  ,"chat.justNow": "Только что"
+  ,"chat.minutesAgo": "{{count}}м назад"
+  ,"chat.hoursAgo": "{{count}}ч назад"
+  ,"chat.daysAgo": "{{count}}д назад"
+  ,"messages.title": "Сообщения"
+  ,"messages.subtitle": "Ваши разговоры с создателями и исполнителями задач"
+  ,"messages.loading": "Загрузка сообщений..."
+  ,"messages.noConversations": "Пока нет разговоров"
+  ,"messages.noConversationsText": "Разговоры начинаются когда вы принимаете или вас принимают на задачу"
+  ,"messages.browseTasks": "Просмотреть Задачи"
+  ,"login.subtitle": "Добро пожаловать! Войдите в свой аккаунт Dozo"
+  ,"login.successPending": "Аккаунт успешно создан! Ваш аккаунт ожидает одобрения администратора. Пожалуйста, войдите."
+  ,"login.success": "Аккаунт успешно создан! Пожалуйста, войдите."
+  ,"login.blocked": "Ваш аккаунт заблокирован. Пожалуйста, свяжитесь с администратором."
+  ,"login.invalidCredentials": "Неверный логин/email или пароль"
+  ,"login.error": "Произошла ошибка. Пожалуйста, попробуйте снова."
+  ,"login.contactAdmin": "Связаться с Админом"
+  ,"login.contactFrom": "От (ваш email или контакт):"
+  ,"login.contactDescription": "Описание:"
+  ,"login.sendMessage": "Отправить Сообщение"
+  ,"login.messageSent": "Сообщение отправлено! Админ рассмотрит ваш запрос."
+  ,"login.messageFailed": "Не удалось отправить сообщение. Попробуйте позже."
+  ,"login.usernameOrEmail": "Имя пользователя или Email"
+  ,"login.password": "Пароль"
+  ,"login.signingIn": "Вход..."
+  ,"login.signIn": "Войти"
+  ,"login.noAccount": "Нет аккаунта?"
+  ,"login.createAccount": "Создайте сейчас"
+  ,"panel.myTasks": "Мои Задачи"
+  ,"panel.postTask": "Создать Задачу"
+  ,"panel.messages": "Сообщения"
+  ,"panel.notifications": "Уведомления"
+  ,"panel.account": "Настройки Аккаунта"
+  ,"panel.logout": "Выйти"
+  ,"header.adminPanel": "Панель Админа"
+  ,"admin.backToHome": "На Главную"
+  ,"application.backToAccount": "Назад в Аккаунт"
  }

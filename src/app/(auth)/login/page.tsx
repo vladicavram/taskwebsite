@@ -25,9 +25,9 @@ function LoginContent() {
   useEffect(() => {
     if (searchParams.get('registered') === 'true') {
       if (searchParams.get('pending') === 'true') {
-        setSuccessMessage('Account created successfully! Your account is pending admin approval before you can apply for tasks. Please log in.')
+        setSuccessMessage(t('login.successPending') || 'Account created successfully! Your account is pending admin approval before you can apply for tasks. Please log in.')
       } else {
-        setSuccessMessage('Account created successfully! Please log in.')
+        setSuccessMessage(t('login.success') || 'Account created successfully! Please log in.')
       }
     }
   }, [searchParams])
@@ -48,9 +48,9 @@ function LoginContent() {
         if (result.error === 'USER_BLOCKED') {
           setBlocked(true)
           setContactOpen(true)
-          setError('Your account has been blocked. Please contact the admin.')
+          setError(t('login.blocked') || 'Your account has been blocked. Please contact the admin.')
         } else {
-          setError('Invalid username/email or password')
+          setError(t('login.invalidCredentials') || 'Invalid username/email or password')
         }
         setLoading(false)
         return
@@ -59,7 +59,7 @@ function LoginContent() {
       // Redirect to tasks browser on success
       router.push(`/${locale}/tasks`)
     } catch (err) {
-      setError('An error occurred. Please try again.')
+      setError(t('login.error') || 'An error occurred. Please try again.')
       setLoading(false)
     }
   }
@@ -74,13 +74,13 @@ function LoginContent() {
         body: JSON.stringify({ from: contactFrom, description: contactDesc, usernameOrEmail })
       })
       if (res.ok) {
-        setContactStatus('Message sent! The admin will review your request.')
+        setContactStatus(t('login.messageSent') || 'Message sent! The admin will review your request.')
         setContactOpen(false)
       } else {
-        setContactStatus('Failed to send message. Please try again later.')
+        setContactStatus(t('login.messageFailed') || 'Failed to send message. Please try again later.')
       }
     } catch {
-      setContactStatus('Failed to send message. Please try again later.')
+      setContactStatus(t('login.messageFailed') || 'Failed to send message. Please try again later.')
     }
   }
 
@@ -96,7 +96,7 @@ function LoginContent() {
             {t('auth.login') || 'Sign In'}
           </h1>
           <p style={{ fontSize: '1.1rem', opacity: 0.95 }}>
-            Welcome back! Log in to your Dozo account
+            {t('login.subtitle') || 'Welcome back! Log in to your Dozo account'}
           </p>
         </div>
       </section>
@@ -130,7 +130,7 @@ function LoginContent() {
                 <>
                   <br />
                   <button type="button" className="btn" style={{marginTop:8}} onClick={() => setContactOpen(true)}>
-                    Contact Admin
+                    {t('login.contactAdmin') || 'Contact Admin'}
                   </button>
                 </>
               )}
@@ -139,17 +139,17 @@ function LoginContent() {
       {/* Blocked user contact modal */}
       {contactOpen && (
         <Modal onClose={() => setContactOpen(false)}>
-          <h2>Contact Admin</h2>
+          <h2>{t('login.contactAdmin') || 'Contact Admin'}</h2>
           <form onSubmit={sendContact} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <label>
-              From (your email or contact):
+              {t('login.contactFrom') || 'From (your email or contact):'}
               <input type="text" value={contactFrom} onChange={e => setContactFrom(e.target.value)} required />
             </label>
             <label>
-              Description:
+              {t('login.contactDescription') || 'Description:'}
               <textarea value={contactDesc} onChange={e => setContactDesc(e.target.value)} required rows={4} />
             </label>
-            <button type="submit" className="btn">Send Message</button>
+            <button type="submit" className="btn">{t('login.sendMessage') || 'Send Message'}</button>
             {contactStatus && <div style={{color:'green'}}>{contactStatus}</div>}
           </form>
         </Modal>
@@ -163,7 +163,7 @@ function LoginContent() {
                 marginBottom: '8px',
                 color: 'var(--text)'
               }}>
-                Username or Email
+                {t('login.usernameOrEmail') || 'Username or Email'}
               </label>
               <input 
                 type="text"
@@ -181,7 +181,7 @@ function LoginContent() {
                 marginBottom: '8px',
                 color: 'var(--text)'
               }}>
-                Password
+                {t('login.password') || 'Password'}
               </label>
               <input 
                 type="password"
@@ -201,13 +201,13 @@ function LoginContent() {
                 cursor: loading ? 'not-allowed' : 'pointer'
               }}
             >
-              {loading ? 'Signing in...' : 'Sign In'}
+              {loading ? (t('login.signingIn') || 'Signing in...') : (t('login.signIn') || 'Sign In')}
             </button>
 
             <p style={{ textAlign: 'center', color: 'var(--text-secondary)' }}>
-              Don't have an account?{' '}
+              {t('login.noAccount') || "Don't have an account?"}{' '}
               <a href={`/${locale}/profile/create`} style={{ color: 'var(--accent)', textDecoration: 'underline' }}>
-                Create Profile
+                {t('login.createAccount') || 'Create one now'}
               </a>
             </p>
           </form>

@@ -10,7 +10,7 @@ const locales = [
 export default function LanguageSwitcher() {
   const router = useRouter()
   const pathname = usePathname()
-  const currentLocale = pathname?.split('/')[1] || 'en'
+  const currentLocale = pathname?.split('/')[1] || 'ro'
 
   const switchLocale = (newLocale: string) => {
     if (pathname) {

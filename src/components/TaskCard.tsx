@@ -17,7 +17,7 @@ export default function TaskCard({ id, title, description, price, category, imag
   const { data: session } = useSession()
   const router = useRouter()
   const pathname = usePathname()
-  const locale = pathname?.split('/')[1] || 'en'
+  const locale = pathname?.split('/')[1] || 'ro'
   const { t } = useLocale()
 
   function handleViewDetails(e: React.MouseEvent) {

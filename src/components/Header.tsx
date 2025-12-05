@@ -274,7 +274,7 @@ export default function Header() {
                         onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--bg-secondary)' }}
                         onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
                       >
-                        ⚙️ Admin Panel
+                        ⚙️ {t('header.adminPanel') || 'Admin Panel'}
                       </Link>
                     )}
                     <Link

@@ -116,12 +116,12 @@ export default function HomePage() {
           gap: '24px'
         }}>
           {[
-            { Icon: Hammer, name: t('home.project.furnitureAssembly') || 'Furniture Assembly', price: 900 },
-            { Icon: Monitor, name: t('home.project.mountTV') || 'Mount a TV', price: 1200 },
-            { Icon: Truck, name: t('home.project.moving') || 'Help Moving', price: 1100 },
-            { Icon: Sparkles, name: t('home.project.cleaning') || 'Home Cleaning', price: 900 },
-            { Icon: Wrench, name: t('home.project.repairs') || 'Minor Repairs', price: 1300 },
-            { Icon: ImageIcon, name: t('home.project.hangPictures') || 'Hang Pictures', price: 1100 },
+            { Icon: Hammer, name: t('home.project.furnitureAssembly') || 'Furniture Assembly', price: 90 },
+            { Icon: Monitor, name: t('home.project.mountTV') || 'Mount a TV', price: 120 },
+            { Icon: Truck, name: t('home.project.moving') || 'Help Moving', price: 110 },
+            { Icon: Sparkles, name: t('home.project.cleaning') || 'Home Cleaning', price: 90 },
+            { Icon: Wrench, name: t('home.project.repairs') || 'Minor Repairs', price: 130 },
+            { Icon: ImageIcon, name: t('home.project.hangPictures') || 'Hang Pictures', price: 110 },
           ].map((project) => (
             <Link 
               key={project.name}

@@ -100,7 +100,33 @@
   "footer.about": "Despre",
   "footer.contact": "Contact",
   "footer.terms": "Termeni",
-  "footer.privacy": "Confidențialitate"
+  "footer.privacy": "Confidențialitate",
+  "footer.discover": "Descoperă",
+  "footer.browseTasks": "Răsfoiește Sarcinile",
+  "footer.becomeTasker": "Devino Tasker",
+  "footer.servicesByCity": "Servicii după Oraș",
+  "footer.allServices": "Toate Serviciile",
+  "footer.eliteTaskers": "Taskeri de Elită",
+  "footer.company": "Companie",
+  "footer.aboutUs": "Despre Noi",
+  "footer.careers": "Cariere",
+  "footer.press": "Presă",
+  "footer.blog": "Blog",
+  "footer.partnerWithUs": "Colaborează cu Noi",
+  "footer.support": "Suport",
+  "footer.helpCenter": "Centru de Ajutor",
+  "footer.safety": "Siguranță",
+  "footer.contactUs": "Contactează-ne",
+  "footer.communityGuidelines": "Ghid Comunitate",
+  "footer.trustSafety": "Încredere și Siguranță",
+  "footer.downloadApp": "Descarcă aplicația noastră",
+  "footer.tackleToDoList": "Rezolvă-ți lista de sarcini oriunde te-ai afla",
+  "footer.downloadOn": "Descarcă de pe",
+  "footer.getItOn": "Obține de pe",
+  "footer.followUs": "Urmărește-ne! Suntem prietenoși:",
+  "footer.allRightsReserved": "© 2025 Dozo. Toate drepturile rezervate.",
+  "footer.legal": "Legal",
+  "footer.doNotSell": "Nu Vinde Informațiile Mele"
   ,"header.account": "Cont"
   ,"header.logout": "Deconectare"
   ,"header.credits.title": "Creditele Tale"
@@ -248,4 +274,45 @@
   ,"taskDetail.alreadyAccepted": "✓ Ești acceptat pentru această sarcină"
   ,"taskDetail.markCompleted": "Marchează ca Finalizat (+0.1 credite)"
   ,"taskDetail.completedSuccess": "✓ Ai finalizat această sarcină"
+  ,"chat.chatWith": "Conversație cu"
+  ,"chat.noMessages": "Încă nu sunt mesaje. Începe conversația!"
+  ,"chat.typePlaceholder": "Scrie un mesaj..."
+  ,"chat.send": "Trimite"
+  ,"chat.justNow": "Chiar acum"
+  ,"chat.minutesAgo": "acum {{count}}m"
+  ,"chat.hoursAgo": "acum {{count}}h"
+  ,"chat.daysAgo": "acum {{count}}z"
+  ,"messages.title": "Mesaje"
+  ,"messages.subtitle": "Conversațiile tale cu creatorii și aplicanții sarcinilor"
+  ,"messages.loading": "Se încarcă mesajele..."
+  ,"messages.noConversations": "Încă nu există conversații"
+  ,"messages.noConversationsText": "Conversațiile încep când accepți sau ești acceptat pentru o sarcină"
+  ,"messages.browseTasks": "Răsfoiește Sarcinile"
+  ,"login.subtitle": "Bine ai revenit! Autentifică-te în contul tău Dozo"
+  ,"login.successPending": "Contul a fost creat cu succes! Contul tău așteaptă aprobarea adminului înainte de a putea aplica la sarcini. Te rugăm să te autentifici."
+  ,"login.success": "Contul a fost creat cu succes! Te rugăm să te autentifici."
+  ,"login.blocked": "Contul tău a fost blocat. Te rugăm să contactezi adminul."
+  ,"login.invalidCredentials": "Nume de utilizator/email sau parolă invalidă"
+  ,"login.error": "A apărut o eroare. Te rugăm să încerci din nou."
+  ,"login.contactAdmin": "Contactează Adminul"
+  ,"login.contactFrom": "De la (emailul sau contactul tău):"
+  ,"login.contactDescription": "Descriere:"
+  ,"login.sendMessage": "Trimite Mesaj"
+  ,"login.messageSent": "Mesajul a fost trimis! Adminul va revizui solicitarea ta."
+  ,"login.messageFailed": "Nu s-a putut trimite mesajul. Te rugăm să încerci mai târziu."
+  ,"login.usernameOrEmail": "Nume utilizator sau Email"
+  ,"login.password": "Parolă"
+  ,"login.signingIn": "Se autentifică..."
+  ,"login.signIn": "Autentificare"
+  ,"login.noAccount": "Nu ai un cont?"
+  ,"login.createAccount": "Creează unul acum"
+  ,"panel.myTasks": "Sarcinile Mele"
+  ,"panel.postTask": "Postează o Sarcină"
+  ,"panel.messages": "Mesaje"
+  ,"panel.notifications": "Notificări"
+  ,"panel.account": "Setări Cont"
+  ,"panel.logout": "Deconectare"
+  ,"header.adminPanel": "Panou Admin"
+  ,"admin.backToHome": "Înapoi Acasă"
+  ,"application.backToAccount": "Înapoi la Cont"
  }

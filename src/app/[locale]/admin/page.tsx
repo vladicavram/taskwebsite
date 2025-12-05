@@ -2,8 +2,14 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { getTranslation } from '../../../lib/locale'
 
 export default function AdminPage() {
+  const pathname = usePathname()
+  const locale = pathname?.split('/')[1] || 'ro'
+  const t = (key: string) => getTranslation(locale, key)
+  
   const [activeTab, setActiveTab] = useState<'users' | 'tasks'>('users')
   const [users, setUsers] = useState<any[]>([])
   const [tasks, setTasks] = useState<any[]>([])
@@ -180,8 +186,8 @@ export default function AdminPage() {
   return (
     <div className="container" style={{ maxWidth: 1200, paddingTop: 24 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-        <h1 style={{ margin: 0 }}>Admin Panel</h1>
-        <Link href="/" className="btn btn-secondary">Back to Home</Link>
+        <h1 style={{ margin: 0 }}>{t('header.adminPanel') || 'Admin Panel'}</h1>
+        <Link href={`/${locale}`} className="btn btn-secondary">{t('admin.backToHome') || 'Back to Home'}</Link>
       </div>
 
       {/* Tabs */}

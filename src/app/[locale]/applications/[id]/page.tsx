@@ -6,11 +6,13 @@ import { useSession } from 'next-auth/react'
 import Chat from '../../../../components/Chat'
 import { MessageCircle, User, Mail, Phone } from 'lucide-react'
 import { CURRENCY_SYMBOL } from '../../../../lib/constants'
+import useLocale from '../../../../lib/locale'
 
 export default function ApplicationDetailPage() {
   const params = useParams()
   const router = useRouter()
   const { data: session } = useSession()
+  const { t, locale } = useLocale()
   const [application, setApplication] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -18,7 +20,7 @@ export default function ApplicationDetailPage() {
   const [counterOfferPrice, setCounterOfferPrice] = useState('')
   const [showCounterOffer, setShowCounterOffer] = useState(false)
   const [offerSent, setOfferSent] = useState(false)
-  const locale = params?.locale || 'en'
+  const locale = params?.locale || 'ro'
   const applicationId = params?.id
 
   useEffect(() => {
@@ -114,9 +116,9 @@ export default function ApplicationDetailPage() {
       <div className="container">
         <div className="card" style={{ textAlign: 'center', padding: '64px 24px', marginTop: '48px' }}>
           <div style={{ fontSize: '4rem', marginBottom: '16px' }}>❌</div>
-          <h2>{error || 'Application not found'}</h2>
+          <h2>{error || (t('application.notFound') || 'Application not found')}</h2>
           <Link href={`/${locale}/profile/account`} className="btn" style={{ marginTop: '24px' }}>
-            Back to Account
+            {t('application.backToAccount') || 'Back to Account'}
           </Link>
         </div>
       </div>

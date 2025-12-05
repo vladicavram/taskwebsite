@@ -7,7 +7,7 @@ import { MOLDOVA_CITIES } from '../../../../lib/constants'
 export default function CreateProfilePage() {
   const router = useRouter()
   const pathname = usePathname()
-  const locale = pathname?.split('/')[1] || 'en'
+  const locale = pathname?.split('/')[1] || 'ro'
   
   const [formData, setFormData] = useState({
     username: '',

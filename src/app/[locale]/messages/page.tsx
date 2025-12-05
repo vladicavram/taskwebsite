@@ -9,7 +9,7 @@ import { MessageCircle } from 'lucide-react'
 export default function MessagesPage() {
   const { data: session } = useSession()
   const router = useRouter()
-  const { locale } = useLocale()
+  const { locale, t } = useLocale()
   const [conversations, setConversations] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -43,10 +43,10 @@ export default function MessagesPage() {
     const hours = Math.floor(diff / 3600000)
     const days = Math.floor(diff / 86400000)
 
-    if (minutes < 1) return 'Just now'
-    if (minutes < 60) return `${minutes}m ago`
-    if (hours < 24) return `${hours}h ago`
-    if (days < 7) return `${days}d ago`
+    if (minutes < 1) return t('chat.justNow') || 'Just now'
+    if (minutes < 60) return `${minutes}m`
+    if (hours < 24) return `${hours}h`
+    if (days < 7) return `${days}d`
     return date.toLocaleDateString()
   }
 
@@ -54,7 +54,7 @@ export default function MessagesPage() {
     return (
       <div className="container" style={{ padding: '64px 24px', textAlign: 'center' }}>
         <div style={{ fontSize: '3rem', marginBottom: '16px' }}>⏳</div>
-        <p>Loading messages...</p>
+        <p>{t('messages.loading') || 'Loading messages...'}</p>
       </div>
     )
   }
@@ -68,10 +68,10 @@ export default function MessagesPage() {
         <div className="container">
           <h1 style={{ fontSize: '2.5rem', marginBottom: '12px', color: 'var(--text)', display: 'flex', alignItems: 'center', gap: '10px' }}>
             <MessageCircle size={28} />
-            Messages
+            {t('messages.title') || 'Messages'}
           </h1>
           <p style={{ fontSize: '1.1rem', opacity: 0.95 }}>
-            Your conversations with task creators and applicants
+            {t('messages.subtitle') || 'Your conversations with task creators and applicants'}
           </p>
         </div>
       </section>
@@ -80,12 +80,12 @@ export default function MessagesPage() {
         {conversations.length === 0 ? (
           <div className="card" style={{ padding: '64px 24px', textAlign: 'center' }}>
             <div style={{ fontSize: '4rem', marginBottom: '16px' }}>💬</div>
-            <h3 style={{ marginBottom: '8px' }}>No conversations yet</h3>
+            <h3 style={{ marginBottom: '8px' }}>{t('messages.noConversations') || 'No conversations yet'}</h3>
             <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>
-              Conversations start when you accept or get accepted for a task
+              {t('messages.noConversationsText') || 'Conversations start when you accept or get accepted for a task'}
             </p>
             <Link href={`/${locale}/tasks`} className="btn">
-              Browse Tasks
+              {t('messages.browseTasks') || 'Browse Tasks'}
             </Link>
           </div>
         ) : (

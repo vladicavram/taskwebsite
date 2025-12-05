@@ -7,10 +7,10 @@ import messagesRu from '../../messages/ru.json'
 const locales = ['en', 'ro', 'ru']
 
 export function detectLocale(pathname: string | null | undefined) {
-  if (!pathname) return 'en'
+  if (!pathname) return 'ro'
   const seg = pathname.split('/').filter(Boolean)[0]
   if (locales.includes(seg || '')) return seg
-  return 'en'
+  return 'ro'
 }
 
 export default function useLocale() {

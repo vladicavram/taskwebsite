@@ -100,7 +100,33 @@
   "footer.about": "About",
   "footer.contact": "Contact",
   "footer.terms": "Terms",
-  "footer.privacy": "Privacy"
+  "footer.privacy": "Privacy",
+  "footer.discover": "Discover",
+  "footer.browseTasks": "Browse Tasks",
+  "footer.becomeTasker": "Become a Tasker",
+  "footer.servicesByCity": "Services by City",
+  "footer.allServices": "All Services",
+  "footer.eliteTaskers": "Elite Taskers",
+  "footer.company": "Company",
+  "footer.aboutUs": "About Us",
+  "footer.careers": "Careers",
+  "footer.press": "Press",
+  "footer.blog": "Blog",
+  "footer.partnerWithUs": "Partner with Us",
+  "footer.support": "Support",
+  "footer.helpCenter": "Help Center",
+  "footer.safety": "Safety",
+  "footer.contactUs": "Contact Us",
+  "footer.communityGuidelines": "Community Guidelines",
+  "footer.trustSafety": "Trust & Safety",
+  "footer.downloadApp": "Download our app",
+  "footer.tackleToDoList": "Tackle your to-do list wherever you are",
+  "footer.downloadOn": "Download on the",
+  "footer.getItOn": "Get it on",
+  "footer.followUs": "Follow us! We're friendly:",
+  "footer.allRightsReserved": "© 2025 Dozo. All rights reserved.",
+  "footer.legal": "Legal",
+  "footer.doNotSell": "Do Not Sell My Info"
   ,"header.account": "Account"
   ,"header.logout": "Log out"
   ,"header.credits.title": "Your Credits"
@@ -248,4 +274,45 @@
   ,"taskDetail.alreadyAccepted": "✓ You are accepted for this task"
   ,"taskDetail.markCompleted": "Mark as Completed (+0.1 credits)"
   ,"taskDetail.completedSuccess": "✓ You have completed this task"
+  ,"chat.chatWith": "Chat with"
+  ,"chat.noMessages": "No messages yet. Start the conversation!"
+  ,"chat.typePlaceholder": "Type a message..."
+  ,"chat.send": "Send"
+  ,"chat.justNow": "Just now"
+  ,"chat.minutesAgo": "{{count}}m ago"
+  ,"chat.hoursAgo": "{{count}}h ago"
+  ,"chat.daysAgo": "{{count}}d ago"
+  ,"messages.title": "Messages"
+  ,"messages.subtitle": "Your conversations with task creators and applicants"
+  ,"messages.loading": "Loading messages..."
+  ,"messages.noConversations": "No conversations yet"
+  ,"messages.noConversationsText": "Conversations start when you accept or get accepted for a task"
+  ,"messages.browseTasks": "Browse Tasks"
+  ,"login.subtitle": "Welcome back! Log in to your Dozo account"
+  ,"login.successPending": "Account created successfully! Your account is pending admin approval before you can apply for tasks. Please log in."
+  ,"login.success": "Account created successfully! Please log in."
+  ,"login.blocked": "Your account has been blocked. Please contact the admin."
+  ,"login.invalidCredentials": "Invalid username/email or password"
+  ,"login.error": "An error occurred. Please try again."
+  ,"login.contactAdmin": "Contact Admin"
+  ,"login.contactFrom": "From (your email or contact):"
+  ,"login.contactDescription": "Description:"
+  ,"login.sendMessage": "Send Message"
+  ,"login.messageSent": "Message sent! The admin will review your request."
+  ,"login.messageFailed": "Failed to send message. Please try again later."
+  ,"login.usernameOrEmail": "Username or Email"
+  ,"login.password": "Password"
+  ,"login.signingIn": "Signing in..."
+  ,"login.signIn": "Sign In"
+  ,"login.noAccount": "Don't have an account?"
+  ,"login.createAccount": "Create one now"
+  ,"panel.myTasks": "My Tasks"
+  ,"panel.postTask": "Post a Task"
+  ,"panel.messages": "Messages"
+  ,"panel.notifications": "Notifications"
+  ,"panel.account": "Account Settings"
+  ,"panel.logout": "Log out"
+  ,"header.adminPanel": "Admin Panel"
+  ,"admin.backToHome": "Back to Home"
+  ,"application.backToAccount": "Back to Account"
  }
