@@ -285,7 +285,7 @@ export default function PurchaseCreditsPage() {
             🔒 Secure payment powered by Stripe
           </p>
           <p>
-            Credits never expire and can be used for any task on TaskHub
+            Credits never expire and can be used for any task on Dozo
           </p>
         </div>
       </div>

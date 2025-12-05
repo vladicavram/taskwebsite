@@ -191,7 +191,7 @@ export default function Footer() {
           color: 'rgba(255,255,255,0.6)'
         }}>
           <div>
-            © 2025 TaskHub. All rights reserved.
+            © 2025 Dozo. All rights reserved.
           </div>
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
             <Link href="#" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>

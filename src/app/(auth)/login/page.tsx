@@ -92,7 +92,7 @@ function LoginContent() {
             {t('auth.login') || 'Sign In'}
           </h1>
           <p style={{ fontSize: '1.1rem', opacity: 0.95 }}>
-            Welcome back! Log in to your TaskHub account
+            Welcome back! Log in to your Dozo account
           </p>
         </div>
       </section>

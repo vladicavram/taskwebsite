@@ -176,7 +176,7 @@ export default function Header() {
               color: 'var(--text)'
             }}
           >
-            TaskHub
+            Dozo
           </Link>
         </div>
         <nav style={{ 
