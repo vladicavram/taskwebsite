@@ -185,6 +185,11 @@ export default function CreateProfilePage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
+    // Only submit on step 3
+    if (step !== 3) {
+      return
+    }
+    
     if (age < 18) {
       setError('You must be at least 18 years old to create a profile.')
       return
@@ -197,6 +202,12 @@ export default function CreateProfilePage() {
     
     if (formData.password.length < 8) {
       setError('Password must be at least 8 characters long.')
+      return
+    }
+    
+    // Verify ID and selfie are uploaded
+    if (!idFile || !selfieFile) {
+      setError('Please go back and upload your ID and selfie.')
       return
     }
     
