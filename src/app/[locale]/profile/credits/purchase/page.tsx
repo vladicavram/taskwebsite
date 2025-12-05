@@ -7,10 +7,10 @@ import { Coins, CreditCard, Check } from 'lucide-react'
 import { CURRENCY_SYMBOL } from '../../../../../lib/constants'
 
 const CREDIT_PACKAGES = [
-  { amount: 1, price: 90, popular: false },
-  { amount: 5, price: 405, popular: true, save: '10%' },
-  { amount: 10, price: 720, popular: false, save: '20%' },
-  { amount: 25, price: 1687, popular: false, save: '25%' }
+  { amount: 1, price: 10, popular: false },
+  { amount: 5, price: 45, popular: true, save: '10%' },
+  { amount: 10, price: 80, popular: false, save: '20%' },
+  { amount: 25, price: 187, popular: false, save: '25%' }
 ]
 
 export default function PurchaseCreditsPage() {
