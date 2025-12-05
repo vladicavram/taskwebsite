@@ -98,7 +98,16 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                 <div style={{ padding: '12px', background: 'var(--accent-light)', border: '1px solid var(--accent)', borderRadius: 'var(--radius-sm)', color: 'var(--accent)', fontWeight: 500, marginBottom: '12px' }}>{getTranslation(params.locale, 'taskDetail.yourTask') || '✓ This is your task'}</div>
               )}
 
-              <h1 style={{ fontSize: '2.5rem', marginBottom: '24px' }}>{task.title}</h1>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', marginBottom: '24px', flexWrap: 'wrap' }}>
+                <h1 style={{ fontSize: '2.5rem', margin: 0 }}>{task.title}</h1>
+                <Link 
+                  href={`/${params.locale}/tasks/create?copy=${task.id}`} 
+                  className="btn btn-secondary" 
+                  style={{ whiteSpace: 'nowrap', fontSize: '0.875rem' }}
+                >
+                  {getTranslation(params.locale, 'taskDetail.postSimilarTask') || '📋 Post Similar Task'}
+                </Link>
+              </div>
 
               {(images.length > 0 || (isCreator && !completedAt)) && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px', flexWrap: 'wrap' }}>
@@ -350,15 +359,6 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
               )}
               <Link href={`/${params.locale}/profile/${task.creator.id}`} className="btn btn-secondary" style={{ width: '100%', textAlign: 'center' }}>
                 {getTranslation(params.locale, 'taskDetail.viewProfile') || 'View Profile'}
-              </Link>
-              
-              {/* Post Similar Task Button */}
-              <Link 
-                href={`/${params.locale}/tasks/create?copy=${task.id}`} 
-                className="btn" 
-                style={{ width: '100%', textAlign: 'center', marginTop: '12px' }}
-              >
-                {getTranslation(params.locale, 'taskDetail.postSimilarTask') || '📋 Post Similar Task'}
               </Link>
             </div>
           </div>
