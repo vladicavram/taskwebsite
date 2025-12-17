@@ -23,18 +23,25 @@
   --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.12);
   --radius: 10px;
   --radius-sm: 8px;
-  /* Moldovan-inspired soft textile motif */
+  /* Moldovan-inspired textile motif (denser, carpet-like but muted) */
   --bg-pattern: 
-    radial-gradient(circle at 18% 20%, rgba(185, 149, 86, 0.14) 0, rgba(185, 149, 86, 0.14) 8px, transparent 10px),
-    radial-gradient(circle at 78% 18%, rgba(111, 135, 166, 0.12) 0, rgba(111, 135, 166, 0.12) 7px, transparent 10px),
-    radial-gradient(circle at 35% 78%, rgba(199, 179, 154, 0.12) 0, rgba(199, 179, 154, 0.12) 6px, transparent 10px),
+    radial-gradient(circle at 18% 20%, rgba(185, 149, 86, 0.22) 0, rgba(185, 149, 86, 0.22) 8px, transparent 12px),
+    radial-gradient(circle at 78% 18%, rgba(111, 135, 166, 0.18) 0, rgba(111, 135, 166, 0.18) 9px, transparent 13px),
+    radial-gradient(circle at 35% 78%, rgba(199, 179, 154, 0.18) 0, rgba(199, 179, 154, 0.18) 8px, transparent 12px),
     repeating-linear-gradient(135deg,
+      rgba(185, 149, 86, 0.12) 0,
+      rgba(185, 149, 86, 0.12) 18px,
+      rgba(111, 135, 166, 0.10) 18px,
+      rgba(111, 135, 166, 0.10) 36px,
+      rgba(199, 179, 154, 0.12) 36px,
+      rgba(199, 179, 154, 0.12) 54px),
+    repeating-linear-gradient(45deg,
       rgba(185, 149, 86, 0.06) 0,
-      rgba(185, 149, 86, 0.06) 28px,
-      rgba(111, 135, 166, 0.05) 28px,
-      rgba(111, 135, 166, 0.05) 56px,
-      rgba(199, 179, 154, 0.06) 56px,
-      rgba(199, 179, 154, 0.06) 84px);
+      rgba(185, 149, 86, 0.06) 10px,
+      rgba(111, 135, 166, 0.06) 10px,
+      rgba(111, 135, 166, 0.06) 20px,
+      rgba(199, 179, 154, 0.06) 20px,
+      rgba(199, 179, 154, 0.06) 30px);
   /* Liquid hero background (updated to match palette) */
   --hero-bg: radial-gradient(1200px 800px at 10% -10%, rgba(245,241,234,0.8) 0%, rgba(245,241,234,0) 40%),
               radial-gradient(900px 600px at 90% 0%, rgba(185,149,86,0.18) 0%, rgba(185,149,86,0) 45%),
@@ -49,7 +56,7 @@ html, body {
 body {
   background-color: var(--bg);
   background-image: var(--bg-pattern);
-  background-size: 420px 420px, 420px 420px, 380px 380px, 240px 240px;
+  background-size: 380px 380px, 360px 360px, 340px 340px, 180px 180px, 120px 120px;
   background-attachment: fixed;
   color: var(--text);
   -webkit-font-smoothing: antialiased;
