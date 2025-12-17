@@ -330,7 +330,7 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
               <h4 style={{ marginBottom: '16px' }}>{getTranslation(params.locale, 'taskDetail.postedBy') || 'Posted By'}</h4>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
                 <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'var(--accent-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', fontWeight: 600, color: 'var(--accent)' }}>
-                  {(task.creator.name || task.creator.email || 'U')[0].toUpperCase()}
+                  {(task.creator.name || (task.creator as any).username || 'U')[0].toUpperCase()}
                 </div>
                 <div>
                   <div style={{ fontWeight: 600, marginBottom: '4px' }}>
@@ -348,7 +348,6 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                       )
                     })()}
                   </div>
-                  <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>{task.creator.email}</div>
                 </div>
               </div>
               {task.creator.profile && (
