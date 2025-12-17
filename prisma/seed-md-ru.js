@@ -226,16 +226,16 @@ const ruTaskTemplates = [
 
 const imgParams = '?auto=format&fit=crop&w=1200&q=80&sat=-5'
 const taskImages = [
-  `https://images.unsplash.com/photo-1581579188871-45ea61f2a0c8${imgParams}`,
-  `https://images.unsplash.com/photo-1581579188845-1b9d1c2d7c16${imgParams}`,
-  `https://images.unsplash.com/photo-1505693416388-ac5ce068fe85${imgParams}`,
-  `https://images.unsplash.com/photo-1505693416388-904bf23c92ad${imgParams}`,
+  `https://images.unsplash.com/photo-1503389152951-9f343605f61e${imgParams}`,
+  `https://images.unsplash.com/photo-1481277542470-605612bd2d61${imgParams}`,
   `https://images.unsplash.com/photo-1505691938895-1758d7feb511${imgParams}`,
-  `https://images.unsplash.com/photo-1505692069463-5e3405e7a5dc${imgParams}`,
-  `https://images.unsplash.com/photo-1505691938895-1758d7feb599${imgParams}`,
+  `https://images.unsplash.com/photo-1505693416388-ac5ce068fe85${imgParams}`,
   `https://images.unsplash.com/photo-1519710164239-da123dc03ef4${imgParams}`,
   `https://images.unsplash.com/photo-1484154218962-a197022b5858${imgParams}`,
-  `https://images.unsplash.com/photo-1505691938895-1758d7feb522${imgParams}`
+  `https://images.unsplash.com/photo-1519389950473-47ba0277781c${imgParams}`,
+  `https://images.unsplash.com/photo-1469474968028-56623f02e42e${imgParams}`,
+  `https://images.unsplash.com/photo-1449247709967-d4461a6a6103${imgParams}`,
+  `https://images.unsplash.com/photo-1452626038306-9aae5e071dd3${imgParams}`
 ]
 
 function pick(arr, i) {
