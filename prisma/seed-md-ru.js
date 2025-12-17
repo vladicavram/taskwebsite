@@ -234,9 +234,24 @@ const taskImages = [
   `https://images.unsplash.com/photo-1484154218962-a197022b5858${imgParams}`,
   `https://images.unsplash.com/photo-1519389950473-47ba0277781c${imgParams}`,
   `https://images.unsplash.com/photo-1469474968028-56623f02e42e${imgParams}`,
-  `https://images.unsplash.com/photo-1449247709967-d4461a6a6103${imgParams}`,
+  `https://images.unsplash.com/photo-1465805139202-a644e217f00e${imgParams}`,
   `https://images.unsplash.com/photo-1452626038306-9aae5e071dd3${imgParams}`
 ]
+
+const categoryImages = {
+  Curatenie: [`https://images.unsplash.com/photo-1481277542470-605612bd2d61${imgParams}`],
+  'Reparatii electrice': [`https://images.unsplash.com/photo-1503389152951-9f343605f61e${imgParams}`],
+  'Instalatii sanitare': [`https://images.unsplash.com/photo-1505691938895-1758d7feb511${imgParams}`],
+  'IT si retele': [`https://images.unsplash.com/photo-1519389950473-47ba0277781c${imgParams}`],
+  'Mutari si transport': [`https://images.unsplash.com/photo-1469474968028-56623f02e42e${imgParams}`],
+  'Pictura si zugraveli': [`https://images.unsplash.com/photo-1505693416388-ac5ce068fe85${imgParams}`],
+  'Montaj mobilier': [`https://images.unsplash.com/photo-1503389152951-9f343605f61e${imgParams}`],
+  Gradinarit: [`https://images.unsplash.com/photo-1465805139202-a644e217f00e${imgParams}`],
+  Evenimente: [`https://images.unsplash.com/photo-1519710164239-da123dc03ef4${imgParams}`],
+  'Lectii si meditatii': [`https://images.unsplash.com/photo-1519389950473-47ba0277781c${imgParams}`],
+  'Livrari locale': [`https://images.unsplash.com/photo-1484154218962-a197022b5858${imgParams}`],
+  'Design interior': [`https://images.unsplash.com/photo-1452626038306-9aae5e071dd3${imgParams}`]
+}
 
 function pick(arr, i) {
   return arr[i % arr.length]
@@ -305,7 +320,8 @@ function buildTask(lang, i, creatorId, category) {
   const [min, max] = priceBands[categoryName] || [250, 650]
   const rawPrice = randBetween(min, max)
   const price = Math.round(rawPrice / 10) * 10
-  const imageUrl = pick(taskImages, i)
+  const imagePool = categoryName && categoryImages[categoryName] ? categoryImages[categoryName] : taskImages
+  const imageUrl = pick(imagePool, i)
   return {
     title,
     description,
