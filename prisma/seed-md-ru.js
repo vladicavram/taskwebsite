@@ -253,6 +253,92 @@ const categoryImages = {
   'Design interior': [`https://images.unsplash.com/photo-1452626038306-9aae5e071dd3${imgParams}`]
 }
 
+const titleCategoryMap = {
+  'Curatenie generala in apartament': 'Curatenie',
+  'Montaj dulap si reglaj usi': 'Montaj mobilier',
+  'Vopsire pereti living': 'Pictura si zugraveli',
+  'Instalare masina de spalat': 'Instalatii sanitare',
+  'Reparatie priza si verificare tablou': 'Reparatii electrice',
+  'Transport canapea': 'Mutari si transport',
+  'Gradinarit: tuns iarba si gard viu': 'Gradinarit',
+  'Curatare dupa renovare': 'Curatenie',
+  'Depanare internet si Wi-Fi': 'IT si retele',
+  'Asamblare pat si noptiere': 'Montaj mobilier',
+  'Mutare birou mic': 'Mutari si transport',
+  'Lectii de romana pentru copil': 'Lectii si meditatii',
+  'Eveniment: fotograf la botez': 'Evenimente',
+  'Schimbat baterie chiuveta si etansare': 'Instalatii sanitare',
+  'Montaj corpuri de iluminat': 'Reparatii electrice',
+  'Curatare canapele si covoare': 'Curatenie',
+  'Corectie gresie desprinsa in baie': 'Instalatii sanitare',
+  'Instalare sistem video interfon': 'Reparatii electrice',
+  'Livrare cumparaturi senior': 'Livrari locale',
+  'Reparat usa de interior care agata': 'Montaj mobilier',
+  'Генеральная уборка квартиры': 'Curatenie',
+  'Сборка шкафа и регулировка дверей': 'Montaj mobilier',
+  'Покраска стен в гостиной': 'Pictura si zugraveli',
+  'Подключение стиральной машины': 'Instalatii sanitare',
+  'Ремонт розетки и проверка щитка': 'Reparatii electrice',
+  'Перевозка дивана': 'Mutari si transport',
+  'Садовые работы: газон и изгородь': 'Gradinarit',
+  'Уборка после ремонта': 'Curatenie',
+  'Настройка интернета и Wi-Fi': 'IT si retele',
+  'Сборка кровати и тумбочек': 'Montaj mobilier',
+  'Офисный переезд': 'Mutari si transport',
+  'Уроки румынского для школьника': 'Lectii si meditatii',
+  'Фотограф на семейное событие': 'Evenimente',
+  'Замена смесителя и герметизация': 'Instalatii sanitare',
+  'Монтаж светильников': 'Reparatii electrice',
+  'Химчистка дивана и ковров': 'Curatenie',
+  'Исправить отклеившуюся плитку в ванной': 'Instalatii sanitare',
+  'Монтаж домофона на 3 квартиры': 'Reparatii electrice',
+  'Доставка покупок пожилому человеку': 'Livrari locale',
+  'Починить межкомнатную дверь': 'Montaj mobilier'
+}
+
+const titleImages = {
+  'Curatenie generala in apartament': [`https://images.unsplash.com/photo-1481277542470-605612bd2d61${imgParams}`],
+  'Генеральная уборка квартиры': [`https://images.unsplash.com/photo-1481277542470-605612bd2d61${imgParams}`],
+  'Montaj dulap si reglaj usi': [`https://images.unsplash.com/photo-1505691938895-1758d7feb511${imgParams}`],
+  'Сборка шкафа и регулировка дверей': [`https://images.unsplash.com/photo-1505691938895-1758d7feb511${imgParams}`],
+  'Vopsire pereti living': [`https://images.unsplash.com/photo-1505693416388-ac5ce068fe85${imgParams}`],
+  'Покраска стен в гостиной': [`https://images.unsplash.com/photo-1505693416388-ac5ce068fe85${imgParams}`],
+  'Instalare masina de spalat': [`https://images.unsplash.com/photo-1505691938895-1758d7feb511${imgParams}`],
+  'Подключение стиральной машины': [`https://images.unsplash.com/photo-1505691938895-1758d7feb511${imgParams}`],
+  'Reparatie priza si verificare tablou': [`https://images.unsplash.com/photo-1503389152951-9f343605f61e${imgParams}`],
+  'Ремонт розетки и проверка щитка': [`https://images.unsplash.com/photo-1503389152951-9f343605f61e${imgParams}`],
+  'Transport canapea': [`https://images.unsplash.com/photo-1469474968028-56623f02e42e${imgParams}`],
+  'Перевозка дивана': [`https://images.unsplash.com/photo-1469474968028-56623f02e42e${imgParams}`],
+  'Gradinarit: tuns iarba si gard viu': [`https://images.unsplash.com/photo-1465805139202-a644e217f00e${imgParams}`],
+  'Садовые работы: газон и изгородь': [`https://images.unsplash.com/photo-1465805139202-a644e217f00e${imgParams}`],
+  'Curatare dupa renovare': [`https://images.unsplash.com/photo-1481277542470-605612bd2d61${imgParams}`],
+  'Уборка после ремонта': [`https://images.unsplash.com/photo-1481277542470-605612bd2d61${imgParams}`],
+  'Depanare internet si Wi-Fi': [`https://images.unsplash.com/photo-1519389950473-47ba0277781c${imgParams}`],
+  'Настройка интернета и Wi-Fi': [`https://images.unsplash.com/photo-1519389950473-47ba0277781c${imgParams}`],
+  'Asamblare pat si noptiere': [`https://images.unsplash.com/photo-1505691938895-1758d7feb511${imgParams}`],
+  'Сборка кровати и тумбочек': [`https://images.unsplash.com/photo-1505691938895-1758d7feb511${imgParams}`],
+  'Mutare birou mic': [`https://images.unsplash.com/photo-1469474968028-56623f02e42e${imgParams}`],
+  'Офисный переезд': [`https://images.unsplash.com/photo-1469474968028-56623f02e42e${imgParams}`],
+  'Lectii de romana pentru copil': [`https://images.unsplash.com/photo-1519389950473-47ba0277781c${imgParams}`],
+  'Уроки румынского для школьника': [`https://images.unsplash.com/photo-1519389950473-47ba0277781c${imgParams}`],
+  'Eveniment: fotograf la botez': [`https://images.unsplash.com/photo-1519710164239-da123dc03ef4${imgParams}`],
+  'Фотограф на семейное событие': [`https://images.unsplash.com/photo-1519710164239-da123dc03ef4${imgParams}`],
+  'Schimbat baterie chiuveta si etansare': [`https://images.unsplash.com/photo-1505691938895-1758d7feb511${imgParams}`],
+  'Замена смесителя и герметизация': [`https://images.unsplash.com/photo-1505691938895-1758d7feb511${imgParams}`],
+  'Montaj corpuri de iluminat': [`https://images.unsplash.com/photo-1503389152951-9f343605f61e${imgParams}`],
+  'Монтаж светильников': [`https://images.unsplash.com/photo-1503389152951-9f343605f61e${imgParams}`],
+  'Curatare canapele si covoare': [`https://images.unsplash.com/photo-1481277542470-605612bd2d61${imgParams}`],
+  'Химчистка дивана и ковров': [`https://images.unsplash.com/photo-1481277542470-605612bd2d61${imgParams}`],
+  'Corectie gresie desprinsa in baie': [`https://images.unsplash.com/photo-1505691938895-1758d7feb511${imgParams}`],
+  'Исправить отклеившуюся плитку в ванной': [`https://images.unsplash.com/photo-1505691938895-1758d7feb511${imgParams}`],
+  'Instalare sistem video interfon': [`https://images.unsplash.com/photo-1519389950473-47ba0277781c${imgParams}`],
+  'Монтаж домофона на 3 квартиры': [`https://images.unsplash.com/photo-1519389950473-47ba0277781c${imgParams}`],
+  'Livrare cumparaturi senior': [`https://images.unsplash.com/photo-1484154218962-a197022b5858${imgParams}`],
+  'Доставка покупок пожилому человеку': [`https://images.unsplash.com/photo-1484154218962-a197022b5858${imgParams}`],
+  'Reparat usa de interior care agata': [`https://images.unsplash.com/photo-1503389152951-9f343605f61e${imgParams}`],
+  'Починить межкомнатную дверь': [`https://images.unsplash.com/photo-1503389152951-9f343605f61e${imgParams}`]
+}
+
 function pick(arr, i) {
   return arr[i % arr.length]
 }
@@ -302,7 +388,7 @@ function buildTask(lang, i, creatorId, category) {
   const area = lang === 'ro' ? pick(roLocations, i + 3) : pick(ruLocations, i + 3)
   const title = template.title
   const description = template.description.replace('%area%', area)
-  const categoryName = category?.name || null
+  const categoryName = titleCategoryMap[title] || category?.name || null
   const priceBands = {
     Curatenie: [250, 450],
     'Reparatii electrice': [400, 800],
@@ -320,7 +406,9 @@ function buildTask(lang, i, creatorId, category) {
   const [min, max] = priceBands[categoryName] || [250, 650]
   const rawPrice = randBetween(min, max)
   const price = Math.round(rawPrice / 10) * 10
-  const imagePool = categoryName && categoryImages[categoryName] ? categoryImages[categoryName] : taskImages
+  const imagePool = titleImages[title]
+    || (categoryName && categoryImages[categoryName])
+    || taskImages
   const imageUrl = pick(imagePool, i)
   return {
     title,

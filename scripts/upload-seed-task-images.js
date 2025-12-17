@@ -15,6 +15,49 @@ const taskImages = [
   'https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?auto=format&fit=crop&w=1200&q=80&sat=-5'
 ]
 
+const titleImages = {
+  'Curatenie generala in apartament': ['https://images.unsplash.com/photo-1481277542470-605612bd2d61?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Генеральная уборка квартиры': ['https://images.unsplash.com/photo-1481277542470-605612bd2d61?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Montaj dulap si reglaj usi': ['https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Сборка шкафа и регулировка дверей': ['https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Vopsire pereti living': ['https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Покраска стен в гостиной': ['https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Instalare masina de spalat': ['https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Подключение стиральной машины': ['https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Reparatie priza si verificare tablou': ['https://images.unsplash.com/photo-1503389152951-9f343605f61e?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Ремонт розетки и проверка щитка': ['https://images.unsplash.com/photo-1503389152951-9f343605f61e?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Transport canapea': ['https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Перевозка дивана': ['https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Gradinarit: tuns iarba si gard viu': ['https://images.unsplash.com/photo-1465805139202-a644e217f00e?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Садовые работы: газон и изгородь': ['https://images.unsplash.com/photo-1465805139202-a644e217f00e?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Curatare dupa renovare': ['https://images.unsplash.com/photo-1481277542470-605612bd2d61?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Уборка после ремонта': ['https://images.unsplash.com/photo-1481277542470-605612bd2d61?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Depanare internet si Wi-Fi': ['https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Настройка интернета и Wi-Fi': ['https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Asamblare pat si noptiere': ['https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Сборка кровати и тумбочек': ['https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Mutare birou mic': ['https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Офисный переезд': ['https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Lectii de romana pentru copil': ['https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Уроки румынского для школьника': ['https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Eveniment: fotograf la botez': ['https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Фотограф на семейное событие': ['https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Schimbat baterie chiuveta si etansare': ['https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Замена смесителя и герметизация': ['https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Montaj corpuri de iluminat': ['https://images.unsplash.com/photo-1503389152951-9f343605f61e?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Монтаж светильников': ['https://images.unsplash.com/photo-1503389152951-9f343605f61e?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Curatare canapele si covoare': ['https://images.unsplash.com/photo-1481277542470-605612bd2d61?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Химчистка дивана и ковров': ['https://images.unsplash.com/photo-1481277542470-605612bd2d61?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Corectie gresie desprinsa in baie': ['https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Исправить отклеившуюся плитку в ванной': ['https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Instalare sistem video interfon': ['https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Монтаж домофона на 3 квартиры': ['https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Livrare cumparaturi senior': ['https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Доставка покупок пожилому человеку': ['https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Reparat usa de interior care agata': ['https://images.unsplash.com/photo-1503389152951-9f343605f61e?auto=format&fit=crop&w=1200&q=80&sat=-5'],
+  'Починить межкомнатную дверь': ['https://images.unsplash.com/photo-1503389152951-9f343605f61e?auto=format&fit=crop&w=1200&q=80&sat=-5']
+}
+
 const categoryImages = {
   Curatenie: ['https://images.unsplash.com/photo-1481277542470-605612bd2d61?auto=format&fit=crop&w=1200&q=80&sat=-5'],
   'Reparatii electrice': ['https://images.unsplash.com/photo-1503389152951-9f343605f61e?auto=format&fit=crop&w=1200&q=80&sat=-5'],
@@ -49,7 +92,9 @@ async function main() {
     for (let i = 0; i < tasks.length; i++) {
       const task = tasks[i]
       const catName = task.category?.name || null
-      const pool = (catName && categoryImages[catName]) ? categoryImages[catName] : taskImages
+      const pool = titleImages[task.title]
+        || (catName && categoryImages[catName])
+        || taskImages
       const src = pick(pool, i)
       const res = await fetch(src)
       if (!res.ok) {
