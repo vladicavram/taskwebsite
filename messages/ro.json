@@ -67,6 +67,7 @@
   "account.saveChanges": "Salvează Modificările",
   "account.saving": "Se salvează...",
   "profile.location": "Locație",
+  "profile.create.selectCity": "Selectează un oraș",
   "profile.bio": "Biografie",
   "profile.skills": "Abilități",
   "task.apply": "Aplică pentru Sarcină",
@@ -88,6 +89,7 @@
   "application.pending": "În așteptare",
   "application.accepted": "Acceptat",
   "application.declined": "Refuzat",
+  "application.notFound": "Aplicația nu a fost găsită sau a fost ștearsă.",
   "application.accept": "Acceptă",
   "application.decline": "Refuză",
   "application.counterOffer": "Contra-Ofertă",
@@ -140,6 +142,8 @@
   ,"header.notifications.title": "Notificări"
   ,"header.notifications.markAllRead": "Marchează toate ca citite"
   ,"header.notifications.empty": "Încă nu există notificări"
+  ,"header.canApply": "Aprobat pentru a aplica la sarcini"
+  ,"header.pendingApproval": "În așteptarea aprobării adminului pentru a aplica la sarcini"
   ,"notification.applicationReceived": "{{user}} a aplicat pentru sarcina ta \"{{task}}\""
   ,"notification.jobOffer": "Ai primit o ofertă de angajare pentru \"{{task}}\" - {{price}} MDL"
   ,"notification.applicationAccepted": "Aplicația ta pentru \"{{task}}\" a fost acceptată!"
@@ -188,6 +192,7 @@
   ,"taskDetail.notFound.title": "Sarcina nu a fost găsită"
   ,"taskDetail.notFound.description": "Sarcina pe care o cauți nu există sau a fost ștearsă."
   ,"taskDetail.notFound.backButton": "Înapoi la Sarcini"
+  ,"taskDetail.editLocked": "🔒 Editarea este blocată cât timp există un aplicant ales. Elimină aplicantul pentru a edita."
   ,"taskDetail.changesSaved": "✓ Modificările au fost salvate"
   ,"taskDetail.yourTask": "✓ Aceasta este sarcina ta"
   ,"taskDetail.taskBudget": "Buget Sarcină"

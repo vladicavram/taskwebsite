@@ -67,6 +67,7 @@
   "account.saveChanges": "Save Changes",
   "account.saving": "Saving...",
   "profile.location": "Location",
+  "profile.create.selectCity": "Select a city",
   "profile.bio": "Bio",
   "profile.skills": "Skills",
   "task.apply": "Apply for Task",
@@ -88,6 +89,7 @@
   "application.pending": "Pending",
   "application.accepted": "Accepted",
   "application.declined": "Declined",
+  "application.notFound": "Application not found or has been removed.",
   "application.accept": "Accept",
   "application.decline": "Decline",
   "application.counterOffer": "Counter-Offer",
@@ -140,6 +142,8 @@
   ,"header.notifications.title": "Notifications"
   ,"header.notifications.markAllRead": "Mark all read"
   ,"header.notifications.empty": "No notifications yet"
+  ,"header.canApply": "Approved to apply for tasks"
+  ,"header.pendingApproval": "Pending admin approval to apply for tasks"
   ,"header.myTasks": "My Tasks"
   ,"notification.applicationReceived": "{{user}} applied to your task \"{{task}}\""
   ,"notification.jobOffer": "You received a job offer for \"{{task}}\" - {{price}} MDL"
@@ -189,6 +193,7 @@
   ,"taskDetail.notFound.title": "Task not found"
   ,"taskDetail.notFound.description": "The task you're looking for doesn't exist or has been removed."
   ,"taskDetail.notFound.backButton": "Back to Tasks"
+  ,"taskDetail.editLocked": "🔒 Editing is locked while an applicant is assigned. Remove the applicant to edit."
   ,"taskDetail.changesSaved": "✓ Changes saved successfully"
   ,"taskDetail.yourTask": "✓ This is your task"
   ,"taskDetail.taskBudget": "Task Budget"
