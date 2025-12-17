@@ -1,13 +1,13 @@
 "use client"
 import { useState, useRef, useEffect } from 'react'
-import { useRouter, usePathname } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { MOLDOVA_CITIES } from '../../../../lib/constants'
+import useLocale from '../../../../lib/locale'
 
 export default function CreateProfilePage() {
   const router = useRouter()
-  const pathname = usePathname()
-  const locale = pathname?.split('/')[1] || 'ro'
+  const { t, locale } = useLocale()
   
   const [formData, setFormData] = useState({
     username: '',
@@ -63,7 +63,7 @@ export default function CreateProfilePage() {
       setShowCamera(true)
     } catch (err) {
       console.error('Error accessing camera:', err)
-      alert('Could not access camera. Please check permissions or use file upload.')
+      alert(t('profileCreate.alert.cameraAccess') || 'Could not access camera. Please check permissions or use file upload.')
     }
   }
 
@@ -99,7 +99,7 @@ export default function CreateProfilePage() {
       setShowSelfieCamera(true)
     } catch (err) {
       console.error('Error accessing camera:', err)
-      alert('Could not access camera. Please check permissions or use file upload.')
+      alert(t('profileCreate.alert.cameraAccess') || 'Could not access camera. Please check permissions or use file upload.')
     }
   }
 
@@ -191,23 +191,23 @@ export default function CreateProfilePage() {
     }
     
     if (age < 18) {
-      setError('You must be at least 18 years old to create a profile.')
+      setError(t('profileCreate.error.age') || 'You must be at least 18 years old to create a profile.')
       return
     }
     
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match.')
+      setError(t('profileCreate.error.passwordMismatch') || 'Passwords do not match.')
       return
     }
     
     if (formData.password.length < 8) {
-      setError('Password must be at least 8 characters long.')
+      setError(t('profileCreate.error.passwordShort') || 'Password must be at least 8 characters long.')
       return
     }
     
     // Verify ID and selfie are uploaded
     if (!idFile || !selfieFile) {
-      setError('Please go back and upload your ID and selfie.')
+      setError(t('profileCreate.error.uploadIdSelfie') || 'Please go back and upload your ID and selfie.')
       return
     }
     
@@ -281,7 +281,7 @@ export default function CreateProfilePage() {
       // Redirect to login page with message about pending approval
       router.push(`/${locale}/login?registered=true&pending=true`)
     } catch (err: any) {
-      setError(err.message || 'Failed to create profile. Please try again.')
+      setError(err.message || (t('profileCreate.error.createProfile') || 'Failed to create profile. Please try again.'))
       setLoading(false)
     }
   }
@@ -293,28 +293,28 @@ export default function CreateProfilePage() {
     }
     if (step === 1) {
       if (!formData.username || !formData.name || !formData.dateOfBirth || !formData.email || !formData.password || !formData.confirmPassword) {
-        setError('Please fill in all required fields.')
+        setError(t('profileCreate.error.fillRequired') || 'Please fill in all required fields.')
         return
       }
       if (formData.password !== formData.confirmPassword) {
-        setError('Passwords do not match.')
+        setError(t('profileCreate.error.passwordMismatch') || 'Passwords do not match.')
         return
       }
       if (formData.password.length < 8) {
-        setError('Password must be at least 8 characters long.')
+        setError(t('profileCreate.error.passwordShort') || 'Password must be at least 8 characters long.')
         return
       }
       if (!/[a-zA-Z0-9_]{3,20}/.test(formData.username)) {
-        setError('Username must be 3-20 characters, letters, numbers, and underscores only.')
+        setError(t('profileCreate.error.usernameInvalid') || 'Username must be 3-20 characters, letters, numbers, and underscores only.')
         return
       }
     }
     if (step === 2 && (!formData.idType || !formData.idNumber || !idFile)) {
-      setError('Please provide your ID information and upload a photo of your ID.')
+      setError(t('profileCreate.error.idRequired') || 'Please provide your ID information and upload a photo of your ID.')
       return
     }
     if (step === 2 && !selfieFile) {
-      setError('Please upload a selfie photo for identity verification.')
+      setError(t('profileCreate.error.selfieRequired') || 'Please upload a selfie photo for identity verification.')
       return
     }
     setError('')
@@ -335,10 +335,10 @@ export default function CreateProfilePage() {
       }}>
         <div className="container">
           <h1 style={{ fontSize: '2.5rem', marginBottom: '12px', color: 'var(--text)' }}>
-            Create Your Profile
+            {t('profileCreate.heroTitle') || 'Create Your Profile'}
           </h1>
           <p style={{ fontSize: '1.1rem', opacity: 0.95 }}>
-            Join our community of trusted taskers and clients
+            {t('profileCreate.heroSubtitle') || 'Join our community of trusted taskers and clients'}
           </p>
         </div>
       </section>
@@ -382,7 +382,7 @@ export default function CreateProfilePage() {
                   color: step >= s ? 'var(--accent)' : 'var(--text-muted)',
                   textAlign: 'center'
                 }}>
-                  {s === 1 ? 'Personal Info' : s === 2 ? 'Verification' : 'Profile Details'}
+                  {s === 1 ? (t('profileCreate.step.personalInfo') || 'Personal Info') : s === 2 ? (t('profileCreate.step.verification') || 'Verification') : (t('profileCreate.step.profileDetails') || 'Profile Details')}
                 </div>
                 {s < 3 && (
                   <div style={{
@@ -423,7 +423,7 @@ export default function CreateProfilePage() {
             {/* Step 1: Personal Information */}
             {step === 1 && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                <h3 style={{ marginBottom: '8px' }}>Personal Information</h3>
+                <h3 style={{ marginBottom: '8px' }}>{t('profileCreate.section.personal') || 'Personal Information'}</h3>
                 
                 <div>
                   <label style={{ 
@@ -432,20 +432,20 @@ export default function CreateProfilePage() {
                     marginBottom: '8px',
                     color: 'var(--text)'
                   }}>
-                    Username *
+                    {t('auth.username') || 'Username'} *
                   </label>
                   <input 
                     type="text"
                     name="username"
                     value={formData.username}
                     onChange={handleInputChange}
-                    placeholder="johndoe"
+                    placeholder={t('profileCreate.placeholder.username') || 'johndoe'}
                     required
                     pattern="[a-zA-Z0-9_]{3,20}"
-                    title="Username must be 3-20 characters, letters, numbers, and underscores only"
+                    title={t('profileCreate.help.username') || 'Username must be 3-20 characters, letters, numbers, and underscores only'}
                   />
                   <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-                    3-20 characters, letters, numbers, and underscores only
+                    {t('profileCreate.help.username') || '3-20 characters, letters, numbers, and underscores only'}
                   </p>
                 </div>
 
@@ -456,14 +456,14 @@ export default function CreateProfilePage() {
                     marginBottom: '8px',
                     color: 'var(--text)'
                   }}>
-                    Full Name *
+                    {t('auth.name') || 'Full Name'} *
                   </label>
                   <input 
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    placeholder="John Doe"
+                    placeholder={t('profileCreate.placeholder.fullName') || 'John Doe'}
                     required
                   />
                 </div>
@@ -475,7 +475,7 @@ export default function CreateProfilePage() {
                     marginBottom: '8px',
                     color: 'var(--text)'
                   }}>
-                    Date of Birth *
+                    {t('profileCreate.label.dateOfBirth') || 'Date of Birth'} *
                   </label>
                   <input 
                     type="date"
@@ -502,7 +502,7 @@ export default function CreateProfilePage() {
                     marginBottom: '8px',
                     color: 'var(--text)'
                   }}>
-                    Email Address *
+                    {t('auth.email') || 'Email Address'} *
                   </label>
                   <input 
                     type="email"
@@ -521,7 +521,7 @@ export default function CreateProfilePage() {
                     marginBottom: '8px',
                     color: 'var(--text)'
                   }}>
-                    Password *
+                    {t('auth.password') || 'Password'} *
                   </label>
                   <input 
                     type="password"
@@ -532,8 +532,8 @@ export default function CreateProfilePage() {
                     required
                     minLength={8}
                   />
-                  <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-                    Minimum 8 characters
+                    <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginTop: '4px' }}>
+                    {t('profileCreate.help.password') || 'Minimum 8 characters'}
                   </p>
                 </div>
 
@@ -544,7 +544,7 @@ export default function CreateProfilePage() {
                     marginBottom: '8px',
                     color: 'var(--text)'
                   }}>
-                    Confirm Password *
+                    {t('profileCreate.label.confirmPassword') || 'Confirm Password'} *
                   </label>
                   <input 
                     type="password"
@@ -557,7 +557,7 @@ export default function CreateProfilePage() {
                   />
                   {formData.confirmPassword && formData.password !== formData.confirmPassword && (
                     <p style={{ fontSize: '0.875rem', color: '#c00', marginTop: '6px' }}>
-                      Passwords do not match
+                      {t('profileCreate.error.passwordMismatch') || 'Passwords do not match'}
                     </p>
                   )}
                 </div>
@@ -569,7 +569,7 @@ export default function CreateProfilePage() {
                     marginBottom: '8px',
                     color: 'var(--text)'
                   }}>
-                    Phone Number
+                    {t('profileCreate.label.phone') || 'Phone Number'}
                   </label>
                   <input 
                     type="tel"
@@ -587,7 +587,7 @@ export default function CreateProfilePage() {
                     marginBottom: '8px',
                     color: 'var(--text)'
                   }}>
-                    Location
+                    {t('profile.location') || 'Location'}
                   </label>
                   <select 
                     name="location"
@@ -595,7 +595,7 @@ export default function CreateProfilePage() {
                     onChange={handleInputChange}
                     style={{ width: '100%' }}
                   >
-                    <option value="">Select your city</option>
+                    <option value="">{t('profileCreate.placeholder.selectCity') || 'Select your city'}</option>
                     {MOLDOVA_CITIES.map((city) => (
                       <option key={city} value={city}>{city}</option>
                     ))}
@@ -607,9 +607,9 @@ export default function CreateProfilePage() {
             {/* Step 2: ID Verification */}
             {step === 2 && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                <h3 style={{ marginBottom: '8px' }}>Identity Verification</h3>
+                <h3 style={{ marginBottom: '8px' }}>{t('profileCreate.section.verification') || 'Identity Verification'}</h3>
                 <p style={{ color: 'var(--text-secondary)', marginTop: '-16px' }}>
-                  We require ID verification to ensure the safety and security of our community.
+                  {t('profileCreate.verification.subtitle') || 'We require ID verification to ensure the safety and security of our community.'}
                 </p>
 
                 <div>
@@ -619,7 +619,7 @@ export default function CreateProfilePage() {
                     marginBottom: '8px',
                     color: 'var(--text)'
                   }}>
-                    ID Type *
+                    {t('profileCreate.label.idType') || 'ID Type'} *
                   </label>
                   <select
                     name="idType"
@@ -627,10 +627,10 @@ export default function CreateProfilePage() {
                     onChange={handleInputChange}
                     required
                   >
-                    <option value="passport">Passport</option>
-                    <option value="drivers_license">Driver's License</option>
-                    <option value="national_id">National ID Card</option>
-                    <option value="state_id">State ID</option>
+                    <option value="passport">{t('profileCreate.idType.passport') || 'Passport'}</option>
+                    <option value="drivers_license">{t('profileCreate.idType.driversLicense') || "Driver's License"}</option>
+                    <option value="national_id">{t('profileCreate.idType.nationalId') || 'National ID Card'}</option>
+                    <option value="state_id">{t('profileCreate.idType.stateId') || 'State ID'}</option>
                   </select>
                 </div>
 
@@ -641,14 +641,14 @@ export default function CreateProfilePage() {
                     marginBottom: '8px',
                     color: 'var(--text)'
                   }}>
-                    ID Number *
+                    {t('profileCreate.label.idNumber') || 'ID Number'} *
                   </label>
                   <input 
                     type="text"
                     name="idNumber"
                     value={formData.idNumber}
                     onChange={handleInputChange}
-                    placeholder="Enter your ID number"
+                    placeholder={t('profileCreate.placeholder.idNumber') || 'Enter your ID number'}
                     required
                   />
                   <p style={{ 
@@ -656,7 +656,7 @@ export default function CreateProfilePage() {
                     color: 'var(--text-muted)',
                     marginTop: '6px'
                   }}>
-                    Your information is encrypted and secure
+                    {t('profileCreate.help.idSecure') || 'Your information is encrypted and secure'}
                   </p>
                 </div>
 
@@ -746,7 +746,7 @@ export default function CreateProfilePage() {
                       >
                         <div style={{ fontSize: '2.5rem', marginBottom: '8px' }}>📄</div>
                         <p style={{ color: 'var(--text-secondary)', margin: 0, fontSize: '0.9rem' }}>
-                          Upload from device
+                          {t('profileCreate.upload.fromDevice') || 'Upload from device'}
                         </p>
                       </div>
                       <div 
@@ -764,7 +764,7 @@ export default function CreateProfilePage() {
                       >
                         <div style={{ fontSize: '2.5rem', marginBottom: '8px' }}>📷</div>
                         <p style={{ color: 'var(--accent)', margin: 0, fontSize: '0.9rem', fontWeight: 600 }}>
-                          Take a photo
+                          {t('profileCreate.upload.takePhoto') || 'Take a photo'}
                         </p>
                       </div>
                     </div>
@@ -784,7 +784,7 @@ export default function CreateProfilePage() {
                     color: 'var(--text-muted)',
                     marginTop: '12px'
                   }}>
-                    Take a clear photo of your ID document (passport, driver's license, or national ID)
+                    {t('profileCreate.help.takeIdPhoto') || "Take a clear photo of your ID document (passport, driver's license, or national ID)"}
                   </p>
                 </div>
 
@@ -876,7 +876,7 @@ export default function CreateProfilePage() {
                       >
                         <div style={{ fontSize: '2.5rem', marginBottom: '8px' }}>🤳</div>
                         <p style={{ color: 'var(--text-secondary)', margin: 0, fontSize: '0.9rem' }}>
-                          Upload from device
+                          {t('profileCreate.upload.fromDevice') || 'Upload from device'}
                         </p>
                       </div>
                       <div 
@@ -894,7 +894,7 @@ export default function CreateProfilePage() {
                       >
                         <div style={{ fontSize: '2.5rem', marginBottom: '8px' }}>📷</div>
                         <p style={{ color: 'var(--accent)', margin: 0, fontSize: '0.9rem', fontWeight: 600 }}>
-                          Take a selfie
+                          {t('profileCreate.upload.takeSelfie') || 'Take a selfie'}
                         </p>
                       </div>
                     </div>
@@ -914,7 +914,7 @@ export default function CreateProfilePage() {
                     color: 'var(--text-muted)',
                     marginTop: '12px'
                   }}>
-                    Take a clear selfie of your face. This helps us verify your identity matches your ID.
+                    {t('profileCreate.help.takeSelfie') || 'Take a clear selfie of your face. This helps us verify your identity matches your ID.'}
                   </p>
                 </div>
 
@@ -947,7 +947,7 @@ export default function CreateProfilePage() {
             {/* Step 3: Profile Details */}
             {step === 3 && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                <h3 style={{ marginBottom: '8px' }}>Complete Your Profile</h3>
+                <h3 style={{ marginBottom: '8px' }}>{t('profileCreate.section.complete') || 'Complete Your Profile'}</h3>
                 
                 <div>
                   <label style={{ 
@@ -956,7 +956,7 @@ export default function CreateProfilePage() {
                     marginBottom: '8px',
                     color: 'var(--text)'
                   }}>
-                    Profile Photo
+                    {t('profileCreate.photo.label') || 'Profile Photo'}
                   </label>
                   <div style={{
                     border: '2px dashed var(--border)',
@@ -970,10 +970,10 @@ export default function CreateProfilePage() {
                   >
                     <div style={{ fontSize: '3rem', marginBottom: '12px' }}>📸</div>
                     <p style={{ color: 'var(--text-secondary)', margin: 0 }}>
-                      {photoFile ? photoFile.name : 'Upload a profile photo'}
+                      {photoFile ? photoFile.name : (t('profileCreate.photo.placeholder') || 'Upload a profile photo')}
                     </p>
                     <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginTop: '8px' }}>
-                      JPG or PNG (max 5MB)
+                      {t('profileCreate.photo.help') || 'JPG or PNG (max 5MB)'}
                     </p>
                   </div>
                   <input 
@@ -992,13 +992,13 @@ export default function CreateProfilePage() {
                     marginBottom: '8px',
                     color: 'var(--text)'
                   }}>
-                    Bio
+                    {t('profileCreate.label.bio') || 'Bio'}
                   </label>
                   <textarea 
                     name="bio"
                     value={formData.bio}
                     onChange={handleInputChange}
-                    placeholder="Tell us about yourself, your experience, and what services you offer..."
+                    placeholder={t('profileCreate.placeholder.bio') || 'Tell us about yourself, your experience, and what services you offer...'}
                     rows={5}
                     style={{ resize: 'vertical' }}
                   />
@@ -1007,7 +1007,7 @@ export default function CreateProfilePage() {
                     color: 'var(--text-muted)',
                     marginTop: '6px'
                   }}>
-                    A good bio helps you stand out and attract more clients
+                    {t('profileCreate.help.bio') || 'A good bio helps you stand out and attract more clients'}
                   </p>
                 </div>
 
@@ -1018,21 +1018,21 @@ export default function CreateProfilePage() {
                     marginBottom: '8px',
                     color: 'var(--text)'
                   }}>
-                    Skills & Services
+                    {t('profileCreate.label.skills') || 'Skills & Services'}
                   </label>
                   <input 
                     type="text"
                     name="skills"
                     value={formData.skills}
                     onChange={handleInputChange}
-                    placeholder="e.g., Furniture Assembly, Plumbing, House Cleaning"
+                    placeholder={t('profileCreate.placeholder.skills') || 'e.g., Furniture Assembly, Plumbing, House Cleaning'}
                   />
                   <p style={{ 
                     fontSize: '0.875rem', 
                     color: 'var(--text-muted)',
                     marginTop: '6px'
                   }}>
-                    Separate skills with commas
+                    {t('profileCreate.help.skills') || 'Separate skills with commas'}
                   </p>
                 </div>
               </div>
@@ -1057,7 +1057,7 @@ export default function CreateProfilePage() {
                     padding: '14px 24px'
                   }}
                 >
-                  ← Back
+                  {t('create.back') || '← Back'}
                 </button>
               )}
               
@@ -1072,7 +1072,7 @@ export default function CreateProfilePage() {
                     padding: '14px 24px'
                   }}
                 >
-                  Continue →
+                  {t('profileCreate.continue') || 'Continue →'}
                 </button>
               ) : (
                 <button 
@@ -1087,7 +1087,7 @@ export default function CreateProfilePage() {
                     cursor: loading ? 'not-allowed' : 'pointer'
                   }}
                 >
-                  {loading ? 'Creating Profile...' : '✓ Create Profile'}
+                  {loading ? (t('profileCreate.creating') || 'Creating Profile...') : (t('profileCreate.create') || '✓ Create Profile')}
                 </button>
               )}
             </div>
@@ -1102,7 +1102,7 @@ export default function CreateProfilePage() {
           borderRadius: 'var(--radius)',
           border: '1px solid var(--border-light)'
         }}>
-          <h3 style={{ marginBottom: '16px' }}>Why we verify profiles</h3>
+          <h3 style={{ marginBottom: '16px' }}>{t('profileCreate.why.title') || 'Why we verify profiles'}</h3>
           <div style={{ 
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
@@ -1110,23 +1110,23 @@ export default function CreateProfilePage() {
           }}>
             <div>
               <div style={{ fontSize: '2rem', marginBottom: '8px' }}>🛡️</div>
-              <h4 style={{ fontSize: '1rem', marginBottom: '8px' }}>Safety First</h4>
+              <h4 style={{ fontSize: '1rem', marginBottom: '8px' }}>{t('profileCreate.why.safety.title') || 'Safety First'}</h4>
               <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', margin: 0 }}>
-                Protect our community from fraud and ensure everyone is who they say they are
+                {t('profileCreate.why.safety.text') || 'Protect our community from fraud and ensure everyone is who they say they are'}
               </p>
             </div>
             <div>
               <div style={{ fontSize: '2rem', marginBottom: '8px' }}>⭐</div>
-              <h4 style={{ fontSize: '1rem', marginBottom: '8px' }}>Build Trust</h4>
+              <h4 style={{ fontSize: '1rem', marginBottom: '8px' }}>{t('profileCreate.why.trust.title') || 'Build Trust'}</h4>
               <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', margin: 0 }}>
-                Verified profiles get more bookings and higher ratings from clients
+                {t('profileCreate.why.trust.text') || 'Verified profiles get more bookings and higher ratings from clients'}
               </p>
             </div>
             <div>
               <div style={{ fontSize: '2rem', marginBottom: '8px' }}>✓</div>
-              <h4 style={{ fontSize: '1rem', marginBottom: '8px' }}>Get Verified Badge</h4>
+              <h4 style={{ fontSize: '1rem', marginBottom: '8px' }}>{t('profileCreate.why.badge.title') || 'Get Verified Badge'}</h4>
               <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', margin: 0 }}>
-                Stand out with a verified badge on your profile
+                {t('profileCreate.why.badge.text') || 'Stand out with a verified badge on your profile'}
               </p>
             </div>
           </div>
