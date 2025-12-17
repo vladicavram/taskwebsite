@@ -30,7 +30,7 @@ function LoginContent() {
         setSuccessMessage(t('login.success') || 'Account created successfully! Please log in.')
       }
     }
-  }, [searchParams])
+  }, [searchParams, t])
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
