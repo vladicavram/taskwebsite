@@ -275,6 +275,7 @@
   ,"myTasks.completed.empty": "No completed tasks yet."
   ,"myTasks.completed.badge": "Completed"
   ,"myTasks.requested.title": "Requested tasks"
+  ,"myTasks.requested.empty": "No requested tasks yet. Apply to tasks to see them here."
   ,"taskDetail.alreadyAccepted": "✓ You are accepted for this task"
   ,"taskDetail.markCompleted": "Mark as Completed (+0.1 credits)"
   ,"taskDetail.completedSuccess": "✓ You have completed this task"

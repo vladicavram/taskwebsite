@@ -275,6 +275,7 @@
   ,"myTasks.completed.empty": "Пока нет выполненных заданий."
   ,"myTasks.completed.badge": "Выполнено"
   ,"myTasks.requested.title": "Запрошенные задания"
+  ,"myTasks.requested.empty": "Пока нет запрошенных заданий. Откликайтесь на задачи, и они появятся здесь."
   ,"taskDetail.alreadyAccepted": "✓ Вы приняты на это задание"
   ,"taskDetail.markCompleted": "Отметить как выполнено (+0.1 кредита)"
   ,"taskDetail.completedSuccess": "✓ Вы выполнили это задание"

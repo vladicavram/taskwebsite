@@ -275,6 +275,7 @@
   ,"myTasks.completed.empty": "Nicio sarcină finalizată încă."
   ,"myTasks.completed.badge": "Finalizat"
   ,"myTasks.requested.title": "Sarcini solicitate"
+  ,"myTasks.requested.empty": "Nu există încă sarcini solicitate. Aplică la sarcini ca să apară aici."
   ,"taskDetail.alreadyAccepted": "✓ Ești acceptat pentru această sarcină"
   ,"taskDetail.markCompleted": "Marchează ca Finalizat (+0.1 credite)"
   ,"taskDetail.completedSuccess": "✓ Ai finalizat această sarcină"
