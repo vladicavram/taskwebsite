@@ -134,7 +134,7 @@ export default function PurchaseCreditsPage() {
       }
     } catch (error: any) {
       console.error('Purchase error:', error)
-      alert(`Payment error: ${error.message || 'Please try again.'}`)
+      alert((t('purchaseCredits.error.payment') || 'Payment error: Please try again.') + (error?.message ? ` ${error.message}` : ''))
     } finally {
       setProcessing(false)
     }

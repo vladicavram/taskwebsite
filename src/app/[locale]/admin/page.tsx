@@ -34,7 +34,7 @@ export default function AdminPage() {
         } else {
           setUsers([])
           if (data && data.error) {
-            alert('Failed to load users: ' + data.error)
+            alert((t('admin.error.loadUsers') || 'Failed to load users:') + ' ' + data.error)
           }
         }
       } else {
@@ -45,7 +45,7 @@ export default function AdminPage() {
         } else {
           setTasks([])
           if (data && data.error) {
-            alert('Failed to load tasks: ' + data.error)
+            alert((t('admin.error.loadTasks') || 'Failed to load tasks:') + ' ' + data.error)
           }
         }
       }
@@ -58,17 +58,17 @@ export default function AdminPage() {
   }
 
   async function deleteUser(id: string) {
-    if (!confirm('Are you sure you want to delete this user? This will also delete all their tasks, applications, and related data.')) return
+    if (!confirm(t('admin.confirm.deleteUser') || 'Are you sure you want to delete this user? This will also delete all their tasks, applications, and related data.')) return
     try {
       const res = await fetch(`/api/admin/users/${id}`, { method: 'DELETE' })
       if (res.ok) {
         loadData()
-        alert('User deleted successfully')
+        alert(t('admin.success.deleteUser') || 'User deleted successfully')
       } else {
-        alert('Failed to delete user')
+        alert(t('admin.error.deleteUser') || 'Failed to delete user')
       }
     } catch (err) {
-      alert('Error deleting user')
+      alert(t('admin.error.deleteUser') || 'Error deleting user')
     }
   }
 
@@ -81,27 +81,27 @@ export default function AdminPage() {
       })
       if (res.ok) {
         loadData()
-        alert(currentStatus ? 'User application rights revoked' : 'User approved to apply for tasks')
+        alert(currentStatus ? (t('admin.success.revokeApply') || 'User application rights revoked') : (t('admin.success.approveApply') || 'User approved to apply for tasks'))
       } else {
-        alert('Failed to update user approval status')
+        alert(t('admin.error.updateApproval') || 'Failed to update user approval status')
       }
     } catch (err) {
-      alert('Error updating user approval')
+      alert(t('admin.error.updateApproval') || 'Error updating user approval')
     }
   }
 
   async function deleteTask(id: string) {
-    if (!confirm('Are you sure you want to delete this task?')) return
+    if (!confirm(t('admin.confirm.deleteTask') || 'Are you sure you want to delete this task?')) return
     try {
       const res = await fetch(`/api/admin/tasks/${id}`, { method: 'DELETE' })
       if (res.ok) {
         loadData()
-        alert('Task deleted successfully')
+        alert(t('admin.success.deleteTask') || 'Task deleted successfully')
       } else {
-        alert('Failed to delete task')
+        alert(t('admin.error.deleteTask') || 'Failed to delete task')
       }
     } catch (err) {
-      alert('Error deleting task')
+      alert(t('admin.error.deleteTask') || 'Error deleting task')
     }
   }
 
@@ -123,12 +123,12 @@ export default function AdminPage() {
       if (res.ok) {
         setEditingUser(null)
         loadData()
-        alert('User updated successfully')
+        alert(t('admin.success.updateUser') || 'User updated successfully')
       } else {
-        alert('Failed to update user')
+        alert(t('admin.error.updateUser') || 'Failed to update user')
       }
     } catch (err) {
-      alert('Error updating user')
+      alert(t('admin.error.updateUser') || 'Error updating user')
     }
   }
 
@@ -148,18 +148,18 @@ export default function AdminPage() {
       if (res.ok) {
         setEditingTask(null)
         loadData()
-        alert('Task updated successfully')
+        alert(t('admin.success.updateTask') || 'Task updated successfully')
       } else {
-        alert('Failed to update task')
+        alert(t('admin.error.updateTask') || 'Failed to update task')
       }
     } catch (err) {
-      alert('Error updating task')
+      alert(t('admin.error.updateTask') || 'Error updating task')
     }
   }
 
   async function sendMessage() {
     if (!messageText.trim()) {
-      alert('Please enter a message')
+      alert(t('admin.error.messageEmpty') || 'Please enter a message')
       return
     }
     try {
@@ -174,12 +174,12 @@ export default function AdminPage() {
       if (res.ok) {
         setMessagingUser(null)
         setMessageText('')
-        alert('Message sent successfully')
+        alert(t('admin.success.messageSent') || 'Message sent successfully')
       } else {
-        alert('Failed to send message')
+        alert(t('admin.error.messageSend') || 'Failed to send message')
       }
     } catch (err) {
-      alert('Error sending message')
+      alert(t('admin.error.messageSend') || 'Error sending message')
     }
   }
 
