@@ -54,9 +54,17 @@ const ruSkills = [
   'переезды, упаковка, помощь с грузом'
 ]
 
-const cityPool = ['Chișinău','Chișinău','Chișinău','Chișinău','Chișinău','Chișinău','Chișinău','Bălți','Comrat','Soroca']
+const cityPool = [
+  'Chișinău Centru','Chișinău Botanica','Chișinău Râșcani','Chișinău Buiucani','Chișinău Ciocana','Chișinău Telecentru',
+  'Chișinău Poșta Veche','Chișinău Sculeanca','Chișinău Durlești','Chișinău Codru','Chișinău Sîngera','Chișinău Cricova',
+  'Bălți','Comrat','Soroca','Orhei','Cahul','Ungheni','Edineț','Hîncești','Căușeni','Anenii Noi','Strășeni','Drochia',
+  'Florești','Ialoveni','Ștefan Vodă','Cimișlia','Rezina','Briceni','Nisporeni'
+]
 const roLocations = cityPool
 const ruLocations = cityPool
+
+const roQualifiers = ['Standard', 'Rapid', 'Premium', 'Eco', 'Express', 'Urgent', 'Weekend', 'Business', 'Familie', 'Budget', 'Profesional', 'Detaliat', 'Cu materiale', 'Fara materiale']
+const ruQualifiers = ['Стандарт', 'Срочно', 'Премиум', 'Эко', 'Экспресс', 'Суперсрочно', 'Выходной', 'Бизнес', 'Семейный', 'Бюджет', 'Профи', 'Детально', 'С материалами', 'Без материалов']
 
 const roTaskTemplates = [
   {
@@ -239,18 +247,66 @@ const taskImages = [
 ]
 
 const categoryImages = {
-  Curatenie: [`https://images.unsplash.com/photo-1481277542470-605612bd2d61${imgParams}`],
-  'Reparatii electrice': [`https://images.unsplash.com/photo-1503389152951-9f343605f61e${imgParams}`],
-  'Instalatii sanitare': [`https://images.unsplash.com/photo-1505691938895-1758d7feb511${imgParams}`],
-  'IT si retele': [`https://images.unsplash.com/photo-1519389950473-47ba0277781c${imgParams}`],
-  'Mutari si transport': [`https://images.unsplash.com/photo-1497366754035-f200968a6e72${imgParams}`],
-  'Pictura si zugraveli': [`https://images.unsplash.com/photo-1505693416388-ac5ce068fe85${imgParams}`],
-  'Montaj mobilier': [`https://images.unsplash.com/photo-1503389152951-9f343605f61e${imgParams}`],
-  Gradinarit: [`https://images.unsplash.com/photo-1465805139202-a644e217f00e${imgParams}`],
-  Evenimente: [`https://images.unsplash.com/photo-1519710164239-da123dc03ef4${imgParams}`],
-  'Lectii si meditatii': [`https://images.unsplash.com/photo-1519389950473-47ba0277781c${imgParams}`],
-  'Livrari locale': [`https://images.unsplash.com/photo-1484154218962-a197022b5858${imgParams}`],
-  'Design interior': [`https://images.unsplash.com/photo-1452626038306-9aae5e071dd3${imgParams}`]
+  Curatenie: [
+    `https://images.unsplash.com/photo-1481277542470-605612bd2d61${imgParams}`,
+    `https://images.unsplash.com/photo-1582719478248-4a00f3f77fe6${imgParams}`,
+    `https://images.unsplash.com/photo-1581579186890-45585b3c38fe${imgParams}`
+  ],
+  'Reparatii electrice': [
+    `https://images.unsplash.com/photo-1503389152951-9f343605f61e${imgParams}`,
+    `https://images.unsplash.com/photo-1508873699372-7aeab60b44ab${imgParams}`,
+    `https://images.unsplash.com/photo-1504384308090-c894fdcc538d${imgParams}`
+  ],
+  'Instalatii sanitare': [
+    `https://images.unsplash.com/photo-1505691938895-1758d7feb511${imgParams}`,
+    `https://images.unsplash.com/photo-1589578527966-0d484df2769b${imgParams}`,
+    `https://images.unsplash.com/photo-1504198453319-5ce911bafcde${imgParams}`
+  ],
+  'IT si retele': [
+    `https://images.unsplash.com/photo-1519389950473-47ba0277781c${imgParams}`,
+    `https://images.unsplash.com/photo-1520607162513-77705c0f0d4a${imgParams}`,
+    `https://images.unsplash.com/photo-1518770660439-4636190af475${imgParams}`
+  ],
+  'Mutari si transport': [
+    `https://images.unsplash.com/photo-1497366754035-f200968a6e72${imgParams}`,
+    `https://images.unsplash.com/photo-1542452255191-c85d3a1e0b7b${imgParams}`,
+    `https://images.unsplash.com/photo-1529429617124-aee7d6a5c12d${imgParams}`
+  ],
+  'Pictura si zugraveli': [
+    `https://images.unsplash.com/photo-1505693416388-ac5ce068fe85${imgParams}`,
+    `https://images.unsplash.com/photo-1501453675342-41c0f7bd0cbb${imgParams}`,
+    `https://images.unsplash.com/photo-1473181488821-2d23949a045a${imgParams}`
+  ],
+  'Montaj mobilier': [
+    `https://images.unsplash.com/photo-1505693415763-3ed5e04ba4cd${imgParams}`,
+    `https://images.unsplash.com/photo-1505691938895-1758d7feb511${imgParams}`,
+    `https://images.unsplash.com/photo-1505691723518-36a5ac3be353${imgParams}`
+  ],
+  Gradinarit: [
+    `https://images.unsplash.com/photo-1465805139202-a644e217f00e${imgParams}`,
+    `https://images.unsplash.com/photo-1501004318641-b39e6451bec6${imgParams}`,
+    `https://images.unsplash.com/photo-1441974231531-c6227db76b6e${imgParams}`
+  ],
+  Evenimente: [
+    `https://images.unsplash.com/photo-1519710164239-da123dc03ef4${imgParams}`,
+    `https://images.unsplash.com/photo-1523906834658-6e24ef2386f9${imgParams}`,
+    `https://images.unsplash.com/photo-1525182008055-f88b95ff7980${imgParams}`
+  ],
+  'Lectii si meditatii': [
+    `https://images.unsplash.com/photo-1519389950473-47ba0277781c${imgParams}`,
+    `https://images.unsplash.com/photo-1523580846011-d3a5bc25702b${imgParams}`,
+    `https://images.unsplash.com/photo-1524504388940-b1c1722653e1${imgParams}`
+  ],
+  'Livrari locale': [
+    `https://images.unsplash.com/photo-1484154218962-a197022b5858${imgParams}`,
+    `https://images.unsplash.com/photo-1542838132-92c53300491e${imgParams}`,
+    `https://images.unsplash.com/photo-1601050690597-df62cfe512c9${imgParams}`
+  ],
+  'Design interior': [
+    `https://images.unsplash.com/photo-1452626038306-9aae5e071dd3${imgParams}`,
+    `https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e${imgParams}`,
+    `https://images.unsplash.com/photo-1493809842364-78817add7ffb${imgParams}`
+  ]
 }
 
 const titleCategoryMap = {
@@ -385,10 +441,15 @@ function makeUsers() {
 
 function buildTask(lang, i, creatorId, category) {
   const template = lang === 'ro' ? pick(roTaskTemplates, i) : pick(ruTaskTemplates, i)
-  const area = lang === 'ro' ? pick(roLocations, i + 3) : pick(ruLocations, i + 3)
-  const title = template.title
+  const areaPool = lang === 'ro' ? roLocations : ruLocations
+  const qualifierPool = lang === 'ro' ? roQualifiers : ruQualifiers
+  const baseTitle = template.title
+  const locationIndex = Math.floor(i / qualifierPool.length)
+  const area = pick(areaPool, locationIndex)
+  const qualifier = pick(qualifierPool, i)
+  const title = `${baseTitle} - ${qualifier} (${area})`
   const description = template.description.replace('%area%', area)
-  const categoryName = titleCategoryMap[title] || category?.name || null
+  const categoryName = titleCategoryMap[baseTitle] || category?.name || null
   const priceBands = {
     Curatenie: [250, 450],
     'Reparatii electrice': [400, 800],
@@ -406,10 +467,10 @@ function buildTask(lang, i, creatorId, category) {
   const [min, max] = priceBands[categoryName] || [250, 650]
   const rawPrice = randBetween(min, max)
   const price = Math.round(rawPrice / 10) * 10
-  const imagePool = titleImages[title]
+  const imagePool = titleImages[baseTitle]
     || (categoryName && categoryImages[categoryName])
     || taskImages
-  const imageUrl = pick(imagePool, i)
+  const imageUrl = pick(imagePool, i + locationIndex)
   return {
     title,
     description,
