@@ -39,6 +39,8 @@ function collectKeysFromSource(file) {
   for (const re of regexes) {
     let m
     while ((m = re.exec(text)) !== null) {
+      // ignore placeholder ellipsis
+      if (m[1] === '...') continue
       keys.add(m[1])
     }
   }
