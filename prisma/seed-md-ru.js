@@ -54,7 +54,7 @@ const ruSkills = [
   'переезды, упаковка, помощь с грузом'
 ]
 
-const cityPool = ['Chisinau','Chisinau','Chisinau','Chisinau','Chisinau','Chisinau','Chisinau','Balti','Comrat','Soroca']
+const cityPool = ['Chișinău','Chișinău','Chișinău','Chișinău','Chișinău','Chișinău','Chișinău','Bălți','Comrat','Soroca']
 const roLocations = cityPool
 const ruLocations = cityPool
 
