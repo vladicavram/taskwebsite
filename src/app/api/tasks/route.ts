@@ -11,8 +11,22 @@ export async function GET(req: Request) {
   const q = searchParams.get('q') || undefined
   const priceMin = searchParams.get('priceMin')
   const priceMax = searchParams.get('priceMax')
-  const location = searchParams.get('location') || undefined
+  const rawLocation = searchParams.get('location') || undefined
   const showCompleted = searchParams.get('completed') === 'true'
+
+  const normalizeLocation = (value?: string) => {
+    if (!value) return undefined
+    const key = value.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase()
+    const map: Record<string, string> = {
+      'chisinau': 'Chișinău',
+      'balti': 'Bălți',
+      'comrat': 'Comrat',
+      'soroca': 'Soroca'
+    }
+    return map[key] || value
+  }
+
+  const location = normalizeLocation(rawLocation)
 
   const where: any = showCompleted 
     ? { 
