@@ -54,8 +54,8 @@ const ruSkills = [
   'переезды, упаковка, помощь с грузом'
 ]
 
-const roLocations = ['Chisinau', 'Balti', 'Cahul', 'Orhei', 'Soroca', 'Ungheni', 'Edinet', 'Hincesti', 'Comrat', 'Ialoveni', 'Causeni', 'Drochia']
-const ruLocations = ['Кишинев', 'Бельцы', 'Кагул', 'Орхей', 'Сороки', 'Унгены', 'Единцы', 'Хынчешты', 'Комрат', 'Яловены', 'Каушаны', 'Дрокия']
+const roLocations = ['Chisinau', 'Balti', 'Comrat', 'Soroca']
+const ruLocations = ['Chisinau', 'Balti', 'Comrat', 'Soroca']
 
 const roTaskTemplates = [
   {
@@ -302,7 +302,8 @@ function buildTask(lang, i, creatorId, category) {
     'Design interior': [650, 1000]
   }
   const [min, max] = priceBands[categoryName] || [250, 650]
-  const price = randBetween(min, max)
+  const rawPrice = randBetween(min, max)
+  const price = Math.round(rawPrice / 10) * 10
   const imageUrl = i % 5 === 0 ? pick(taskImages, i) : null
   return {
     title,
