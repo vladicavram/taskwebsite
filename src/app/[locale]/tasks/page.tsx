@@ -37,7 +37,7 @@ export default async function TasksPage({ params }: { params: { locale: string }
             {tasks.map((t: any) => (
               <article key={t.id} className="card" style={{ padding: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column', height: '100%' }}>
                 <div style={{ width: '100%', height: '200px', background: '#f9fafb', borderBottom: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}>
-                  <img src={`/uploads/tasks/${t.id}/cover.webp`} alt={t.title} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.9 }} />
+                  <img src={t.imageUrl || 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80&sat=-5'} alt={t.title} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.9 }} />
                   {t.price && (
                     <div style={{ position: 'absolute', top: '12px', right: '12px', background: 'white', padding: '8px 16px', borderRadius: '20px', fontWeight: 600, color: 'var(--accent)', boxShadow: 'var(--shadow)' }}>{t.price} MDL</div>
                   )}
