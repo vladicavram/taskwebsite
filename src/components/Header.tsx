@@ -1,5 +1,6 @@
 "use client"
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
 import LanguageSwitcher from './LanguageSwitcher'
@@ -168,17 +169,24 @@ export default function Header() {
         justifyContent: 'space-between',
         padding: '16px 24px'
       }}>
-        <div>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
           <Link 
             href={session?.user ? `/${locale}/tasks` : `/${locale}`} 
             style={{ 
-              fontWeight: 700, 
-              fontSize: '1.5rem',
               textDecoration: 'none',
-              color: 'var(--text)'
+              color: 'var(--text)',
+              display: 'inline-flex',
+              alignItems: 'center'
             }}
           >
-            Dozo
+            <Image
+              src="/logo-dozo.svg"
+              alt="Dozo"
+              width={120}
+              height={100}
+              priority
+              style={{ height: 'auto', width: '120px' }}
+            />
           </Link>
         </div>
         <nav style={{ 

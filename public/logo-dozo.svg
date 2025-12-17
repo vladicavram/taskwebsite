@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 210" role="img" aria-labelledby="title desc">
+  <title id="title">Dozo logo</title>
+  <desc id="desc">Circular brown strokes surrounding the word Dozo</desc>
+  <defs>
+    <style>
+      .stroke { fill: none; stroke: #603813; stroke-linecap: round; }
+    </style>
+  </defs>
+  <circle class="stroke" cx="120" cy="105" r="92" stroke-width="6" stroke-dasharray="460 40" />
+  <circle class="stroke" cx="120" cy="105" r="78" stroke-width="4" stroke-dasharray="360 40" />
+  <path class="stroke" d="M54 68a92 92 0 0 1 23-26" stroke-width="4" />
+  <path class="stroke" d="M72 178a90 90 0 0 0 58 20" stroke-width="4" />
+  <path class="stroke" d="M186 62a90 90 0 0 1-8 56" stroke-width="6" stroke-dasharray="120 260" />
+  <path class="stroke" d="M176 158a70 70 0 0 1-28 16" stroke-width="3" />
+  <text x="120" y="118" text-anchor="middle" font-family="'Playfair Display', 'Times New Roman', serif" font-size="38" fill="#603813">Dozo</text>
+</svg>
