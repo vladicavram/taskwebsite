@@ -282,16 +282,22 @@ async function main() {
     )
   )
 
+  console.log('Fetching existing admins to preserve...')
+  const adminUsers = await prisma.user.findMany({ where: { isAdmin: true }, select: { id: true, email: true } })
+  const adminIds = adminUsers.map((a) => a.id)
+
   console.log('Seeding 100 users...')
   const usersData = makeUsers()
+
+  // Clear dependent data first (safe order), but keep admins intact
   await prisma.notification.deleteMany({})
   await prisma.message.deleteMany({})
   await prisma.application.deleteMany({})
   await prisma.review.deleteMany({})
   await prisma.creditTransaction.deleteMany({})
   await prisma.task.deleteMany({})
-  await prisma.profile.deleteMany({})
-  await prisma.user.deleteMany({})
+  await prisma.profile.deleteMany({ where: { NOT: { userId: { in: adminIds } } } })
+  await prisma.user.deleteMany({ where: { isAdmin: false } })
 
   const createdUsers = []
   for (const user of usersData) {
