@@ -395,6 +395,79 @@ const titleImages = {
   'Починить межкомнатную дверь': [`https://images.unsplash.com/photo-1503389152951-9f343605f61e${imgParams}`]
 }
 
+const usedTitles = new Set()
+
+const categoryQueries = {
+  Curatenie: 'apartment cleaning',
+  'Reparatii electrice': 'electrician wiring',
+  'Instalatii sanitare': 'plumber faucet install',
+  'IT si retele': 'wifi technician setup',
+  'Mutari si transport': 'moving boxes van',
+  'Pictura si zugraveli': 'interior wall painting',
+  'Montaj mobilier': 'furniture assembly home',
+  Gradinarit: 'garden hedge trimming',
+  Evenimente: 'event photographer',
+  'Lectii si meditatii': 'private tutoring at home',
+  'Livrari locale': 'grocery delivery bags',
+  'Design interior': 'modern apartment interior'
+}
+
+const titleQueries = {
+  'Curatenie generala in apartament': 'deep cleaning apartment',
+  'Генеральная уборка квартиры': 'deep cleaning apartment',
+  'Montaj dulap si reglaj usi': 'wardrobe assembly tools',
+  'Сборка шкафа и регулировка дверей': 'wardrobe assembly tools',
+  'Vopsire pereti living': 'painting living room walls',
+  'Покраска стен в гостиной': 'painting living room walls',
+  'Instalare masina de spalat': 'washing machine installation',
+  'Подключение стиральной машины': 'washing machine installation',
+  'Reparatie priza si verificare tablou': 'electrician repairing outlet',
+  'Ремонт розетки и проверка щитка': 'electrician repairing outlet',
+  'Transport canapea': 'sofa moving service',
+  'Перевозка дивана': 'sofa moving service',
+  'Gradinarit: tuns iarba si gard viu': 'gardening hedge trim',
+  'Садовые работы: газон и изгородь': 'gardening hedge trim',
+  'Curatare dupa renovare': 'post renovation cleaning',
+  'Уборка после ремонта': 'post renovation cleaning',
+  'Depanare internet si Wi-Fi': 'technician fixing wifi',
+  'Настройка интернета и Wi-Fi': 'technician fixing wifi',
+  'Asamblare pat si noptiere': 'assembling bed furniture',
+  'Сборка кровати и тумбочек': 'assembling bed furniture',
+  'Mutare birou mic': 'office moving boxes',
+  'Офисный переезд': 'office moving boxes',
+  'Lectii de romana pentru copil': 'romanian tutor student',
+  'Уроки румынского для школьника': 'romanian tutor student',
+  'Eveniment: fotograf la botez': 'event photographer baptism',
+  'Фотограф на семейное событие': 'event photographer family',
+  'Schimbat baterie chiuveta si etansare': 'plumber replacing faucet',
+  'Замена смесителя и герметизация': 'plumber replacing faucet',
+  'Montaj corpuri de iluminat': 'installing ceiling lights',
+  'Монтаж светильников': 'installing ceiling lights',
+  'Curatare canapele si covoare': 'sofa carpet cleaning',
+  'Химчистка дивана и ковров': 'sofa carpet cleaning',
+  'Corectie gresie desprinsa in baie': 'bathroom tile repair',
+  'Исправить отклеившуюся плитку в ванной': 'bathroom tile repair',
+  'Instalare sistem video interfon': 'intercom installation',
+  'Монтаж домофона на 3 квартиры': 'intercom installation',
+  'Livrare cumparaturi senior': 'grocery delivery senior',
+  'Доставка покупок пожилому человеку': 'grocery delivery senior',
+  'Reparat usa de interior care agata': 'interior door repair',
+  'Починить межкомнатную дверь': 'interior door repair'
+}
+
+function buildImageUrl(baseTitle, categoryName, seed) {
+  const query = titleQueries[baseTitle]
+    || (categoryName && categoryQueries[categoryName])
+    || categoryName
+    || 'local handyman service'
+  const keyword = query
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ',')
+    .replace(/,+/g, ',')
+    .replace(/^,|,$/g, '') || 'service'
+  return `https://loremflickr.com/1200/800/${keyword}?lock=${seed}`
+}
+
 function pick(arr, i) {
   return arr[i % arr.length]
 }
@@ -445,9 +518,20 @@ function buildTask(lang, i, creatorId, category) {
   const qualifierPool = lang === 'ro' ? roQualifiers : ruQualifiers
   const baseTitle = template.title
   const locationIndex = Math.floor(i / qualifierPool.length)
-  const area = pick(areaPool, locationIndex)
-  const qualifier = pick(qualifierPool, i)
-  const title = `${baseTitle} - ${qualifier} (${area})`
+  let area = pick(areaPool, locationIndex)
+  let qualifierIndex = i
+  let qualifier = pick(qualifierPool, qualifierIndex)
+  let title = `${baseTitle} - ${qualifier} (${area})`
+
+  while (usedTitles.has(title)) {
+    qualifierIndex += 1
+    qualifier = pick(qualifierPool, qualifierIndex)
+    area = pick(areaPool, locationIndex + qualifierIndex)
+    title = `${baseTitle} - ${qualifier} (${area})`
+  }
+
+  usedTitles.add(title)
+
   const description = template.description.replace('%area%', area)
   const categoryName = titleCategoryMap[baseTitle] || category?.name || null
   const priceBands = {
@@ -467,10 +551,7 @@ function buildTask(lang, i, creatorId, category) {
   const [min, max] = priceBands[categoryName] || [250, 650]
   const rawPrice = randBetween(min, max)
   const price = Math.round(rawPrice / 10) * 10
-  const imagePool = titleImages[baseTitle]
-    || (categoryName && categoryImages[categoryName])
-    || taskImages
-  const imageUrl = pick(imagePool, i + locationIndex)
+  const imageUrl = buildImageUrl(baseTitle, categoryName, i + 1)
   return {
     title,
     description,
