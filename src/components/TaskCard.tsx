@@ -28,17 +28,31 @@ export default function TaskCard({ id, title, description, price, category, imag
   }
 
   return (
-    <article 
-      className="card" 
-      style={{ 
-        padding: '16px',
-        overflow: 'hidden',
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%'
-      }}
+    <Link
+      href={`/${locale}/tasks/${id}`}
+      onClick={handleViewDetails}
+      style={{ textDecoration: 'none', color: 'inherit' }}
     >
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <article 
+        className="card" 
+        style={{ 
+          padding: '16px',
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+          cursor: 'pointer',
+          transition: 'transform 0.2s, box-shadow 0.2s'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'translateY(-4px)'
+          e.currentTarget.style.boxShadow = '0 8px 16px rgba(0,0,0,0.1)'
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'translateY(0)'
+          e.currentTarget.style.boxShadow = 'var(--shadow)'
+        }}
+      >
         <div style={{ 
           display: 'flex', 
           justifyContent: 'space-between', 
@@ -75,40 +89,17 @@ export default function TaskCard({ id, title, description, price, category, imag
           color: 'var(--text)',
           lineHeight: '1.4'
         }}>
-          <Link
-            href={`/${locale}/tasks/${id}`}
-            className="task-link"
-            style={{ textDecoration: 'none', color: 'inherit', transition: 'color 0.2s' }}
-            onClick={handleViewDetails}
-          >
-            {title}
-          </Link>
+          {title}
         </h3>
         
         <p style={{ 
           color: 'var(--text-secondary)',
-          marginBottom: '12px',
-          flex: 1,
           lineHeight: '1.5',
           fontSize: '0.875rem'
         }}>
           {description.length > 80 ? description.substring(0, 80) + '...' : description}
         </p>
-        
-        <Link 
-          href={`/${locale}/tasks/${id}`}
-          className="btn"
-          style={{
-            width: '100%',
-            textAlign: 'center',
-            padding: '8px 12px',
-            fontSize: '0.875rem'
-          }}
-          onClick={handleViewDetails}
-        >
-          {t('tasks.viewDetails') || 'View Details'}
-        </Link>
-      </div>
-    </article>
+      </article>
+    </Link>
   )
 }
