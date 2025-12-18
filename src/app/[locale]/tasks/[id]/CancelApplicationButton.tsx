@@ -37,6 +37,8 @@ export default function CancelApplicationButton({
 
       if (response.ok) {
         setSuccess(true)
+        // Trigger global credit update event for Header
+        window.dispatchEvent(new CustomEvent('creditsUpdated'))
         setTimeout(() => {
           router.refresh()
         }, 800)

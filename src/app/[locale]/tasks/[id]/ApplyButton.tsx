@@ -147,6 +147,8 @@ export default function ApplyButton({
         setShowContract(false)
         // Refresh credits after successful application
         await fetchCredits()
+        // Trigger global credit update event for Header
+        window.dispatchEvent(new CustomEvent('creditsUpdated'))
         router.refresh()
       } else {
         let msg = 'Failed to submit application'

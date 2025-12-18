@@ -42,7 +42,17 @@ export default function Header() {
         fetchUnreadMessages()
         fetchCredits()
       }, 30000)
-      return () => clearInterval(interval)
+      
+      // Listen for credit update events
+      const handleCreditsUpdate = () => {
+        fetchCredits()
+      }
+      window.addEventListener('creditsUpdated', handleCreditsUpdate)
+      
+      return () => {
+        clearInterval(interval)
+        window.removeEventListener('creditsUpdated', handleCreditsUpdate)
+      }
     }
   }, [session])
 
