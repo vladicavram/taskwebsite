@@ -1,9 +1,10 @@
-<svg width="350" height="180" viewBox="0 0 350 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="350" height="100" viewBox="0 0 350 100" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- DOZO text -->
-  <text x="20" y="110" font-family="Arial, sans-serif" font-size="72" font-weight="300" fill="#C8996F" letter-spacing="4">DOZO</text>
+  <text x="20" y="70" font-family="Arial, sans-serif" font-size="72" font-weight="300" fill="#C8996F" letter-spacing="4">DOZO</text>
   
-  <!-- Circular dots pattern -->
-  <g transform="translate(140, 90)">
+  <!-- Circular dots pattern overlapping the middle -->
+  <g transform="translate(140, 50)">
     <!-- Outer ring - larger dots -->
     <circle cx="0" cy="-45" r="4" fill="#C8996F" opacity="0.9"/>
     <circle cx="15" cy="-43" r="4" fill="#C8996F" opacity="0.85"/>

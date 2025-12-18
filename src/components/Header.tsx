@@ -180,10 +180,10 @@ export default function Header() {
             }}
           >
             <Image
-              src="/logo-dozo-text.svg?v=2"
+              src="/logo-dozo-text.svg?v=3"
               alt="Dozo"
               width={175}
-              height={90}
+              height={50}
               priority
               style={{ height: 'auto', width: '175px' }}
             />
