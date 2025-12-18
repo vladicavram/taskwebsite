@@ -105,8 +105,8 @@ export default function HireWorkersPage() {
       ) : (
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-          gap: 20
+          gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+          gap: 16
         }}>
           {filteredWorkers.map((worker) => (
             <Link
@@ -114,7 +114,7 @@ export default function HireWorkersPage() {
               href={`/${locale}/hire/${worker.id}`}
               style={{
                 display: 'block',
-                padding: 20,
+                padding: 16,
                 background: 'var(--bg)',
                 border: '1px solid var(--border)',
                 borderRadius: 'var(--radius-md)',
@@ -134,27 +134,28 @@ export default function HireWorkersPage() {
                 e.currentTarget.style.boxShadow = 'none'
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
                 <div style={{
-                  width: 50,
-                  height: 50,
+                  width: 40,
+                  height: 40,
                   borderRadius: '50%',
                   background: 'var(--accent)',
                   color: 'white',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '1.5rem',
-                  fontWeight: 600
+                  fontSize: '1.2rem',
+                  fontWeight: 600,
+                  flexShrink: 0
                 }}>
                   {worker.name?.charAt(0).toUpperCase() || '?'}
                 </div>
-                <div style={{ flex: 1 }}>
-                  <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 600 }}>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                     {worker.name || 'Anonymous'}
                   </h3>
                   {worker.profile?.location && (
-                    <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: 2 }}>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       📍 {worker.profile.location}
                     </div>
                   )}
@@ -163,14 +164,14 @@ export default function HireWorkersPage() {
 
               {worker.profile?.bio && (
                 <p style={{
-                  margin: '12px 0',
-                  fontSize: '0.9rem',
+                  margin: '10px 0',
+                  fontSize: '0.85rem',
                   color: 'var(--text-secondary)',
-                  lineHeight: 1.5,
+                  lineHeight: 1.4,
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   display: '-webkit-box',
-                  WebkitLineClamp: 3,
+                  WebkitLineClamp: 2,
                   WebkitBoxOrient: 'vertical'
                 }}>
                   {worker.profile.bio}
@@ -178,20 +179,20 @@ export default function HireWorkersPage() {
               )}
 
               {worker.profile?.skills && (
-                <div style={{ marginTop: 12 }}>
+                <div style={{ marginTop: 10 }}>
                   <div style={{
                     display: 'flex',
                     flexWrap: 'wrap',
-                    gap: 6
+                    gap: 4
                   }}>
-                    {worker.profile.skills.split(',').slice(0, 3).map((skill: string, idx: number) => (
+                    {worker.profile.skills.split(',').slice(0, 2).map((skill: string, idx: number) => (
                       <span
                         key={idx}
                         style={{
-                          padding: '4px 10px',
+                          padding: '3px 8px',
                           background: 'var(--bg-secondary)',
                           borderRadius: 'var(--radius-sm)',
-                          fontSize: '0.8rem',
+                          fontSize: '0.75rem',
                           color: 'var(--text-secondary)'
                         }}
                       >
@@ -203,26 +204,14 @@ export default function HireWorkersPage() {
               )}
 
               <div style={{
-                marginTop: 16,
-                paddingTop: 16,
+                marginTop: 12,
+                paddingTop: 12,
                 borderTop: '1px solid var(--border)',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center'
+                fontSize: '0.8rem',
+                color: 'var(--text-secondary)',
+                textAlign: 'center'
               }}>
-                <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-                  {worker._count?.applications || 0} {t('hire.completedJobs') || 'jobs'}
-                </div>
-                <div style={{
-                  padding: '6px 14px',
-                  background: 'var(--accent)',
-                  color: 'white',
-                  borderRadius: 'var(--radius-sm)',
-                  fontSize: '0.9rem',
-                  fontWeight: 500
-                }}>
-                  {t('hire.viewProfile') || 'View Profile'}
-                </div>
+                {worker._count?.applications || 0} {t('hire.completedJobs') || 'jobs'}
               </div>
             </Link>
           ))}
