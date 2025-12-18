@@ -1010,7 +1010,7 @@ export default function Header() {
                     )}
                   </Link>
                   <Link
-                    href={`/${locale}/profile/credits`}
+                    href={`/${locale}/profile/credits/purchase`}
                     onClick={() => setShowMobileMenu(false)}
                     style={{
                       display: 'block',
