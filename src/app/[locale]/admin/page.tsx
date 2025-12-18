@@ -18,6 +18,8 @@ export default function AdminPage() {
   const [editingTask, setEditingTask] = useState<any>(null)
   const [messagingUser, setMessagingUser] = useState<any>(null)
   const [messageText, setMessageText] = useState('')
+  const [userSearch, setUserSearch] = useState('')
+  const [taskSearch, setTaskSearch] = useState('')
 
   useEffect(() => {
     loadData()
@@ -183,6 +185,30 @@ export default function AdminPage() {
     }
   }
 
+  // Filter users based on search
+  const filteredUsers = users.filter(user => {
+    if (!userSearch.trim()) return true
+    const search = userSearch.toLowerCase()
+    return (
+      user.name?.toLowerCase().includes(search) ||
+      user.email?.toLowerCase().includes(search) ||
+      user.username?.toLowerCase().includes(search) ||
+      user.id?.toLowerCase().includes(search)
+    )
+  })
+
+  // Filter tasks based on search
+  const filteredTasks = tasks.filter(task => {
+    if (!taskSearch.trim()) return true
+    const search = taskSearch.toLowerCase()
+    return (
+      task.title?.toLowerCase().includes(search) ||
+      task.description?.toLowerCase().includes(search) ||
+      task.location?.toLowerCase().includes(search) ||
+      task.id?.toLowerCase().includes(search)
+    )
+  })
+
   return (
     <div className="container" style={{ maxWidth: 1200, paddingTop: 24 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
@@ -231,6 +257,29 @@ export default function AdminPage() {
           {/* Users Tab */}
           {activeTab === 'users' && (
             <div>
+              {/* Users Search Bar */}
+              <div style={{ marginBottom: 16 }}>
+                <input
+                  type="text"
+                  placeholder={t('admin.searchUsers') || 'Search users by name, email, username, or ID...'}
+                  value={userSearch}
+                  onChange={(e) => setUserSearch(e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    fontSize: '1rem',
+                    border: '1px solid var(--border)',
+                    borderRadius: 'var(--radius-sm)',
+                    background: 'var(--bg)',
+                    color: 'var(--text)'
+                  }}
+                />
+                {userSearch && (
+                  <div style={{ marginTop: 8, fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                    Found {filteredUsers.length} of {users.length} users
+                  </div>
+                )}
+              </div>
               <div style={{ overflowX: 'auto' }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                   <thead>
@@ -246,7 +295,7 @@ export default function AdminPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {users.map((user) => (
+                    {filteredUsers.map((user) => (
                       <tr key={user.id} style={{ borderBottom: '1px solid var(--border)' }}>
                         <td style={{ padding: 12 }}>{user.name || '-'}</td>
                         <td style={{ padding: 12 }}>{user.email}</td>
@@ -358,6 +407,29 @@ export default function AdminPage() {
           {/* Tasks Tab */}
           {activeTab === 'tasks' && (
             <div>
+              {/* Tasks Search Bar */}
+              <div style={{ marginBottom: 16 }}>
+                <input
+                  type="text"
+                  placeholder={t('admin.searchTasks') || 'Search tasks by title, description, location, or ID...'}
+                  value={taskSearch}
+                  onChange={(e) => setTaskSearch(e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    fontSize: '1rem',
+                    border: '1px solid var(--border)',
+                    borderRadius: 'var(--radius-sm)',
+                    background: 'var(--bg)',
+                    color: 'var(--text)'
+                  }}
+                />
+                {taskSearch && (
+                  <div style={{ marginTop: 8, fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                    Found {filteredTasks.length} of {tasks.length} tasks
+                  </div>
+                )}
+              </div>
               <div style={{ overflowX: 'auto' }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                   <thead>
@@ -371,7 +443,7 @@ export default function AdminPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {tasks.map((task) => (
+                    {filteredTasks.map((task) => (
                       <tr key={task.id} style={{ borderBottom: '1px solid var(--border)' }}>
                         <td style={{ padding: 12 }}>{task.title}</td>
                         <td style={{ padding: 12 }}>{task.creator?.name || task.creator?.email || '-'}</td>

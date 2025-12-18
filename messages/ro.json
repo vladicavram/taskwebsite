@@ -332,6 +332,8 @@
   ,"panel.logout": "Deconectare"
   ,"header.adminPanel": "Panou Admin"
   ,"admin.backToHome": "Înapoi Acasă"
+  ,"admin.searchUsers": "Caută utilizatori după nume, email, username sau ID..."
+  ,"admin.searchTasks": "Caută sarcini după titlu, descriere, locație sau ID..."
   ,"admin.error.loadUsers": "Nu s-au putut încărca utilizatorii:"
   ,"admin.error.loadTasks": "Nu s-au putut încărca sarcinile:"
   ,"admin.confirm.deleteUser": "Ești sigur că vrei să ștergi acest utilizator? Aceasta va șterge și toate sarcinile, aplicațiile și datele asociate."

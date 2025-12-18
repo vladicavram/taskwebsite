@@ -332,6 +332,8 @@
   ,"panel.logout": "Выйти"
   ,"header.adminPanel": "Панель Админа"
   ,"admin.backToHome": "На Главную"
+  ,"admin.searchUsers": "Поиск пользователей по имени, email, username или ID..."
+  ,"admin.searchTasks": "Поиск задач по названию, описанию, местоположению или ID..."
   ,"admin.error.loadUsers": "Не удалось загрузить пользователей:"
   ,"admin.error.loadTasks": "Не удалось загрузить задания:"
   ,"admin.confirm.deleteUser": "Вы уверены, что хотите удалить этого пользователя? Также будут удалены все его задания, отклики и связанные данные."
