@@ -145,6 +145,8 @@ export default function ApplyButton({
       if (response.ok) {
         setApplied(true)
         setShowContract(false)
+        // Refresh credits after successful application
+        await fetchCredits()
         router.refresh()
       } else {
         let msg = 'Failed to submit application'

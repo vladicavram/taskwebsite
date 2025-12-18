@@ -69,6 +69,14 @@ export async function POST(
     // Enforce fractional credits: required = price/100 (1 credit = 100 MDL)
     const effectivePrice = typeof proposedPrice === 'number' && proposedPrice > 0 ? proposedPrice : (task.price || 0)
     const requiredCredits = effectivePrice / 100
+    
+    console.log('[APPLY] Credit check:', { 
+      applicantEmail: applicant.email, 
+      currentCredits: applicant.credits, 
+      requiredCredits, 
+      effectivePrice 
+    })
+    
     if (applicant.credits < requiredCredits) {
       return NextResponse.json({ error: `Insufficient credits. Required ${requiredCredits.toFixed(2)}, you have ${applicant.credits}.` }, { status: 400 })
     }
@@ -76,9 +84,15 @@ export async function POST(
     // Create application and deduct credits in a transaction
     const application = await prisma.$transaction(async (tx: any) => {
       // Deduct credits from applicant
-      await tx.user.update({
+      const updatedUser = await tx.user.update({
         where: { id: applicant.id },
         data: { credits: { decrement: requiredCredits } }
+      })
+      
+      console.log('[APPLY] Credits deducted:', { 
+        previousCredits: applicant.credits, 
+        deducted: requiredCredits, 
+        newCredits: updatedUser.credits 
       })
 
       // Create application

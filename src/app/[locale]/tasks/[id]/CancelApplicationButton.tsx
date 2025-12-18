@@ -16,11 +16,12 @@ export default function CancelApplicationButton({
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState(false)
 
   const handleCancel = async () => {
     const refundCredits = proposedPrice ? (proposedPrice / 100).toFixed(2) : '0'
     const confirmMessage = t('taskDetail.cancelApplication.confirm') || 
-      `Are you sure you want to cancel your application? ${refundCredits} credits will be refunded to your account.`
+      `Cancel your application?\n\n✓ ${refundCredits} credits will be refunded\n✓ You can apply again later`
     
     if (!confirm(confirmMessage)) {
       return
@@ -35,7 +36,10 @@ export default function CancelApplicationButton({
       })
 
       if (response.ok) {
-        router.refresh()
+        setSuccess(true)
+        setTimeout(() => {
+          router.refresh()
+        }, 800)
       } else {
         const data = await response.json()
         setError(data.error || 'Failed to cancel application')
@@ -45,6 +49,25 @@ export default function CancelApplicationButton({
     } finally {
       setLoading(false)
     }
+  }
+
+  if (success) {
+    return (
+      <div style={{
+        padding: '12px 16px',
+        background: '#d1fae5',
+        border: '1px solid #10b981',
+        borderRadius: '8px',
+        color: '#065f46',
+        fontWeight: 600,
+        fontSize: '0.9rem',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px'
+      }}>
+        ✓ {t('taskDetail.cancelApplication.success') || 'Application cancelled. Credits refunded!'}
+      </div>
+    )
   }
 
   return (
@@ -65,16 +88,36 @@ export default function CancelApplicationButton({
       <button
         onClick={handleCancel}
         disabled={loading}
-        className="btn btn-secondary"
+        className="btn"
         style={{
-          background: '#ef4444',
-          color: 'white',
+          background: 'transparent',
+          border: '2px solid #ef4444',
+          color: '#ef4444',
+          padding: '8px 16px',
+          fontSize: '0.9rem',
+          fontWeight: 600,
           opacity: loading ? 0.6 : 1,
-          cursor: loading ? 'not-allowed' : 'pointer'
+          cursor: loading ? 'not-allowed' : 'pointer',
+          transition: 'all 0.2s'
+        }}
+        onMouseEnter={(e) => {
+          if (!loading) {
+            e.currentTarget.style.background = '#ef4444'
+            e.currentTarget.style.color = 'white'
+          }
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.background = 'transparent'
+          e.currentTarget.style.color = '#ef4444'
         }}
       >
-        {loading ? (t('taskDetail.cancelApplication.cancelling') || 'Cancelling...') : (t('taskDetail.cancelApplication.cancel') || 'Cancel Application')}
+        {loading ? '⏳ ' + (t('taskDetail.cancelApplication.cancelling') || 'Cancelling...') : '✕ ' + (t('taskDetail.cancelApplication.cancel') || 'Cancel Application')}
       </button>
+      {proposedPrice && (
+        <div style={{ fontSize: '0.75rem', color: '#78350f', marginTop: '8px' }}>
+          💰 {((proposedPrice / 100).toFixed(2))} {t('taskDetail.cancelApplication.creditsRefund') || 'credits will be refunded'}
+        </div>
+      )}
     </div>
   )
 }
