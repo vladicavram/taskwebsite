@@ -86,11 +86,6 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                   {getTranslation(params.locale, 'taskDetail.changesSaved') || '✓ Changes saved successfully'}
                 </div>
               )}
-              {task.category && (
-                <span style={{ display: 'inline-block', fontSize: '0.875rem', fontWeight: 500, color: 'var(--accent)', background: 'var(--accent-light)', padding: '6px 16px', borderRadius: '20px', marginBottom: '16px' }}>
-                  {task.category.name}
-                </span>
-              )}
 
               {isCreator && (
                 <div style={{ padding: '12px', background: 'var(--accent-light)', border: '1px solid var(--accent)', borderRadius: 'var(--radius-sm)', color: 'var(--accent)', fontWeight: 500, marginBottom: '12px' }}>{getTranslation(params.locale, 'taskDetail.yourTask') || '✓ This is your task'}</div>
