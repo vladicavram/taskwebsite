@@ -162,17 +162,18 @@ export default function Header() {
   }
 
   return (
-    <header style={{ 
-      width: '100%', 
-      background: 'rgba(255,255,255,0.05)',
-      backdropFilter: 'saturate(180%) blur(20px)',
-      WebkitBackdropFilter: 'saturate(180%) blur(20px)',
-      borderBottom: '1px solid rgba(255,255,255,0.2)',
-      boxShadow: 'var(--shadow-sm)',
-      position: 'fixed',
-      top: 0,
-      zIndex: 100
-    }}>
+    <>
+      <header style={{ 
+        width: '100%', 
+        background: 'rgba(255,255,255,0.05)',
+        backdropFilter: 'saturate(180%) blur(20px)',
+        WebkitBackdropFilter: 'saturate(180%) blur(20px)',
+        borderBottom: '1px solid rgba(255,255,255,0.2)',
+        boxShadow: 'var(--shadow-sm)',
+        position: 'fixed',
+        top: 0,
+        zIndex: 100
+      }}>
       <div className="container" style={{ 
         display: 'flex', 
         alignItems: 'center', 
@@ -794,8 +795,9 @@ export default function Header() {
           <LanguageSwitcher />
         </nav>
       </div>
+    </header>
 
-      {/* Mobile Slide-out Menu - Only visible on mobile screens */}
+      {/* Mobile Slide-out Menu - Rendered outside header to avoid z-index stacking issues */}
       {showMobileMenu && (
         <>
           {/* Overlay */}
@@ -1111,6 +1113,6 @@ export default function Header() {
           </div>
         </>
       )}
-    </header>
+    </>
   )
 }
