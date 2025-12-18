@@ -1,115 +1,253 @@
-/* Mobile Menu Animation */
-@keyframes slideIn {
-  from {
-    transform: translateX(-100%);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #f5f1ea;
+  --bg-secondary: #ede6dc;
+  /* Palette inspired by Moldova tourism mark */
+  --pattern-rose: #e54c70;
+  --pattern-red: #e63946;
+  --pattern-green: #4caf50;
+  --pattern-teal: #2e9ca0;
+  --pattern-blue: #2d7dd2;
+  --pattern-gold: #f2a541;
+  --pattern-deep: #1a1a1a;
+  --text: #111111;
+  --text-secondary: #3a3a3a;
+  --text-muted: #6a6a6a;
+  --border: #e0d7c9;
+  --border-light: #ece4d8;
+  --accent: #111111;
+  --accent-hover: #000000;
+  --accent-light: #d7ccbd;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.12);
+  --radius: 10px;
+  --radius-sm: 8px;
+  /* Monochrome cross-stitch medallion inspired by the provided motif */
+  --bg-pattern:
+    url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27160%27%20height%3D%27160%27%20viewBox%3D%270%200%20160%20160%27%3E%3Cg%20stroke%3D%27%23111111%27%20stroke-width%3D%276%27%20stroke-linecap%3D%27square%27%20stroke-opacity%3D%27.14%27%3E%3Cpath%20d%3D%27M70%2070%20L90%2090%20M90%2070%20L70%2090%20M50%2050%20L70%2070%20M70%2050%20L50%2070%20M90%2050%20L110%2070%20M110%2050%20L90%2070%20M50%2090%20L70%20110%20M70%2090%20L50%20110%20M90%2090%20L110%20110%20M110%2090%20L90%20110%20M30%2070%20L50%2090%20M50%2070%20L30%2090%20M110%2070%20L130%2090%20M130%2070%20L110%2090%20M70%2030%20L90%2050%20M90%2030%20L70%2050%20M70%20110%20L90%20130%20M90%20110%20L70%20130%20M30%2030%20L50%2050%20M50%2030%20L30%2050%20M110%2030%20L130%2050%20M130%2030%20L110%2050%20M30%20110%20L50%20130%20M50%20110%20L30%20130%20M110%20110%20L130%20130%20M130%20110%20L110%20130%20M10%2070%20L30%2090%20M30%2070%20L10%2090%20M70%2010%20L90%2030%20M90%2010%20L70%2030%20M70%20130%20L90%20150%20M90%20130%20L70%20150%20M130%2070%20L150%2090%20M150%2070%20L130%2090%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"),
+    radial-gradient(circle at 18% 16%, rgba(242, 165, 65, 0.18) 0, rgba(242, 165, 65, 0) 46%),
+    radial-gradient(circle at 82% 18%, rgba(46, 156, 160, 0.12) 0, rgba(46, 156, 160, 0) 52%),
+    radial-gradient(circle at 50% 82%, rgba(45, 125, 210, 0.10) 0, rgba(45, 125, 210, 0) 50%);
+  /* Liquid hero background (updated to match palette) */
+  --hero-bg: radial-gradient(1200px 800px at 10% -10%, rgba(245,241,234,0.8) 0%, rgba(245,241,234,0) 40%),
+              radial-gradient(900px 600px at 90% 0%, rgba(185,149,86,0.18) 0%, rgba(185,149,86,0) 45%),
+              linear-gradient(180deg, #f6f1e7 0%, #ebe2d6 100%);
+}
+
+html, body { 
+  height: 100%; 
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+}
+
+body {
+  background-color: var(--bg);
+  background-image: var(--bg-pattern);
+  background-size: 220px 220px, 720px 720px, 820px 820px, 900px 900px;
+  background-attachment: fixed;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+}
+
+/* Liquid hero with gentle motion */
+.liquid-hero {
+  background: var(--hero-bg);
+  background-size: 160% 160%, 160% 160%, 100% 100%;
+  background-position: 0% 0%, 100% 0%, 50% 0%;
+  background-attachment: fixed, fixed, fixed;
+  animation: heroShift 18s ease-in-out infinite alternate;
+  color: var(--text);
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(17,17,17,0.1);
+}
+
+/* High-contrast badge colors */
+:root {
+  --danger: #b91c1c; /* red-700 for WCAG AA with white text */
+  --danger-contrast: #ffffff;
+}
+
+@keyframes heroShift {
+  0% {
+    background-position: 0% 0%, 100% 0%, 50% 0%;
   }
-  to {
-    transform: translateX(0);
+  100% {
+    background-position: 50% 20%, 60% 0%, 50% 100%;
   }
 }
 
-/* Mobile Responsive Styles - Automatically applied on mobile devices */
+.container { 
+  max-width: 1200px; 
+  margin: 0 auto; 
+  padding: 24px; 
+}
+
+.card { 
+  background: rgba(255,255,255,0.78); 
+  border: 1px solid rgba(255,255,255,0.4); 
+  padding: 24px; 
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+
+/* Dark fixed CTA background with contrast overlay */
+.fixed-cta-dark {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  background-attachment: fixed;
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+.fixed-cta-dark::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}
+.link { 
+  color: var(--text); 
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* Task title link hover - use CSS only to avoid hydration/JS flicker */
+.task-link {
+  color: inherit;
+  transition: color 0.18s ease;
+}
+.task-link:hover {
+  color: var(--accent);
+}
+
+.muted { 
+  color: var(--text-muted); 
+  font-size: 0.875rem;
+}
+
+.btn { 
+  display: inline-block; 
+  padding: 12px 24px; 
+  border-radius: 9999px; 
+  border: 1px solid var(--accent);
+  background: linear-gradient(180deg, #111 0%, #000 100%); 
+  color: #ffffff;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.btn { will-change: transform, opacity; position: relative; overflow: hidden; }
+
+.btn:hover {
+  /* Don't replace the background (gradient -> solid) — that causes repaints/flicker.
+     Use an overlay pseudo-element to darken smoothly on hover instead. */
+  box-shadow: var(--shadow);
+  transform: translateY(-1px);
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.18);
+  opacity: 0;
+  transition: opacity 160ms ease;
+  border-radius: 9999px;
+  pointer-events: none;
+}
+.btn:hover::after {
+  opacity: 1;
+}
+
+.btn-secondary {
+  background: rgba(255,255,255,0.65);
+  color: var(--text);
+  border: 1px solid rgba(17,17,17,0.2);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-secondary);
+  border-color: var(--text);
+  box-shadow: var(--shadow);
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid rgba(17,17,17,0.15);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+  background: rgba(255,255,255,0.7);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: saturate(180%) blur(10px);
+  -webkit-backdrop-filter: saturate(180%) blur(10px);
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-light);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.2;
+  margin-bottom: 0.5em;
+  color: var(--text);
+}
+
+h1 { font-size: 2.5rem; font-weight: 700; }
+h2 { font-size: 2rem; font-weight: 600; }
+h3 { font-size: 1.5rem; font-weight: 600; }
+h4 { font-size: 1.25rem; font-weight: 500; }
+
+p {
+  margin-bottom: 1em;
+  color: var(--text-secondary);
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-  /* Show mobile menu button on small screens */
-  .mobile-menu-button {
-    display: block !important;
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.25rem; }
+  
+  .container {
+    padding: 16px;
   }
-
-  /* Hide desktop navigation items on mobile */
-  header nav {
-    display: none !important;
-  }
-
-  /* Hide center action buttons on mobile */
-  header > div > div[style*="position: absolute"] {
-    display: none !important;
-  }
-
-  /* Adjust container padding for mobile */
-  header .container {
-    padding: 12px 16px !important;
-  }
-
-  /* Adjust logo size on mobile */
-  header img[alt="Dozo"] {
-    width: 120px !important;
-  }
-
-  /* Make cards stack on mobile */
+  
   .card {
-    margin-bottom: 16px;
+    padding: 16px;
   }
-
-  /* Adjust task cards for mobile */
-  div[style*="grid-template-columns"] {
+  
+  .task-detail-grid {
     grid-template-columns: 1fr !important;
   }
-
-  /* Make containers full width on mobile */
-  .container {
-    max-width: 100% !important;
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-  }
-
-  /* Adjust hero sections for mobile */
-  .liquid-hero {
-    padding: 32px 16px !important;
-  }
-
-  .liquid-hero h1 {
-    font-size: 1.75rem !important;
-  }
-
-  .liquid-hero p {
-    font-size: 1rem !important;
-  }
-
-  /* Make buttons stack on mobile */
-  div[style*="display: flex"][style*="gap"] {
-    flex-direction: column !important;
-    gap: 12px !important;
-  }
-
-  /* Adjust form inputs for mobile */
-  input, textarea, select {
-    font-size: 16px !important; /* Prevents zoom on iOS */
-  }
-
-  /* Make modals full screen on mobile */
-  div[style*="max-width: 500px"] {
-    max-width: 100% !important;
-    margin: 0 !important;
-    border-radius: 0 !important;
-  }
 }
 
-/* Tablet and touch devices */
-@media (max-width: 1024px) and (hover: none) {
-  .mobile-menu-button {
-    display: block !important;
-  }
-  
-  header nav {
-    display: none !important;
-  }
-  
-  header > div > div[style*="position: absolute"] {
-    display: none !important;
-  }
-}
-
-@media (max-width: 480px) {
-  /* Extra small screens */
-  header .container {
-    padding: 8px 12px !important;
-  }
-
-  header img[alt="Dozo"] {
-    width: 100px !important;
-  }
-
-  .liquid-hero h1 {
-    font-size: 1.5rem !important;
-  }
-}
