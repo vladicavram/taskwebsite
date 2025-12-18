@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  experimental: {
+    serverComponentsExternalPackages: ['@prisma/client', 'bcryptjs']
+  },
   env: {
     // Provide a fallback for NEXTAUTH_URL during build to prevent "Invalid URL" errors.
     // The actual value is set in Vercel environment variables and takes precedence at runtime.
