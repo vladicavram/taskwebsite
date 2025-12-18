@@ -219,14 +219,6 @@ export default function WorkerProfilePage({ params }: { params: { id: string } }
         }}>
           <div>
             <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: 4 }}>
-              {t('hire.totalJobs') || 'Total Jobs'}
-            </div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 600 }}>
-              {worker._count?.applications || 0}
-            </div>
-          </div>
-          <div>
-            <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: 4 }}>
               Average Rating
             </div>
             <div style={{ fontSize: '1.5rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 6 }}>

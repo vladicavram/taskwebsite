@@ -220,17 +220,6 @@ export default function HireWorkersPage() {
                   </div>
                 </div>
               )}
-
-              <div style={{
-                marginTop: 12,
-                paddingTop: 12,
-                borderTop: '1px solid var(--border)',
-                fontSize: '0.8rem',
-                color: 'var(--text-secondary)',
-                textAlign: 'center'
-              }}>
-                {worker._count?.applications || 0} {t('hire.completedJobs') || 'jobs'}
-              </div>
             </Link>
           ))}
         </div>
