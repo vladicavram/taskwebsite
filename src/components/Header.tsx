@@ -6,7 +6,7 @@ import { useState, useEffect, useRef } from 'react'
 import LanguageSwitcher from './LanguageSwitcher'
 import useLocale from '../lib/locale'
 import { useSession, signOut } from 'next-auth/react'
-import { MessageCircle, Bell, Coins } from 'lucide-react'
+import { MessageCircle, Bell, Coins, Menu, X } from 'lucide-react'
 
 export default function Header() {
   const router = useRouter()
@@ -23,6 +23,7 @@ export default function Header() {
   const [credits, setCredits] = useState(0)
   const [showUserMenu, setShowUserMenu] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false)
+  const [showMobileMenu, setShowMobileMenu] = useState(false)
   
   const messagesRef = useRef<HTMLDivElement>(null)
   const notificationsRef = useRef<HTMLDivElement>(null)
@@ -179,7 +180,26 @@ export default function Header() {
         padding: '16px 24px',
         position: 'relative'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          {/* Mobile Menu Button - Hidden by default, shown on mobile */}
+          <button
+            onClick={() => setShowMobileMenu(!showMobileMenu)}
+            className="mobile-menu-button"
+            style={{
+              display: 'none',
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              padding: '8px',
+              color: 'var(--text)',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+            aria-label="Menu"
+          >
+            {showMobileMenu ? <X size={24} /> : <Menu size={24} />}
+          </button>
+
           <Link 
             href={session?.user ? `/${locale}/tasks` : `/${locale}`} 
             style={{ 
@@ -201,7 +221,7 @@ export default function Header() {
         
         {/* Center Action Buttons */}
         {session?.user && (
-          <div style={{ 
+          <div className="desktop-center-buttons" style={{ 
             position: 'absolute',
             left: '50%',
             transform: 'translateX(-50%)',
@@ -251,7 +271,7 @@ export default function Header() {
           </div>
         )}
         
-        <nav style={{ 
+        <nav className="desktop-nav" style={{ 
           display: 'flex', 
           alignItems: 'center', 
           gap: '16px',
@@ -774,6 +794,323 @@ export default function Header() {
           <LanguageSwitcher />
         </nav>
       </div>
+
+      {/* Mobile Slide-out Menu - Only visible on mobile screens */}
+      {showMobileMenu && (
+        <>
+          {/* Overlay */}
+          <div
+            onClick={() => setShowMobileMenu(false)}
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: 'rgba(0,0,0,0.5)',
+              zIndex: 998
+            }}
+          />
+          
+          {/* Slide-out Panel */}
+          <div
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              bottom: 0,
+              width: '280px',
+              maxWidth: '85vw',
+              background: 'white',
+              boxShadow: '2px 0 20px rgba(0,0,0,0.2)',
+              zIndex: 999,
+              overflowY: 'auto',
+              padding: '20px',
+              animation: 'slideInFromLeft 0.3s ease-out'
+            }}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setShowMobileMenu(false)}
+              style={{
+                position: 'absolute',
+                top: '16px',
+                right: '16px',
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                padding: '8px',
+                color: 'var(--text)'
+              }}
+              aria-label="Close menu"
+            >
+              <X size={24} />
+            </button>
+
+            {/* Logo */}
+            <div style={{ marginBottom: '32px', marginTop: '8px' }}>
+              <img
+                src="/logo-dozo-text.svg?v=3"
+                alt="Dozo"
+                width="140"
+                height="40"
+                style={{ height: 'auto', width: '140px' }}
+              />
+            </div>
+
+            {session?.user ? (
+              <>
+                {/* User Info */}
+                <div style={{ 
+                  marginBottom: '24px',
+                  padding: '16px',
+                  background: 'var(--bg-secondary)',
+                  borderRadius: '12px'
+                }}>
+                  <div style={{ 
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    marginBottom: '8px'
+                  }}>
+                    <div style={{
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: '50%',
+                      background: 'var(--accent)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: 'white',
+                      fontWeight: '600',
+                      fontSize: '1.1rem'
+                    }}>
+                      {session.user.name?.[0]?.toUpperCase() || session.user.email?.[0]?.toUpperCase()}
+                    </div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ 
+                        fontWeight: '600', 
+                        fontSize: '0.95rem',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap'
+                      }}>
+                        {session.user.name || session.user.email}
+                      </div>
+                      <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                        {credits} {t('header.credits') || 'credits'}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Navigation Links */}
+                <div style={{ marginBottom: '24px' }}>
+                  <Link
+                    href={`/${locale}/tasks`}
+                    onClick={() => setShowMobileMenu(false)}
+                    style={{
+                      display: 'block',
+                      padding: '14px 16px',
+                      marginBottom: '8px',
+                      borderRadius: '8px',
+                      textDecoration: 'none',
+                      color: 'var(--text)',
+                      background: pathname?.includes('/tasks') && !pathname?.includes('/tasks/create') ? 'var(--accent)' : 'transparent',
+                      fontWeight: pathname?.includes('/tasks') && !pathname?.includes('/tasks/create') ? '600' : '500'
+                    }}
+                  >
+                    {t('header.browseTasks') || 'Browse Tasks'}
+                  </Link>
+                  <Link
+                    href={`/${locale}/hire`}
+                    onClick={() => setShowMobileMenu(false)}
+                    style={{
+                      display: 'block',
+                      padding: '14px 16px',
+                      marginBottom: '8px',
+                      borderRadius: '8px',
+                      textDecoration: 'none',
+                      color: 'var(--text)',
+                      background: pathname?.includes('/hire') ? 'var(--accent)' : 'transparent',
+                      fontWeight: pathname?.includes('/hire') ? '600' : '500'
+                    }}
+                  >
+                    {t('header.hire') || 'Hire'}
+                  </Link>
+                  <Link
+                    href={`/${locale}/tasks/create`}
+                    onClick={() => setShowMobileMenu(false)}
+                    style={{
+                      display: 'block',
+                      padding: '14px 16px',
+                      marginBottom: '8px',
+                      borderRadius: '8px',
+                      textDecoration: 'none',
+                      color: 'var(--text)',
+                      background: pathname?.includes('/tasks/create') ? 'var(--accent)' : 'transparent',
+                      fontWeight: pathname?.includes('/tasks/create') ? '600' : '500'
+                    }}
+                  >
+                    {t('header.postTask') || 'Post a Task'}
+                  </Link>
+                </div>
+
+                {/* Account Section */}
+                <div style={{ 
+                  borderTop: '1px solid var(--border)',
+                  paddingTop: '20px'
+                }}>
+                  <Link
+                    href={`/${locale}/profile/account`}
+                    onClick={() => setShowMobileMenu(false)}
+                    style={{
+                      display: 'block',
+                      padding: '14px 16px',
+                      marginBottom: '8px',
+                      borderRadius: '8px',
+                      textDecoration: 'none',
+                      color: 'var(--text)',
+                      fontWeight: '500'
+                    }}
+                  >
+                    {t('header.account') || 'Account'}
+                  </Link>
+                  <Link
+                    href={`/${locale}/messages`}
+                    onClick={() => setShowMobileMenu(false)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '14px 16px',
+                      marginBottom: '8px',
+                      borderRadius: '8px',
+                      textDecoration: 'none',
+                      color: 'var(--text)',
+                      fontWeight: '500'
+                    }}
+                  >
+                    <span>{t('header.messages') || 'Messages'}</span>
+                    {unreadMessagesCount > 0 && (
+                      <span style={{
+                        background: 'var(--error)',
+                        color: 'white',
+                        borderRadius: '12px',
+                        padding: '2px 8px',
+                        fontSize: '0.75rem',
+                        fontWeight: '600',
+                        minWidth: '20px',
+                        textAlign: 'center'
+                      }}>
+                        {unreadMessagesCount}
+                      </span>
+                    )}
+                  </Link>
+                  <Link
+                    href={`/${locale}/profile/credits`}
+                    onClick={() => setShowMobileMenu(false)}
+                    style={{
+                      display: 'block',
+                      padding: '14px 16px',
+                      marginBottom: '8px',
+                      borderRadius: '8px',
+                      textDecoration: 'none',
+                      color: 'var(--text)',
+                      fontWeight: '500'
+                    }}
+                  >
+                    {t('header.buyCredits') || 'Buy Credits'}
+                  </Link>
+                  {isAdmin && (
+                    <Link
+                      href={`/${locale}/admin`}
+                      onClick={() => setShowMobileMenu(false)}
+                      style={{
+                        display: 'block',
+                        padding: '14px 16px',
+                        marginBottom: '8px',
+                        borderRadius: '8px',
+                        textDecoration: 'none',
+                        color: 'var(--accent)',
+                        fontWeight: '600',
+                        background: 'rgba(0,0,0,0.03)'
+                      }}
+                    >
+                      {t('header.adminPanel') || 'Admin Panel'}
+                    </Link>
+                  )}
+                  <button
+                    onClick={() => {
+                      setShowMobileMenu(false)
+                      signOut({ callbackUrl: `/${locale}` })
+                    }}
+                    style={{
+                      width: '100%',
+                      padding: '14px 16px',
+                      marginTop: '12px',
+                      borderRadius: '8px',
+                      border: '1px solid var(--error)',
+                      background: 'transparent',
+                      color: 'var(--error)',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                      fontSize: '0.95rem'
+                    }}
+                  >
+                    {t('auth.logout') || 'Logout'}
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                {/* Guest Menu */}
+                <div style={{ paddingTop: '20px' }}>
+                  <button
+                    onClick={() => {
+                      setShowMobileMenu(false)
+                      router.push(`/${locale}/login`)
+                    }}
+                    style={{
+                      width: '100%',
+                      padding: '14px 16px',
+                      marginBottom: '12px',
+                      borderRadius: '8px',
+                      border: '1px solid var(--border)',
+                      background: 'white',
+                      color: 'var(--text)',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                      fontSize: '0.95rem'
+                    }}
+                  >
+                    {t('auth.login') || 'Login'}
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowMobileMenu(false)
+                      router.push(`/${locale}/signup`)
+                    }}
+                    style={{
+                      width: '100%',
+                      padding: '14px 16px',
+                      borderRadius: '8px',
+                      border: 'none',
+                      background: 'var(--accent)',
+                      color: 'white',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                      fontSize: '0.95rem'
+                    }}
+                  >
+                    {t('auth.signup') || 'Sign Up'}
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        </>
+      )}
     </header>
   )
 }

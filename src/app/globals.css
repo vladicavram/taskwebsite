@@ -251,3 +251,40 @@ p {
   }
 }
 
+/* Mobile Menu Styles - Only for small screens */
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Mobile-only adjustments */
+@media (max-width: 768px) {
+  /* Show hamburger menu button on mobile */
+  .mobile-menu-button {
+    display: flex !important;
+  }
+
+  /* Hide desktop navigation on mobile */
+  .desktop-nav {
+    display: none !important;
+  }
+
+  /* Hide center action buttons on mobile */
+  .desktop-center-buttons {
+    display: none !important;
+  }
+
+  /* Adjust header for mobile */
+  header .container {
+    padding: 12px 16px !important;
+  }
+
+  /* Smaller logo on mobile */
+  header img[alt="Dozo"] {
+    width: 110px !important;
+  }
+}
