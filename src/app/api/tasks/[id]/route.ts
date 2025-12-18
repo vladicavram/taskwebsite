@@ -112,7 +112,33 @@ export async function DELETE(
       return NextResponse.json({ error: 'Cannot delete a completed task' }, { status: 400 })
     }
 
-    // Delete related records first
+    // Get all applications for this task to refund credits
+    const applications = await prisma.application.findMany({
+      where: { taskId: params.id },
+      include: { applicant: true }
+    })
+
+    // Refund credits to applicants with pending or accepted applications
+    const refundPromises = applications
+      .filter(app => app.status === 'pending' || app.status === 'accepted')
+      .map(async (app) => {
+        const taskPrice = task.price || 0
+        const refundAmount = taskPrice / 100 // Convert MDL to credits
+        
+        const oldCredits = app.applicant.credits
+        const newCredits = oldCredits + refundAmount
+
+        await prisma.user.update({
+          where: { id: app.applicant.id },
+          data: { credits: newCredits }
+        })
+
+        console.log(`[TASK DELETION REFUND] User ${app.applicant.email}: ${oldCredits.toFixed(1)} credits + ${refundAmount.toFixed(1)} = ${newCredits.toFixed(1)} credits (task "${task.title}" deleted)`)
+      })
+
+    await Promise.all(refundPromises)
+
+    // Delete related records
     await prisma.notification.deleteMany({
       where: { taskId: params.id }
     })

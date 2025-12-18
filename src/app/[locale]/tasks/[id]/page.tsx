@@ -51,6 +51,8 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
   const hasPendingApplication = userApplication?.status === 'pending'
   // Only consider as "already applied" if status is pending or accepted (not declined/removed)
   const hasAlreadyApplied = !!userApplication && (userApplication.status === 'pending' || userApplication.status === 'accepted')
+  // Count only pending and accepted applications (exclude declined and removed)
+  const activeApplicationsCount = (task as any).applications.filter((app: any) => app.status === 'pending' || app.status === 'accepted').length
   const completedAt = (task as any).completedAt as Date | undefined
   // Only show review forms if task has accepted applicant or is completed
   const showReviewForms = (isCreator || isAcceptedApplicantServer) && (acceptedApps.length > 0 || !!completedAt)
@@ -307,7 +309,7 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                 }}>
                   ✓ {getTranslation(params.locale, 'taskDetail.taskAccepted') || 'Task Accepted'}
                 </div>
-              ) : (task as any).applications.length > 0 ? (
+              ) : activeApplicationsCount > 0 ? (
                 <div style={{
                   padding: '12px',
                   background: '#fef3c7',
@@ -318,7 +320,7 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                   textAlign: 'center',
                   marginBottom: '8px'
                 }}>
-                  📋 {(task as any).applications.length} {getTranslation(params.locale, 'taskDetail.applicants') || 'Applicant(s)'}
+                  📋 {activeApplicationsCount} {getTranslation(params.locale, 'taskDetail.applicants') || 'Applicant(s)'}
                 </div>
               ) : (
                 <div style={{
