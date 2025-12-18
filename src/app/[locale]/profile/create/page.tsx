@@ -649,6 +649,34 @@ export default function CreateProfilePage() {
                     marginBottom: '8px',
                     color: 'var(--text)'
                   }}>
+                    {t('profileCreate.label.dateOfBirth') || 'Date of Birth'} *
+                  </label>
+                  <input 
+                    type="date"
+                    name="dateOfBirth"
+                    value={formData.dateOfBirth}
+                    onChange={handleInputChange}
+                    required
+                    max={new Date(new Date().setFullYear(new Date().getFullYear() - 18)).toISOString().split('T')[0]}
+                  />
+                  {age > 0 && age < 18 && (
+                    <p style={{ 
+                      fontSize: '0.875rem', 
+                      color: '#dc3545',
+                      marginTop: '6px'
+                    }}>
+                      {t('profileCreate.error.age') || 'You must be at least 18 years old'}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label style={{ 
+                    display: 'block', 
+                    fontWeight: 600,
+                    marginBottom: '8px',
+                    color: 'var(--text)'
+                  }}>
                     {t('profileCreate.label.idType') || 'ID Type'} *
                   </label>
                   <select

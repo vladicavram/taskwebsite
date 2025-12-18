@@ -65,6 +65,7 @@
   "taskDetail.posterOnly.upgradeButton": "Стать Исполнителем",
   "account.upgradeSuccess.title": "Запрос на Обновление Отправлен!",
   "account.upgradeSuccess.message": "Ваш запрос на статус исполнителя отправлен. Администратор проверит вашу ID-верификацию и скоро одобрит ваш аккаунт.",
+  "profileCreate.label.dateOfBirth": "Дата Рождения",
   "create.title": "Создать Задачу",
   "create.taskTitle": "Название Задачи",
   "create.description": "Описание",

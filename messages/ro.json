@@ -66,6 +66,7 @@
   "taskDetail.posterOnly.upgradeButton": "Devino Tasker",
   "account.upgradeSuccess.title": "Actualizare Trimisă!",
   "account.upgradeSuccess.message": "Cererea ta de a deveni tasker a fost trimisă. Un administrator va verifica identificarea ta și va aproba contul în curând.",
+  "profileCreate.label.dateOfBirth": "Data Nașterii",
   "create.title": "Postează o Sarcină",
   "create.taskTitle": "Titlul Sarcinii",
   "create.description": "Descriere",
