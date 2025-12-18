@@ -163,10 +163,10 @@ export default function Header() {
   return (
     <header style={{ 
       width: '100%', 
-      background: 'rgba(255,255,255,0.1)',
-      backdropFilter: 'saturate(180%) blur(16px)',
-      WebkitBackdropFilter: 'saturate(180%) blur(16px)',
-      borderBottom: '1px solid rgba(255,255,255,0.35)',
+      background: 'rgba(255,255,255,0.05)',
+      backdropFilter: 'saturate(180%) blur(20px)',
+      WebkitBackdropFilter: 'saturate(180%) blur(20px)',
+      borderBottom: '1px solid rgba(255,255,255,0.2)',
       boxShadow: 'var(--shadow-sm)',
       position: 'fixed',
       top: 0,
