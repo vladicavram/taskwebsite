@@ -1,7 +1,7 @@
 "use client"
 import Link from 'next/link'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
 import LanguageSwitcher from './LanguageSwitcher'
 import useLocale from '../lib/locale'
@@ -10,6 +10,7 @@ import { MessageCircle, Bell, Coins } from 'lucide-react'
 
 export default function Header() {
   const router = useRouter()
+  const pathname = usePathname()
   const { t, locale } = useLocale()
   const { data: session } = useSession()
   const [notifications, setNotifications] = useState<any[]>([])
@@ -210,10 +211,13 @@ export default function Header() {
           }}>
             <Link 
               href={`/${locale}/tasks`}
-              className="btn btn-secondary"
+              className="btn"
               style={{ 
                 padding: '8px 16px',
-                fontSize: '0.9rem'
+                fontSize: '0.9rem',
+                background: pathname?.includes('/tasks') && !pathname?.includes('/tasks/create') ? 'var(--text)' : 'white',
+                color: pathname?.includes('/tasks') && !pathname?.includes('/tasks/create') ? 'white' : 'var(--text)',
+                border: '1px solid var(--border)'
               }}
             >
               {t('header.browseTasks') || 'Browse Tasks'}
@@ -224,8 +228,9 @@ export default function Header() {
               style={{ 
                 padding: '8px 16px',
                 fontSize: '0.9rem',
-                background: 'var(--accent)',
-                color: 'white'
+                background: pathname?.includes('/hire') ? 'var(--text)' : 'white',
+                color: pathname?.includes('/hire') ? 'white' : 'var(--text)',
+                border: '1px solid var(--border)'
               }}
             >
               {t('header.hire') || 'Hire'}
@@ -235,7 +240,10 @@ export default function Header() {
               className="btn"
               style={{ 
                 padding: '8px 16px',
-                fontSize: '0.9rem'
+                fontSize: '0.9rem',
+                background: pathname?.includes('/tasks/create') ? 'var(--text)' : 'white',
+                color: pathname?.includes('/tasks/create') ? 'white' : 'var(--text)',
+                border: '1px solid var(--border)'
               }}
             >
               {t('header.postTask') || 'Post a Task'}
