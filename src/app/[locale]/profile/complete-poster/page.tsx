@@ -1,10 +1,10 @@
 "use client"
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { MOLDOVA_CITIES } from '../../../../lib/constants'
 import useLocale from '../../../../lib/locale'
 
-export default function PosterProfilePage() {
+function PosterProfileContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { t, locale } = useLocale()
@@ -314,5 +314,17 @@ export default function PosterProfilePage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function PosterProfilePage() {
+  return (
+    <Suspense fallback={
+      <div className="container" style={{ textAlign: 'center', padding: '100px 0' }}>
+        Loading...
+      </div>
+    }>
+      <PosterProfileContent />
+    </Suspense>
   )
 }

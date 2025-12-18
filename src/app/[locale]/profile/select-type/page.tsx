@@ -1,9 +1,9 @@
 "use client"
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import useLocale from '../../../../lib/locale'
 
-export default function SelectUserTypePage() {
+function SelectUserTypeContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { t, locale } = useLocale()
@@ -316,5 +316,17 @@ export default function SelectUserTypePage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function SelectUserTypePage() {
+  return (
+    <Suspense fallback={
+      <div className="container" style={{ textAlign: 'center', padding: '100px 0' }}>
+        Loading...
+      </div>
+    }>
+      <SelectUserTypeContent />
+    </Suspense>
   )
 }
