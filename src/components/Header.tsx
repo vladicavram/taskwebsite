@@ -163,7 +163,7 @@ export default function Header() {
   return (
     <header style={{ 
       width: '100%', 
-      background: 'rgba(255,255,255,0.6)',
+      background: 'rgba(255,255,255,0.8)',
       backdropFilter: 'saturate(180%) blur(16px)',
       WebkitBackdropFilter: 'saturate(180%) blur(16px)',
       borderBottom: '1px solid rgba(255,255,255,0.35)',
