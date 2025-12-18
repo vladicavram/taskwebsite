@@ -170,7 +170,7 @@ export default function WorkerProfilePage({ params }: { params: { id: string } }
                 className="btn"
                 style={{ fontSize: '1.1rem', padding: '12px 32px' }}
               >
-                {t('hire.hireButton') || 'Hire This Worker'}
+                {t('hire.hireButton') || 'Hire'}
               </button>
             </div>
           </div>
