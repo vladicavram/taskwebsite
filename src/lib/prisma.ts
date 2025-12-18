@@ -6,6 +6,12 @@ declare global {
   var prisma: PrismaClient | undefined
 }
 
-export const prisma = global.prisma || new PrismaClient()
+if (typeof window === 'undefined') {
+  console.log('🔍 Prisma DB URL:', process.env.DATABASE_URL?.substring(0, 60) + '...')
+}
+
+export const prisma = global.prisma || new PrismaClient({
+  log: process.env.NODE_ENV === 'production' ? ['error', 'warn'] : ['query', 'error', 'warn'],
+})
 
 if (process.env.NODE_ENV !== 'production') global.prisma = prisma
