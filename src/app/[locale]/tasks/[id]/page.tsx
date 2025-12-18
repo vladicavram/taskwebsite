@@ -1,7 +1,6 @@
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
-import ImageLightbox from '../../../../components/ImageLightbox'
 import { prisma } from '../../../../lib/prisma'
 import Link from 'next/link'
 import { getServerSession } from 'next-auth/next'
@@ -11,8 +10,6 @@ import ApplyButton from './ApplyButton'
 import ApplicantsList from './ApplicantsList'
 import DeleteTaskButton from './DeleteTaskButton'
 import EditTaskInline from './EditTaskInline'
-import TaskImageControls from './TaskImageControls'
-import ThumbnailWithDelete from './ThumbnailWithDelete'
 import ReviewSection from './ReviewSection'
 import { revalidatePath } from 'next/cache'
 import MarkCompleteButton from './MarkCompleteButton'
@@ -45,9 +42,6 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
       </div>
     )
   }
-
-  // Use imageUrl from database (stored in Vercel Blob)
-  const images: string[] = (task as any).imageUrl ? [(task as any).imageUrl] : []
 
   const isCreator = session?.user?.email === task.creator.email
   const acceptedApps = (task as any).applications.filter((app: any) => app.status === 'accepted')
@@ -110,18 +104,6 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                 </Link>
               </div>
 
-              {(images.length > 0 || (isCreator && !completedAt)) && (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px', flexWrap: 'wrap' }}>
-                  {images.map((imgUrl) => {
-                    const nameMatch = imgUrl.match(/\/([^/?#]+)(?:\?v=\d+)?$/)
-                    const imageName = nameMatch ? nameMatch[1] : undefined
-                    return (
-                      <ThumbnailWithDelete key={imgUrl} src={imgUrl} alt={task.title} taskId={params.id} canEdit={isCreator && !completedAt} imageName={imageName} />
-                    )
-                  })}
-                  {isCreator && !completedAt && <TaskImageControls taskId={params.id} canEdit={isCreator} showAddOnly />}
-                </div>
-              )}
               {!isCreator ? (
                 <p style={{ lineHeight: '1.8', color: 'var(--text-secondary)', marginBottom: '24px' }}>{task.description}</p>
               ) : completedAt ? (
