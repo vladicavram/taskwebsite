@@ -200,10 +200,50 @@ export default function Header() {
           display: 'flex', 
           alignItems: 'center', 
           gap: '16px',
-          flexWrap: 'wrap'
+          flexWrap: 'wrap',
+          flex: 1,
+          justifyContent: 'center'
         }}>
           {session?.user ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <>
+              {/* Action Buttons */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <Link 
+                  href={`/${locale}/tasks`}
+                  className="btn btn-secondary"
+                  style={{ 
+                    padding: '8px 16px',
+                    fontSize: '0.9rem'
+                  }}
+                >
+                  {t('header.browseTasks') || 'Browse Tasks'}
+                </Link>
+                <Link 
+                  href={`/${locale}/hire`}
+                  className="btn"
+                  style={{ 
+                    padding: '8px 16px',
+                    fontSize: '0.9rem',
+                    background: 'var(--accent)',
+                    color: 'white'
+                  }}
+                >
+                  {t('header.hire') || 'Hire'}
+                </Link>
+                <Link 
+                  href={`/${locale}/tasks/create`}
+                  className="btn"
+                  style={{ 
+                    padding: '8px 16px',
+                    fontSize: '0.9rem'
+                  }}
+                >
+                  {t('header.postTask') || 'Post a Task'}
+                </Link>
+              </div>
+              
+              {/* User Controls */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginLeft: 'auto' }}>
               {/* User Avatar Menu (swapped into first position) */}
               <div 
                 ref={userMenuRef} 
@@ -686,7 +726,8 @@ export default function Header() {
                 )}
               </div>
 
-            </div>
+              </div>
+            </>
           ) : (
             <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
               <a 
