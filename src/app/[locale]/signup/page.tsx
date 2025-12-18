@@ -19,10 +19,10 @@ export default function SignUpOptionsPage() {
       }}>
         <div className="container">
           <h1 style={{ fontSize: '2.5rem', marginBottom: '12px', color: 'var(--text)' }}>
-            {t('signup.title') || 'Join Our Platform'}
+            Join Our Platform
           </h1>
           <p style={{ fontSize: '1.1rem', opacity: 0.95 }}>
-            {t('signup.subtitle') || 'How would you like to use our platform?'}
+            How would you like to use our platform?
           </p>
         </div>
       </section>
@@ -57,19 +57,26 @@ export default function SignUpOptionsPage() {
             }}
           >
             <div style={{ 
-              width: '48px', 
-              height: '48px', 
-              margin: '0 auto 16px',
+              width: '64px', 
+              height: '64px', 
+              margin: '0 auto 20px',
               borderRadius: '50%',
-              background: 'var(--accent)',
-              opacity: 0.1
-            }} />
+              background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-dark, #0056b3) 100%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'white',
+              fontSize: '28px',
+              fontWeight: 'bold'
+            }}>
+              ⚡
+            </div>
             <h3 style={{ 
               fontSize: '1.5rem', 
               marginBottom: '12px',
               color: 'var(--text)'
             }}>
-              {t('signup.tasker.title') || 'Become a Tasker'}
+              Become a Tasker
             </h3>
             <p style={{ 
               color: 'var(--text-secondary)', 
@@ -77,7 +84,7 @@ export default function SignUpOptionsPage() {
               lineHeight: '1.6',
               marginBottom: '16px'
             }}>
-              {t('signup.tasker.description') || 'Offer your services, find work, and earn money by completing tasks for clients.'}
+              Offer your services, find work, and earn money by completing tasks for clients.
             </p>
             <ul style={{ 
               textAlign: 'left', 
@@ -86,10 +93,10 @@ export default function SignUpOptionsPage() {
               lineHeight: '1.8',
               paddingLeft: '20px'
             }}>
-              <li>{t('signup.tasker.feature1') || 'Browse and apply to tasks'}</li>
-              <li>{t('signup.tasker.feature2') || 'Build your reputation with reviews'}</li>
-              <li>{t('signup.tasker.feature3') || 'Set your own rates'}</li>
-              <li>{t('signup.tasker.feature4') || 'Get verified with ID'}</li>
+              <li>Browse and apply to tasks</li>
+              <li>Build your reputation with reviews</li>
+              <li>Set your own rates</li>
+              <li>Get verified with ID</li>
             </ul>
           </button>
 
@@ -117,19 +124,26 @@ export default function SignUpOptionsPage() {
             }}
           >
             <div style={{ 
-              width: '48px', 
-              height: '48px', 
-              margin: '0 auto 16px',
-              borderRadius: '8px',
-              background: 'var(--accent)',
-              opacity: 0.1
-            }} />
+              width: '64px', 
+              height: '64px', 
+              margin: '0 auto 20px',
+              borderRadius: '12px',
+              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'white',
+              fontSize: '28px',
+              fontWeight: 'bold'
+            }}>
+              📝
+            </div>
             <h3 style={{ 
               fontSize: '1.5rem', 
               marginBottom: '12px',
               color: 'var(--text)'
             }}>
-              {t('signup.poster.title') || 'Post Tasks Only'}
+              Post Tasks Only
             </h3>
             <p style={{ 
               color: 'var(--text-secondary)', 
@@ -137,7 +151,7 @@ export default function SignUpOptionsPage() {
               lineHeight: '1.6',
               marginBottom: '16px'
             }}>
-              {t('signup.poster.description') || 'Hire skilled taskers to help with your projects. Quick and simple signup.'}
+              Hire skilled taskers to help with your projects. Quick and simple signup.
             </p>
             <ul style={{ 
               textAlign: 'left', 
@@ -146,10 +160,10 @@ export default function SignUpOptionsPage() {
               lineHeight: '1.8',
               paddingLeft: '20px'
             }}>
-              <li>{t('signup.poster.feature1') || 'Post tasks quickly'}</li>
-              <li>{t('signup.poster.feature2') || 'Hire verified taskers'}</li>
-              <li>{t('signup.poster.feature3') || 'Simple registration (no ID required)'}</li>
-              <li>{t('signup.poster.feature4') || 'Upgrade to tasker later'}</li>
+              <li>Post tasks quickly</li>
+              <li>Hire verified taskers</li>
+              <li>Simple registration (no ID required)</li>
+              <li>Upgrade to tasker later</li>
             </ul>
           </button>
 
@@ -177,19 +191,26 @@ export default function SignUpOptionsPage() {
             }}
           >
             <div style={{ 
-              width: '48px', 
-              height: '48px', 
-              margin: '0 auto 16px',
-              borderRadius: '12px',
-              background: 'var(--accent)',
-              opacity: 0.15
-            }} />
+              width: '64px', 
+              height: '64px', 
+              margin: '0 auto 20px',
+              borderRadius: '16px',
+              background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'white',
+              fontSize: '28px',
+              fontWeight: 'bold'
+            }}>
+              ⭐
+            </div>
             <h3 style={{ 
               fontSize: '1.5rem', 
               marginBottom: '12px',
               color: 'var(--text)'
             }}>
-              {t('signup.both.title') || 'Both - Full Access'}
+              Both - Full Access
             </h3>
             <p style={{ 
               color: 'var(--text-secondary)', 
@@ -197,7 +218,7 @@ export default function SignUpOptionsPage() {
               lineHeight: '1.6',
               marginBottom: '16px'
             }}>
-              {t('signup.both.description') || 'Get complete access - post tasks and offer your services as a tasker.'}
+              Get complete access - post tasks and offer your services as a tasker.
             </p>
             <ul style={{ 
               textAlign: 'left', 
@@ -206,10 +227,10 @@ export default function SignUpOptionsPage() {
               lineHeight: '1.8',
               paddingLeft: '20px'
             }}>
-              <li>{t('signup.both.feature1') || 'Post tasks and apply to tasks'}</li>
-              <li>{t('signup.both.feature2') || 'Maximum flexibility'}</li>
-              <li>{t('signup.both.feature3') || 'Full platform access'}</li>
-              <li>{t('signup.both.feature4') || 'ID verification required'}</li>
+              <li>Post tasks and apply to tasks</li>
+              <li>Maximum flexibility</li>
+              <li>Full platform access</li>
+              <li>ID verification required</li>
             </ul>
           </button>
         </div>
@@ -220,12 +241,12 @@ export default function SignUpOptionsPage() {
           color: 'var(--text-secondary)',
           fontSize: '0.95rem'
         }}>
-          {t('signup.hasAccount') || 'Already have an account?'}{' '}
+          Already have an account?{' '}
           <a 
             href={`/${locale}/login`}
             style={{ color: 'var(--accent)', fontWeight: 600 }}
           >
-            {t('auth.login') || 'Sign In'}
+            Sign In
           </a>
         </div>
       </div>
