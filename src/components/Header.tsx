@@ -22,8 +22,6 @@ export default function Header() {
   const [credits, setCredits] = useState(0)
   const [showUserMenu, setShowUserMenu] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false)
-  const [canApply, setCanApply] = useState(false)
-  const [isBlocked, setIsBlocked] = useState(false)
   
   const messagesRef = useRef<HTMLDivElement>(null)
   const notificationsRef = useRef<HTMLDivElement>(null)
@@ -76,8 +74,6 @@ export default function Header() {
       if (response.ok) {
         const data = await response.json()
         setIsAdmin(data.isAdmin || data.role === 'admin' || data.role === 'moderator')
-        setCanApply(data.canApply || false)
-        setIsBlocked(data.isBlocked || false)
       }
     } catch (error) {
       console.error('Failed to check admin status:', error)
@@ -337,33 +333,6 @@ export default function Header() {
                     </button>
                   </div>
                 )}
-              </div>
-
-              {/* Approval Status Badge */}
-              <div 
-                style={{ 
-                  position: 'relative',
-                  display: 'flex',
-                  alignItems: 'center'
-                }}
-                title={
-                  isBlocked 
-                    ? (t('header.blocked') || 'Account blocked - cannot apply for tasks')
-                    : !canApply 
-                      ? (t('header.pendingApproval') || 'Pending admin approval to apply for tasks')
-                      : credits <= 0
-                        ? (t('header.noCredits') || 'No credits - cannot apply for tasks')
-                        : (t('header.canApply') || 'Approved to apply for tasks')
-                }
-              >
-                <div style={{
-                  width: '12px',
-                  height: '12px',
-                  borderRadius: '50%',
-                  background: (canApply && !isBlocked && credits > 0) ? '#10b981' : '#ef4444',
-                  border: '2px solid white',
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.2)'
-                }} />
               </div>
 
               {/* Credits Coin (swapped after avatar) */}
