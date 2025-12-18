@@ -207,7 +207,7 @@ export default function Header() {
           {session?.user ? (
             <>
               {/* Action Buttons */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
                 <Link 
                   href={`/${locale}/tasks`}
                   className="btn btn-secondary"
