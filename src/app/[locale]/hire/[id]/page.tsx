@@ -136,6 +136,23 @@ export default function WorkerProfilePage({ params }: { params: { id: string } }
           </div>
           <div style={{ flex: 1 }}>
             <h1 style={{ margin: 0, fontSize: '2rem' }}>{worker.name || 'Anonymous'}</h1>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 8 }}>
+              {worker.averageRating > 0 ? (
+                <>
+                  <span style={{ color: '#f59e0b', fontSize: '1.5rem' }}>★</span>
+                  <span style={{ fontSize: '1.2rem', fontWeight: 600 }}>
+                    {worker.averageRating.toFixed(1)}
+                  </span>
+                  <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                    ({worker.reviewCount} {worker.reviewCount === 1 ? 'review' : 'reviews'})
+                  </span>
+                </>
+              ) : (
+                <span style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>
+                  No reviews yet
+                </span>
+              )}
+            </div>
             {worker.profile?.location && (
               <div style={{ fontSize: '1rem', color: 'var(--text-secondary)', marginTop: 8 }}>
                 📍 {worker.profile.location}
@@ -206,6 +223,21 @@ export default function WorkerProfilePage({ params }: { params: { id: string } }
             </div>
             <div style={{ fontSize: '1.5rem', fontWeight: 600 }}>
               {worker._count?.applications || 0}
+            </div>
+          </div>
+          <div>
+            <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: 4 }}>
+              Average Rating
+            </div>
+            <div style={{ fontSize: '1.5rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 6 }}>
+              {worker.averageRating > 0 ? (
+                <>
+                  <span style={{ color: '#f59e0b' }}>★</span>
+                  {worker.averageRating.toFixed(1)}
+                </>
+              ) : (
+                <span style={{ fontSize: '1rem', color: 'var(--text-secondary)' }}>N/A</span>
+              )}
             </div>
           </div>
         </div>

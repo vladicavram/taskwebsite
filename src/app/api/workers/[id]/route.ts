@@ -27,6 +27,11 @@ export async function GET(
             skills: true
           }
         },
+        reviewsReceived: {
+          select: {
+            rating: true
+          }
+        },
         _count: {
           select: {
             applications: true
@@ -39,7 +44,24 @@ export async function GET(
       return NextResponse.json({ error: 'Worker not found' }, { status: 404 })
     }
 
-    return NextResponse.json(worker)
+    // Calculate average rating
+    const ratings = worker.reviewsReceived.map(r => r.rating)
+    const averageRating = ratings.length > 0 
+      ? ratings.reduce((sum, r) => sum + r, 0) / ratings.length 
+      : 0
+
+    const workerWithRating = {
+      id: worker.id,
+      name: worker.name,
+      email: worker.email,
+      image: worker.image,
+      profile: worker.profile,
+      averageRating: Math.round(averageRating * 10) / 10,
+      reviewCount: ratings.length,
+      _count: worker._count
+    }
+
+    return NextResponse.json(workerWithRating)
   } catch (error) {
     console.error('Failed to fetch worker:', error)
     return NextResponse.json({ error: 'Failed to fetch worker' }, { status: 500 })

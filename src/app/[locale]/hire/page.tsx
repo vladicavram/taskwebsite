@@ -154,13 +154,31 @@ export default function HireWorkersPage() {
                   <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                     {worker.name || 'Anonymous'}
                   </h3>
-                  {worker.profile?.location && (
-                    <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      📍 {worker.profile.location}
-                    </div>
-                  )}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2 }}>
+                    {worker.averageRating > 0 ? (
+                      <>
+                        <span style={{ color: '#f59e0b', fontSize: '0.85rem' }}>★</span>
+                        <span style={{ fontSize: '0.75rem', fontWeight: 500 }}>
+                          {worker.averageRating.toFixed(1)}
+                        </span>
+                        <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>
+                          ({worker.reviewCount})
+                        </span>
+                      </>
+                    ) : (
+                      <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
+                        No reviews yet
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
+
+              {worker.profile?.location && (
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: 8 }}>
+                  📍 {worker.profile.location}
+                </div>
+              )}
 
               {worker.profile?.bio && (
                 <p style={{
