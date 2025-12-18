@@ -20,6 +20,8 @@ export const authOptions: NextAuthOptions = {
           return null
         }
         console.log('🔍 Login attempt for:', credentials.usernameOrEmail)
+        console.log('🔍 Password length:', credentials.password?.length)
+        
         const user = await prisma.user.findFirst({ 
           where: { 
             OR: [
@@ -28,23 +30,39 @@ export const authOptions: NextAuthOptions = {
             ]
           }
         })
+        
         if (!user) {
-          console.log('❌ User not found')
+          console.log('❌ User not found for:', credentials.usernameOrEmail)
+          // Check total users
+          const count = await prisma.user.count()
+          console.log('📊 Total users in DB:', count)
           return null
         }
+        
+        console.log('✓ User found:', user.email, '/', user.username)
+        console.log('✓ Is Admin:', user.isAdmin)
+        console.log('✓ Blocked:', user.blocked)
+        
         if (user.blocked) {
-          // Special error for blocked users
+          console.log('❌ User is blocked')
           throw new Error('USER_BLOCKED')
         }
+        
         if (!user.password) {
           console.log('❌ User has no password')
           return null
         }
-        console.log('✓ User found:', user.name)
+        
+        console.log('✓ Has password, checking...')
         const ok = compareSync(credentials.password, user.password)
-        console.log('✓ Password check:', ok ? 'PASS' : 'FAIL')
-        if (!ok) return null
-        console.log('✅ Login successful for:', user.name)
+        console.log('✓ Password check:', ok ? '✅ PASS' : '❌ FAIL')
+        
+        if (!ok) {
+          console.log('❌ Password mismatch for:', user.email)
+          return null
+        }
+        
+        console.log('✅ Login successful for:', user.name, '(', user.email, ')')
         return { id: user.id, email: user.email, name: user.name }
       }
     }),
