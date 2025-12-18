@@ -12,6 +12,8 @@ export default function AccountPage() {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const [activeTab, setActiveTab] = useState<'profile'>('profile')
+  const [userType, setUserType] = useState<string>('')
+  const [userId, setUserId] = useState<string>('')
   const [form, setForm] = useState({
     username: '',
     name: '',
@@ -39,6 +41,8 @@ export default function AccountPage() {
           password: '',
           image: data.image || ''
         })
+        setUserType(data.userType || 'poster')
+        setUserId(data.id || '')
       }
     }
     load()
@@ -95,7 +99,43 @@ export default function AccountPage() {
       {/* Tabs removed; My Tasks moved to header menu */}
 
       {activeTab === 'profile' && (
-      <div className="card" style={{ padding: '24px' }}>
+      <>
+        {/* Show upgrade banner for poster-only users */}
+        {userType === 'poster' && (
+          <div style={{
+            background: 'linear-gradient(135deg, #007bff 0%, #0056b3 100%)',
+            color: 'white',
+            padding: '24px',
+            borderRadius: 'var(--radius)',
+            marginBottom: '24px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '20px'
+          }}>
+            <div style={{ flex: 1 }}>
+              <h3 style={{ margin: '0 0 8px 0', fontSize: '1.3rem' }}>🌟 Want to Offer Your Services?</h3>
+              <p style={{ margin: 0, opacity: 0.95, fontSize: '1rem' }}>
+                Upgrade to a Tasker account to apply for tasks and start earning money
+              </p>
+            </div>
+            <button
+              onClick={() => router.push(`/${locale}/profile/create?userType=both&userId=${userId}`)}
+              className="btn"
+              style={{
+                background: 'white',
+                color: '#007bff',
+                fontWeight: 600,
+                padding: '12px 24px',
+                whiteSpace: 'nowrap'
+              }}
+            >
+              Become a Tasker →
+            </button>
+          </div>
+        )}
+        
+        <div className="card" style={{ padding: '24px' }}>
         {error && (
           <div style={{ padding: 12, background: '#fee', border: '1px solid #fcc', borderRadius: 8, color: '#c00', marginBottom: 16 }}>{error}</div>
         )}
@@ -140,6 +180,7 @@ export default function AccountPage() {
           </div>
         </form>
       </div>
+      </>
       )}
 
       {/* Tasks UI removed from account settings */}

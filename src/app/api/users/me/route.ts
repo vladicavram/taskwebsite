@@ -20,6 +20,7 @@ export async function GET() {
     isAdmin: user.isAdmin, 
     role: user.role,
     canApply: user.canApply,
+    userType: user.userType,
     idPhotoUrl: user.idPhotoUrl
   })
 }

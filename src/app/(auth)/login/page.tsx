@@ -206,7 +206,7 @@ function LoginContent() {
 
             <p style={{ textAlign: 'center', color: 'var(--text-secondary)' }}>
               {t('login.noAccount') || "Don't have an account?"}{' '}
-              <a href={`/${locale}/profile/create`} style={{ color: 'var(--accent)', textDecoration: 'underline' }}>
+              <a href={`/${locale}/profile/register`} style={{ color: 'var(--accent)', textDecoration: 'underline' }}>
                 {t('login.createAccount') || 'Create one now'}
               </a>
             </p>

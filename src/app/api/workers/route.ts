@@ -7,10 +7,14 @@ export const dynamic = 'force-dynamic'
 export async function GET(req: Request) {
   try {
     // Get all users who are approved to apply for tasks (workers)
+    // Only include users with userType 'tasker' or 'both' (not 'poster')
     const workers = await prisma.user.findMany({
       where: {
         canApply: true,
-        blocked: false
+        blocked: false,
+        userType: {
+          in: ['tasker', 'both']
+        }
       },
       select: {
         id: true,

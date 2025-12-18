@@ -9,11 +9,14 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const worker = await prisma.user.findUnique({
+    const worker = await prisma.user.findFirst({
       where: {
         id: params.id,
         canApply: true,
-        blocked: false
+        blocked: false,
+        userType: {
+          in: ['tasker', 'both']
+        }
       },
       select: {
         id: true,

@@ -1,13 +1,19 @@
 "use client"
 import { useState, useRef, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { MOLDOVA_CITIES } from '../../../../lib/constants'
 import useLocale from '../../../../lib/locale'
 
 export default function CreateProfilePage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { t, locale } = useLocale()
+  
+  // Get params from URL
+  const userType = searchParams.get('userType') || 'both'
+  const userId = searchParams.get('userId')
+  const isPosterOnly = userType === 'poster'
   
   const [formData, setFormData] = useState({
     username: '',
@@ -33,7 +39,8 @@ export default function CreateProfilePage() {
   const [photoFile, setPhotoFile] = useState<File | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [step, setStep] = useState(1)
+  // Start at step 2 if userId is provided (skip account creation)
+  const [step, setStep] = useState(userId ? 2 : 1)
   const videoRef = useRef<HTMLVideoElement>(null)
   const selfieVideoRef = useRef<HTMLVideoElement>(null)
   const streamRef = useRef<MediaStream | null>(null)
@@ -195,14 +202,17 @@ export default function CreateProfilePage() {
       return
     }
     
-    if (formData.password !== formData.confirmPassword) {
-      setError(t('profileCreate.error.passwordMismatch') || 'Passwords do not match.')
-      return
-    }
-    
-    if (formData.password.length < 8) {
-      setError(t('profileCreate.error.passwordShort') || 'Password must be at least 8 characters long.')
-      return
+    // Only validate passwords if creating new account
+    if (!userId) {
+      if (formData.password !== formData.confirmPassword) {
+        setError(t('profileCreate.error.passwordMismatch') || 'Passwords do not match.')
+        return
+      }
+      
+      if (formData.password.length < 8) {
+        setError(t('profileCreate.error.passwordShort') || 'Password must be at least 8 characters long.')
+        return
+      }
     }
     
     // Verify ID and selfie are uploaded
@@ -215,31 +225,36 @@ export default function CreateProfilePage() {
     setError('')
     
     try {
-      // Create user account
-      const userResponse = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          username: formData.username,
-          email: formData.email,
-          password: formData.password,
-          name: formData.name
+      let userIdToUse = userId
+      
+      // Create user account only if userId not provided
+      if (!userId) {
+        const userResponse = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username: formData.username,
+            email: formData.email,
+            password: formData.password,
+            name: formData.name
+          })
         })
-      })
-      
-      if (!userResponse.ok) {
-        const errorData = await userResponse.json()
-        throw new Error(errorData.error || 'Failed to create account')
+        
+        if (!userResponse.ok) {
+          const errorData = await userResponse.json()
+          throw new Error(errorData.error || 'Failed to create account')
+        }
+        
+        const userData = await userResponse.json()
+        userIdToUse = userData.id
       }
-      
-      const userData = await userResponse.json()
       
       // Create profile
       const profileResponse = await fetch('/api/profiles', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          userId: userData.id,
+          userId: userIdToUse,
           bio: formData.bio,
           location: formData.location,
           skills: formData.skills,
@@ -257,7 +272,7 @@ export default function CreateProfilePage() {
       }
       
       // Upload ID photo and selfie
-      if (idFile || selfieFile) {
+      if ((idFile || selfieFile) && userIdToUse) {
         const formDataUpload = new FormData()
         if (idFile) {
           formDataUpload.append('idPhoto', idFile)
@@ -265,7 +280,7 @@ export default function CreateProfilePage() {
         if (selfieFile) {
           formDataUpload.append('selfie', selfieFile)
         }
-        formDataUpload.append('userId', userData.id)
+        formDataUpload.append('userId', userIdToUse)
         
         const uploadResponse = await fetch('/api/users/upload-id', {
           method: 'POST',
@@ -344,14 +359,14 @@ export default function CreateProfilePage() {
       </section>
 
       <div className="container" style={{ maxWidth: '800px' }}>
-        {/* Progress Indicator */}
+        {/* Progress Indicator - hide step 1 if userId exists */}
         <div style={{ marginBottom: '40px' }}>
           <div style={{ 
             display: 'flex', 
             justifyContent: 'space-between',
             marginBottom: '16px'
           }}>
-            {[1, 2, 3].map((s) => (
+            {(userId ? [2, 3] : [1, 2, 3]).map((s, idx) => (
               <div 
                 key={s}
                 style={{
@@ -375,7 +390,7 @@ export default function CreateProfilePage() {
                   marginBottom: '8px',
                   zIndex: 2
                 }}>
-                  {s}
+                  {userId ? idx + 1 : s}
                 </div>
                 <div style={{ 
                   fontSize: '0.875rem',
@@ -384,7 +399,7 @@ export default function CreateProfilePage() {
                 }}>
                   {s === 1 ? (t('profileCreate.step.personalInfo') || 'Personal Info') : s === 2 ? (t('profileCreate.step.verification') || 'Verification') : (t('profileCreate.step.profileDetails') || 'Profile Details')}
                 </div>
-                {s < 3 && (
+                {((userId && idx < 1) || (!userId && s < 3)) && (
                   <div style={{
                     position: 'absolute',
                     top: '20px',
@@ -1046,7 +1061,8 @@ export default function CreateProfilePage() {
               marginTop: '24px',
               borderTop: '1px solid var(--border)'
             }}>
-              {step > 1 && (
+              {/* Only show back button if step > 2 when userId exists, or step > 1 when creating new account */}
+              {(userId ? step > 2 : step > 1) && (
                 <button 
                   type="button"
                   onClick={prevStep}
