@@ -58,8 +58,16 @@ export async function POST(
       }
     })
 
-    if (existingApplication) {
+    // Allow reapplying if previous application was declined or removed
+    if (existingApplication && existingApplication.status !== 'declined' && existingApplication.status !== 'removed') {
       return NextResponse.json({ error: 'You have already applied to this task' }, { status: 400 })
+    }
+
+    // If reapplying, delete the old declined/removed application
+    if (existingApplication) {
+      await prisma.application.delete({
+        where: { id: existingApplication.id }
+      })
     }
 
     if (!agree || !agreementText || agreementText.trim().length < 10) {

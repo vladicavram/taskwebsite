@@ -48,8 +48,9 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
   const acceptedApps = (task as any).applications.filter((app: any) => app.status === 'accepted')
   const isAcceptedApplicantServer = !!acceptedApps.find((app: any) => app.applicant.id === session?.user?.id)
   const userApplication = (task as any).applications.find((app: any) => app.applicant.id === session?.user?.id)
-  const hasAlreadyApplied = !!userApplication
   const hasPendingApplication = userApplication?.status === 'pending'
+  // Only consider as "already applied" if status is pending or accepted (not declined/removed)
+  const hasAlreadyApplied = !!userApplication && (userApplication.status === 'pending' || userApplication.status === 'accepted')
   const completedAt = (task as any).completedAt as Date | undefined
   // Only show review forms if task has accepted applicant or is completed
   const showReviewForms = (isCreator || isAcceptedApplicantServer) && (acceptedApps.length > 0 || !!completedAt)
