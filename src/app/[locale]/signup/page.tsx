@@ -16,31 +16,16 @@ export default function SignUpOptionsPage() {
       <div style={{
         background: 'linear-gradient(135deg, var(--accent) 0%, #667eea 100%)',
         color: 'white',
-        padding: '16px 24px',
+        padding: '48px 24px',
         textAlign: 'center',
-        fontSize: '1.1rem',
-        fontWeight: '600',
+        fontSize: '2rem',
+        fontWeight: '700',
         boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
       }}>
         {t('signup.banner')}
       </div>
 
-      {/* Hero Banner */}
-      <section className="liquid-hero" style={{
-        padding: '48px 24px',
-        marginBottom: '48px'
-      }}>
-        <div className="container">
-          <h1 style={{ fontSize: '2.5rem', marginBottom: '12px', color: 'var(--text)' }}>
-            {t('signup.title')}
-          </h1>
-          <p style={{ fontSize: '1.1rem', opacity: 0.95 }}>
-            {t('signup.subtitle')}
-          </p>
-        </div>
-      </section>
-
-      <div className="container" style={{ maxWidth: '1000px', marginBottom: '60px' }}>
+      <div className="container" style={{ maxWidth: '1000px', marginBottom: '60px', marginTop: '48px' }}>
         <div style={{ 
           display: 'grid', 
           gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
