@@ -64,6 +64,8 @@
   "taskDetail.posterOnly.title": "Actualizează pentru a Deveni Tasker",
   "taskDetail.posterOnly.description": "Contul tău este configurat doar pentru a posta sarcini. Pentru a aplica la sarcini, trebuie să actualizezi la un cont de tasker și să completezi verificarea ID-ului.",
   "taskDetail.posterOnly.upgradeButton": "Devino Tasker",
+  "account.upgradeSuccess.title": "Actualizare Trimisă!",
+  "account.upgradeSuccess.message": "Cererea ta de a deveni tasker a fost trimisă. Un administrator va verifica identificarea ta și va aproba contul în curând.",
   "create.title": "Postează o Sarcină",
   "create.taskTitle": "Titlul Sarcinii",
   "create.description": "Descriere",

@@ -1,6 +1,7 @@
 "use client"
 import { useState, useRef, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { MOLDOVA_CITIES } from '../../../../lib/constants'
 import useLocale from '../../../../lib/locale'
@@ -8,12 +9,16 @@ import useLocale from '../../../../lib/locale'
 export default function CreateProfilePage() {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const { data: session } = useSession()
   const { t, locale } = useLocale()
   
   // Get params from URL
   const userType = searchParams.get('userType') || 'both'
   const userId = searchParams.get('userId')
   const isPosterOnly = userType === 'poster'
+  
+  // Check if user is already logged in (upgrading from poster)
+  const isUpgrading = !!session?.user
   
   const [formData, setFormData] = useState({
     username: '',
@@ -39,8 +44,8 @@ export default function CreateProfilePage() {
   const [photoFile, setPhotoFile] = useState<File | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  // Start at step 2 if userId is provided (skip account creation)
-  const [step, setStep] = useState(userId ? 2 : 1)
+  // Start at step 2 if userId is provided OR user is logged in (upgrading)
+  const [step, setStep] = useState(userId || isUpgrading ? 2 : 1)
   const videoRef = useRef<HTMLVideoElement>(null)
   const selfieVideoRef = useRef<HTMLVideoElement>(null)
   const streamRef = useRef<MediaStream | null>(null)
@@ -227,8 +232,12 @@ export default function CreateProfilePage() {
     try {
       let userIdToUse = userId
       
-      // Create user account only if userId not provided
-      if (!userId) {
+      // If user is logged in (upgrading), use their session info
+      if (isUpgrading && session?.user) {
+        // For logged-in users upgrading, we'll update their userType via the profile API
+        userIdToUse = (session.user as any).id
+      } else if (!userId) {
+        // Create user account only if userId not provided and not logged in
         const userResponse = await fetch('/api/auth/register', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -293,8 +302,14 @@ export default function CreateProfilePage() {
         }
       }
       
-      // Redirect to login page with message about pending approval
-      router.push(`/${locale}/login?registered=true&pending=true`)
+      // Redirect based on whether user is upgrading or creating new account
+      if (isUpgrading) {
+        // Upgrading user - redirect to profile with pending message
+        router.push(`/${locale}/profile/account?upgraded=true`)
+      } else {
+        // New user - redirect to login page with message about pending approval
+        router.push(`/${locale}/login?registered=true&pending=true`)
+      }
     } catch (err: any) {
       setError(err.message || (t('profileCreate.error.createProfile') || 'Failed to create profile. Please try again.'))
       setLoading(false)

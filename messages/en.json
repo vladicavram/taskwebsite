@@ -64,6 +64,8 @@
   "taskDetail.posterOnly.title": "Upgrade to Become a Tasker",
   "taskDetail.posterOnly.description": "Your account is currently set up to only post tasks. To apply for tasks, you need to upgrade to a tasker account and complete ID verification.",
   "taskDetail.posterOnly.upgradeButton": "Become a Tasker",
+  "account.upgradeSuccess.title": "Upgrade Submitted!",
+  "account.upgradeSuccess.message": "Your request to become a tasker has been submitted. An admin will review your ID verification and approve your account soon.",
   "create.title": "Post a Task",
   "create.taskTitle": "Task Title",
   "create.description": "Description",

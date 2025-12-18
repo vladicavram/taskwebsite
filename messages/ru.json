@@ -63,6 +63,8 @@
   "taskDetail.posterOnly.title": "Обновитесь, чтобы Стать Исполнителем",
   "taskDetail.posterOnly.description": "Ваш аккаунт настроен только для размещения задач. Чтобы откликаться на задачи, вам нужно обновиться до аккаунта исполнителя и пройти верификацию ID.",
   "taskDetail.posterOnly.upgradeButton": "Стать Исполнителем",
+  "account.upgradeSuccess.title": "Запрос на Обновление Отправлен!",
+  "account.upgradeSuccess.message": "Ваш запрос на статус исполнителя отправлен. Администратор проверит вашу ID-верификацию и скоро одобрит ваш аккаунт.",
   "create.title": "Создать Задачу",
   "create.taskTitle": "Название Задачи",
   "create.description": "Описание",

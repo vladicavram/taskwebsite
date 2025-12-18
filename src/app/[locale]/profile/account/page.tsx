@@ -1,12 +1,13 @@
 "use client"
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import useLocale from '../../../../lib/locale'
 
 export default function AccountPage() {
   const { locale, t } = useLocale()
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { data: session, status } = useSession()
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
@@ -14,6 +15,7 @@ export default function AccountPage() {
   const [activeTab, setActiveTab] = useState<'profile'>('profile')
   const [userType, setUserType] = useState<string>('')
   const [userId, setUserId] = useState<string>('')
+  const [showUpgradeMessage, setShowUpgradeMessage] = useState(false)
   const [form, setForm] = useState({
     username: '',
     name: '',
@@ -21,6 +23,15 @@ export default function AccountPage() {
     password: '',
     image: ''
   })
+
+  useEffect(() => {
+    if (searchParams.get('upgraded') === 'true') {
+      setShowUpgradeMessage(true)
+      // Clear the URL parameter after showing message
+      const timer = setTimeout(() => setShowUpgradeMessage(false), 10000)
+      return () => clearTimeout(timer)
+    }
+  }, [searchParams])
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -95,6 +106,30 @@ export default function AccountPage() {
   return (
     <div className="container" style={{ maxWidth: '900px', paddingTop: '32px' }}>
       <h2 style={{ fontWeight: 700, fontSize: '1.75rem', marginBottom: '16px' }}>Account Settings</h2>
+      
+      {/* Show upgrade success message */}
+      {showUpgradeMessage && (
+        <div style={{
+          background: '#10b981',
+          color: 'white',
+          padding: '16px 24px',
+          borderRadius: 'var(--radius)',
+          marginBottom: '24px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px'
+        }}>
+          <span style={{ fontSize: '1.5rem' }}>✓</span>
+          <div>
+            <div style={{ fontWeight: 600, marginBottom: '4px' }}>
+              {t('account.upgradeSuccess.title') || 'Upgrade Submitted!'}
+            </div>
+            <div style={{ fontSize: '0.9rem', opacity: 0.95 }}>
+              {t('account.upgradeSuccess.message') || 'Your request to become a tasker has been submitted. An admin will review your ID verification and approve your account soon.'}
+            </div>
+          </div>
+        </div>
+      )}
       
       {/* Tabs removed; My Tasks moved to header menu */}
 

@@ -96,6 +96,17 @@ export async function POST(req: Request) {
       const user = await prisma.user.findUnique({ where: { id: userId } })
       if (!user) return NextResponse.json({ error: 'User not found' }, { status: 404 })
     
+      // If user is upgrading from poster to tasker, update their userType
+      if (user.userType === 'poster') {
+        await prisma.user.update({
+          where: { id: userId },
+          data: { 
+            userType: 'tasker',
+            canApply: false // Needs admin approval
+          }
+        })
+      }
+    
       const profile = await prisma.profile.upsert({
         where: { userId },
         update: { bio, location, skills },
