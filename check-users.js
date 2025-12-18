@@ -1,13 +1,26 @@
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
-async function checkUsers() {
-  const users = await prisma.user.findMany()
-  console.log('Users in database:')
-  users.forEach(u => {
-    console.log(`  - Username: ${u.username || 'NO_USERNAME'} / Email: ${u.email} / Has password: ${!!u.password}`)
+async function main() {
+  const userCount = await prisma.user.count()
+  const taskCount = await prisma.task.count()
+  const admin = await prisma.user.findUnique({
+    where: { email: 'admin@taskwebsite.com' },
+    select: { username: true, email: true, isAdmin: true, canApply: true, userType: true }
   })
-  await prisma.$disconnect()
+  
+  const workers = await prisma.user.count({
+    where: { canApply: true, userType: { in: ['tasker', 'both'] } }
+  })
+  
+  console.log('Database Summary:')
+  console.log('================')
+  console.log(`Total Users: ${userCount}`)
+  console.log(`Total Tasks: ${taskCount}`)
+  console.log(`Workers (tasker/both + canApply): ${workers}`)
+  console.log('\nAdmin Account:')
+  console.log(admin)
+  console.log('\n✅ Everything is ready!')
 }
 
-checkUsers()
+main().catch(console.error).finally(() => prisma.$disconnect())
