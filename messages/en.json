@@ -3,6 +3,7 @@
   "home.hero": "Find Local Services",
   "home.heroSubtitle": "Get help with everyday tasks from trusted taskers",
   "home.browseBtn": "Browse Tasks",
+  "home.hireBtn": "Hire a Worker",
   "home.postBtn": "Post a Task",
   "home.howItWorks": "How it works",
   "home.stats.furniture": "Furniture Assemblies",
@@ -352,6 +353,28 @@
     ,"admin.error.messageEmpty": "Please enter a message"
     ,"admin.success.messageSent": "Message sent successfully"
     ,"admin.error.messageSend": "Failed to send message"
+  ,"hire.title": "Find Workers"
+  ,"hire.subtitle": "Browse available workers and hire them for your tasks"
+  ,"hire.searchPlaceholder": "Search by name, skills, or bio..."
+  ,"hire.locationPlaceholder": "Filter by location..."
+  ,"hire.noWorkers": "No workers found"
+  ,"hire.completedJobs": "jobs"
+  ,"hire.viewProfile": "View Profile"
+  ,"hire.workerNotFound": "Worker not found"
+  ,"hire.backToList": "Back to Workers"
+  ,"hire.hireButton": "Hire This Worker"
+  ,"hire.about": "About"
+  ,"hire.skills": "Skills"
+  ,"hire.totalJobs": "Total Jobs"
+  ,"hire.createTaskFor": "Create Task for"
+  ,"hire.titlePlaceholder": "e.g., Fix plumbing issue"
+  ,"hire.descriptionPlaceholder": "Describe the task in detail..."
+  ,"hire.fillAllFields": "Please fill in all required fields"
+  ,"hire.invalidPrice": "Please enter a valid price"
+  ,"hire.success": "Hire request sent successfully! The worker has been notified."
+  ,"hire.error": "Failed to send hire request"
+  ,"hire.sendRequest": "Send Hire Request"
+  ,"common.sending": "Sending..."
   ,"application.backToAccount": "Back to Account"
   ,"taskDetail.taskAccepted": "Task Accepted"
   ,"taskDetail.applicants.selectedApplicant": "Selected Applicant"

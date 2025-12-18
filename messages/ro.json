@@ -3,6 +3,7 @@
   "home.hero": "Găsește Servicii Locale",
   "home.heroSubtitle": "Primește ajutor cu sarcinile zilnice de la tasker-i de încredere",
   "home.browseBtn": "Caută Sarcini",
+  "home.hireBtn": "Angajează un Lucrător",
   "home.postBtn": "Postează o Sarcină",
   "home.howItWorks": "Cum funcționează",
   "home.stats.furniture": "Asamblări de Mobilier",
@@ -352,6 +353,28 @@
   ,"admin.error.messageEmpty": "Te rugăm să introduci un mesaj"
   ,"admin.success.messageSent": "Mesaj trimis cu succes"
   ,"admin.error.messageSend": "Nu s-a putut trimite mesajul"
+  ,"hire.title": "Găsește Lucrători"
+  ,"hire.subtitle": "Răsfoiește lucrătorii disponibili și angajează-i pentru sarcinile tale"
+  ,"hire.searchPlaceholder": "Caută după nume, abilități sau bio..."
+  ,"hire.locationPlaceholder": "Filtrează după locație..."
+  ,"hire.noWorkers": "Nu s-au găsit lucrători"
+  ,"hire.completedJobs": "lucrări"
+  ,"hire.viewProfile": "Vezi Profilul"
+  ,"hire.workerNotFound": "Lucrătorul nu a fost găsit"
+  ,"hire.backToList": "Înapoi la Lucrători"
+  ,"hire.hireButton": "Angajează acest Lucrător"
+  ,"hire.about": "Despre"
+  ,"hire.skills": "Abilități"
+  ,"hire.totalJobs": "Total Lucrări"
+  ,"hire.createTaskFor": "Creează Sarcină pentru"
+  ,"hire.titlePlaceholder": "ex., Repară problema de instalații"
+  ,"hire.descriptionPlaceholder": "Descrie sarcina în detaliu..."
+  ,"hire.fillAllFields": "Te rugăm să completezi toate câmpurile obligatorii"
+  ,"hire.invalidPrice": "Te rugăm să introduci un preț valid"
+  ,"hire.success": "Cererea de angajare a fost trimisă cu succes! Lucrătorul a fost notificat."
+  ,"hire.error": "Nu s-a putut trimite cererea de angajare"
+  ,"hire.sendRequest": "Trimite Cererea de Angajare"
+  ,"common.sending": "Se trimite..."
   ,"application.backToAccount": "Înapoi la Cont"
   ,"taskDetail.taskAccepted": "Sarcină Acceptată"
   ,"taskDetail.applicants.selectedApplicant": "Aplicant Selectat"
