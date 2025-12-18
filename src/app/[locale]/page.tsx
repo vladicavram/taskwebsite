@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import BookTaskButton from '../../components/BookTaskButton'
 import PostTaskButton from '../../components/PostTaskButton'
+import HireWorkerButton from '../../components/HireWorkerButton'
 import useLocale from '../../lib/locale'
 import { Smile, BadgeCheck, Headphones, Hammer, Monitor, Truck, Sparkles, Wrench, Image as ImageIcon } from 'lucide-react'
 
@@ -23,6 +24,7 @@ export default function HomePage() {
           </p>
           <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <BookTaskButton />
+            <HireWorkerButton />
               <PostTaskButton style={{
                 fontSize: '1.1rem',
                 padding: '16px 40px',
