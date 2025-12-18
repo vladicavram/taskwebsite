@@ -175,7 +175,8 @@ export default function Header() {
         display: 'flex', 
         alignItems: 'center', 
         justifyContent: 'space-between',
-        padding: '16px 24px'
+        padding: '16px 24px',
+        position: 'relative'
       }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <Link 
@@ -196,54 +197,62 @@ export default function Header() {
             />
           </Link>
         </div>
+        
+        {/* Center Action Buttons */}
+        {session?.user && (
+          <div style={{ 
+            position: 'absolute',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '24px'
+          }}>
+            <Link 
+              href={`/${locale}/tasks`}
+              className="btn btn-secondary"
+              style={{ 
+                padding: '8px 16px',
+                fontSize: '0.9rem'
+              }}
+            >
+              {t('header.browseTasks') || 'Browse Tasks'}
+            </Link>
+            <Link 
+              href={`/${locale}/hire`}
+              className="btn"
+              style={{ 
+                padding: '8px 16px',
+                fontSize: '0.9rem',
+                background: 'var(--accent)',
+                color: 'white'
+              }}
+            >
+              {t('header.hire') || 'Hire'}
+            </Link>
+            <Link 
+              href={`/${locale}/tasks/create`}
+              className="btn"
+              style={{ 
+                padding: '8px 16px',
+                fontSize: '0.9rem'
+              }}
+            >
+              {t('header.postTask') || 'Post a Task'}
+            </Link>
+          </div>
+        )}
+        
         <nav style={{ 
           display: 'flex', 
           alignItems: 'center', 
           gap: '16px',
-          flexWrap: 'wrap',
-          flex: 1,
-          justifyContent: 'center'
+          flexWrap: 'wrap'
         }}>
           {session?.user ? (
             <>
-              {/* Action Buttons */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-                <Link 
-                  href={`/${locale}/tasks`}
-                  className="btn btn-secondary"
-                  style={{ 
-                    padding: '8px 16px',
-                    fontSize: '0.9rem'
-                  }}
-                >
-                  {t('header.browseTasks') || 'Browse Tasks'}
-                </Link>
-                <Link 
-                  href={`/${locale}/hire`}
-                  className="btn"
-                  style={{ 
-                    padding: '8px 16px',
-                    fontSize: '0.9rem',
-                    background: 'var(--accent)',
-                    color: 'white'
-                  }}
-                >
-                  {t('header.hire') || 'Hire'}
-                </Link>
-                <Link 
-                  href={`/${locale}/tasks/create`}
-                  className="btn"
-                  style={{ 
-                    padding: '8px 16px',
-                    fontSize: '0.9rem'
-                  }}
-                >
-                  {t('header.postTask') || 'Post a Task'}
-                </Link>
-              </div>
-              
               {/* User Controls */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginLeft: 'auto' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               {/* User Avatar Menu (swapped into first position) */}
               <div 
                 ref={userMenuRef} 
