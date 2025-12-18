@@ -1,26 +1,36 @@
 const { PrismaClient } = require('@prisma/client')
+const bcrypt = require('bcryptjs')
 const prisma = new PrismaClient()
 
-async function setAdmin() {
-  const email = process.argv[2]
+async function main() {
+  const adminPassword = bcrypt.hashSync('admin123', 10)
   
-  if (!email) {
-    console.error('Usage: node set-admin.js <email>')
-    process.exit(1)
-  }
+  const admin = await prisma.user.upsert({
+    where: { email: 'admin@taskwebsite.com' },
+    update: {
+      username: 'admin',
+      password: adminPassword,
+      isAdmin: true,
+      canApply: true,
+      userType: 'both'
+    },
+    create: {
+      email: 'admin@taskwebsite.com',
+      username: 'admin',
+      name: 'Admin User',
+      password: adminPassword,
+      isAdmin: true,
+      canApply: true,
+      userType: 'both',
+      credits: 1000
+    }
+  })
   
-  try {
-    const user = await prisma.user.update({
-      where: { email },
-      data: { isAdmin: true }
-    })
-    
-    console.log(`✓ ${user.email} is now an admin`)
-  } catch (err) {
-    console.error('Error:', err.message)
-  } finally {
-    await prisma.$disconnect()
-  }
+  console.log('✅ Admin account set:')
+  console.log('   Email: admin@taskwebsite.com')
+  console.log('   Username: admin')
+  console.log('   Password: admin123')
+  console.log('   Is Admin:', admin.isAdmin)
 }
 
-setAdmin()
+main().catch(console.error).finally(() => prisma.$disconnect())
