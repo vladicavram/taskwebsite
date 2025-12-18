@@ -168,7 +168,7 @@ export default function Header() {
       WebkitBackdropFilter: 'saturate(180%) blur(16px)',
       borderBottom: '1px solid rgba(255,255,255,0.35)',
       boxShadow: 'var(--shadow-sm)',
-      position: 'sticky',
+      position: 'fixed',
       top: 0,
       zIndex: 100
     }}>

@@ -8,7 +8,7 @@ export default function LocaleLayout({ children, params }: Props) {
   return (
     <AuthProvider>
       <Header />
-      <main style={{ minHeight: 'calc(100vh - 200px)' }}>
+      <main style={{ minHeight: 'calc(100vh - 200px)', paddingTop: '82px' }}>
         {children}
       </main>
       <Footer />
