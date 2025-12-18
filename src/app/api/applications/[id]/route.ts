@@ -67,6 +67,15 @@ export async function PATCH(
       // Calculate credits to refund (price/100)
       const refundCredits = (application.proposedPrice || 0) / 100
 
+      console.log('[APP_UPDATE] Processing application status change:', {
+        applicationId: params.id,
+        currentStatus: application.status,
+        newStatus: status,
+        proposedPrice: application.proposedPrice,
+        refundCredits,
+        applicantId: application.applicantId
+      })
+
       // If removing an accepted applicant
       if (status === 'removed') {
         const updated = await tx.application.update({
@@ -77,11 +86,19 @@ export async function PATCH(
           }
         })
 
-        // Refund credits to the removed applicant
-        if (refundCredits > 0) {
+        // Only refund credits if the application was previously accepted or pending (credits were deducted)
+        if (refundCredits > 0 && (application.status === 'accepted' || application.status === 'pending')) {
+          const userBefore = await tx.user.findUnique({ where: { id: application.applicantId } })
           await tx.user.update({
             where: { id: application.applicantId },
             data: { credits: { increment: refundCredits } }
+          })
+          const userAfter = await tx.user.findUnique({ where: { id: application.applicantId } })
+          console.log('[CREDIT_REFUND] Removed applicant:', {
+            userId: application.applicantId,
+            before: userBefore.credits,
+            refunded: refundCredits,
+            after: userAfter.credits
           })
         }
 
@@ -123,13 +140,24 @@ export async function PATCH(
           include: { applicant: true }
         })
 
+        console.log('[APP_ACCEPT] Refunding other applicants:', otherApplications.length)
+
         // Refund credits to all other pending applicants
         for (const otherApp of otherApplications) {
           const otherRefundCredits = (otherApp.proposedPrice || 0) / 100
           if (otherRefundCredits > 0) {
+            const userBefore = await tx.user.findUnique({ where: { id: otherApp.applicantId } })
             await tx.user.update({
               where: { id: otherApp.applicantId },
               data: { credits: { increment: otherRefundCredits } }
+            })
+            const userAfter = await tx.user.findUnique({ where: { id: otherApp.applicantId } })
+            console.log('[CREDIT_REFUND] Other applicant:', {
+              userId: otherApp.applicantId,
+              applicationId: otherApp.id,
+              before: userBefore.credits,
+              refunded: otherRefundCredits,
+              after: userAfter.credits
             })
           }
 
@@ -167,11 +195,19 @@ export async function PATCH(
           data: { status: 'declined' }
         })
 
-        // Refund credits to the declined applicant
-        if (refundCredits > 0) {
+        // Only refund credits if the application was pending (credits were deducted)
+        if (refundCredits > 0 && application.status === 'pending') {
+          const userBefore = await tx.user.findUnique({ where: { id: application.applicantId } })
           await tx.user.update({
             where: { id: application.applicantId },
             data: { credits: { increment: refundCredits } }
+          })
+          const userAfter = await tx.user.findUnique({ where: { id: application.applicantId } })
+          console.log('[CREDIT_REFUND] Declined applicant:', {
+            userId: application.applicantId,
+            before: userBefore.credits,
+            refunded: refundCredits,
+            after: userAfter.credits
           })
         }
 
@@ -252,6 +288,22 @@ export async function DELETE(
       // Calculate credits to refund (price/100)
       const refundCredits = (application.proposedPrice || 0) / 100
 
+      console.log('[APP_CANCEL] User cancelling application:', {
+        applicationId: params.id,
+        userId: user.id,
+        status: application.status,
+        proposedPrice: application.proposedPrice,
+        refundCredits
+      })
+
+      // Only refund if status is pending (credits were deducted)
+      if (application.status !== 'pending') {
+        throw new Error('Can only cancel pending applications')
+      }
+
+      // Get user's current credits before refund
+      const userBefore = await tx.user.findUnique({ where: { id: user.id } })
+
       // Delete the application
       await tx.application.delete({
         where: { id: params.id }
@@ -262,6 +314,14 @@ export async function DELETE(
         await tx.user.update({
           where: { id: user.id },
           data: { credits: { increment: refundCredits } }
+        })
+        
+        const userAfter = await tx.user.findUnique({ where: { id: user.id } })
+        console.log('[CREDIT_REFUND] Cancelled application:', {
+          userId: user.id,
+          before: userBefore.credits,
+          refunded: refundCredits,
+          after: userAfter.credits
         })
       }
 

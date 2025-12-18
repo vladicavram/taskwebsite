@@ -170,7 +170,7 @@ export default function ApplyButton({
 
   const currentPrice = proposedPrice ? parseFloat(proposedPrice) : 0
   const requiredCredits = calculateRequiredCredits(currentPrice)
-  const hasEnoughCredits = credits >= requiredCredits
+  const hasEnoughCredits = credits >= requiredCredits && currentPrice > 0 && requiredCredits > 0
 
   if (applied) {
     return (
@@ -293,8 +293,22 @@ export default function ApplyButton({
           </p>
         )}
         {session?.user && (
-          <p style={{ color: 'var(--text-muted)', margin: 0 }}>
-            {interpolate(t('taskDetail.apply.yourBalance') || 'Your balance: {{credits}} credit{{plural}}', { credits: String(credits), plural: credits !== 1 ? 's' : '' })}
+          <p style={{ 
+            color: hasEnoughCredits ? 'var(--text-muted)' : '#dc2626',
+            margin: 0,
+            fontWeight: hasEnoughCredits ? 400 : 600
+          }}>
+            {interpolate(t('taskDetail.apply.yourBalance') || 'Your balance: {{credits}} credit{{plural}}', { credits: String(credits.toFixed(2)), plural: credits !== 1 ? 's' : '' })}
+          </p>
+        )}
+        {!hasEnoughCredits && currentPrice > 0 && (
+          <p style={{ 
+            color: '#dc2626', 
+            margin: '8px 0 0 0',
+            fontWeight: 600,
+            fontSize: '0.9rem'
+          }}>
+            ⚠️ {t('taskDetail.apply.needMoreCredits') || 'You need more credits to apply. Please purchase credits first.'}
           </p>
         )}
       </div>

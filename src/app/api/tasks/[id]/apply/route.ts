@@ -83,6 +83,12 @@ export async function POST(
 
     // Create application and deduct credits in a transaction
     const application = await prisma.$transaction(async (tx: any) => {
+      // Re-check credits within transaction to prevent race conditions
+      const freshUser = await tx.user.findUnique({ where: { id: applicant.id } })
+      if (!freshUser || freshUser.credits < requiredCredits) {
+        throw new Error(`Insufficient credits. Required ${requiredCredits.toFixed(2)}, you have ${freshUser?.credits || 0}.`)
+      }
+
       // Deduct credits from applicant
       const updatedUser = await tx.user.update({
         where: { id: applicant.id },
