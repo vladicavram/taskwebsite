@@ -12,6 +12,19 @@ export default function SignUpOptionsPage() {
 
   return (
     <div>
+      {/* Free Credits Banner */}
+      <div style={{
+        background: 'linear-gradient(135deg, var(--accent) 0%, #667eea 100%)',
+        color: 'white',
+        padding: '16px 24px',
+        textAlign: 'center',
+        fontSize: '1.1rem',
+        fontWeight: '600',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+      }}>
+        {t('signup.banner')}
+      </div>
+
       {/* Hero Banner */}
       <section className="liquid-hero" style={{
         padding: '48px 24px',
