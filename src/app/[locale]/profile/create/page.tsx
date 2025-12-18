@@ -51,6 +51,66 @@ export default function CreateProfilePage() {
   const streamRef = useRef<MediaStream | null>(null)
   const selfieStreamRef = useRef<MediaStream | null>(null)
 
+  // Restore form data and step from sessionStorage on mount
+  useEffect(() => {
+    const savedFormData = sessionStorage.getItem('profileCreateFormData')
+    const savedStep = sessionStorage.getItem('profileCreateStep')
+    const savedIdPreview = sessionStorage.getItem('profileCreateIdPreview')
+    const savedSelfiePreview = sessionStorage.getItem('profileCreateSelfiePreview')
+    
+    if (savedFormData) {
+      setFormData(JSON.parse(savedFormData))
+    }
+    if (savedStep) {
+      setStep(parseInt(savedStep))
+    }
+    if (savedIdPreview) {
+      setIdPreview(savedIdPreview)
+      // Convert base64 back to File object
+      fetch(savedIdPreview)
+        .then(res => res.blob())
+        .then(blob => {
+          const file = new File([blob], 'id-photo.jpg', { type: 'image/jpeg' })
+          setIdFile(file)
+        })
+        .catch(err => console.error('Failed to restore ID file:', err))
+    }
+    if (savedSelfiePreview) {
+      setSelfiePreview(savedSelfiePreview)
+      // Convert base64 back to File object
+      fetch(savedSelfiePreview)
+        .then(res => res.blob())
+        .then(blob => {
+          const file = new File([blob], 'selfie.jpg', { type: 'image/jpeg' })
+          setSelfieFile(file)
+        })
+        .catch(err => console.error('Failed to restore selfie file:', err))
+    }
+  }, [])
+
+  // Save form data to sessionStorage whenever it changes
+  useEffect(() => {
+    sessionStorage.setItem('profileCreateFormData', JSON.stringify(formData))
+  }, [formData])
+
+  // Save step to sessionStorage whenever it changes
+  useEffect(() => {
+    sessionStorage.setItem('profileCreateStep', step.toString())
+  }, [step])
+
+  // Save preview images to sessionStorage
+  useEffect(() => {
+    if (idPreview) {
+      sessionStorage.setItem('profileCreateIdPreview', idPreview)
+    }
+  }, [idPreview])
+
+  useEffect(() => {
+    if (selfiePreview) {
+      sessionStorage.setItem('profileCreateSelfiePreview', selfiePreview)
+    }
+  }, [selfiePreview])
+
   const calculateAge = (dob: string) => {
     if (!dob) return 0
     const today = new Date()
@@ -301,6 +361,12 @@ export default function CreateProfilePage() {
           // Don't fail registration, but log the error
         }
       }
+      
+      // Clear sessionStorage after successful submission
+      sessionStorage.removeItem('profileCreateFormData')
+      sessionStorage.removeItem('profileCreateStep')
+      sessionStorage.removeItem('profileCreateIdPreview')
+      sessionStorage.removeItem('profileCreateSelfiePreview')
       
       // Redirect based on whether user is upgrading or creating new account
       if (isUpgrading) {
