@@ -7,12 +7,20 @@ export const dynamic = 'force-dynamic'
 
 export async function POST(req: NextRequest) {
   try {
-    const { username, email, password, name } = await req.json()
+    const { username, email, password, name, phone, userType } = await req.json()
 
     // Validate required fields
     if (!username || !email || !password || !name) {
       return NextResponse.json(
         { error: 'Missing required fields' },
+        { status: 400 }
+      )
+    }
+    
+    // Phone required for poster type
+    if (userType === 'poster' && !phone) {
+      return NextResponse.json(
+        { error: 'Phone number is required for task posters' },
         { status: 400 }
       )
     }
@@ -66,7 +74,10 @@ export async function POST(req: NextRequest) {
         username,
         email,
         password: hashedPassword,
-        name
+        name,
+        phone: phone || null,
+        userType: userType || 'poster',
+        canApply: userType === 'tasker' || userType === 'both' ? false : true // Taskers need approval
       }
     })
 

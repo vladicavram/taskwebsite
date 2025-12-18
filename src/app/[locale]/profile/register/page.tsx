@@ -1,22 +1,33 @@
 "use client"
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useEffect, Suspense } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import useLocale from '../../../../lib/locale'
 
-export default function QuickRegisterPage() {
+function RegisterContent() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { t, locale } = useLocale()
+  
+  const userType = searchParams.get('type') || 'poster' // Default to poster if not specified
   
   const [formData, setFormData] = useState({
     username: '',
     name: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    phone: ''
   })
   
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  
+  // Redirect if no type specified
+  useEffect(() => {
+    if (!searchParams.get('type')) {
+      router.push(`/${locale}/signup`)
+    }
+  }, [searchParams, locale, router])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -30,6 +41,11 @@ export default function QuickRegisterPage() {
     // Validation
     if (!formData.username || !formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
       setError('Please fill in all required fields.')
+      return
+    }
+    
+    if (userType === 'poster' && !formData.phone) {
+      setError('Phone number is required.')
       return
     }
     
@@ -58,7 +74,9 @@ export default function QuickRegisterPage() {
           username: formData.username,
           email: formData.email,
           password: formData.password,
-          name: formData.name
+          name: formData.name,
+          phone: formData.phone,
+          userType: userType
         })
       })
       
@@ -69,8 +87,14 @@ export default function QuickRegisterPage() {
       
       const userData = await userResponse.json()
       
-      // Redirect to user type selection
-      router.push(`/${locale}/profile/select-type?username=${encodeURIComponent(formData.username)}&userId=${userData.id}`)
+      // Redirect based on user type
+      if (userType === 'poster') {
+        // For poster-only users, redirect to login with success message
+        router.push(`/${locale}/login?registered=true`)
+      } else {
+        // For tasker or both, go to profile creation for ID verification
+        router.push(`/${locale}/profile/create?userType=${userType}&userId=${userData.id}`)
+      }
     } catch (err: any) {
       setError(err.message || 'Failed to create account. Please try again.')
       setLoading(false)
@@ -86,10 +110,14 @@ export default function QuickRegisterPage() {
       }}>
         <div className="container">
           <h1 style={{ fontSize: '2.5rem', marginBottom: '12px', color: 'var(--text)' }}>
-            Create Your Account
+            {userType === 'poster' ? 'Sign Up to Post Tasks' : 
+             userType === 'tasker' ? 'Sign Up as a Tasker' : 
+             'Sign Up - Full Access'}
           </h1>
           <p style={{ fontSize: '1.1rem', opacity: 0.95 }}>
-            Join our community of taskers and clients
+            {userType === 'poster' ? 'Quick signup to start hiring taskers' :
+             userType === 'tasker' ? 'Join our community of skilled taskers' :
+             'Get complete access to post and complete tasks'}
           </p>
         </div>
       </section>
@@ -169,6 +197,31 @@ export default function QuickRegisterPage() {
                 placeholder="john@example.com"
                 required
               />
+            </div>
+
+            {/* Phone field - required for posters */}
+            <div>
+              <label style={{ 
+                display: 'block', 
+                fontWeight: 600,
+                marginBottom: '8px',
+                color: 'var(--text)'
+              }}>
+                Phone Number {userType === 'poster' ? '*' : '(Optional)'}
+              </label>
+              <input 
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                placeholder="+1234567890"
+                required={userType === 'poster'}
+              />
+              {userType === 'poster' && (
+                <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginTop: '4px' }}>
+                  Required for task posting
+                </p>
+              )}
             </div>
 
             <div>
@@ -255,5 +308,13 @@ export default function QuickRegisterPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={<div style={{padding: '100px', textAlign: 'center'}}>Loading...</div>}>
+      <RegisterContent />
+    </Suspense>
   )
 }

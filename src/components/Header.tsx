@@ -732,7 +732,7 @@ export default function Header() {
                 {t('auth.login') || 'Login'}
               </a>
               <a
-                onClick={() => router.push(`/${locale}/profile/create`)}
+                onClick={() => router.push(`/${locale}/signup`)}
                 className="link"
                 style={{
                   cursor: 'pointer',
