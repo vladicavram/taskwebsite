@@ -179,12 +179,11 @@ export default function Header() {
               alignItems: 'center'
             }}
           >
-            <Image
+            <img
               src="/logo-dozo-text.svg?v=3"
               alt="Dozo"
-              width={175}
-              height={50}
-              priority
+              width="175"
+              height="50"
               style={{ height: 'auto', width: '175px' }}
             />
           </Link>
