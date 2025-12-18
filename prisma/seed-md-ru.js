@@ -551,7 +551,7 @@ function buildTask(lang, i, creatorId, category) {
   const [min, max] = priceBands[categoryName] || [250, 650]
   const rawPrice = randBetween(min, max)
   const price = Math.round(rawPrice / 10) * 10
-  const imageUrl = buildImageUrl(baseTitle, categoryName, i + 1)
+  const imageUrl = null
   return {
     title,
     description,

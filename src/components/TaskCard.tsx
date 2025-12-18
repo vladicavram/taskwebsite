@@ -31,91 +31,49 @@ export default function TaskCard({ id, title, description, price, category, imag
     <article 
       className="card" 
       style={{ 
-        padding: 0,
+        padding: '16px',
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',
         height: '100%'
       }}
     >
-      {imageUrl ? (
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         <div style={{ 
-          width: '100%', 
-          height: '200px',
-          background: `#f9fafb`,
-          borderBottom: '1px solid var(--border)',
-          position: 'relative',
-          overflow: 'hidden'
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center',
+          marginBottom: '12px'
         }}>
-          <img 
-            src={imageUrl}
-            alt={title}
-            style={{ 
-              width: '100%', 
-              height: '100%', 
-              objectFit: 'cover',
-              opacity: 0.9
-            }}
-          />
-          {price && (
-            <div style={{
-              position: 'absolute',
-              top: '12px',
-              right: '12px',
-              background: 'white',
-              padding: '8px 16px',
-              borderRadius: '20px',
-              fontWeight: 600,
-              color: 'var(--accent)',
-              boxShadow: 'var(--shadow)'
-            }}>
-              {price} MDL
-            </div>
-          )}
-        </div>
-      ) : (
-        price && (
-          <div style={{
-            padding: '12px 20px',
-            borderBottom: '1px solid var(--border)',
-            display: 'flex',
-            justifyContent: 'flex-end'
-          }}>
+          {category && (
             <span style={{
+              fontSize: '0.75rem',
+              fontWeight: 500,
+              color: 'var(--accent)',
               background: 'var(--accent-light)',
-              padding: '8px 16px',
-              borderRadius: '20px',
+              padding: '4px 12px',
+              borderRadius: '12px'
+            }}>
+              {category}
+            </span>
+          )}
+          {price && (
+            <span style={{
+              fontSize: '0.875rem',
               fontWeight: 600,
               color: 'var(--accent)'
             }}>
               {price} MDL
             </span>
-          </div>
-        )
-      )}
-      
-      <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-        {category && (
-          <span style={{
-            display: 'inline-block',
-            fontSize: '0.75rem',
-            fontWeight: 500,
-            color: 'var(--accent)',
-            background: 'var(--accent-light)',
-            padding: '4px 12px',
-            borderRadius: '12px',
-            marginBottom: '12px',
-            width: 'fit-content'
-          }}>
-            {category}
-          </span>
-        )}
+          )}
+        </div>
         
         <h3 style={{ 
           fontWeight: 600, 
-          fontSize: '1.25rem', 
+          fontSize: '1rem', 
           marginBottom: '8px',
-          color: 'var(--text)'
+          color: 'var(--text)',
+          lineHeight: '1.4'
         }}>
           <Link
             href={`/${locale}/tasks/${id}`}
@@ -129,11 +87,12 @@ export default function TaskCard({ id, title, description, price, category, imag
         
         <p style={{ 
           color: 'var(--text-secondary)',
-          marginBottom: '16px',
+          marginBottom: '12px',
           flex: 1,
-          lineHeight: '1.6'
+          lineHeight: '1.5',
+          fontSize: '0.875rem'
         }}>
-          {description.length > 120 ? description.substring(0, 120) + '...' : description}
+          {description.length > 80 ? description.substring(0, 80) + '...' : description}
         </p>
         
         <Link 
@@ -142,7 +101,8 @@ export default function TaskCard({ id, title, description, price, category, imag
           style={{
             width: '100%',
             textAlign: 'center',
-            padding: '10px 16px'
+            padding: '8px 12px',
+            fontSize: '0.875rem'
           }}
           onClick={handleViewDetails}
         >

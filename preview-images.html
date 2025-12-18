@@ -1,0 +1,2077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Images Preview</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .stats {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 15px;
+    }
+    .card-title {
+      font-weight: 600;
+      margin: 0 0 8px 0;
+      font-size: 14px;
+      color: #333;
+    }
+    .card-meta {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 4px;
+    }
+    .category {
+      display: inline-block;
+      background: #e3f2fd;
+      color: #1976d2;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <h1>Task Images Preview</h1>
+  <div class="stats">
+    <strong>Total Tasks:</strong> 200<br>
+    <strong>Search Method:</strong> Pexels AI-powered image search based on task meaning<br>
+    <strong>Note:</strong> Placeholders shown - actual images will be fetched from Pexels API
+  </div>
+  <div class="grid">
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=general%20apartment%20cleaning" alt="Curatenie generala in apartament - Standard (Chișinău Centru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Curatenie generala in apartament - Standard (Chișinău Centru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Curatenie generala in apartament</div>
+          <div class="card-meta"><strong>Search:</strong> "general apartment cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=general%20apartment%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=wardrobe%20assembly%20door%20adjustment" alt="Сборка шкафа и регулировка дверей - Срочно (Chișinău Centru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Сборка шкафа и регулировка дверей - Срочно (Chișinău Centru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Сборка шкафа и регулировка дверей</div>
+          <div class="card-meta"><strong>Search:</strong> "wardrobe assembly door adjustment"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=wardrobe%20assembly%20door%20adjustment</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=living%20room%20wall%20painting" alt="Vopsire pereti living - Premium (Chișinău Centru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Vopsire pereti living - Premium (Chișinău Centru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Vopsire pereti living</div>
+          <div class="card-meta"><strong>Search:</strong> "living room wall painting"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=living%20room%20wall%20painting</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=washing%20machine%20installation%20plumbing" alt="Подключение стиральной машины - Эко (Chișinău Centru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Подключение стиральной машины - Эко (Chișinău Centru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Подключение стиральной машины</div>
+          <div class="card-meta"><strong>Search:</strong> "washing machine installation plumbing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=washing%20machine%20installation%20plumbing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=electrical%20outlet%20repair%20circuit%20breaker" alt="Reparatie priza si verificare tablou - Express (Chișinău Centru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Reparatie priza si verificare tablou - Express (Chișinău Centru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Reparatie priza si verificare tablou</div>
+          <div class="card-meta"><strong>Search:</strong> "electrical outlet repair circuit breaker"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=electrical%20outlet%20repair%20circuit%20breaker</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20moving%20transport" alt="Перевозка дивана - Суперсрочно (Chișinău Centru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Перевозка дивана - Суперсрочно (Chișinău Centru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Перевозка дивана</div>
+          <div class="card-meta"><strong>Search:</strong> "sofa moving transport"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20moving%20transport</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=lawn%20mowing%20hedge%20trimming%20gardening" alt="Gradinarit: tuns iarba si gard viu - Weekend (Chișinău Centru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Gradinarit: tuns iarba si gard viu - Weekend (Chișinău Centru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Gradinarit: tuns iarba si gard viu</div>
+          <div class="card-meta"><strong>Search:</strong> "lawn mowing hedge trimming gardening"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=lawn%20mowing%20hedge%20trimming%20gardening</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=post%20renovation%20cleaning" alt="Уборка после ремонта - Бизнес (Chișinău Centru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Уборка после ремонта - Бизнес (Chișinău Centru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Уборка после ремонта</div>
+          <div class="card-meta"><strong>Search:</strong> "post renovation cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=post%20renovation%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=internet%20wifi%20troubleshooting%20repair" alt="Depanare internet si Wi-Fi - Familie (Chișinău Centru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Depanare internet si Wi-Fi - Familie (Chișinău Centru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Depanare internet si Wi-Fi</div>
+          <div class="card-meta"><strong>Search:</strong> "internet wifi troubleshooting repair"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=internet%20wifi%20troubleshooting%20repair</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=bed%20nightstand%20assembly%20furniture" alt="Сборка кровати и тумбочек - Бюджет (Chișinău Centru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Сборка кровати и тумбочек - Бюджет (Chișinău Centru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Сборка кровати и тумбочек</div>
+          <div class="card-meta"><strong>Search:</strong> "bed nightstand assembly furniture"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=bed%20nightstand%20assembly%20furniture</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=small%20office%20moving%20relocation" alt="Mutare birou mic - Profesional (Chișinău Centru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Mutare birou mic - Profesional (Chișinău Centru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Mutare birou mic</div>
+          <div class="card-meta"><strong>Search:</strong> "small office moving relocation"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=small%20office%20moving%20relocation</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=student%20tutoring%20lesson%20education" alt="Уроки румынского для школьника - Детально (Chișinău Centru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Уроки румынского для школьника - Детально (Chișinău Centru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Уроки румынского для школьника</div>
+          <div class="card-meta"><strong>Search:</strong> "student tutoring lesson education"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=student%20tutoring%20lesson%20education</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=baptism%20christening%20photographer%20event" alt="Eveniment: fotograf la botez - Cu materiale (Chișinău Centru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Eveniment: fotograf la botez - Cu materiale (Chișinău Centru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Eveniment: fotograf la botez</div>
+          <div class="card-meta"><strong>Search:</strong> "baptism christening photographer event"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=baptism%20christening%20photographer%20event</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=faucet%20replacement%20plumbing%20sealing" alt="Замена смесителя и герметизация - Без материалов (Chișinău Centru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Замена смесителя и герметизация - Без материалов (Chișinău Centru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Замена смесителя и герметизация</div>
+          <div class="card-meta"><strong>Search:</strong> "faucet replacement plumbing sealing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=faucet%20replacement%20plumbing%20sealing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=lighting%20fixture%20installation%20electrician" alt="Montaj corpuri de iluminat - Standard (Chișinău Botanica)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Montaj corpuri de iluminat - Standard (Chișinău Botanica)</h3>
+          <div class="card-meta"><strong>Base:</strong> Montaj corpuri de iluminat</div>
+          <div class="card-meta"><strong>Search:</strong> "lighting fixture installation electrician"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=lighting%20fixture%20installation%20electrician</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20carpet%20upholstery%20dry%20cleaning" alt="Химчистка дивана и ковров - Срочно (Chișinău Botanica)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Химчистка дивана и ковров - Срочно (Chișinău Botanica)</h3>
+          <div class="card-meta"><strong>Base:</strong> Химчистка дивана и ковров</div>
+          <div class="card-meta"><strong>Search:</strong> "sofa carpet upholstery dry cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20carpet%20upholstery%20dry%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=bathroom%20tile%20repair%20fixing" alt="Corectie gresie desprinsa in baie - Premium (Chișinău Botanica)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Corectie gresie desprinsa in baie - Premium (Chișinău Botanica)</h3>
+          <div class="card-meta"><strong>Base:</strong> Corectie gresie desprinsa in baie</div>
+          <div class="card-meta"><strong>Search:</strong> "bathroom tile repair fixing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=bathroom%20tile%20repair%20fixing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=intercom%20system%20installation%20apartment" alt="Монтаж домофона на 3 квартиры - Эко (Chișinău Botanica)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Монтаж домофона на 3 квартиры - Эко (Chișinău Botanica)</h3>
+          <div class="card-meta"><strong>Base:</strong> Монтаж домофона на 3 квартиры</div>
+          <div class="card-meta"><strong>Search:</strong> "intercom system installation apartment"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=intercom%20system%20installation%20apartment</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=grocery%20delivery%20shopping%20senior" alt="Livrare cumparaturi senior - Express (Chișinău Botanica)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Livrare cumparaturi senior - Express (Chișinău Botanica)</h3>
+          <div class="card-meta"><strong>Base:</strong> Livrare cumparaturi senior</div>
+          <div class="card-meta"><strong>Search:</strong> "grocery delivery shopping senior"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=grocery%20delivery%20shopping%20senior</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=interior%20door%20repair%20fixing" alt="Починить межкомнатную дверь - Суперсрочно (Chișinău Botanica)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Починить межкомнатную дверь - Суперсрочно (Chișinău Botanica)</h3>
+          <div class="card-meta"><strong>Base:</strong> Починить межкомнатную дверь</div>
+          <div class="card-meta"><strong>Search:</strong> "interior door repair fixing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=interior%20door%20repair%20fixing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=general%20apartment%20cleaning" alt="Curatenie generala in apartament - Weekend (Chișinău Botanica)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Curatenie generala in apartament - Weekend (Chișinău Botanica)</h3>
+          <div class="card-meta"><strong>Base:</strong> Curatenie generala in apartament</div>
+          <div class="card-meta"><strong>Search:</strong> "general apartment cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=general%20apartment%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=wardrobe%20assembly%20door%20adjustment" alt="Сборка шкафа и регулировка дверей - Бизнес (Chișinău Botanica)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Сборка шкафа и регулировка дверей - Бизнес (Chișinău Botanica)</h3>
+          <div class="card-meta"><strong>Base:</strong> Сборка шкафа и регулировка дверей</div>
+          <div class="card-meta"><strong>Search:</strong> "wardrobe assembly door adjustment"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=wardrobe%20assembly%20door%20adjustment</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=living%20room%20wall%20painting" alt="Vopsire pereti living - Familie (Chișinău Botanica)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Vopsire pereti living - Familie (Chișinău Botanica)</h3>
+          <div class="card-meta"><strong>Base:</strong> Vopsire pereti living</div>
+          <div class="card-meta"><strong>Search:</strong> "living room wall painting"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=living%20room%20wall%20painting</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=washing%20machine%20installation%20plumbing" alt="Подключение стиральной машины - Бюджет (Chișinău Botanica)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Подключение стиральной машины - Бюджет (Chișinău Botanica)</h3>
+          <div class="card-meta"><strong>Base:</strong> Подключение стиральной машины</div>
+          <div class="card-meta"><strong>Search:</strong> "washing machine installation plumbing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=washing%20machine%20installation%20plumbing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=electrical%20outlet%20repair%20circuit%20breaker" alt="Reparatie priza si verificare tablou - Profesional (Chișinău Botanica)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Reparatie priza si verificare tablou - Profesional (Chișinău Botanica)</h3>
+          <div class="card-meta"><strong>Base:</strong> Reparatie priza si verificare tablou</div>
+          <div class="card-meta"><strong>Search:</strong> "electrical outlet repair circuit breaker"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=electrical%20outlet%20repair%20circuit%20breaker</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20moving%20transport" alt="Перевозка дивана - Детально (Chișinău Botanica)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Перевозка дивана - Детально (Chișinău Botanica)</h3>
+          <div class="card-meta"><strong>Base:</strong> Перевозка дивана</div>
+          <div class="card-meta"><strong>Search:</strong> "sofa moving transport"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20moving%20transport</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=lawn%20mowing%20hedge%20trimming%20gardening" alt="Gradinarit: tuns iarba si gard viu - Cu materiale (Chișinău Botanica)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Gradinarit: tuns iarba si gard viu - Cu materiale (Chișinău Botanica)</h3>
+          <div class="card-meta"><strong>Base:</strong> Gradinarit: tuns iarba si gard viu</div>
+          <div class="card-meta"><strong>Search:</strong> "lawn mowing hedge trimming gardening"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=lawn%20mowing%20hedge%20trimming%20gardening</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=post%20renovation%20cleaning" alt="Уборка после ремонта - Без материалов (Chișinău Botanica)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Уборка после ремонта - Без материалов (Chișinău Botanica)</h3>
+          <div class="card-meta"><strong>Base:</strong> Уборка после ремонта</div>
+          <div class="card-meta"><strong>Search:</strong> "post renovation cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=post%20renovation%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=internet%20wifi%20troubleshooting%20repair" alt="Depanare internet si Wi-Fi - Standard (Chișinău Râșcani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Depanare internet si Wi-Fi - Standard (Chișinău Râșcani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Depanare internet si Wi-Fi</div>
+          <div class="card-meta"><strong>Search:</strong> "internet wifi troubleshooting repair"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=internet%20wifi%20troubleshooting%20repair</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=bed%20nightstand%20assembly%20furniture" alt="Сборка кровати и тумбочек - Срочно (Chișinău Râșcani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Сборка кровати и тумбочек - Срочно (Chișinău Râșcani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Сборка кровати и тумбочек</div>
+          <div class="card-meta"><strong>Search:</strong> "bed nightstand assembly furniture"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=bed%20nightstand%20assembly%20furniture</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=small%20office%20moving%20relocation" alt="Mutare birou mic - Premium (Chișinău Râșcani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Mutare birou mic - Premium (Chișinău Râșcani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Mutare birou mic</div>
+          <div class="card-meta"><strong>Search:</strong> "small office moving relocation"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=small%20office%20moving%20relocation</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=student%20tutoring%20lesson%20education" alt="Уроки румынского для школьника - Эко (Chișinău Râșcani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Уроки румынского для школьника - Эко (Chișinău Râșcani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Уроки румынского для школьника</div>
+          <div class="card-meta"><strong>Search:</strong> "student tutoring lesson education"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=student%20tutoring%20lesson%20education</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=baptism%20christening%20photographer%20event" alt="Eveniment: fotograf la botez - Express (Chișinău Râșcani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Eveniment: fotograf la botez - Express (Chișinău Râșcani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Eveniment: fotograf la botez</div>
+          <div class="card-meta"><strong>Search:</strong> "baptism christening photographer event"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=baptism%20christening%20photographer%20event</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=faucet%20replacement%20plumbing%20sealing" alt="Замена смесителя и герметизация - Суперсрочно (Chișinău Râșcani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Замена смесителя и герметизация - Суперсрочно (Chișinău Râșcani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Замена смесителя и герметизация</div>
+          <div class="card-meta"><strong>Search:</strong> "faucet replacement plumbing sealing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=faucet%20replacement%20plumbing%20sealing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=lighting%20fixture%20installation%20electrician" alt="Montaj corpuri de iluminat - Weekend (Chișinău Râșcani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Montaj corpuri de iluminat - Weekend (Chișinău Râșcani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Montaj corpuri de iluminat</div>
+          <div class="card-meta"><strong>Search:</strong> "lighting fixture installation electrician"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=lighting%20fixture%20installation%20electrician</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20carpet%20upholstery%20dry%20cleaning" alt="Химчистка дивана и ковров - Бизнес (Chișinău Râșcani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Химчистка дивана и ковров - Бизнес (Chișinău Râșcani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Химчистка дивана и ковров</div>
+          <div class="card-meta"><strong>Search:</strong> "sofa carpet upholstery dry cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20carpet%20upholstery%20dry%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=bathroom%20tile%20repair%20fixing" alt="Corectie gresie desprinsa in baie - Familie (Chișinău Râșcani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Corectie gresie desprinsa in baie - Familie (Chișinău Râșcani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Corectie gresie desprinsa in baie</div>
+          <div class="card-meta"><strong>Search:</strong> "bathroom tile repair fixing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=bathroom%20tile%20repair%20fixing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=intercom%20system%20installation%20apartment" alt="Монтаж домофона на 3 квартиры - Бюджет (Chișinău Râșcani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Монтаж домофона на 3 квартиры - Бюджет (Chișinău Râșcani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Монтаж домофона на 3 квартиры</div>
+          <div class="card-meta"><strong>Search:</strong> "intercom system installation apartment"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=intercom%20system%20installation%20apartment</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=grocery%20delivery%20shopping%20senior" alt="Livrare cumparaturi senior - Profesional (Chișinău Râșcani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Livrare cumparaturi senior - Profesional (Chișinău Râșcani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Livrare cumparaturi senior</div>
+          <div class="card-meta"><strong>Search:</strong> "grocery delivery shopping senior"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=grocery%20delivery%20shopping%20senior</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=interior%20door%20repair%20fixing" alt="Починить межкомнатную дверь - Детально (Chișinău Râșcani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Починить межкомнатную дверь - Детально (Chișinău Râșcani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Починить межкомнатную дверь</div>
+          <div class="card-meta"><strong>Search:</strong> "interior door repair fixing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=interior%20door%20repair%20fixing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=general%20apartment%20cleaning" alt="Curatenie generala in apartament - Cu materiale (Chișinău Râșcani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Curatenie generala in apartament - Cu materiale (Chișinău Râșcani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Curatenie generala in apartament</div>
+          <div class="card-meta"><strong>Search:</strong> "general apartment cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=general%20apartment%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=wardrobe%20assembly%20door%20adjustment" alt="Сборка шкафа и регулировка дверей - Без материалов (Chișinău Râșcani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Сборка шкафа и регулировка дверей - Без материалов (Chișinău Râșcani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Сборка шкафа и регулировка дверей</div>
+          <div class="card-meta"><strong>Search:</strong> "wardrobe assembly door adjustment"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=wardrobe%20assembly%20door%20adjustment</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=living%20room%20wall%20painting" alt="Vopsire pereti living - Standard (Chișinău Buiucani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Vopsire pereti living - Standard (Chișinău Buiucani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Vopsire pereti living</div>
+          <div class="card-meta"><strong>Search:</strong> "living room wall painting"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=living%20room%20wall%20painting</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=washing%20machine%20installation%20plumbing" alt="Подключение стиральной машины - Срочно (Chișinău Buiucani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Подключение стиральной машины - Срочно (Chișinău Buiucani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Подключение стиральной машины</div>
+          <div class="card-meta"><strong>Search:</strong> "washing machine installation plumbing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=washing%20machine%20installation%20plumbing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=electrical%20outlet%20repair%20circuit%20breaker" alt="Reparatie priza si verificare tablou - Premium (Chișinău Buiucani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Reparatie priza si verificare tablou - Premium (Chișinău Buiucani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Reparatie priza si verificare tablou</div>
+          <div class="card-meta"><strong>Search:</strong> "electrical outlet repair circuit breaker"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=electrical%20outlet%20repair%20circuit%20breaker</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20moving%20transport" alt="Перевозка дивана - Эко (Chișinău Buiucani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Перевозка дивана - Эко (Chișinău Buiucani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Перевозка дивана</div>
+          <div class="card-meta"><strong>Search:</strong> "sofa moving transport"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20moving%20transport</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=lawn%20mowing%20hedge%20trimming%20gardening" alt="Gradinarit: tuns iarba si gard viu - Express (Chișinău Buiucani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Gradinarit: tuns iarba si gard viu - Express (Chișinău Buiucani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Gradinarit: tuns iarba si gard viu</div>
+          <div class="card-meta"><strong>Search:</strong> "lawn mowing hedge trimming gardening"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=lawn%20mowing%20hedge%20trimming%20gardening</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=post%20renovation%20cleaning" alt="Уборка после ремонта - Суперсрочно (Chișinău Buiucani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Уборка после ремонта - Суперсрочно (Chișinău Buiucani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Уборка после ремонта</div>
+          <div class="card-meta"><strong>Search:</strong> "post renovation cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=post%20renovation%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=internet%20wifi%20troubleshooting%20repair" alt="Depanare internet si Wi-Fi - Weekend (Chișinău Buiucani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Depanare internet si Wi-Fi - Weekend (Chișinău Buiucani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Depanare internet si Wi-Fi</div>
+          <div class="card-meta"><strong>Search:</strong> "internet wifi troubleshooting repair"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=internet%20wifi%20troubleshooting%20repair</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=bed%20nightstand%20assembly%20furniture" alt="Сборка кровати и тумбочек - Бизнес (Chișinău Buiucani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Сборка кровати и тумбочек - Бизнес (Chișinău Buiucani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Сборка кровати и тумбочек</div>
+          <div class="card-meta"><strong>Search:</strong> "bed nightstand assembly furniture"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=bed%20nightstand%20assembly%20furniture</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=small%20office%20moving%20relocation" alt="Mutare birou mic - Familie (Chișinău Buiucani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Mutare birou mic - Familie (Chișinău Buiucani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Mutare birou mic</div>
+          <div class="card-meta"><strong>Search:</strong> "small office moving relocation"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=small%20office%20moving%20relocation</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=student%20tutoring%20lesson%20education" alt="Уроки румынского для школьника - Бюджет (Chișinău Buiucani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Уроки румынского для школьника - Бюджет (Chișinău Buiucani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Уроки румынского для школьника</div>
+          <div class="card-meta"><strong>Search:</strong> "student tutoring lesson education"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=student%20tutoring%20lesson%20education</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=baptism%20christening%20photographer%20event" alt="Eveniment: fotograf la botez - Profesional (Chișinău Buiucani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Eveniment: fotograf la botez - Profesional (Chișinău Buiucani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Eveniment: fotograf la botez</div>
+          <div class="card-meta"><strong>Search:</strong> "baptism christening photographer event"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=baptism%20christening%20photographer%20event</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=faucet%20replacement%20plumbing%20sealing" alt="Замена смесителя и герметизация - Детально (Chișinău Buiucani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Замена смесителя и герметизация - Детально (Chișinău Buiucani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Замена смесителя и герметизация</div>
+          <div class="card-meta"><strong>Search:</strong> "faucet replacement plumbing sealing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=faucet%20replacement%20plumbing%20sealing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=lighting%20fixture%20installation%20electrician" alt="Montaj corpuri de iluminat - Cu materiale (Chișinău Buiucani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Montaj corpuri de iluminat - Cu materiale (Chișinău Buiucani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Montaj corpuri de iluminat</div>
+          <div class="card-meta"><strong>Search:</strong> "lighting fixture installation electrician"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=lighting%20fixture%20installation%20electrician</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20carpet%20upholstery%20dry%20cleaning" alt="Химчистка дивана и ковров - Без материалов (Chișinău Buiucani)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Химчистка дивана и ковров - Без материалов (Chișinău Buiucani)</h3>
+          <div class="card-meta"><strong>Base:</strong> Химчистка дивана и ковров</div>
+          <div class="card-meta"><strong>Search:</strong> "sofa carpet upholstery dry cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20carpet%20upholstery%20dry%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=bathroom%20tile%20repair%20fixing" alt="Corectie gresie desprinsa in baie - Standard (Chișinău Ciocana)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Corectie gresie desprinsa in baie - Standard (Chișinău Ciocana)</h3>
+          <div class="card-meta"><strong>Base:</strong> Corectie gresie desprinsa in baie</div>
+          <div class="card-meta"><strong>Search:</strong> "bathroom tile repair fixing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=bathroom%20tile%20repair%20fixing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=intercom%20system%20installation%20apartment" alt="Монтаж домофона на 3 квартиры - Срочно (Chișinău Ciocana)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Монтаж домофона на 3 квартиры - Срочно (Chișinău Ciocana)</h3>
+          <div class="card-meta"><strong>Base:</strong> Монтаж домофона на 3 квартиры</div>
+          <div class="card-meta"><strong>Search:</strong> "intercom system installation apartment"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=intercom%20system%20installation%20apartment</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=grocery%20delivery%20shopping%20senior" alt="Livrare cumparaturi senior - Premium (Chișinău Ciocana)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Livrare cumparaturi senior - Premium (Chișinău Ciocana)</h3>
+          <div class="card-meta"><strong>Base:</strong> Livrare cumparaturi senior</div>
+          <div class="card-meta"><strong>Search:</strong> "grocery delivery shopping senior"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=grocery%20delivery%20shopping%20senior</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=interior%20door%20repair%20fixing" alt="Починить межкомнатную дверь - Эко (Chișinău Ciocana)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Починить межкомнатную дверь - Эко (Chișinău Ciocana)</h3>
+          <div class="card-meta"><strong>Base:</strong> Починить межкомнатную дверь</div>
+          <div class="card-meta"><strong>Search:</strong> "interior door repair fixing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=interior%20door%20repair%20fixing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=general%20apartment%20cleaning" alt="Curatenie generala in apartament - Express (Chișinău Ciocana)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Curatenie generala in apartament - Express (Chișinău Ciocana)</h3>
+          <div class="card-meta"><strong>Base:</strong> Curatenie generala in apartament</div>
+          <div class="card-meta"><strong>Search:</strong> "general apartment cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=general%20apartment%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=wardrobe%20assembly%20door%20adjustment" alt="Сборка шкафа и регулировка дверей - Суперсрочно (Chișinău Ciocana)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Сборка шкафа и регулировка дверей - Суперсрочно (Chișinău Ciocana)</h3>
+          <div class="card-meta"><strong>Base:</strong> Сборка шкафа и регулировка дверей</div>
+          <div class="card-meta"><strong>Search:</strong> "wardrobe assembly door adjustment"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=wardrobe%20assembly%20door%20adjustment</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=living%20room%20wall%20painting" alt="Vopsire pereti living - Weekend (Chișinău Ciocana)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Vopsire pereti living - Weekend (Chișinău Ciocana)</h3>
+          <div class="card-meta"><strong>Base:</strong> Vopsire pereti living</div>
+          <div class="card-meta"><strong>Search:</strong> "living room wall painting"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=living%20room%20wall%20painting</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=washing%20machine%20installation%20plumbing" alt="Подключение стиральной машины - Бизнес (Chișinău Ciocana)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Подключение стиральной машины - Бизнес (Chișinău Ciocana)</h3>
+          <div class="card-meta"><strong>Base:</strong> Подключение стиральной машины</div>
+          <div class="card-meta"><strong>Search:</strong> "washing machine installation plumbing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=washing%20machine%20installation%20plumbing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=electrical%20outlet%20repair%20circuit%20breaker" alt="Reparatie priza si verificare tablou - Familie (Chișinău Ciocana)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Reparatie priza si verificare tablou - Familie (Chișinău Ciocana)</h3>
+          <div class="card-meta"><strong>Base:</strong> Reparatie priza si verificare tablou</div>
+          <div class="card-meta"><strong>Search:</strong> "electrical outlet repair circuit breaker"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=electrical%20outlet%20repair%20circuit%20breaker</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20moving%20transport" alt="Перевозка дивана - Бюджет (Chișinău Ciocana)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Перевозка дивана - Бюджет (Chișinău Ciocana)</h3>
+          <div class="card-meta"><strong>Base:</strong> Перевозка дивана</div>
+          <div class="card-meta"><strong>Search:</strong> "sofa moving transport"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20moving%20transport</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=lawn%20mowing%20hedge%20trimming%20gardening" alt="Gradinarit: tuns iarba si gard viu - Profesional (Chișinău Ciocana)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Gradinarit: tuns iarba si gard viu - Profesional (Chișinău Ciocana)</h3>
+          <div class="card-meta"><strong>Base:</strong> Gradinarit: tuns iarba si gard viu</div>
+          <div class="card-meta"><strong>Search:</strong> "lawn mowing hedge trimming gardening"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=lawn%20mowing%20hedge%20trimming%20gardening</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=post%20renovation%20cleaning" alt="Уборка после ремонта - Детально (Chișinău Ciocana)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Уборка после ремонта - Детально (Chișinău Ciocana)</h3>
+          <div class="card-meta"><strong>Base:</strong> Уборка после ремонта</div>
+          <div class="card-meta"><strong>Search:</strong> "post renovation cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=post%20renovation%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=internet%20wifi%20troubleshooting%20repair" alt="Depanare internet si Wi-Fi - Cu materiale (Chișinău Ciocana)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Depanare internet si Wi-Fi - Cu materiale (Chișinău Ciocana)</h3>
+          <div class="card-meta"><strong>Base:</strong> Depanare internet si Wi-Fi</div>
+          <div class="card-meta"><strong>Search:</strong> "internet wifi troubleshooting repair"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=internet%20wifi%20troubleshooting%20repair</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=bed%20nightstand%20assembly%20furniture" alt="Сборка кровати и тумбочек - Без материалов (Chișinău Ciocana)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Сборка кровати и тумбочек - Без материалов (Chișinău Ciocana)</h3>
+          <div class="card-meta"><strong>Base:</strong> Сборка кровати и тумбочек</div>
+          <div class="card-meta"><strong>Search:</strong> "bed nightstand assembly furniture"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=bed%20nightstand%20assembly%20furniture</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=small%20office%20moving%20relocation" alt="Mutare birou mic - Standard (Chișinău Telecentru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Mutare birou mic - Standard (Chișinău Telecentru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Mutare birou mic</div>
+          <div class="card-meta"><strong>Search:</strong> "small office moving relocation"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=small%20office%20moving%20relocation</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=student%20tutoring%20lesson%20education" alt="Уроки румынского для школьника - Срочно (Chișinău Telecentru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Уроки румынского для школьника - Срочно (Chișinău Telecentru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Уроки румынского для школьника</div>
+          <div class="card-meta"><strong>Search:</strong> "student tutoring lesson education"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=student%20tutoring%20lesson%20education</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=baptism%20christening%20photographer%20event" alt="Eveniment: fotograf la botez - Premium (Chișinău Telecentru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Eveniment: fotograf la botez - Premium (Chișinău Telecentru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Eveniment: fotograf la botez</div>
+          <div class="card-meta"><strong>Search:</strong> "baptism christening photographer event"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=baptism%20christening%20photographer%20event</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=faucet%20replacement%20plumbing%20sealing" alt="Замена смесителя и герметизация - Эко (Chișinău Telecentru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Замена смесителя и герметизация - Эко (Chișinău Telecentru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Замена смесителя и герметизация</div>
+          <div class="card-meta"><strong>Search:</strong> "faucet replacement plumbing sealing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=faucet%20replacement%20plumbing%20sealing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=lighting%20fixture%20installation%20electrician" alt="Montaj corpuri de iluminat - Express (Chișinău Telecentru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Montaj corpuri de iluminat - Express (Chișinău Telecentru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Montaj corpuri de iluminat</div>
+          <div class="card-meta"><strong>Search:</strong> "lighting fixture installation electrician"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=lighting%20fixture%20installation%20electrician</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20carpet%20upholstery%20dry%20cleaning" alt="Химчистка дивана и ковров - Суперсрочно (Chișinău Telecentru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Химчистка дивана и ковров - Суперсрочно (Chișinău Telecentru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Химчистка дивана и ковров</div>
+          <div class="card-meta"><strong>Search:</strong> "sofa carpet upholstery dry cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20carpet%20upholstery%20dry%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=bathroom%20tile%20repair%20fixing" alt="Corectie gresie desprinsa in baie - Weekend (Chișinău Telecentru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Corectie gresie desprinsa in baie - Weekend (Chișinău Telecentru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Corectie gresie desprinsa in baie</div>
+          <div class="card-meta"><strong>Search:</strong> "bathroom tile repair fixing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=bathroom%20tile%20repair%20fixing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=intercom%20system%20installation%20apartment" alt="Монтаж домофона на 3 квартиры - Бизнес (Chișinău Telecentru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Монтаж домофона на 3 квартиры - Бизнес (Chișinău Telecentru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Монтаж домофона на 3 квартиры</div>
+          <div class="card-meta"><strong>Search:</strong> "intercom system installation apartment"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=intercom%20system%20installation%20apartment</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=grocery%20delivery%20shopping%20senior" alt="Livrare cumparaturi senior - Familie (Chișinău Telecentru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Livrare cumparaturi senior - Familie (Chișinău Telecentru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Livrare cumparaturi senior</div>
+          <div class="card-meta"><strong>Search:</strong> "grocery delivery shopping senior"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=grocery%20delivery%20shopping%20senior</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=interior%20door%20repair%20fixing" alt="Починить межкомнатную дверь - Бюджет (Chișinău Telecentru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Починить межкомнатную дверь - Бюджет (Chișinău Telecentru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Починить межкомнатную дверь</div>
+          <div class="card-meta"><strong>Search:</strong> "interior door repair fixing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=interior%20door%20repair%20fixing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=general%20apartment%20cleaning" alt="Curatenie generala in apartament - Profesional (Chișinău Telecentru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Curatenie generala in apartament - Profesional (Chișinău Telecentru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Curatenie generala in apartament</div>
+          <div class="card-meta"><strong>Search:</strong> "general apartment cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=general%20apartment%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=wardrobe%20assembly%20door%20adjustment" alt="Сборка шкафа и регулировка дверей - Детально (Chișinău Telecentru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Сборка шкафа и регулировка дверей - Детально (Chișinău Telecentru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Сборка шкафа и регулировка дверей</div>
+          <div class="card-meta"><strong>Search:</strong> "wardrobe assembly door adjustment"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=wardrobe%20assembly%20door%20adjustment</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=living%20room%20wall%20painting" alt="Vopsire pereti living - Cu materiale (Chișinău Telecentru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Vopsire pereti living - Cu materiale (Chișinău Telecentru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Vopsire pereti living</div>
+          <div class="card-meta"><strong>Search:</strong> "living room wall painting"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=living%20room%20wall%20painting</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=washing%20machine%20installation%20plumbing" alt="Подключение стиральной машины - Без материалов (Chișinău Telecentru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Подключение стиральной машины - Без материалов (Chișinău Telecentru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Подключение стиральной машины</div>
+          <div class="card-meta"><strong>Search:</strong> "washing machine installation plumbing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=washing%20machine%20installation%20plumbing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=electrical%20outlet%20repair%20circuit%20breaker" alt="Reparatie priza si verificare tablou - Standard (Chișinău Poșta Veche)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Reparatie priza si verificare tablou - Standard (Chișinău Poșta Veche)</h3>
+          <div class="card-meta"><strong>Base:</strong> Reparatie priza si verificare tablou</div>
+          <div class="card-meta"><strong>Search:</strong> "electrical outlet repair circuit breaker"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=electrical%20outlet%20repair%20circuit%20breaker</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20moving%20transport" alt="Перевозка дивана - Срочно (Chișinău Poșta Veche)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Перевозка дивана - Срочно (Chișinău Poșta Veche)</h3>
+          <div class="card-meta"><strong>Base:</strong> Перевозка дивана</div>
+          <div class="card-meta"><strong>Search:</strong> "sofa moving transport"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20moving%20transport</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=lawn%20mowing%20hedge%20trimming%20gardening" alt="Gradinarit: tuns iarba si gard viu - Premium (Chișinău Poșta Veche)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Gradinarit: tuns iarba si gard viu - Premium (Chișinău Poșta Veche)</h3>
+          <div class="card-meta"><strong>Base:</strong> Gradinarit: tuns iarba si gard viu</div>
+          <div class="card-meta"><strong>Search:</strong> "lawn mowing hedge trimming gardening"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=lawn%20mowing%20hedge%20trimming%20gardening</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=post%20renovation%20cleaning" alt="Уборка после ремонта - Эко (Chișinău Poșta Veche)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Уборка после ремонта - Эко (Chișinău Poșta Veche)</h3>
+          <div class="card-meta"><strong>Base:</strong> Уборка после ремонта</div>
+          <div class="card-meta"><strong>Search:</strong> "post renovation cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=post%20renovation%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=internet%20wifi%20troubleshooting%20repair" alt="Depanare internet si Wi-Fi - Express (Chișinău Poșta Veche)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Depanare internet si Wi-Fi - Express (Chișinău Poșta Veche)</h3>
+          <div class="card-meta"><strong>Base:</strong> Depanare internet si Wi-Fi</div>
+          <div class="card-meta"><strong>Search:</strong> "internet wifi troubleshooting repair"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=internet%20wifi%20troubleshooting%20repair</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=bed%20nightstand%20assembly%20furniture" alt="Сборка кровати и тумбочек - Суперсрочно (Chișinău Poșta Veche)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Сборка кровати и тумбочек - Суперсрочно (Chișinău Poșta Veche)</h3>
+          <div class="card-meta"><strong>Base:</strong> Сборка кровати и тумбочек</div>
+          <div class="card-meta"><strong>Search:</strong> "bed nightstand assembly furniture"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=bed%20nightstand%20assembly%20furniture</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=small%20office%20moving%20relocation" alt="Mutare birou mic - Weekend (Chișinău Poșta Veche)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Mutare birou mic - Weekend (Chișinău Poșta Veche)</h3>
+          <div class="card-meta"><strong>Base:</strong> Mutare birou mic</div>
+          <div class="card-meta"><strong>Search:</strong> "small office moving relocation"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=small%20office%20moving%20relocation</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=student%20tutoring%20lesson%20education" alt="Уроки румынского для школьника - Бизнес (Chișinău Poșta Veche)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Уроки румынского для школьника - Бизнес (Chișinău Poșta Veche)</h3>
+          <div class="card-meta"><strong>Base:</strong> Уроки румынского для школьника</div>
+          <div class="card-meta"><strong>Search:</strong> "student tutoring lesson education"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=student%20tutoring%20lesson%20education</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=baptism%20christening%20photographer%20event" alt="Eveniment: fotograf la botez - Familie (Chișinău Poșta Veche)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Eveniment: fotograf la botez - Familie (Chișinău Poșta Veche)</h3>
+          <div class="card-meta"><strong>Base:</strong> Eveniment: fotograf la botez</div>
+          <div class="card-meta"><strong>Search:</strong> "baptism christening photographer event"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=baptism%20christening%20photographer%20event</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=faucet%20replacement%20plumbing%20sealing" alt="Замена смесителя и герметизация - Бюджет (Chișinău Poșta Veche)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Замена смесителя и герметизация - Бюджет (Chișinău Poșta Veche)</h3>
+          <div class="card-meta"><strong>Base:</strong> Замена смесителя и герметизация</div>
+          <div class="card-meta"><strong>Search:</strong> "faucet replacement plumbing sealing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=faucet%20replacement%20plumbing%20sealing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=lighting%20fixture%20installation%20electrician" alt="Montaj corpuri de iluminat - Profesional (Chișinău Poșta Veche)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Montaj corpuri de iluminat - Profesional (Chișinău Poșta Veche)</h3>
+          <div class="card-meta"><strong>Base:</strong> Montaj corpuri de iluminat</div>
+          <div class="card-meta"><strong>Search:</strong> "lighting fixture installation electrician"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=lighting%20fixture%20installation%20electrician</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20carpet%20upholstery%20dry%20cleaning" alt="Химчистка дивана и ковров - Детально (Chișinău Poșta Veche)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Химчистка дивана и ковров - Детально (Chișinău Poșta Veche)</h3>
+          <div class="card-meta"><strong>Base:</strong> Химчистка дивана и ковров</div>
+          <div class="card-meta"><strong>Search:</strong> "sofa carpet upholstery dry cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20carpet%20upholstery%20dry%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=bathroom%20tile%20repair%20fixing" alt="Corectie gresie desprinsa in baie - Cu materiale (Chișinău Poșta Veche)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Corectie gresie desprinsa in baie - Cu materiale (Chișinău Poșta Veche)</h3>
+          <div class="card-meta"><strong>Base:</strong> Corectie gresie desprinsa in baie</div>
+          <div class="card-meta"><strong>Search:</strong> "bathroom tile repair fixing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=bathroom%20tile%20repair%20fixing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=intercom%20system%20installation%20apartment" alt="Монтаж домофона на 3 квартиры - Без материалов (Chișinău Poșta Veche)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Монтаж домофона на 3 квартиры - Без материалов (Chișinău Poșta Veche)</h3>
+          <div class="card-meta"><strong>Base:</strong> Монтаж домофона на 3 квартиры</div>
+          <div class="card-meta"><strong>Search:</strong> "intercom system installation apartment"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=intercom%20system%20installation%20apartment</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=grocery%20delivery%20shopping%20senior" alt="Livrare cumparaturi senior - Standard (Chișinău Sculeanca)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Livrare cumparaturi senior - Standard (Chișinău Sculeanca)</h3>
+          <div class="card-meta"><strong>Base:</strong> Livrare cumparaturi senior</div>
+          <div class="card-meta"><strong>Search:</strong> "grocery delivery shopping senior"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=grocery%20delivery%20shopping%20senior</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=interior%20door%20repair%20fixing" alt="Починить межкомнатную дверь - Срочно (Chișinău Sculeanca)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Починить межкомнатную дверь - Срочно (Chișinău Sculeanca)</h3>
+          <div class="card-meta"><strong>Base:</strong> Починить межкомнатную дверь</div>
+          <div class="card-meta"><strong>Search:</strong> "interior door repair fixing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=interior%20door%20repair%20fixing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=general%20apartment%20cleaning" alt="Curatenie generala in apartament - Premium (Chișinău Sculeanca)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Curatenie generala in apartament - Premium (Chișinău Sculeanca)</h3>
+          <div class="card-meta"><strong>Base:</strong> Curatenie generala in apartament</div>
+          <div class="card-meta"><strong>Search:</strong> "general apartment cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=general%20apartment%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=wardrobe%20assembly%20door%20adjustment" alt="Сборка шкафа и регулировка дверей - Эко (Chișinău Sculeanca)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Сборка шкафа и регулировка дверей - Эко (Chișinău Sculeanca)</h3>
+          <div class="card-meta"><strong>Base:</strong> Сборка шкафа и регулировка дверей</div>
+          <div class="card-meta"><strong>Search:</strong> "wardrobe assembly door adjustment"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=wardrobe%20assembly%20door%20adjustment</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=living%20room%20wall%20painting" alt="Vopsire pereti living - Express (Chișinău Sculeanca)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Vopsire pereti living - Express (Chișinău Sculeanca)</h3>
+          <div class="card-meta"><strong>Base:</strong> Vopsire pereti living</div>
+          <div class="card-meta"><strong>Search:</strong> "living room wall painting"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=living%20room%20wall%20painting</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=washing%20machine%20installation%20plumbing" alt="Подключение стиральной машины - Суперсрочно (Chișinău Sculeanca)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Подключение стиральной машины - Суперсрочно (Chișinău Sculeanca)</h3>
+          <div class="card-meta"><strong>Base:</strong> Подключение стиральной машины</div>
+          <div class="card-meta"><strong>Search:</strong> "washing machine installation plumbing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=washing%20machine%20installation%20plumbing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=electrical%20outlet%20repair%20circuit%20breaker" alt="Reparatie priza si verificare tablou - Weekend (Chișinău Sculeanca)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Reparatie priza si verificare tablou - Weekend (Chișinău Sculeanca)</h3>
+          <div class="card-meta"><strong>Base:</strong> Reparatie priza si verificare tablou</div>
+          <div class="card-meta"><strong>Search:</strong> "electrical outlet repair circuit breaker"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=electrical%20outlet%20repair%20circuit%20breaker</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20moving%20transport" alt="Перевозка дивана - Бизнес (Chișinău Sculeanca)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Перевозка дивана - Бизнес (Chișinău Sculeanca)</h3>
+          <div class="card-meta"><strong>Base:</strong> Перевозка дивана</div>
+          <div class="card-meta"><strong>Search:</strong> "sofa moving transport"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20moving%20transport</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=lawn%20mowing%20hedge%20trimming%20gardening" alt="Gradinarit: tuns iarba si gard viu - Familie (Chișinău Sculeanca)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Gradinarit: tuns iarba si gard viu - Familie (Chișinău Sculeanca)</h3>
+          <div class="card-meta"><strong>Base:</strong> Gradinarit: tuns iarba si gard viu</div>
+          <div class="card-meta"><strong>Search:</strong> "lawn mowing hedge trimming gardening"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=lawn%20mowing%20hedge%20trimming%20gardening</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=post%20renovation%20cleaning" alt="Уборка после ремонта - Бюджет (Chișinău Sculeanca)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Уборка после ремонта - Бюджет (Chișinău Sculeanca)</h3>
+          <div class="card-meta"><strong>Base:</strong> Уборка после ремонта</div>
+          <div class="card-meta"><strong>Search:</strong> "post renovation cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=post%20renovation%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=internet%20wifi%20troubleshooting%20repair" alt="Depanare internet si Wi-Fi - Profesional (Chișinău Sculeanca)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Depanare internet si Wi-Fi - Profesional (Chișinău Sculeanca)</h3>
+          <div class="card-meta"><strong>Base:</strong> Depanare internet si Wi-Fi</div>
+          <div class="card-meta"><strong>Search:</strong> "internet wifi troubleshooting repair"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=internet%20wifi%20troubleshooting%20repair</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=bed%20nightstand%20assembly%20furniture" alt="Сборка кровати и тумбочек - Детально (Chișinău Sculeanca)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Сборка кровати и тумбочек - Детально (Chișinău Sculeanca)</h3>
+          <div class="card-meta"><strong>Base:</strong> Сборка кровати и тумбочек</div>
+          <div class="card-meta"><strong>Search:</strong> "bed nightstand assembly furniture"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=bed%20nightstand%20assembly%20furniture</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=small%20office%20moving%20relocation" alt="Mutare birou mic - Cu materiale (Chișinău Sculeanca)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Mutare birou mic - Cu materiale (Chișinău Sculeanca)</h3>
+          <div class="card-meta"><strong>Base:</strong> Mutare birou mic</div>
+          <div class="card-meta"><strong>Search:</strong> "small office moving relocation"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=small%20office%20moving%20relocation</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=student%20tutoring%20lesson%20education" alt="Уроки румынского для школьника - Без материалов (Chișinău Sculeanca)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Уроки румынского для школьника - Без материалов (Chișinău Sculeanca)</h3>
+          <div class="card-meta"><strong>Base:</strong> Уроки румынского для школьника</div>
+          <div class="card-meta"><strong>Search:</strong> "student tutoring lesson education"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=student%20tutoring%20lesson%20education</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=baptism%20christening%20photographer%20event" alt="Eveniment: fotograf la botez - Standard (Chișinău Durlești)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Eveniment: fotograf la botez - Standard (Chișinău Durlești)</h3>
+          <div class="card-meta"><strong>Base:</strong> Eveniment: fotograf la botez</div>
+          <div class="card-meta"><strong>Search:</strong> "baptism christening photographer event"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=baptism%20christening%20photographer%20event</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=faucet%20replacement%20plumbing%20sealing" alt="Замена смесителя и герметизация - Срочно (Chișinău Durlești)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Замена смесителя и герметизация - Срочно (Chișinău Durlești)</h3>
+          <div class="card-meta"><strong>Base:</strong> Замена смесителя и герметизация</div>
+          <div class="card-meta"><strong>Search:</strong> "faucet replacement plumbing sealing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=faucet%20replacement%20plumbing%20sealing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=lighting%20fixture%20installation%20electrician" alt="Montaj corpuri de iluminat - Premium (Chișinău Durlești)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Montaj corpuri de iluminat - Premium (Chișinău Durlești)</h3>
+          <div class="card-meta"><strong>Base:</strong> Montaj corpuri de iluminat</div>
+          <div class="card-meta"><strong>Search:</strong> "lighting fixture installation electrician"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=lighting%20fixture%20installation%20electrician</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20carpet%20upholstery%20dry%20cleaning" alt="Химчистка дивана и ковров - Эко (Chișinău Durlești)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Химчистка дивана и ковров - Эко (Chișinău Durlești)</h3>
+          <div class="card-meta"><strong>Base:</strong> Химчистка дивана и ковров</div>
+          <div class="card-meta"><strong>Search:</strong> "sofa carpet upholstery dry cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20carpet%20upholstery%20dry%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=bathroom%20tile%20repair%20fixing" alt="Corectie gresie desprinsa in baie - Express (Chișinău Durlești)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Corectie gresie desprinsa in baie - Express (Chișinău Durlești)</h3>
+          <div class="card-meta"><strong>Base:</strong> Corectie gresie desprinsa in baie</div>
+          <div class="card-meta"><strong>Search:</strong> "bathroom tile repair fixing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=bathroom%20tile%20repair%20fixing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=intercom%20system%20installation%20apartment" alt="Монтаж домофона на 3 квартиры - Суперсрочно (Chișinău Durlești)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Монтаж домофона на 3 квартиры - Суперсрочно (Chișinău Durlești)</h3>
+          <div class="card-meta"><strong>Base:</strong> Монтаж домофона на 3 квартиры</div>
+          <div class="card-meta"><strong>Search:</strong> "intercom system installation apartment"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=intercom%20system%20installation%20apartment</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=grocery%20delivery%20shopping%20senior" alt="Livrare cumparaturi senior - Weekend (Chișinău Durlești)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Livrare cumparaturi senior - Weekend (Chișinău Durlești)</h3>
+          <div class="card-meta"><strong>Base:</strong> Livrare cumparaturi senior</div>
+          <div class="card-meta"><strong>Search:</strong> "grocery delivery shopping senior"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=grocery%20delivery%20shopping%20senior</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=interior%20door%20repair%20fixing" alt="Починить межкомнатную дверь - Бизнес (Chișinău Durlești)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Починить межкомнатную дверь - Бизнес (Chișinău Durlești)</h3>
+          <div class="card-meta"><strong>Base:</strong> Починить межкомнатную дверь</div>
+          <div class="card-meta"><strong>Search:</strong> "interior door repair fixing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=interior%20door%20repair%20fixing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=general%20apartment%20cleaning" alt="Curatenie generala in apartament - Familie (Chișinău Durlești)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Curatenie generala in apartament - Familie (Chișinău Durlești)</h3>
+          <div class="card-meta"><strong>Base:</strong> Curatenie generala in apartament</div>
+          <div class="card-meta"><strong>Search:</strong> "general apartment cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=general%20apartment%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=wardrobe%20assembly%20door%20adjustment" alt="Сборка шкафа и регулировка дверей - Бюджет (Chișinău Durlești)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Сборка шкафа и регулировка дверей - Бюджет (Chișinău Durlești)</h3>
+          <div class="card-meta"><strong>Base:</strong> Сборка шкафа и регулировка дверей</div>
+          <div class="card-meta"><strong>Search:</strong> "wardrobe assembly door adjustment"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=wardrobe%20assembly%20door%20adjustment</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=living%20room%20wall%20painting" alt="Vopsire pereti living - Profesional (Chișinău Durlești)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Vopsire pereti living - Profesional (Chișinău Durlești)</h3>
+          <div class="card-meta"><strong>Base:</strong> Vopsire pereti living</div>
+          <div class="card-meta"><strong>Search:</strong> "living room wall painting"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=living%20room%20wall%20painting</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=washing%20machine%20installation%20plumbing" alt="Подключение стиральной машины - Детально (Chișinău Durlești)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Подключение стиральной машины - Детально (Chișinău Durlești)</h3>
+          <div class="card-meta"><strong>Base:</strong> Подключение стиральной машины</div>
+          <div class="card-meta"><strong>Search:</strong> "washing machine installation plumbing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=washing%20machine%20installation%20plumbing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=electrical%20outlet%20repair%20circuit%20breaker" alt="Reparatie priza si verificare tablou - Cu materiale (Chișinău Durlești)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Reparatie priza si verificare tablou - Cu materiale (Chișinău Durlești)</h3>
+          <div class="card-meta"><strong>Base:</strong> Reparatie priza si verificare tablou</div>
+          <div class="card-meta"><strong>Search:</strong> "electrical outlet repair circuit breaker"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=electrical%20outlet%20repair%20circuit%20breaker</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20moving%20transport" alt="Перевозка дивана - Без материалов (Chișinău Durlești)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Перевозка дивана - Без материалов (Chișinău Durlești)</h3>
+          <div class="card-meta"><strong>Base:</strong> Перевозка дивана</div>
+          <div class="card-meta"><strong>Search:</strong> "sofa moving transport"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20moving%20transport</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=lawn%20mowing%20hedge%20trimming%20gardening" alt="Gradinarit: tuns iarba si gard viu - Standard (Chișinău Codru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Gradinarit: tuns iarba si gard viu - Standard (Chișinău Codru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Gradinarit: tuns iarba si gard viu</div>
+          <div class="card-meta"><strong>Search:</strong> "lawn mowing hedge trimming gardening"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=lawn%20mowing%20hedge%20trimming%20gardening</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=post%20renovation%20cleaning" alt="Уборка после ремонта - Срочно (Chișinău Codru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Уборка после ремонта - Срочно (Chișinău Codru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Уборка после ремонта</div>
+          <div class="card-meta"><strong>Search:</strong> "post renovation cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=post%20renovation%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=internet%20wifi%20troubleshooting%20repair" alt="Depanare internet si Wi-Fi - Premium (Chișinău Codru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Depanare internet si Wi-Fi - Premium (Chișinău Codru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Depanare internet si Wi-Fi</div>
+          <div class="card-meta"><strong>Search:</strong> "internet wifi troubleshooting repair"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=internet%20wifi%20troubleshooting%20repair</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=bed%20nightstand%20assembly%20furniture" alt="Сборка кровати и тумбочек - Эко (Chișinău Codru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Сборка кровати и тумбочек - Эко (Chișinău Codru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Сборка кровати и тумбочек</div>
+          <div class="card-meta"><strong>Search:</strong> "bed nightstand assembly furniture"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=bed%20nightstand%20assembly%20furniture</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=small%20office%20moving%20relocation" alt="Mutare birou mic - Express (Chișinău Codru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Mutare birou mic - Express (Chișinău Codru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Mutare birou mic</div>
+          <div class="card-meta"><strong>Search:</strong> "small office moving relocation"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=small%20office%20moving%20relocation</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=student%20tutoring%20lesson%20education" alt="Уроки румынского для школьника - Суперсрочно (Chișinău Codru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Уроки румынского для школьника - Суперсрочно (Chișinău Codru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Уроки румынского для школьника</div>
+          <div class="card-meta"><strong>Search:</strong> "student tutoring lesson education"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=student%20tutoring%20lesson%20education</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=baptism%20christening%20photographer%20event" alt="Eveniment: fotograf la botez - Weekend (Chișinău Codru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Eveniment: fotograf la botez - Weekend (Chișinău Codru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Eveniment: fotograf la botez</div>
+          <div class="card-meta"><strong>Search:</strong> "baptism christening photographer event"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=baptism%20christening%20photographer%20event</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=faucet%20replacement%20plumbing%20sealing" alt="Замена смесителя и герметизация - Бизнес (Chișinău Codru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Замена смесителя и герметизация - Бизнес (Chișinău Codru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Замена смесителя и герметизация</div>
+          <div class="card-meta"><strong>Search:</strong> "faucet replacement plumbing sealing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=faucet%20replacement%20plumbing%20sealing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=lighting%20fixture%20installation%20electrician" alt="Montaj corpuri de iluminat - Familie (Chișinău Codru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Montaj corpuri de iluminat - Familie (Chișinău Codru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Montaj corpuri de iluminat</div>
+          <div class="card-meta"><strong>Search:</strong> "lighting fixture installation electrician"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=lighting%20fixture%20installation%20electrician</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20carpet%20upholstery%20dry%20cleaning" alt="Химчистка дивана и ковров - Бюджет (Chișinău Codru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Химчистка дивана и ковров - Бюджет (Chișinău Codru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Химчистка дивана и ковров</div>
+          <div class="card-meta"><strong>Search:</strong> "sofa carpet upholstery dry cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20carpet%20upholstery%20dry%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=bathroom%20tile%20repair%20fixing" alt="Corectie gresie desprinsa in baie - Profesional (Chișinău Codru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Corectie gresie desprinsa in baie - Profesional (Chișinău Codru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Corectie gresie desprinsa in baie</div>
+          <div class="card-meta"><strong>Search:</strong> "bathroom tile repair fixing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=bathroom%20tile%20repair%20fixing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=intercom%20system%20installation%20apartment" alt="Монтаж домофона на 3 квартиры - Детально (Chișinău Codru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Монтаж домофона на 3 квартиры - Детально (Chișinău Codru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Монтаж домофона на 3 квартиры</div>
+          <div class="card-meta"><strong>Search:</strong> "intercom system installation apartment"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=intercom%20system%20installation%20apartment</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=grocery%20delivery%20shopping%20senior" alt="Livrare cumparaturi senior - Cu materiale (Chișinău Codru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Livrare cumparaturi senior - Cu materiale (Chișinău Codru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Livrare cumparaturi senior</div>
+          <div class="card-meta"><strong>Search:</strong> "grocery delivery shopping senior"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=grocery%20delivery%20shopping%20senior</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=interior%20door%20repair%20fixing" alt="Починить межкомнатную дверь - Без материалов (Chișinău Codru)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Починить межкомнатную дверь - Без материалов (Chișinău Codru)</h3>
+          <div class="card-meta"><strong>Base:</strong> Починить межкомнатную дверь</div>
+          <div class="card-meta"><strong>Search:</strong> "interior door repair fixing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=interior%20door%20repair%20fixing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=general%20apartment%20cleaning" alt="Curatenie generala in apartament - Standard (Chișinău Sîngera)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Curatenie generala in apartament - Standard (Chișinău Sîngera)</h3>
+          <div class="card-meta"><strong>Base:</strong> Curatenie generala in apartament</div>
+          <div class="card-meta"><strong>Search:</strong> "general apartment cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=general%20apartment%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=wardrobe%20assembly%20door%20adjustment" alt="Сборка шкафа и регулировка дверей - Срочно (Chișinău Sîngera)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Сборка шкафа и регулировка дверей - Срочно (Chișinău Sîngera)</h3>
+          <div class="card-meta"><strong>Base:</strong> Сборка шкафа и регулировка дверей</div>
+          <div class="card-meta"><strong>Search:</strong> "wardrobe assembly door adjustment"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=wardrobe%20assembly%20door%20adjustment</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=living%20room%20wall%20painting" alt="Vopsire pereti living - Premium (Chișinău Sîngera)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Vopsire pereti living - Premium (Chișinău Sîngera)</h3>
+          <div class="card-meta"><strong>Base:</strong> Vopsire pereti living</div>
+          <div class="card-meta"><strong>Search:</strong> "living room wall painting"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=living%20room%20wall%20painting</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=washing%20machine%20installation%20plumbing" alt="Подключение стиральной машины - Эко (Chișinău Sîngera)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Подключение стиральной машины - Эко (Chișinău Sîngera)</h3>
+          <div class="card-meta"><strong>Base:</strong> Подключение стиральной машины</div>
+          <div class="card-meta"><strong>Search:</strong> "washing machine installation plumbing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=washing%20machine%20installation%20plumbing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=electrical%20outlet%20repair%20circuit%20breaker" alt="Reparatie priza si verificare tablou - Express (Chișinău Sîngera)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Reparatie priza si verificare tablou - Express (Chișinău Sîngera)</h3>
+          <div class="card-meta"><strong>Base:</strong> Reparatie priza si verificare tablou</div>
+          <div class="card-meta"><strong>Search:</strong> "electrical outlet repair circuit breaker"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=electrical%20outlet%20repair%20circuit%20breaker</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20moving%20transport" alt="Перевозка дивана - Суперсрочно (Chișinău Sîngera)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Перевозка дивана - Суперсрочно (Chișinău Sîngera)</h3>
+          <div class="card-meta"><strong>Base:</strong> Перевозка дивана</div>
+          <div class="card-meta"><strong>Search:</strong> "sofa moving transport"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20moving%20transport</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=lawn%20mowing%20hedge%20trimming%20gardening" alt="Gradinarit: tuns iarba si gard viu - Weekend (Chișinău Sîngera)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Gradinarit: tuns iarba si gard viu - Weekend (Chișinău Sîngera)</h3>
+          <div class="card-meta"><strong>Base:</strong> Gradinarit: tuns iarba si gard viu</div>
+          <div class="card-meta"><strong>Search:</strong> "lawn mowing hedge trimming gardening"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=lawn%20mowing%20hedge%20trimming%20gardening</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=post%20renovation%20cleaning" alt="Уборка после ремонта - Бизнес (Chișinău Sîngera)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Уборка после ремонта - Бизнес (Chișinău Sîngera)</h3>
+          <div class="card-meta"><strong>Base:</strong> Уборка после ремонта</div>
+          <div class="card-meta"><strong>Search:</strong> "post renovation cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=post%20renovation%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=internet%20wifi%20troubleshooting%20repair" alt="Depanare internet si Wi-Fi - Familie (Chișinău Sîngera)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Depanare internet si Wi-Fi - Familie (Chișinău Sîngera)</h3>
+          <div class="card-meta"><strong>Base:</strong> Depanare internet si Wi-Fi</div>
+          <div class="card-meta"><strong>Search:</strong> "internet wifi troubleshooting repair"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=internet%20wifi%20troubleshooting%20repair</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=bed%20nightstand%20assembly%20furniture" alt="Сборка кровати и тумбочек - Бюджет (Chișinău Sîngera)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Сборка кровати и тумбочек - Бюджет (Chișinău Sîngera)</h3>
+          <div class="card-meta"><strong>Base:</strong> Сборка кровати и тумбочек</div>
+          <div class="card-meta"><strong>Search:</strong> "bed nightstand assembly furniture"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=bed%20nightstand%20assembly%20furniture</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=small%20office%20moving%20relocation" alt="Mutare birou mic - Profesional (Chișinău Sîngera)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Mutare birou mic - Profesional (Chișinău Sîngera)</h3>
+          <div class="card-meta"><strong>Base:</strong> Mutare birou mic</div>
+          <div class="card-meta"><strong>Search:</strong> "small office moving relocation"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=small%20office%20moving%20relocation</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=student%20tutoring%20lesson%20education" alt="Уроки румынского для школьника - Детально (Chișinău Sîngera)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Уроки румынского для школьника - Детально (Chișinău Sîngera)</h3>
+          <div class="card-meta"><strong>Base:</strong> Уроки румынского для школьника</div>
+          <div class="card-meta"><strong>Search:</strong> "student tutoring lesson education"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=student%20tutoring%20lesson%20education</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=baptism%20christening%20photographer%20event" alt="Eveniment: fotograf la botez - Cu materiale (Chișinău Sîngera)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Eveniment: fotograf la botez - Cu materiale (Chișinău Sîngera)</h3>
+          <div class="card-meta"><strong>Base:</strong> Eveniment: fotograf la botez</div>
+          <div class="card-meta"><strong>Search:</strong> "baptism christening photographer event"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=baptism%20christening%20photographer%20event</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=faucet%20replacement%20plumbing%20sealing" alt="Замена смесителя и герметизация - Без материалов (Chișinău Sîngera)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Замена смесителя и герметизация - Без материалов (Chișinău Sîngera)</h3>
+          <div class="card-meta"><strong>Base:</strong> Замена смесителя и герметизация</div>
+          <div class="card-meta"><strong>Search:</strong> "faucet replacement plumbing sealing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=faucet%20replacement%20plumbing%20sealing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=lighting%20fixture%20installation%20electrician" alt="Montaj corpuri de iluminat - Standard (Chișinău Cricova)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Montaj corpuri de iluminat - Standard (Chișinău Cricova)</h3>
+          <div class="card-meta"><strong>Base:</strong> Montaj corpuri de iluminat</div>
+          <div class="card-meta"><strong>Search:</strong> "lighting fixture installation electrician"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=lighting%20fixture%20installation%20electrician</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20carpet%20upholstery%20dry%20cleaning" alt="Химчистка дивана и ковров - Срочно (Chișinău Cricova)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Химчистка дивана и ковров - Срочно (Chișinău Cricova)</h3>
+          <div class="card-meta"><strong>Base:</strong> Химчистка дивана и ковров</div>
+          <div class="card-meta"><strong>Search:</strong> "sofa carpet upholstery dry cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20carpet%20upholstery%20dry%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=bathroom%20tile%20repair%20fixing" alt="Corectie gresie desprinsa in baie - Premium (Chișinău Cricova)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Corectie gresie desprinsa in baie - Premium (Chișinău Cricova)</h3>
+          <div class="card-meta"><strong>Base:</strong> Corectie gresie desprinsa in baie</div>
+          <div class="card-meta"><strong>Search:</strong> "bathroom tile repair fixing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=bathroom%20tile%20repair%20fixing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=intercom%20system%20installation%20apartment" alt="Монтаж домофона на 3 квартиры - Эко (Chișinău Cricova)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Монтаж домофона на 3 квартиры - Эко (Chișinău Cricova)</h3>
+          <div class="card-meta"><strong>Base:</strong> Монтаж домофона на 3 квартиры</div>
+          <div class="card-meta"><strong>Search:</strong> "intercom system installation apartment"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=intercom%20system%20installation%20apartment</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=grocery%20delivery%20shopping%20senior" alt="Livrare cumparaturi senior - Express (Chișinău Cricova)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Livrare cumparaturi senior - Express (Chișinău Cricova)</h3>
+          <div class="card-meta"><strong>Base:</strong> Livrare cumparaturi senior</div>
+          <div class="card-meta"><strong>Search:</strong> "grocery delivery shopping senior"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=grocery%20delivery%20shopping%20senior</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=interior%20door%20repair%20fixing" alt="Починить межкомнатную дверь - Суперсрочно (Chișinău Cricova)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Починить межкомнатную дверь - Суперсрочно (Chișinău Cricova)</h3>
+          <div class="card-meta"><strong>Base:</strong> Починить межкомнатную дверь</div>
+          <div class="card-meta"><strong>Search:</strong> "interior door repair fixing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=interior%20door%20repair%20fixing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=general%20apartment%20cleaning" alt="Curatenie generala in apartament - Weekend (Chișinău Cricova)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Curatenie generala in apartament - Weekend (Chișinău Cricova)</h3>
+          <div class="card-meta"><strong>Base:</strong> Curatenie generala in apartament</div>
+          <div class="card-meta"><strong>Search:</strong> "general apartment cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=general%20apartment%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=wardrobe%20assembly%20door%20adjustment" alt="Сборка шкафа и регулировка дверей - Бизнес (Chișinău Cricova)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Сборка шкафа и регулировка дверей - Бизнес (Chișinău Cricova)</h3>
+          <div class="card-meta"><strong>Base:</strong> Сборка шкафа и регулировка дверей</div>
+          <div class="card-meta"><strong>Search:</strong> "wardrobe assembly door adjustment"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=wardrobe%20assembly%20door%20adjustment</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=living%20room%20wall%20painting" alt="Vopsire pereti living - Familie (Chișinău Cricova)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Vopsire pereti living - Familie (Chișinău Cricova)</h3>
+          <div class="card-meta"><strong>Base:</strong> Vopsire pereti living</div>
+          <div class="card-meta"><strong>Search:</strong> "living room wall painting"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=living%20room%20wall%20painting</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=washing%20machine%20installation%20plumbing" alt="Подключение стиральной машины - Бюджет (Chișinău Cricova)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Подключение стиральной машины - Бюджет (Chișinău Cricova)</h3>
+          <div class="card-meta"><strong>Base:</strong> Подключение стиральной машины</div>
+          <div class="card-meta"><strong>Search:</strong> "washing machine installation plumbing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=washing%20machine%20installation%20plumbing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=electrical%20outlet%20repair%20circuit%20breaker" alt="Reparatie priza si verificare tablou - Profesional (Chișinău Cricova)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Reparatie priza si verificare tablou - Profesional (Chișinău Cricova)</h3>
+          <div class="card-meta"><strong>Base:</strong> Reparatie priza si verificare tablou</div>
+          <div class="card-meta"><strong>Search:</strong> "electrical outlet repair circuit breaker"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=electrical%20outlet%20repair%20circuit%20breaker</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20moving%20transport" alt="Перевозка дивана - Детально (Chișinău Cricova)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Перевозка дивана - Детально (Chișinău Cricova)</h3>
+          <div class="card-meta"><strong>Base:</strong> Перевозка дивана</div>
+          <div class="card-meta"><strong>Search:</strong> "sofa moving transport"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20moving%20transport</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=lawn%20mowing%20hedge%20trimming%20gardening" alt="Gradinarit: tuns iarba si gard viu - Cu materiale (Chișinău Cricova)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Gradinarit: tuns iarba si gard viu - Cu materiale (Chișinău Cricova)</h3>
+          <div class="card-meta"><strong>Base:</strong> Gradinarit: tuns iarba si gard viu</div>
+          <div class="card-meta"><strong>Search:</strong> "lawn mowing hedge trimming gardening"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=lawn%20mowing%20hedge%20trimming%20gardening</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=post%20renovation%20cleaning" alt="Уборка после ремонта - Без материалов (Chișinău Cricova)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Уборка после ремонта - Без материалов (Chișinău Cricova)</h3>
+          <div class="card-meta"><strong>Base:</strong> Уборка после ремонта</div>
+          <div class="card-meta"><strong>Search:</strong> "post renovation cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=post%20renovation%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=internet%20wifi%20troubleshooting%20repair" alt="Depanare internet si Wi-Fi - Standard (Bălți)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Depanare internet si Wi-Fi - Standard (Bălți)</h3>
+          <div class="card-meta"><strong>Base:</strong> Depanare internet si Wi-Fi</div>
+          <div class="card-meta"><strong>Search:</strong> "internet wifi troubleshooting repair"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=internet%20wifi%20troubleshooting%20repair</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=bed%20nightstand%20assembly%20furniture" alt="Сборка кровати и тумбочек - Срочно (Bălți)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Сборка кровати и тумбочек - Срочно (Bălți)</h3>
+          <div class="card-meta"><strong>Base:</strong> Сборка кровати и тумбочек</div>
+          <div class="card-meta"><strong>Search:</strong> "bed nightstand assembly furniture"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=bed%20nightstand%20assembly%20furniture</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=small%20office%20moving%20relocation" alt="Mutare birou mic - Premium (Bălți)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Mutare birou mic - Premium (Bălți)</h3>
+          <div class="card-meta"><strong>Base:</strong> Mutare birou mic</div>
+          <div class="card-meta"><strong>Search:</strong> "small office moving relocation"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=small%20office%20moving%20relocation</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=student%20tutoring%20lesson%20education" alt="Уроки румынского для школьника - Эко (Bălți)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Уроки румынского для школьника - Эко (Bălți)</h3>
+          <div class="card-meta"><strong>Base:</strong> Уроки румынского для школьника</div>
+          <div class="card-meta"><strong>Search:</strong> "student tutoring lesson education"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=student%20tutoring%20lesson%20education</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=baptism%20christening%20photographer%20event" alt="Eveniment: fotograf la botez - Express (Bălți)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Eveniment: fotograf la botez - Express (Bălți)</h3>
+          <div class="card-meta"><strong>Base:</strong> Eveniment: fotograf la botez</div>
+          <div class="card-meta"><strong>Search:</strong> "baptism christening photographer event"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=baptism%20christening%20photographer%20event</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=faucet%20replacement%20plumbing%20sealing" alt="Замена смесителя и герметизация - Суперсрочно (Bălți)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Замена смесителя и герметизация - Суперсрочно (Bălți)</h3>
+          <div class="card-meta"><strong>Base:</strong> Замена смесителя и герметизация</div>
+          <div class="card-meta"><strong>Search:</strong> "faucet replacement plumbing sealing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=faucet%20replacement%20plumbing%20sealing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=lighting%20fixture%20installation%20electrician" alt="Montaj corpuri de iluminat - Weekend (Bălți)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Montaj corpuri de iluminat - Weekend (Bălți)</h3>
+          <div class="card-meta"><strong>Base:</strong> Montaj corpuri de iluminat</div>
+          <div class="card-meta"><strong>Search:</strong> "lighting fixture installation electrician"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=lighting%20fixture%20installation%20electrician</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20carpet%20upholstery%20dry%20cleaning" alt="Химчистка дивана и ковров - Бизнес (Bălți)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Химчистка дивана и ковров - Бизнес (Bălți)</h3>
+          <div class="card-meta"><strong>Base:</strong> Химчистка дивана и ковров</div>
+          <div class="card-meta"><strong>Search:</strong> "sofa carpet upholstery dry cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20carpet%20upholstery%20dry%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=bathroom%20tile%20repair%20fixing" alt="Corectie gresie desprinsa in baie - Familie (Bălți)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Corectie gresie desprinsa in baie - Familie (Bălți)</h3>
+          <div class="card-meta"><strong>Base:</strong> Corectie gresie desprinsa in baie</div>
+          <div class="card-meta"><strong>Search:</strong> "bathroom tile repair fixing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=bathroom%20tile%20repair%20fixing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=intercom%20system%20installation%20apartment" alt="Монтаж домофона на 3 квартиры - Бюджет (Bălți)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Монтаж домофона на 3 квартиры - Бюджет (Bălți)</h3>
+          <div class="card-meta"><strong>Base:</strong> Монтаж домофона на 3 квартиры</div>
+          <div class="card-meta"><strong>Search:</strong> "intercom system installation apartment"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=intercom%20system%20installation%20apartment</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=grocery%20delivery%20shopping%20senior" alt="Livrare cumparaturi senior - Profesional (Bălți)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Livrare cumparaturi senior - Profesional (Bălți)</h3>
+          <div class="card-meta"><strong>Base:</strong> Livrare cumparaturi senior</div>
+          <div class="card-meta"><strong>Search:</strong> "grocery delivery shopping senior"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=grocery%20delivery%20shopping%20senior</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=interior%20door%20repair%20fixing" alt="Починить межкомнатную дверь - Детально (Bălți)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Починить межкомнатную дверь - Детально (Bălți)</h3>
+          <div class="card-meta"><strong>Base:</strong> Починить межкомнатную дверь</div>
+          <div class="card-meta"><strong>Search:</strong> "interior door repair fixing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=interior%20door%20repair%20fixing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=general%20apartment%20cleaning" alt="Curatenie generala in apartament - Cu materiale (Bălți)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Curatenie generala in apartament - Cu materiale (Bălți)</h3>
+          <div class="card-meta"><strong>Base:</strong> Curatenie generala in apartament</div>
+          <div class="card-meta"><strong>Search:</strong> "general apartment cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=general%20apartment%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=wardrobe%20assembly%20door%20adjustment" alt="Сборка шкафа и регулировка дверей - Без материалов (Bălți)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Сборка шкафа и регулировка дверей - Без материалов (Bălți)</h3>
+          <div class="card-meta"><strong>Base:</strong> Сборка шкафа и регулировка дверей</div>
+          <div class="card-meta"><strong>Search:</strong> "wardrobe assembly door adjustment"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=wardrobe%20assembly%20door%20adjustment</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=living%20room%20wall%20painting" alt="Vopsire pereti living - Standard (Comrat)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Vopsire pereti living - Standard (Comrat)</h3>
+          <div class="card-meta"><strong>Base:</strong> Vopsire pereti living</div>
+          <div class="card-meta"><strong>Search:</strong> "living room wall painting"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=living%20room%20wall%20painting</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=washing%20machine%20installation%20plumbing" alt="Подключение стиральной машины - Срочно (Comrat)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Подключение стиральной машины - Срочно (Comrat)</h3>
+          <div class="card-meta"><strong>Base:</strong> Подключение стиральной машины</div>
+          <div class="card-meta"><strong>Search:</strong> "washing machine installation plumbing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=washing%20machine%20installation%20plumbing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=electrical%20outlet%20repair%20circuit%20breaker" alt="Reparatie priza si verificare tablou - Premium (Comrat)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Reparatie priza si verificare tablou - Premium (Comrat)</h3>
+          <div class="card-meta"><strong>Base:</strong> Reparatie priza si verificare tablou</div>
+          <div class="card-meta"><strong>Search:</strong> "electrical outlet repair circuit breaker"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=electrical%20outlet%20repair%20circuit%20breaker</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20moving%20transport" alt="Перевозка дивана - Эко (Comrat)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Перевозка дивана - Эко (Comrat)</h3>
+          <div class="card-meta"><strong>Base:</strong> Перевозка дивана</div>
+          <div class="card-meta"><strong>Search:</strong> "sofa moving transport"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20moving%20transport</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=lawn%20mowing%20hedge%20trimming%20gardening" alt="Gradinarit: tuns iarba si gard viu - Express (Comrat)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Gradinarit: tuns iarba si gard viu - Express (Comrat)</h3>
+          <div class="card-meta"><strong>Base:</strong> Gradinarit: tuns iarba si gard viu</div>
+          <div class="card-meta"><strong>Search:</strong> "lawn mowing hedge trimming gardening"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=lawn%20mowing%20hedge%20trimming%20gardening</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=post%20renovation%20cleaning" alt="Уборка после ремонта - Суперсрочно (Comrat)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Уборка после ремонта - Суперсрочно (Comrat)</h3>
+          <div class="card-meta"><strong>Base:</strong> Уборка после ремонта</div>
+          <div class="card-meta"><strong>Search:</strong> "post renovation cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=post%20renovation%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=internet%20wifi%20troubleshooting%20repair" alt="Depanare internet si Wi-Fi - Weekend (Comrat)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Depanare internet si Wi-Fi - Weekend (Comrat)</h3>
+          <div class="card-meta"><strong>Base:</strong> Depanare internet si Wi-Fi</div>
+          <div class="card-meta"><strong>Search:</strong> "internet wifi troubleshooting repair"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=internet%20wifi%20troubleshooting%20repair</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=bed%20nightstand%20assembly%20furniture" alt="Сборка кровати и тумбочек - Бизнес (Comrat)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Сборка кровати и тумбочек - Бизнес (Comrat)</h3>
+          <div class="card-meta"><strong>Base:</strong> Сборка кровати и тумбочек</div>
+          <div class="card-meta"><strong>Search:</strong> "bed nightstand assembly furniture"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=bed%20nightstand%20assembly%20furniture</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=small%20office%20moving%20relocation" alt="Mutare birou mic - Familie (Comrat)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Mutare birou mic - Familie (Comrat)</h3>
+          <div class="card-meta"><strong>Base:</strong> Mutare birou mic</div>
+          <div class="card-meta"><strong>Search:</strong> "small office moving relocation"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=small%20office%20moving%20relocation</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=student%20tutoring%20lesson%20education" alt="Уроки румынского для школьника - Бюджет (Comrat)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Уроки румынского для школьника - Бюджет (Comrat)</h3>
+          <div class="card-meta"><strong>Base:</strong> Уроки румынского для школьника</div>
+          <div class="card-meta"><strong>Search:</strong> "student tutoring lesson education"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=student%20tutoring%20lesson%20education</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=baptism%20christening%20photographer%20event" alt="Eveniment: fotograf la botez - Profesional (Comrat)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Eveniment: fotograf la botez - Profesional (Comrat)</h3>
+          <div class="card-meta"><strong>Base:</strong> Eveniment: fotograf la botez</div>
+          <div class="card-meta"><strong>Search:</strong> "baptism christening photographer event"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=baptism%20christening%20photographer%20event</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=faucet%20replacement%20plumbing%20sealing" alt="Замена смесителя и герметизация - Детально (Comrat)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Замена смесителя и герметизация - Детально (Comrat)</h3>
+          <div class="card-meta"><strong>Base:</strong> Замена смесителя и герметизация</div>
+          <div class="card-meta"><strong>Search:</strong> "faucet replacement plumbing sealing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=faucet%20replacement%20plumbing%20sealing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=lighting%20fixture%20installation%20electrician" alt="Montaj corpuri de iluminat - Cu materiale (Comrat)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Montaj corpuri de iluminat - Cu materiale (Comrat)</h3>
+          <div class="card-meta"><strong>Base:</strong> Montaj corpuri de iluminat</div>
+          <div class="card-meta"><strong>Search:</strong> "lighting fixture installation electrician"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=lighting%20fixture%20installation%20electrician</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20carpet%20upholstery%20dry%20cleaning" alt="Химчистка дивана и ковров - Без материалов (Comrat)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Химчистка дивана и ковров - Без материалов (Comrat)</h3>
+          <div class="card-meta"><strong>Base:</strong> Химчистка дивана и ковров</div>
+          <div class="card-meta"><strong>Search:</strong> "sofa carpet upholstery dry cleaning"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=sofa%20carpet%20upholstery%20dry%20cleaning</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=bathroom%20tile%20repair%20fixing" alt="Corectie gresie desprinsa in baie - Standard (Soroca)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Corectie gresie desprinsa in baie - Standard (Soroca)</h3>
+          <div class="card-meta"><strong>Base:</strong> Corectie gresie desprinsa in baie</div>
+          <div class="card-meta"><strong>Search:</strong> "bathroom tile repair fixing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=bathroom%20tile%20repair%20fixing</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=intercom%20system%20installation%20apartment" alt="Монтаж домофона на 3 квартиры - Срочно (Soroca)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Монтаж домофона на 3 квартиры - Срочно (Soroca)</h3>
+          <div class="card-meta"><strong>Base:</strong> Монтаж домофона на 3 квартиры</div>
+          <div class="card-meta"><strong>Search:</strong> "intercom system installation apartment"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=intercom%20system%20installation%20apartment</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=grocery%20delivery%20shopping%20senior" alt="Livrare cumparaturi senior - Premium (Soroca)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Livrare cumparaturi senior - Premium (Soroca)</h3>
+          <div class="card-meta"><strong>Base:</strong> Livrare cumparaturi senior</div>
+          <div class="card-meta"><strong>Search:</strong> "grocery delivery shopping senior"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=grocery%20delivery%20shopping%20senior</div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <img src="https://via.placeholder.com/1200x800/6366f1/ffffff?text=interior%20door%20repair%20fixing" alt="Починить межкомнатную дверь - Эко (Soroca)" loading="lazy">
+        <div class="card-body">
+          <h3 class="card-title">Починить межкомнатную дверь - Эко (Soroca)</h3>
+          <div class="card-meta"><strong>Base:</strong> Починить межкомнатную дверь</div>
+          <div class="card-meta"><strong>Search:</strong> "interior door repair fixing"</div>
+          <div class="card-meta" style="font-size: 10px; color: #999; margin-top: 8px;">https://via.placeholder.com/1200x800/6366f1/ffffff?text=interior%20door%20repair%20fixing</div>
+        </div>
+      </div>
+    
+  </div>
+</body>
+</html>
