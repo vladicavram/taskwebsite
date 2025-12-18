@@ -180,7 +180,7 @@ export default function Header() {
             }}
           >
             <Image
-              src="/logo-dozo-text.svg"
+              src="/logo-dozo-text.svg?v=2"
               alt="Dozo"
               width={175}
               height={90}
