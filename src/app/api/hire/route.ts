@@ -74,7 +74,7 @@ export async function POST(req: Request) {
         userId: workerId,
         taskId: task.id,
         type: 'hire_request',
-        message: `${user.id} wants to hire you for: "${title}"`
+        content: `Someone wants to hire you for: "${title}"`
       }
     })
 
