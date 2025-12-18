@@ -73,9 +73,13 @@ export default function TaskCard({ id, title, description, price, category, imag
           )}
           {price && (
             <span style={{
-              fontSize: '0.875rem',
-              fontWeight: 600,
-              color: 'var(--accent)'
+              fontSize: '1.125rem',
+              fontWeight: 700,
+              color: '#FFFFFF',
+              background: 'linear-gradient(135deg, #C8996F 0%, #B8895F 100%)',
+              padding: '8px 16px',
+              borderRadius: '20px',
+              boxShadow: '0 2px 8px rgba(200, 153, 111, 0.3)'
             }}>
               {price} MDL
             </span>

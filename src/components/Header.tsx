@@ -180,12 +180,12 @@ export default function Header() {
             }}
           >
             <Image
-              src="/logo-dozo.svg"
+              src="/logo-dozo-text.svg"
               alt="Dozo"
-              width={60}
-              height={50}
+              width={175}
+              height={90}
               priority
-              style={{ height: 'auto', width: '60px' }}
+              style={{ height: 'auto', width: '175px' }}
             />
           </Link>
         </div>
