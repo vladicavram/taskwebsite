@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -H 0.0.0.0",
-    "build": "prisma generate && prisma migrate deploy && node seed-large-dataset.js && node set-admin.js && next build",
+    "build": "prisma generate && prisma migrate deploy && next build",
     "start": "next start -p $PORT",
     "lint": "next lint",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
