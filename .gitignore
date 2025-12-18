@@ -48,3 +48,4 @@ coverage
 db-data
 .vercel
 .env*.local
+.env.vercel-check
