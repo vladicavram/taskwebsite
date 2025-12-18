@@ -3,7 +3,7 @@
   <text x="20" y="110" font-family="Arial, sans-serif" font-size="72" font-weight="300" fill="#C8996F" letter-spacing="4">DOZO</text>
   
   <!-- Circular dots pattern -->
-  <g transform="translate(265, 90)">
+  <g transform="translate(140, 90)">
     <!-- Outer ring - larger dots -->
     <circle cx="0" cy="-45" r="4" fill="#C8996F" opacity="0.9"/>
     <circle cx="15" cy="-43" r="4" fill="#C8996F" opacity="0.85"/>
