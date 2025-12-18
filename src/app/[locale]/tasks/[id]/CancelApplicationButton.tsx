@@ -19,7 +19,7 @@ export default function CancelApplicationButton({
   const [success, setSuccess] = useState(false)
 
   const handleCancel = async () => {
-    const refundCredits = proposedPrice ? (proposedPrice / 100).toFixed(2) : '0'
+    const refundCredits = proposedPrice ? (proposedPrice / 100).toFixed(1) : '0'
     const confirmMessage = t('taskDetail.cancelApplication.confirm') || 
       `Cancel your application?\n\n✓ ${refundCredits} credits will be refunded\n✓ You can apply again later`
     
@@ -117,7 +117,7 @@ export default function CancelApplicationButton({
       </button>
       {proposedPrice && (
         <div style={{ fontSize: '0.75rem', color: '#78350f', marginTop: '8px' }}>
-          💰 {((proposedPrice / 100).toFixed(2))} {t('taskDetail.cancelApplication.creditsRefund') || 'credits will be refunded'}
+          💰 {((proposedPrice / 100).toFixed(1))} {t('taskDetail.cancelApplication.creditsRefund') || 'credits will be refunded'}
         </div>
       )}
     </div>

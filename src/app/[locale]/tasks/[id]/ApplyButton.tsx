@@ -291,7 +291,7 @@ export default function ApplyButton({
             margin: 0,
             fontWeight: hasEnoughCredits ? 400 : 600
           }}>
-            {interpolate(t('taskDetail.apply.requiredCredits') || 'Required credits: {{credits}} (1 credit = 100 MDL)', { credits: requiredCredits.toFixed(2) })}
+            {interpolate(t('taskDetail.apply.requiredCredits') || 'Required credits: {{credits}} (1 credit = 100 MDL)', { credits: requiredCredits.toFixed(1) })}
           </p>
         )}
         {session?.user && (
@@ -300,7 +300,7 @@ export default function ApplyButton({
             margin: 0,
             fontWeight: hasEnoughCredits ? 400 : 600
           }}>
-            {interpolate(t('taskDetail.apply.yourBalance') || 'Your balance: {{credits}} credit{{plural}}', { credits: String(credits.toFixed(2)), plural: credits !== 1 ? 's' : '' })}
+            {interpolate(t('taskDetail.apply.yourBalance') || 'Your balance: {{credits}} credit{{plural}}', { credits: String(credits.toFixed(1)), plural: credits !== 1 ? 's' : '' })}
           </p>
         )}
         {!hasEnoughCredits && currentPrice > 0 && (

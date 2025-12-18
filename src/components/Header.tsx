@@ -398,7 +398,7 @@ export default function Header() {
                     e.currentTarget.style.boxShadow = 'none'
                   }}
                 >
-                  {credits}
+                  {credits.toFixed(1)}
                 </button>
                 {showCredits && (
                   <div style={{
@@ -422,7 +422,7 @@ export default function Header() {
                         color: 'var(--accent)',
                         marginBottom: '8px'
                       }}>
-                        {credits} {t('header.credits.unit') || 'Credits'}
+                        {credits.toFixed(1)} {t('header.credits.unit') || 'Credits'}
                       </div>
                       <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: 0 }}>
                         {t('header.credits.exchange') || '1 credit = $100 task value'}
