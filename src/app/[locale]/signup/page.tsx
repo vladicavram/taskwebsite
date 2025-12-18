@@ -1,6 +1,6 @@
 "use client"
 import { useRouter } from 'next/navigation'
-import useLocale from '../../../../lib/locale'
+import useLocale from '../../../lib/locale'
 
 export default function SignUpOptionsPage() {
   const router = useRouter()
