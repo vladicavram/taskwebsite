@@ -2,7 +2,6 @@
 import Link from 'next/link'
 import BookTaskButton from '../../components/BookTaskButton'
 import PostTaskButton from '../../components/PostTaskButton'
-import HireWorkerButton from '../../components/HireWorkerButton'
 import useLocale from '../../lib/locale'
 import { Smile, BadgeCheck, Headphones, Hammer, Monitor, Truck, Sparkles, Wrench, Image as ImageIcon } from 'lucide-react'
 
@@ -24,82 +23,12 @@ export default function HomePage() {
           </p>
           <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <BookTaskButton />
-            <HireWorkerButton />
               <PostTaskButton style={{
                 fontSize: '1.1rem',
                 padding: '16px 40px',
                 fontWeight: 600,
                 minWidth: '220px'
               }} />
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Bar */}
-      <section style={{
-        background: 'white',
-        borderBottom: '1px solid var(--border)',
-        padding: '40px 24px'
-      }}>
-        <div className="container">
-          <div style={{ 
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '32px',
-            textAlign: 'center'
-          }}>
-            <div>
-              <div style={{ 
-                fontSize: '2.5rem', 
-                fontWeight: 700,
-                color: 'var(--accent)',
-                marginBottom: '8px'
-              }}>
-                3.4M+
-              </div>
-              <div style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
-                {t('home.stats.furniture') || 'Furniture Assemblies'}
-              </div>
-            </div>
-            <div>
-              <div style={{ 
-                fontSize: '2.5rem', 
-                fontWeight: 700,
-                color: 'var(--accent)',
-                marginBottom: '8px'
-              }}>
-                1.5M+
-              </div>
-              <div style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
-                {t('home.stats.moving') || 'Moving Tasks'}
-              </div>
-            </div>
-            <div>
-              <div style={{ 
-                fontSize: '2.5rem', 
-                fontWeight: 700,
-                color: 'var(--accent)',
-                marginBottom: '8px'
-              }}>
-                890K+
-              </div>
-              <div style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
-                {t('home.stats.cleaning') || 'Homes Cleaned'}
-              </div>
-            </div>
-            <div>
-              <div style={{ 
-                fontSize: '2.5rem', 
-                fontWeight: 700,
-                color: 'var(--accent)',
-                marginBottom: '8px'
-              }}>
-                700K+
-              </div>
-              <div style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
-                {t('home.stats.repairs') || 'Home Repairs'}
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -118,12 +47,12 @@ export default function HomePage() {
           gap: '24px'
         }}>
           {[
-            { Icon: Hammer, name: t('home.project.furnitureAssembly') || 'Furniture Assembly', price: 90 },
-            { Icon: Monitor, name: t('home.project.mountTV') || 'Mount a TV', price: 120 },
-            { Icon: Truck, name: t('home.project.moving') || 'Help Moving', price: 110 },
-            { Icon: Sparkles, name: t('home.project.cleaning') || 'Home Cleaning', price: 90 },
-            { Icon: Wrench, name: t('home.project.repairs') || 'Minor Repairs', price: 130 },
-            { Icon: ImageIcon, name: t('home.project.hangPictures') || 'Hang Pictures', price: 110 },
+            { Icon: Hammer, name: t('home.project.furnitureAssembly') || 'Furniture Assembly', price: 49 },
+            { Icon: Monitor, name: t('home.project.mountTV') || 'Mount a TV', price: 69 },
+            { Icon: Truck, name: t('home.project.moving') || 'Help Moving', price: 67 },
+            { Icon: Sparkles, name: t('home.project.cleaning') || 'Home Cleaning', price: 49 },
+            { Icon: Wrench, name: t('home.project.repairs') || 'Minor Repairs', price: 74 },
+            { Icon: ImageIcon, name: t('home.project.hangPictures') || 'Hang Pictures', price: 65 },
           ].map((project) => (
             <Link 
               key={project.name}
@@ -148,14 +77,166 @@ export default function HomePage() {
                 fontWeight: 600,
                 fontSize: '1.1rem'
               }}>
-                {t('home.project.startingAt') || 'Starting at'} {project.price} MDL
+                {t('home.project.startingAt') || 'Starting at'} ${project.price}
               </div>
             </Link>
           ))}
         </div>
       </section>
 
-      {/* How It Works */}
+      {/* Trust Badges */}
+      <section style={{ background: 'var(--bg-secondary)', padding: '80px 24px' }}>
+        <div className="container">
+          <h2 style={{ textAlign: 'center', marginBottom: '56px', fontSize: '2.25rem' }}>
+            {t('home.guaranteeTitle') || 'Your satisfaction, guaranteed'}
+          </h2>
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
+            gap: '48px'
+          }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ 
+                width: '80px',
+                height: '80px',
+                background: 'var(--accent)',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 24px'
+              }}>
+                <Smile size={36} color="#fff" />
+              </div>
+              <h3 style={{ marginBottom: '12px', fontSize: '1.5rem' }}>{t('home.happiness.title') || 'Happiness Pledge'}</h3>
+              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.7' }}>
+                {t('home.happiness.text') || "If you're not satisfied, we'll work to make it right."}
+              </p>
+            </div>
+
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ 
+                width: '80px',
+                height: '80px',
+                background: 'var(--accent)',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 24px'
+              }}>
+                <BadgeCheck size={36} color="#fff" />
+              </div>
+              <h3 style={{ marginBottom: '12px', fontSize: '1.5rem' }}>{t('home.vetted.title') || 'Vetted Taskers'}</h3>
+              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.7' }}>
+                {t('home.vetted.text') || 'Taskers are always background checked before joining the platform.'}
+              </p>
+            </div>
+
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ 
+                width: '80px',
+                height: '80px',
+                background: 'var(--accent)',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 24px'
+              }}>
+                <Headphones size={36} color="#fff" />
+              </div>
+              <h3 style={{ marginBottom: '12px', fontSize: '1.5rem' }}>{t('home.support.title') || 'Dedicated Support'}</h3>
+              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.7' }}>
+                {t('home.support.text') || 'Friendly service when you need us – every day of the week.'}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="container" style={{ marginTop: '80px', marginBottom: '80px' }}>
+        <h2 style={{ textAlign: 'center', marginBottom: '56px', fontSize: '2.25rem' }}>
+          {t('home.testimonialsTitle') || 'See what happy customers are saying'}
+        </h2>
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', 
+          gap: '32px'
+        }}>
+          {[
+            {
+              name: 'Elizabeth P.',
+              task: 'Furniture Assembly',
+              review: 'Assembled the IKEA drawer chest for me in less than 30 minutes, and fixed a drawer on an already assembled desk. Highly recommend!',
+              rating: 5
+            },
+            {
+              name: 'Tiffany B.',
+              task: 'Furniture Assembly',
+              review: 'Did an awesome job assembling crib and dresser for nursery. Really appreciate this! Cleaned up the area after work and organized the boxes.',
+              rating: 5
+            },
+            {
+              name: 'Amanda L.',
+              task: 'Home Repairs',
+              review: 'Great with communication, was fast, professional and did a fantastic job. Even came back to do a second layer to make it look seamless.',
+              rating: 5
+            }
+          ].map((testimonial, i) => (
+            <div 
+              key={i}
+              className="card" 
+              style={{ padding: '32px' }}
+            >
+              <div style={{ 
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                marginBottom: '16px'
+              }}>
+                <div style={{
+                  width: '48px',
+                  height: '48px',
+                  borderRadius: '50%',
+                  background: 'var(--accent-light)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '1.25rem',
+                  fontWeight: 600,
+                  color: 'var(--accent)'
+                }}>
+                  {testimonial.name[0]}
+                </div>
+                <div>
+                  <div style={{ fontWeight: 600 }}>{testimonial.name}</div>
+                  <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
+                    {testimonial.task}
+                  </div>
+                </div>
+              </div>
+              <div style={{ 
+                color: 'var(--accent)',
+                marginBottom: '12px',
+                fontSize: '1.25rem'
+              }}>
+                {'⭐'.repeat(testimonial.rating)}
+              </div>
+              <p style={{ 
+                color: 'var(--text-secondary)',
+                lineHeight: '1.7',
+                margin: 0
+              }}>
+                "{testimonial.review}"
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* How It Works with Image */}
       <section style={{ background: 'white', padding: '80px 24px', borderTop: '1px solid var(--border)' }}>
         <div className="container" style={{ maxWidth: '1000px' }}>
           <h2 style={{ textAlign: 'center', marginBottom: '56px', fontSize: '2.25rem' }}>
@@ -265,159 +346,9 @@ export default function HomePage() {
           <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', marginBottom: '32px' }}>
             {t('home.ctaSubtitle') || 'Join thousands of people getting things done every day'}
           </p>
-          <PostTaskButton label={t('home.ctaButton') || 'Post Your First Task'} style={{ fontSize: '1.1rem', padding: '16px 40px', fontWeight: 600 }} />
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="container" style={{ marginTop: '80px', marginBottom: '80px' }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '56px', fontSize: '2.25rem' }}>
-          {t('home.testimonialsTitle') || 'See what happy customers are saying'}
-        </h2>
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', 
-          gap: '32px'
-        }}>
-          {[
-            {
-              name: 'Elizabeth P.',
-              task: 'Furniture Assembly',
-              review: 'Assembled the IKEA drawer chest for me in less than 30 minutes, and fixed a drawer on an already assembled desk. Highly recommend!',
-              rating: 5
-            },
-            {
-              name: 'Tiffany B.',
-              task: 'Furniture Assembly',
-              review: 'Did an awesome job assembling crib and dresser for nursery. Really appreciate this! Cleaned up the area after work and organized the boxes.',
-              rating: 5
-            },
-            {
-              name: 'Amanda L.',
-              task: 'Home Repairs',
-              review: 'Great with communication, was fast, professional and did a fantastic job. Even came back to do a second layer to make it look seamless.',
-              rating: 5
-            }
-          ].map((testimonial, i) => (
-            <div 
-              key={i}
-              className="card" 
-              style={{ padding: '32px' }}
-            >
-              <div style={{ 
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                marginBottom: '16px'
-              }}>
-                <div style={{
-                  width: '48px',
-                  height: '48px',
-                  borderRadius: '50%',
-                  background: 'var(--accent-light)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '1.25rem',
-                  fontWeight: 600,
-                  color: 'var(--accent)'
-                }}>
-                  {testimonial.name[0]}
-                </div>
-                <div>
-                  <div style={{ fontWeight: 600 }}>{testimonial.name}</div>
-                  <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-                    {testimonial.task}
-                  </div>
-                </div>
-              </div>
-              <div style={{ 
-                color: 'var(--accent)',
-                marginBottom: '12px',
-                fontSize: '1.25rem'
-              }}>
-                {'⭐'.repeat(testimonial.rating)}
-              </div>
-              <p style={{ 
-                color: 'var(--text-secondary)',
-                lineHeight: '1.7',
-                margin: 0
-              }}>
-                "{testimonial.review}"
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Trust Badges */}
-      <section style={{ background: 'var(--bg-secondary)', padding: '80px 24px' }}>
-        <div className="container">
-          <h2 style={{ textAlign: 'center', marginBottom: '56px', fontSize: '2.25rem' }}>
-            {t('home.guaranteeTitle') || 'Your satisfaction, guaranteed'}
-          </h2>
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
-            gap: '48px'
-          }}>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ 
-                width: '80px',
-                height: '80px',
-                background: 'var(--accent)',
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: '0 auto 24px'
-              }}>
-                <Smile size={36} color="#fff" />
-              </div>
-              <h3 style={{ marginBottom: '12px', fontSize: '1.5rem' }}>{t('home.happiness.title') || 'Happiness Pledge'}</h3>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.7' }}>
-                {t('home.happiness.text') || "If you're not satisfied, we'll work to make it right."}
-              </p>
-            </div>
-
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ 
-                width: '80px',
-                height: '80px',
-                background: 'var(--accent)',
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: '0 auto 24px'
-              }}>
-                <BadgeCheck size={36} color="#fff" />
-              </div>
-              <h3 style={{ marginBottom: '12px', fontSize: '1.5rem' }}>{t('home.vetted.title') || 'Vetted Taskers'}</h3>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.7' }}>
-                {t('home.vetted.text') || 'Taskers are always background checked before joining the platform.'}
-              </p>
-            </div>
-
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ 
-                width: '80px',
-                height: '80px',
-                background: 'var(--accent)',
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: '0 auto 24px'
-              }}>
-                <Headphones size={36} color="#fff" />
-              </div>
-              <h3 style={{ marginBottom: '12px', fontSize: '1.5rem' }}>{t('home.support.title') || 'Dedicated Support'}</h3>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.7' }}>
-                {t('home.support.text') || 'Friendly service when you need us – every day of the week.'}
-              </p>
-            </div>
-          </div>
+          <Link href={`/${locale}/tasks/create`} className="btn" style={{ fontSize: '1.1rem', padding: '16px 40px', fontWeight: 600 }}>
+            {t('home.ctaButton') || 'Post Your First Task'}
+          </Link>
         </div>
       </section>
     </div>
