@@ -57,19 +57,18 @@ export default function SignUpOptionsPage() {
             }}
           >
             <div style={{ 
-              width: '64px', 
-              height: '64px', 
+              width: '60px', 
+              height: '60px', 
               margin: '0 auto 20px',
               borderRadius: '50%',
-              background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-dark, #0056b3) 100%)',
+              border: '3px solid var(--accent)',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
-              color: 'white',
-              fontSize: '28px',
-              fontWeight: 'bold'
+              justifyContent: 'center'
             }}>
-              ⚡
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+              </svg>
             </div>
             <h3 style={{ 
               fontSize: '1.5rem', 
@@ -124,19 +123,21 @@ export default function SignUpOptionsPage() {
             }}
           >
             <div style={{ 
-              width: '64px', 
-              height: '64px', 
+              width: '60px', 
+              height: '60px', 
               margin: '0 auto 20px',
               borderRadius: '12px',
-              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+              border: '3px solid #10b981',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
-              color: 'white',
-              fontSize: '28px',
-              fontWeight: 'bold'
+              justifyContent: 'center'
             }}>
-              📝
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="12" y1="18" x2="12" y2="12"></line>
+                <line x1="9" y1="15" x2="15" y2="15"></line>
+              </svg>
             </div>
             <h3 style={{ 
               fontSize: '1.5rem', 
@@ -167,72 +168,6 @@ export default function SignUpOptionsPage() {
             </ul>
           </button>
 
-          {/* Option 3: Both */}
-          <button
-            onClick={() => handleSelection('both')}
-            className="card"
-            style={{
-              padding: '32px 24px',
-              textAlign: 'center',
-              cursor: 'pointer',
-              border: '2px solid var(--border)',
-              background: 'white',
-              transition: 'all 0.2s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = 'var(--accent)'
-              e.currentTarget.style.transform = 'translateY(-4px)'
-              e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.12)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'var(--border)'
-              e.currentTarget.style.transform = 'translateY(0)'
-              e.currentTarget.style.boxShadow = 'none'
-            }}
-          >
-            <div style={{ 
-              width: '64px', 
-              height: '64px', 
-              margin: '0 auto 20px',
-              borderRadius: '16px',
-              background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: 'white',
-              fontSize: '28px',
-              fontWeight: 'bold'
-            }}>
-              ⭐
-            </div>
-            <h3 style={{ 
-              fontSize: '1.5rem', 
-              marginBottom: '12px',
-              color: 'var(--text)'
-            }}>
-              Both - Full Access
-            </h3>
-            <p style={{ 
-              color: 'var(--text-secondary)', 
-              fontSize: '1rem',
-              lineHeight: '1.6',
-              marginBottom: '16px'
-            }}>
-              Get complete access - post tasks and offer your services as a tasker.
-            </p>
-            <ul style={{ 
-              textAlign: 'left', 
-              color: 'var(--text-secondary)',
-              fontSize: '0.9rem',
-              lineHeight: '1.8',
-              paddingLeft: '20px'
-            }}>
-              <li>Post tasks and apply to tasks</li>
-              <li>Maximum flexibility</li>
-              <li>Full platform access</li>
-              <li>ID verification required</li>
-            </ul>
-          </button>
         </div>
 
         <div style={{ 

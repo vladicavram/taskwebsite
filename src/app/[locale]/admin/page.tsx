@@ -299,7 +299,14 @@ export default function AdminPage() {
                       <tr key={user.id} style={{ borderBottom: '1px solid var(--border)' }}>
                         <td style={{ padding: 12 }}>{user.name || '-'}</td>
                         <td style={{ padding: 12 }}>{user.email}</td>
-                        <td style={{ padding: 12 }}>{user.username || '-'}</td>
+                        <td style={{ padding: 12 }}>
+                          <Link 
+                            href={`/${locale}/profile/${user.id}`}
+                            style={{ color: 'var(--accent)', textDecoration: 'underline' }}
+                          >
+                            {user.username || '-'}
+                          </Link>
+                        </td>
                         <td style={{ padding: 12, textAlign: 'center' }}>
                           {user.idPhotoUrl ? (
                             <a 
@@ -445,7 +452,14 @@ export default function AdminPage() {
                   <tbody>
                     {filteredTasks.map((task) => (
                       <tr key={task.id} style={{ borderBottom: '1px solid var(--border)' }}>
-                        <td style={{ padding: 12 }}>{task.title}</td>
+                        <td style={{ padding: 12 }}>
+                          <Link 
+                            href={`/${locale}/tasks/${task.id}`}
+                            style={{ color: 'var(--accent)', textDecoration: 'underline' }}
+                          >
+                            {task.title}
+                          </Link>
+                        </td>
                         <td style={{ padding: 12 }}>{task.creator?.name || task.creator?.email || '-'}</td>
                         <td style={{ padding: 12 }}>{task.location || '-'}</td>
                         <td style={{ padding: 12, textAlign: 'right' }}>{task.price ? `${task.price} MDL` : '-'}</td>
