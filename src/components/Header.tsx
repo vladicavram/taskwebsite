@@ -808,7 +808,7 @@ export default function Header() {
               right: 0,
               bottom: 0,
               background: 'rgba(0,0,0,0.5)',
-              zIndex: 9998
+              zIndex: 99998
             }}
           />
           
@@ -823,7 +823,7 @@ export default function Header() {
               maxWidth: '85vw',
               background: 'white',
               boxShadow: '2px 0 20px rgba(0,0,0,0.2)',
-              zIndex: 9999,
+              zIndex: 99999,
               overflowY: 'auto',
               padding: '20px',
               animation: 'slideInFromLeft 0.3s ease-out'
