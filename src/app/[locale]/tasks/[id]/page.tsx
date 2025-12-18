@@ -13,6 +13,7 @@ import EditTaskInline from './EditTaskInline'
 import ReviewSection from './ReviewSection'
 import { revalidatePath } from 'next/cache'
 import MarkCompleteButton from './MarkCompleteButton'
+import CancelApplicationButton from './CancelApplicationButton'
 
 type Props = { params: { id: string; locale: string } }
 
@@ -46,7 +47,9 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
   const isCreator = session?.user?.email === task.creator.email
   const acceptedApps = (task as any).applications.filter((app: any) => app.status === 'accepted')
   const isAcceptedApplicantServer = !!acceptedApps.find((app: any) => app.applicant.id === session?.user?.id)
-  const hasAlreadyApplied = !!(task as any).applications.find((app: any) => app.applicant.id === session?.user?.id)
+  const userApplication = (task as any).applications.find((app: any) => app.applicant.id === session?.user?.id)
+  const hasAlreadyApplied = !!userApplication
+  const hasPendingApplication = userApplication?.status === 'pending'
   const completedAt = (task as any).completedAt as Date | undefined
   // Only show review forms if task has accepted applicant or is completed
   const showReviewForms = (isCreator || isAcceptedApplicantServer) && (acceptedApps.length > 0 || !!completedAt)
@@ -162,7 +165,36 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                 </div>
               ) : (
                 <div>
-                  {!isAcceptedApplicantServer ? (
+                  {hasPendingApplication && userApplication ? (
+                    <>
+                      <div style={{
+                        padding: '16px',
+                        background: '#fef3c7',
+                        border: '2px solid #f59e0b',
+                        borderRadius: '8px',
+                        marginBottom: '16px'
+                      }}>
+                        <div style={{ marginBottom: '12px' }}>
+                          <div style={{ fontWeight: 600, fontSize: '1.1rem', color: '#92400e', marginBottom: '4px' }}>
+                            ⏳ {getTranslation(params.locale, 'taskDetail.pendingApplication') || 'Application Pending'}
+                          </div>
+                          <div style={{ fontSize: '0.9rem', color: '#92400e' }}>
+                            {getTranslation(params.locale, 'taskDetail.proposedPrice') || 'Your offer:'} {userApplication.proposedPrice} MDL
+                          </div>
+                          {userApplication.message && (
+                            <div style={{ fontSize: '0.9rem', color: '#78350f', marginTop: '8px', fontStyle: 'italic' }}>
+                              "{userApplication.message}"
+                            </div>
+                          )}
+                        </div>
+                        <CancelApplicationButton 
+                          applicationId={userApplication.id}
+                          proposedPrice={userApplication.proposedPrice}
+                          locale={params.locale}
+                        />
+                      </div>
+                    </>
+                  ) : !isAcceptedApplicantServer ? (
                     <>
                       <h3 style={{ marginBottom: '12px' }}>{getTranslation(params.locale, 'taskDetail.applyForTask') || 'Apply for this Task'}</h3>
                       <ApplyButton 

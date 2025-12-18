@@ -73,17 +73,25 @@ export async function POST(
       return NextResponse.json({ error: `Insufficient credits. Required ${requiredCredits.toFixed(2)}, you have ${applicant.credits}.` }, { status: 400 })
     }
 
-    // Create application
-    // Create application without agreement fields to avoid Prisma client type mismatch
-    const application = await prisma.application.create({
-      data: {
-        taskId: params.id,
-        applicantId: applicant.id,
-        message: message || null,
-        proposedPrice: effectivePrice || null,
-        lastProposedBy: applicant.id,
-        status: 'pending'
-      }
+    // Create application and deduct credits in a transaction
+    const application = await prisma.$transaction(async (tx: any) => {
+      // Deduct credits from applicant
+      await tx.user.update({
+        where: { id: applicant.id },
+        data: { credits: { decrement: requiredCredits } }
+      })
+
+      // Create application
+      return await tx.application.create({
+        data: {
+          taskId: params.id,
+          applicantId: applicant.id,
+          message: message || null,
+          proposedPrice: effectivePrice || null,
+          lastProposedBy: applicant.id,
+          status: 'pending'
+        }
+      })
     })
 
     // Attempt raw SQL update to set agreement fields if columns exist
