@@ -68,6 +68,7 @@ export default function ProfilePage() {
   }
 
   const isOwnProfile = currentUser?.id === profileId
+  const isAdmin = currentUser?.isAdmin === true
 
   if (loading) {
     return (
@@ -202,61 +203,63 @@ export default function ProfilePage() {
         <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '32px', alignItems: 'start' }}>
           {/* Main Content */}
           <div>
-            {/* Personal Information Section */}
-            <div className="card" style={{ padding: '32px', marginBottom: '24px' }}>
-              <h2 style={{ marginBottom: '16px' }}>{t('profile.personalInfo') || 'Personal Information'}</h2>
-              <div style={{ display: 'grid', gap: '16px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '12px' }}>
-                  <span style={{ fontWeight: 600, color: 'var(--text-secondary)' }}>{t('profile.username') || 'Username'}:</span>
-                  <span style={{ color: 'var(--text)' }}>{user.username || '-'}</span>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '12px' }}>
-                  <span style={{ fontWeight: 600, color: 'var(--text-secondary)' }}>{t('profile.email') || 'Email'}:</span>
-                  <span style={{ color: 'var(--text)' }}>{user.email || '-'}</span>
-                </div>
-                {user.phone && (
+            {/* Personal Information Section - Only visible to admin */}
+            {isAdmin && (
+              <div className="card" style={{ padding: '32px', marginBottom: '24px' }}>
+                <h2 style={{ marginBottom: '16px' }}>{t('profile.personalInfo') || 'Personal Information'}</h2>
+                <div style={{ display: 'grid', gap: '16px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '12px' }}>
-                    <span style={{ fontWeight: 600, color: 'var(--text-secondary)' }}>{t('profile.phone') || 'Phone'}:</span>
-                    <span style={{ color: 'var(--text)' }}>{user.phone}</span>
+                    <span style={{ fontWeight: 600, color: 'var(--text-secondary)' }}>{t('profile.username') || 'Username'}:</span>
+                    <span style={{ color: 'var(--text)' }}>{user.username || '-'}</span>
                   </div>
-                )}
-                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '12px' }}>
-                  <span style={{ fontWeight: 600, color: 'var(--text-secondary)' }}>{t('profile.userType') || 'Account Type'}:</span>
-                  <span style={{ color: 'var(--text)', textTransform: 'capitalize' }}>{user.userType || 'poster'}</span>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '12px' }}>
-                  <span style={{ fontWeight: 600, color: 'var(--text-secondary)' }}>{t('profile.credits') || 'Credits'}:</span>
-                  <span style={{ color: 'var(--text)' }}>{user.credits || 0}</span>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '12px' }}>
-                  <span style={{ fontWeight: 600, color: 'var(--text-secondary)' }}>{t('profile.canApply') || 'Can Apply to Tasks'}:</span>
-                  <span style={{ color: user.canApply ? '#10b981' : '#ef4444' }}>
-                    {user.canApply ? (t('common.yes') || 'Yes') : (t('common.no') || 'No')}
-                  </span>
-                </div>
-                {user.isAdmin && (
                   <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '12px' }}>
-                    <span style={{ fontWeight: 600, color: 'var(--text-secondary)' }}>{t('profile.role') || 'Role'}:</span>
-                    <span style={{ color: '#f59e0b', fontWeight: 600 }}>Admin</span>
+                    <span style={{ fontWeight: 600, color: 'var(--text-secondary)' }}>{t('profile.email') || 'Email'}:</span>
+                    <span style={{ color: 'var(--text)' }}>{user.email || '-'}</span>
                   </div>
-                )}
-                {user.blocked && (
+                  {user.phone && (
+                    <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '12px' }}>
+                      <span style={{ fontWeight: 600, color: 'var(--text-secondary)' }}>{t('profile.phone') || 'Phone'}:</span>
+                      <span style={{ color: 'var(--text)' }}>{user.phone}</span>
+                    </div>
+                  )}
                   <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '12px' }}>
-                    <span style={{ fontWeight: 600, color: 'var(--text-secondary)' }}>{t('profile.status') || 'Status'}:</span>
-                    <span style={{ color: '#ef4444', fontWeight: 600 }}>{t('profile.blocked') || 'Blocked'}</span>
+                    <span style={{ fontWeight: 600, color: 'var(--text-secondary)' }}>{t('profile.userType') || 'Account Type'}:</span>
+                    <span style={{ color: 'var(--text)', textTransform: 'capitalize' }}>{user.userType || 'poster'}</span>
                   </div>
-                )}
-                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '12px' }}>
-                  <span style={{ fontWeight: 600, color: 'var(--text-secondary)' }}>{t('profile.memberSince') || 'Member Since'}:</span>
-                  <span style={{ color: 'var(--text)' }}>
-                    {user.createdAt ? new Date(user.createdAt).toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' }) : '-'}
-                  </span>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '12px' }}>
+                    <span style={{ fontWeight: 600, color: 'var(--text-secondary)' }}>{t('profile.credits') || 'Credits'}:</span>
+                    <span style={{ color: 'var(--text)' }}>{user.credits || 0}</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '12px' }}>
+                    <span style={{ fontWeight: 600, color: 'var(--text-secondary)' }}>{t('profile.canApply') || 'Can Apply to Tasks'}:</span>
+                    <span style={{ color: user.canApply ? '#10b981' : '#ef4444' }}>
+                      {user.canApply ? (t('common.yes') || 'Yes') : (t('common.no') || 'No')}
+                    </span>
+                  </div>
+                  {user.isAdmin && (
+                    <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '12px' }}>
+                      <span style={{ fontWeight: 600, color: 'var(--text-secondary)' }}>{t('profile.role') || 'Role'}:</span>
+                      <span style={{ color: '#f59e0b', fontWeight: 600 }}>Admin</span>
+                    </div>
+                  )}
+                  {user.blocked && (
+                    <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '12px' }}>
+                      <span style={{ fontWeight: 600, color: 'var(--text-secondary)' }}>{t('profile.status') || 'Status'}:</span>
+                      <span style={{ color: '#ef4444', fontWeight: 600 }}>{t('profile.blocked') || 'Blocked'}</span>
+                    </div>
+                  )}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '12px' }}>
+                    <span style={{ fontWeight: 600, color: 'var(--text-secondary)' }}>{t('profile.memberSince') || 'Member Since'}:</span>
+                    <span style={{ color: 'var(--text)' }}>
+                      {user.createdAt ? new Date(user.createdAt).toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' }) : '-'}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
-            {/* ID Verification Section */}
-            {(user.idPhotoUrl || user.selfieUrl) && (
+            {/* ID Verification Section - Only visible to admin */}
+            {isAdmin && (user.idPhotoUrl || user.selfieUrl) && (
               <div className="card" style={{ padding: '32px', marginBottom: '24px' }}>
                 <h2 style={{ marginBottom: '16px' }}>{t('profile.idVerification') || 'ID Verification'}</h2>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
