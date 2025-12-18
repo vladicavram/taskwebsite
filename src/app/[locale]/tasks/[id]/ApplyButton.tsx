@@ -10,7 +10,8 @@ export default function ApplyButton({
   taskPrice,
   taskTitle,
   taskCreatorName,
-  hasAlreadyApplied = false
+  hasAlreadyApplied = false,
+  userType = 'poster'
 }: { 
   taskId: string
   locale: string
@@ -18,6 +19,7 @@ export default function ApplyButton({
   taskTitle?: string
   taskCreatorName?: string
   hasAlreadyApplied?: boolean
+  userType?: string
 }) {
   const { t } = useLocale()
   const { data: session } = useSession()
@@ -32,6 +34,9 @@ export default function ApplyButton({
   const agreeRef = useRef<HTMLInputElement>(null)
   const [shake, setShake] = useState(false)
   const router = useRouter()
+  
+  // Check if user is poster-only (cannot apply)
+  const isPosterOnly = userType === 'poster'
 
   useEffect(() => {
     if (session?.user) {
@@ -173,6 +178,28 @@ export default function ApplyButton({
   const currentPrice = proposedPrice ? parseFloat(proposedPrice) : 0
   const requiredCredits = calculateRequiredCredits(currentPrice)
   const hasEnoughCredits = credits >= requiredCredits && currentPrice > 0 && requiredCredits > 0
+
+  if (isPosterOnly) {
+    return (
+      <div style={{ padding: '24px', background: '#fef3c7', border: '2px solid #f59e0b', borderRadius: '8px' }}>
+        <div style={{ marginBottom: '16px' }}>
+          <h4 style={{ margin: '0 0 8px 0', color: '#92400e' }}>
+            {t('taskDetail.posterOnly.title') || '👤 Upgrade to Become a Tasker'}
+          </h4>
+          <p style={{ margin: 0, fontSize: '0.95rem', color: '#78350f' }}>
+            {t('taskDetail.posterOnly.description') || 'Your account is currently set up to only post tasks. To apply for tasks, you need to upgrade to a tasker account and complete ID verification.'}
+          </p>
+        </div>
+        <button
+          onClick={() => router.push(`/${locale}/profile/create`)}
+          className="btn"
+          style={{ width: '100%' }}
+        >
+          {t('taskDetail.posterOnly.upgradeButton') || 'Become a Tasker'}
+        </button>
+      </div>
+    )
+  }
 
   if (applied) {
     return (

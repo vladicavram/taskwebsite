@@ -19,6 +19,16 @@ type Props = { params: { id: string; locale: string } }
 
 export default async function TaskDetail({ params, searchParams }: Props & { searchParams?: Record<string, string> }) {
   const session: any = await getServerSession(authOptions as any)
+  
+  // Fetch current user's data to check userType
+  let currentUser = null
+  if (session?.user?.email) {
+    currentUser = await prisma.user.findUnique({
+      where: { email: session.user.email },
+      select: { userType: true }
+    })
+  }
+  
   const task = await prisma.task.findUnique({ 
     where: { id: params.id }, 
     include: { 
@@ -202,6 +212,7 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                         taskTitle={task.title}
                         taskCreatorName={task.creator.name || task.creator.email}
                         hasAlreadyApplied={hasAlreadyApplied}
+                        userType={currentUser?.userType || 'poster'}
                       />
                     </>
                   ) : (
