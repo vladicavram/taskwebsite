@@ -115,15 +115,15 @@ export async function POST(req: Request) {
       }
     })
 
-    // Create notification for receiver
-    await prisma.notification.create({
-      data: {
-        userId: receiverId,
-        type: 'message',
-        content: `New message from ${user.name || user.email}`,
-        taskId: taskId || null
-      }
-    })
+    // Create notification for receiver - REMOVED, only show unread count in message icon
+    // await prisma.notification.create({
+    //   data: {
+    //     userId: receiverId,
+    //     type: 'message',
+    //     content: `New message from ${user.name || user.email}`,
+    //     taskId: taskId || null
+    //   }
+    // })
 
     return NextResponse.json(message)
   } catch (error) {
