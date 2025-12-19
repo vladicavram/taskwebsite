@@ -8,10 +8,12 @@ export async function GET(req: Request) {
   try {
     // Get all users who are approved to apply for tasks (workers)
     // Only include users with userType 'tasker' or 'both' (not 'poster')
+    // And who have openForHire set to true
     const workers = await prisma.user.findMany({
       where: {
         canApply: true,
         blocked: false,
+        openForHire: true,
         userType: {
           in: ['tasker', 'both']
         }

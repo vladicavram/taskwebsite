@@ -14,6 +14,8 @@ export default function AccountPage() {
   const [success, setSuccess] = useState('')
   const [activeTab, setActiveTab] = useState<'profile'>('profile')
   const [userType, setUserType] = useState<string>('')
+  const [canApply, setCanApply] = useState(false)
+  const [openForHire, setOpenForHire] = useState(true)
   const [userId, setUserId] = useState<string>('')
   const [showUpgradeMessage, setShowUpgradeMessage] = useState(false)
   const [form, setForm] = useState({
@@ -53,6 +55,8 @@ export default function AccountPage() {
           image: data.image || ''
         })
         setUserType(data.userType || 'poster')
+        setCanApply(data.canApply || false)
+        setOpenForHire(data.openForHire !== undefined ? data.openForHire : true)
         setUserId(data.id || '')
       }
     }
@@ -75,14 +79,17 @@ export default function AccountPage() {
       setForm(prev => ({ ...prev, image: base64 }))
     }
     reader.readAsDataURL(file)
-  }
-
   async function submit(e: React.FormEvent) {
     e.preventDefault()
     setSaving(true)
     setError('')
     setSuccess('')
-    const payload: any = { username: form.username, name: form.name, image: form.image }
+    const payload: any = { 
+      username: form.username, 
+      name: form.name, 
+      image: form.image,
+      openForHire: openForHire
+    }
     if (form.password) payload.password = form.password
     const res = await fetch('/api/users/me', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
     setSaving(false)
@@ -96,6 +103,8 @@ export default function AccountPage() {
     try {
       router.refresh()
       setTimeout(() => {
+        if (typeof window !== 'undefined') window.location.reload()
+      }, 200)out(() => {
         if (typeof window !== 'undefined') window.location.reload()
       }, 200)
     } catch {}
@@ -200,11 +209,53 @@ export default function AccountPage() {
           <div>
             <label style={{ display: 'block', fontWeight: 600, marginBottom: 8 }}>Full Name</label>
             <input name="name" value={form.name} onChange={onChange} required />
-          </div>
           <div>
-            <label style={{ display: 'block', fontWeight: 600, marginBottom: 8 }}>Email</label>
-            <input type="email" name="email" value={form.email} readOnly required />
+            <label style={{ display: 'block', fontWeight: 600, marginBottom: 8 }}>New Password (optional)</label>
+            <input type="password" name="password" value={form.password} onChange={onChange} minLength={8} placeholder="••••••••" />
           </div>
+          
+          {/* Show openForHire checkbox for taskers */}
+          {(userType === 'tasker' || userType === 'both') && canApply && (
+            <div style={{
+              padding: '16px',
+              background: 'var(--bg-secondary)',
+              borderRadius: 'var(--radius)',
+              border: '1px solid var(--border)'
+            }}>
+              <label style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '12px',
+                cursor: 'pointer',
+                fontWeight: 600
+              }}>
+                <input
+                  type="checkbox"
+                  checked={openForHire}
+                  onChange={(e) => setOpenForHire(e.target.checked)}
+                  style={{
+                    width: '20px',
+                    height: '20px',
+                    cursor: 'pointer'
+                  }}
+                />
+                <div>
+                  <div style={{ marginBottom: '4px' }}>
+                    {t('account.openForHire') || 'Available for Hire'}
+                  </div>
+                  <div style={{ 
+                    fontSize: '0.875rem', 
+                    fontWeight: 'normal',
+                    color: 'var(--text-secondary)' 
+                  }}>
+                    {t('account.openForHireDesc') || 'Show my profile in the hire list so clients can find and hire me'}
+                  </div>
+                </div>
+              </label>
+            </div>
+          )}
+          
+          <div style={{ display: 'flex', gap: 12 }}>
           <div>
             <label style={{ display: 'block', fontWeight: 600, marginBottom: 8 }}>New Password (optional)</label>
             <input type="password" name="password" value={form.password} onChange={onChange} minLength={8} placeholder="••••••••" />
