@@ -2,13 +2,21 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '../../../../lib/prisma'
 import Stripe from 'stripe'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
+// Only initialize Stripe if API key is available
+const stripe = process.env.STRIPE_SECRET_KEY 
+  ? new Stripe(process.env.STRIPE_SECRET_KEY)
+  : null
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
 // This endpoint handles Stripe webhooks
 export async function POST(req: NextRequest) {
+  // Return early if Stripe is not configured
+  if (!stripe) {
+    return NextResponse.json({ error: 'Stripe not configured' }, { status: 503 })
+  }
+  
   try {
     const body = await req.text()
     const signature = req.headers.get('stripe-signature')
