@@ -121,8 +121,8 @@ model Message {
   content       String
   senderId      String
   receiverId    String
-  taskId        String
-  applicationId String
+  taskId        String?
+  applicationId String?
   read          Boolean     @default(false)
   createdAt     DateTime    @default(now())
 }
