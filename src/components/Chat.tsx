@@ -13,13 +13,14 @@ interface Message {
 }
 
 interface ChatProps {
-  applicationId: string
-  taskId: string
-  receiverId: string
-  receiverName: string
+  applicationId?: string
+  taskId?: string
+  receiverId?: string
+  receiverName?: string
+  partnerId?: string
 }
 
-export default function Chat({ applicationId, taskId, receiverId, receiverName }: ChatProps) {
+export default function Chat({ applicationId, taskId, receiverId, receiverName, partnerId }: ChatProps) {
   const { data: session } = useSession()
   const { t } = useLocale()
   const [messages, setMessages] = useState<Message[]>([])
@@ -27,6 +28,8 @@ export default function Chat({ applicationId, taskId, receiverId, receiverName }
   const [loading, setLoading] = useState(false)
   const [currentUserId, setCurrentUserId] = useState<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  
+  const isDirectMessage = !!partnerId
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -52,14 +55,24 @@ export default function Chat({ applicationId, taskId, receiverId, receiverName }
     fetchMessages()
     const interval = setInterval(fetchMessages, 3000) // Poll every 3 seconds
     return () => clearInterval(interval)
-  }, [applicationId])
+  }, [applicationId, partnerId])
 
   const fetchMessages = async () => {
     try {
-      const res = await fetch(`/api/messages?applicationId=${applicationId}`)
+      let url = '/api/messages'
+      if (applicationId) {
+        url += `?applicationId=${applicationId}`
+      } else if (partnerId) {
+        url += `?partnerId=${partnerId}`
+      } else {
+        return
+      }
+      
+      const res = await fetch(url)
       if (res.ok) {
         const data = await res.json()
         setMessages(data)
+        scrollToBottom()
       }
     } catch (error) {
       console.error('Error fetching messages:', error)
@@ -72,21 +85,29 @@ export default function Chat({ applicationId, taskId, receiverId, receiverName }
 
     setLoading(true)
     try {
+      const payload: any = {
+        content: newMessage
+      }
+      
+      if (isDirectMessage && partnerId) {
+        payload.receiverId = partnerId
+      } else {
+        payload.receiverId = receiverId
+        payload.taskId = taskId
+        payload.applicationId = applicationId
+      }
+      
       const res = await fetch('/api/messages', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          content: newMessage,
-          receiverId,
-          taskId,
-          applicationId
-        })
+        body: JSON.stringify(payload)
       })
 
       if (res.ok) {
         const message = await res.json()
         setMessages([...messages, message])
         setNewMessage('')
+        scrollToBottom()
       }
     } catch (error) {
       console.error('Error sending message:', error)
@@ -128,7 +149,7 @@ export default function Chat({ applicationId, taskId, receiverId, receiverName }
         borderBottom: '1px solid var(--border)',
         background: 'var(--bg-secondary)'
       }}>
-        <h3 style={{ margin: 0, fontSize: '1.1rem' }}>💬 {t('chat.chatWith') || 'Chat with'} {receiverName}</h3>
+        <h3 style={{ margin: 0, fontSize: '1.1rem' }}>💬 {isDirectMessage ? (t('chat.supportChat') || 'Support Chat') : `${t('chat.chatWith') || 'Chat with'} ${receiverName || ''}`}</h3>
       </div>
 
       {/* Messages Area */}

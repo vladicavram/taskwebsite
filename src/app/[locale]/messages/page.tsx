@@ -4,7 +4,8 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import useLocale from '../../../lib/locale'
-import { MessageCircle } from 'lucide-react'
+import { MessageCircle, Check, X } from 'lucide-react'
+import Chat from '../../../components/Chat'
 
 export default function MessagesPage() {
   const { data: session } = useSession()
@@ -12,6 +13,8 @@ export default function MessagesPage() {
   const { locale, t } = useLocale()
   const [conversations, setConversations] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+  const [selectedConversation, setSelectedConversation] = useState<any>(null)
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     if (!session?.user) {
@@ -32,6 +35,45 @@ export default function MessagesPage() {
       console.error('Error fetching conversations:', error)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const markConversationAsRead = async (conv: any) => {
+    try {
+      if (conv.type === 'direct') {
+        // Mark all messages from this partner as read
+        await fetch('/api/messages', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            partnerId: conv.partner.id,
+            markAllRead: true 
+          })
+        })
+      } else {
+        // Mark all messages in this application as read
+        await fetch('/api/messages', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            applicationId: conv.application.id,
+            markAllRead: true 
+          })
+        })
+      }
+      // Refresh conversations to update unread counts
+      fetchConversations()
+    } catch (error) {
+      console.error('Error marking as read:', error)
+    }
+  }
+
+  const openConversation = (conv: any) => {
+    setSelectedConversation(conv)
+    setShowModal(true)
+    // Mark as read when opening
+    if (conv.unreadCount > 0) {
+      markConversationAsRead(conv)
     }
   }
 
@@ -179,44 +221,14 @@ export default function MessagesPage() {
               // For support messages, we need to implement a chat interface
               // For now, make them clickable to show they're interactive
               const key = conv.type === 'direct' ? `direct-${conv.partner.id}` : `task-${conv.application.id}`
-              const isClickable = conv.type !== 'direct'
               
-              if (!isClickable) {
-                // TODO: Implement support message chat interface
-                // For now, show as non-clickable but styled to indicate it's a support message
-                return (
-                  <div
-                    key={key}
-                    className="card"
-                    style={{
-                      padding: '20px',
-                      cursor: 'default',
-                      background: conv.unreadCount > 0 ? 'var(--accent-light)' : 'white',
-                      border: '1px solid var(--accent)',
-                      opacity: 0.7
-                    }}
-                  >
-                    {cardContent}
-                    <div style={{
-                      marginTop: '12px',
-                      fontSize: '0.75rem',
-                      color: 'var(--text-muted)',
-                      fontStyle: 'italic'
-                    }}>
-                      {t('messages.supportMessageNote') || 'Support team will respond via email'}
-                    </div>
-                  </div>
-                )
-              }
-
               return (
-                <Link
+                <div
                   key={key}
-                  href={conversationLink}
                   className="card"
+                  onClick={() => openConversation(conv)}
                   style={{
                     padding: '20px',
-                    textDecoration: 'none',
                     cursor: 'pointer',
                     transition: 'transform 0.2s, box-shadow 0.2s',
                     position: 'relative',
@@ -232,12 +244,132 @@ export default function MessagesPage() {
                   }}
                 >
                   {cardContent}
-                </Link>
+                  {conv.unreadCount > 0 && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        markConversationAsRead(conv)
+                      }}
+                      style={{
+                        position: 'absolute',
+                        top: '12px',
+                        right: '12px',
+                        background: 'var(--accent)',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '6px',
+                        padding: '6px 12px',
+                        fontSize: '0.75rem',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                        fontWeight: 600,
+                        transition: 'background 0.2s'
+                      }}
+                      onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--accent-dark)' }}
+                      onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--accent)' }}
+                    >
+                      <Check size={14} />
+                      {t('messages.markAsRead') || 'Mark as Read'}
+                    </button>
+                  )}
+                </div>
               )
             })}
           </div>
         )}
       </div>
+
+      {/* Modal for viewing conversation */}
+      {showModal && selectedConversation && (
+        <>
+          {/* Overlay */}
+          <div
+            onClick={() => setShowModal(false)}
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: 'rgba(0,0,0,0.5)',
+              zIndex: 9998,
+              backdropFilter: 'blur(4px)'
+            }}
+          />
+          
+          {/* Modal */}
+          <div
+            style={{
+              position: 'fixed',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '90%',
+              maxWidth: '900px',
+              maxHeight: '85vh',
+              background: 'white',
+              borderRadius: '12px',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+              zIndex: 9999,
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden'
+            }}
+          >
+            {/* Modal Header */}
+            <div style={{
+              padding: '20px 24px',
+              borderBottom: '1px solid var(--border)',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              background: 'var(--bg-secondary)'
+            }}>
+              <div>
+                <h2 style={{ margin: 0, fontSize: '1.5rem', marginBottom: '4px' }}>
+                  {selectedConversation.type === 'direct' 
+                    ? (selectedConversation.partner?.name || 'Support')
+                    : (selectedConversation.application?.task?.title || 'Conversation')}
+                </h2>
+                <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+                  {selectedConversation.type === 'direct' 
+                    ? (t('messages.supportConversation') || 'Support Request')
+                    : (t('messages.taskConversation') || 'Task Discussion')}
+                </p>
+              </div>
+              <button
+                onClick={() => setShowModal(false)}
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: '8px',
+                  borderRadius: '6px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'background 0.2s'
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(0,0,0,0.1)' }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* Modal Body - Chat Component */}
+            <div style={{ flex: 1, overflow: 'hidden' }}>
+              {selectedConversation.type === 'direct' ? (
+                <Chat partnerId={selectedConversation.partner.id} />
+              ) : (
+                <Chat applicationId={selectedConversation.application.id} />
+              )}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }
