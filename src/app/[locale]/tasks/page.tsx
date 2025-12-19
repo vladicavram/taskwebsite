@@ -1,82 +1,141 @@
-import React, { Suspense } from 'react'
-import Link from 'next/link'
-import TasksBrowser from './TasksBrowser'
-import PostTaskButton from '../../../components/PostTaskButton'
-import { getTranslation } from '../../../lib/locale-server'
 import { prisma } from '../../../lib/prisma'
+import TaskCard from '../../../components/TaskCard'
+import Link from 'next/link'
+import { LocaleProvider } from '../../../lib/locale'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export default async function TasksPage({ params }: { params: { locale: string } }) {
-  const { locale } = params
-
-  // Fetch initial public tasks server-side to avoid client-side flicker
-  const where: any = {
-    isOpen: true,
-    completedAt: null,
-    applications: { none: { status: 'accepted' } }
-  }
-  const initialTasks = await prisma.task.findMany({ where, orderBy: { createdAt: 'desc' }, take: 100 })
-
-  function ServerFallback({ tasks }: { tasks: any[] }) {
-    return (
-      <div>
-        <div className="card" style={{ padding: 16, marginBottom: 16 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 12 }}>
-            <input type="text" placeholder={getTranslation(locale, 'tasks.browse.searchPlaceholder') || 'Search tasks...'} />
-            <input type="number" placeholder={getTranslation(locale, 'tasks.browse.minPrice') || 'Min price'} />
-            <input type="number" placeholder={getTranslation(locale, 'tasks.browse.maxPrice') || 'Max price'} />
-            <input type="text" placeholder={getTranslation(locale, 'tasks.browse.locationPlaceholder') || 'Location'} />
-          </div>
-        </div>
-
-        {(!tasks || tasks.length === 0) ? (
-          <div className="card" style={{ padding: 24 }}>{getTranslation(locale, 'tasks.browse.noResults') || 'No tasks match your filters.'}</div>
-        ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 24 }}>
-            {tasks.map((t: any) => (
-              <article key={t.id} className="card" style={{ padding: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column', height: '100%' }}>
-                <div style={{ width: '100%', height: '200px', background: '#f9fafb', borderBottom: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}>
-                  <img src={t.imageUrl || 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80&sat=-5'} alt={t.title} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.9 }} />
-                  {t.price && (
-                    <div style={{ position: 'absolute', top: '12px', right: '12px', background: 'white', padding: '8px 16px', borderRadius: '20px', fontWeight: 600, color: 'var(--accent)', boxShadow: 'var(--shadow)' }}>{t.price} MDL</div>
-                  )}
-                </div>
-
-                <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                  {t.category && (
-                    <span style={{ display: 'inline-block', fontSize: '0.75rem', fontWeight: 500, color: 'var(--accent)', background: 'var(--accent-light)', padding: '4px 12px', borderRadius: '12px', marginBottom: '12px', width: 'fit-content' }}>{t.category}</span>
-                  )}
-
-                  <h3 style={{ fontWeight: 600, fontSize: '1.25rem', marginBottom: '8px', color: 'var(--text)' }}>
-                    <a href={`/${locale}/tasks/${t.id}`} className="task-link" style={{ textDecoration: 'none', color: 'inherit', transition: 'color 0.2s' }}>{t.title}</a>
-                  </h3>
-
-                  <p style={{ color: 'var(--text-secondary)', marginBottom: '16px', flex: 1, lineHeight: '1.6' }}>{t.description && (t.description.length > 120 ? t.description.substring(0, 120) + '...' : t.description)}</p>
-
-                  <a href={`/${locale}/tasks/${t.id}`} className="btn" style={{ width: '100%', textAlign: 'center', padding: '10px 16px' }}>{getTranslation(locale, 'tasks.viewDetails') || 'View Details'}</a>
-                </div>
-              </article>
-            ))}
-          </div>
-        )}
-      </div>
-    )
-  }
-
-  
+  const tasks = await prisma.task.findMany({
+    where: { isOpen: true },
+    include: { creator: true, category: true },
+    orderBy: { createdAt: 'desc' }
+  })
 
   return (
-    <div className="container" style={{ padding: '24px' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-        <h1 style={{ fontSize: '1.75rem', fontWeight: 700 }}>{getTranslation(locale, 'tasks.browse.title') || 'Browse Tasks'}</h1>
-        <PostTaskButton label={getTranslation(locale, 'tasks.browse.postTask') || '+ Post a Task'} />
-      </div>
+    <div>
+      {/* Hero Banner */}
+      <section className="liquid-hero" style={{
+        padding: '48px 24px',
+        marginBottom: '48px'
+      }}>
+        <div className="container">
+          <h1 style={{ fontSize: '2.5rem', marginBottom: '12px', color: 'var(--text)' }}>
+            <LocaleProvider message="tasks.title" fallback="Browse Tasks" />
+          </h1>
+          <p style={{ fontSize: '1.1rem', opacity: 0.95 }}>
+            Find local tasks that match your skills
+          </p>
+        </div>
+      </section>
 
-      <div>
-        <Suspense fallback={<ServerFallback tasks={initialTasks} />}>
-          <TasksBrowser locale={locale} initialTasks={initialTasks} />
-        </Suspense>
+      <div className="container">
+        {/* Search & Filter Bar */}
+        <div style={{ 
+          marginBottom: '32px',
+          display: 'flex',
+          gap: '16px',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          background: 'white',
+          padding: '20px',
+          borderRadius: 'var(--radius)',
+          boxShadow: 'var(--shadow-sm)'
+        }}>
+          <input 
+            type="text" 
+            placeholder="Search tasks..."
+            style={{ 
+              flex: 1,
+              minWidth: '250px',
+              padding: '12px 16px',
+              border: '1px solid var(--border)',
+              borderRadius: 'var(--radius-sm)',
+              fontSize: '1rem'
+            }}
+          />
+          <select style={{
+            padding: '12px 16px',
+            border: '1px solid var(--border)',
+            borderRadius: 'var(--radius-sm)',
+            fontSize: '1rem',
+            minWidth: '150px'
+          }}>
+            <option><LocaleProvider message="tasks.allCategories" fallback="All Categories" /></option>
+            <option>Handyman</option>
+            <option>Cleaning</option>
+            <option>Moving</option>
+            <option>Tech</option>
+          </select>
+          <select style={{
+            padding: '12px 16px',
+            border: '1px solid var(--border)',
+            borderRadius: 'var(--radius-sm)',
+            fontSize: '1rem',
+            minWidth: '150px'
+          }}>
+            <option>Any Price</option>
+            <option>Under $50</option>
+            <option>$50-$100</option>
+            <option>$100+</option>
+          </select>
+        </div>
+
+        {/* Stats Bar */}
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '24px',
+          flexWrap: 'wrap',
+          gap: '16px'
+        }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+            <strong>{tasks.length}</strong> tasks available
+          </p>
+          <Link href={`/${params.locale}/tasks/create`} className="btn">
+            + <LocaleProvider message="tasks.postTask" fallback="Post a Task" />
+          </Link>
+        </div>
+
+        {/* Tasks Grid */}
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+          gap: '24px',
+          marginBottom: '48px'
+        }}>
+          {tasks.map((t: any) => (
+            <TaskCard 
+              key={t.id} 
+              id={t.id} 
+              title={t.title} 
+              description={t.description} 
+              price={t.price}
+              category={t.category?.name}
+            />
+          ))}
+        </div>
+
+        {/* Empty State */}
+        {tasks.length === 0 && (
+          <div style={{
+            textAlign: 'center',
+            padding: '64px 24px',
+            background: 'white',
+            borderRadius: 'var(--radius)',
+            boxShadow: 'var(--shadow-sm)'
+          }}>
+            <div style={{ fontSize: '4rem', marginBottom: '16px' }}>📋</div>
+            <h3 style={{ marginBottom: '8px' }}><LocaleProvider message="tasks.noTasksYet" fallback="No tasks yet" /></h3>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>
+              <LocaleProvider message="tasks.beFirst" fallback="Be the first to post a task!" />
+            </p>
+            <Link href={`/${params.locale}/tasks/create`} className="btn">
+              <LocaleProvider message="create.submit" fallback="Create First Task" />
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   )
