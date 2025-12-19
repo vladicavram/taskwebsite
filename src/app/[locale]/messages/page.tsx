@@ -92,13 +92,12 @@ export default function MessagesPage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {conversations.map((conv, idx) => {
               // Handle both task-based and direct conversations
-              let otherUser, conversationLink, taskTitle, isClickable
+              let otherUser, conversationLink, taskTitle
               
               if (conv.type === 'direct') {
                 otherUser = conv.partner
-                conversationLink = '#'  // Direct messages not yet implemented with chat UI
+                conversationLink = '#'
                 taskTitle = t('messages.supportConversation') || 'Support Request'
-                isClickable = false
               } else {
                 const isApplicant = !!(session?.user?.email && conv.application.applicant?.email === session.user.email)
                 otherUser = isApplicant 
@@ -106,43 +105,19 @@ export default function MessagesPage() {
                   : conv.application.applicant
                 conversationLink = `/${locale}/applications/${conv.application.id}`
                 taskTitle = conv.application.task.title
-                isClickable = true
               }
 
-              const CardWrapper = isClickable ? Link : 'div'
-
-              return (
-                <CardWrapper
-                  key={conv.type === 'direct' ? `direct-${conv.partner.id}` : `task-${conv.application.id}`}
-                  {...(isClickable ? { href: conversationLink } : {})}
-                  className="card"
-                  style={{
-                    padding: '20px',
-                    textDecoration: 'none',
-                    cursor: isClickable ? 'pointer' : 'default',
-                    transition: 'transform 0.2s, box-shadow 0.2s',
-                    position: 'relative',
-                    background: conv.unreadCount > 0 ? 'var(--accent-light)' : 'white'
-                  }}
-                  onMouseEnter={isClickable ? (e) => {
-                    e.currentTarget.style.transform = 'translateY(-2px)'
-                    e.currentTarget.style.boxShadow = 'var(--shadow)'
-                  } : undefined}
-                  onMouseLeave={isClickable ? (e) => {
-                    e.currentTarget.style.transform = 'translateY(0)'
-                    e.currentTarget.style.boxShadow = 'var(--shadow-sm)'
-                  } : undefined}
-                >
-                  <div style={{ display: 'flex', gap: '16px', alignItems: 'start' }}>
-                    <div style={{
-                      width: '56px',
-                      height: '56px',
-                      borderRadius: '50%',
-                      background: 'var(--accent-light)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '1.5rem',
+              const cardContent = (
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'start' }}>
+                  <div style={{
+                    width: '56px',
+                    height: '56px',
+                    borderRadius: '50%',
+                    background: 'var(--accent-light)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '1.5rem',
                       fontWeight: 600,
                       color: 'var(--accent)',
                       flexShrink: 0,
@@ -199,7 +174,50 @@ export default function MessagesPage() {
                       </div>
                     )}
                   </div>
-                </CardWrapper>
+                </div>
+              )
+
+              // Render Link for task conversations, div for direct messages
+              if (conv.type === 'direct') {
+                return (
+                  <div
+                    key={`direct-${conv.partner.id}`}
+                    className="card"
+                    style={{
+                      padding: '20px',
+                      cursor: 'default',
+                      background: conv.unreadCount > 0 ? 'var(--accent-light)' : 'white'
+                    }}
+                  >
+                    {cardContent}
+                  </div>
+                )
+              }
+
+              return (
+                <Link
+                  key={`task-${conv.application.id}`}
+                  href={conversationLink}
+                  className="card"
+                  style={{
+                    padding: '20px',
+                    textDecoration: 'none',
+                    cursor: 'pointer',
+                    transition: 'transform 0.2s, box-shadow 0.2s',
+                    position: 'relative',
+                    background: conv.unreadCount > 0 ? 'var(--accent-light)' : 'white'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-2px)'
+                    e.currentTarget.style.boxShadow = 'var(--shadow)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)'
+                    e.currentTarget.style.boxShadow = 'var(--shadow-sm)'
+                  }}
+                >
+                  {cardContent}
+                </Link>
               )
             })}
           </div>
