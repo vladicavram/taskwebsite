@@ -61,8 +61,7 @@ export async function POST(req: Request) {
       data: {
         userId: admin.id,
         type: 'message',
-        content: `New support request from ${sender.name || sender.email}: ${subject || 'No subject'}`,
-        link: `/messages`
+        content: `New support request from ${sender.name || sender.email}: ${subject || 'No subject'}`
       }
     })
 

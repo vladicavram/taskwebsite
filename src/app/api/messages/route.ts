@@ -89,7 +89,6 @@ export async function POST(req: Request) {
         userId: receiverId,
         type: 'message',
         content: `New message from ${user.name || user.email}`,
-        link: `/messages`,
         taskId
       }
     })
