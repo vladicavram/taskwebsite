@@ -114,7 +114,7 @@ export default function MessagesPage() {
               return (
                 <CardWrapper
                   key={conv.type === 'direct' ? `direct-${conv.partner.id}` : `task-${conv.application.id}`}
-                  href={isClickable ? conversationLink : undefined}
+                  {...(isClickable ? { href: conversationLink } : {})}
                   className="card"
                   style={{
                     padding: '20px',
