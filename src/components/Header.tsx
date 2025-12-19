@@ -32,20 +32,21 @@ export default function Header() {
 
   useEffect(() => {
     if (session?.user) {
-      fetchNotifications()
-      fetchUnreadMessages()
-      fetchCredits()
-      checkAdmin()
+      fetchNotifications().catch(err => console.error('Initial notifications fetch failed:', err))
+      fetchUnreadMessages().catch(err => console.error('Initial messages fetch failed:', err))
+      fetchCredits().catch(err => console.error('Initial credits fetch failed:', err))
+      checkAdmin().catch(err => console.error('Initial admin check failed:', err))
+      
       // Poll for new data every 30 seconds
       const interval = setInterval(() => {
-        fetchNotifications()
-        fetchUnreadMessages()
-        fetchCredits()
+        fetchNotifications().catch(err => console.error('Polling notifications failed:', err))
+        fetchUnreadMessages().catch(err => console.error('Polling messages failed:', err))
+        fetchCredits().catch(err => console.error('Polling credits failed:', err))
       }, 30000)
       
       // Listen for credit update events
       const handleCreditsUpdate = () => {
-        fetchCredits()
+        fetchCredits().catch(err => console.error('Credits update failed:', err))
       }
       window.addEventListener('creditsUpdated', handleCreditsUpdate)
       
@@ -64,9 +65,12 @@ export default function Header() {
       if (response.ok) {
         const data = await response.json()
         setCredits(data.credits || 0)
+      } else {
+        setCredits(0)
       }
     } catch (error) {
       console.error('Failed to fetch credits:', error)
+      setCredits(0)
     }
   }
 
@@ -76,9 +80,12 @@ export default function Header() {
       if (response.ok) {
         const data = await response.json()
         setIsAdmin(data.isAdmin || data.role === 'admin' || data.role === 'moderator')
+      } else {
+        setIsAdmin(false)
       }
     } catch (error) {
       console.error('Failed to check admin status:', error)
+      setIsAdmin(false)
     }
   }
 
@@ -87,11 +94,19 @@ export default function Header() {
       const response = await fetch('/api/notifications')
       if (response.ok) {
         const data = await response.json()
-        setNotifications(data)
-        setUnreadCount(data.filter((n: any) => !n.read).length)
+        if (Array.isArray(data)) {
+          setNotifications(data)
+          setUnreadCount(data.filter((n: any) => !n.read).length)
+        } else {
+          console.error('Notifications response is not an array:', data)
+          setNotifications([])
+          setUnreadCount(0)
+        }
       }
     } catch (error) {
       console.error('Failed to fetch notifications:', error)
+      setNotifications([])
+      setUnreadCount(0)
     }
   }
 
@@ -100,12 +115,20 @@ export default function Header() {
       const response = await fetch('/api/conversations')
       if (response.ok) {
         const data = await response.json()
-        setConversations(data)
-        const totalUnread = data.reduce((sum: number, conv: any) => sum + conv.unreadCount, 0)
-        setUnreadMessagesCount(totalUnread)
+        if (Array.isArray(data)) {
+          setConversations(data)
+          const totalUnread = data.reduce((sum: number, conv: any) => sum + (conv.unreadCount || 0), 0)
+          setUnreadMessagesCount(totalUnread)
+        } else {
+          console.error('Conversations response is not an array:', data)
+          setConversations([])
+          setUnreadMessagesCount(0)
+        }
       }
     } catch (error) {
       console.error('Failed to fetch unread messages:', error)
+      setConversations([])
+      setUnreadMessagesCount(0)
     }
   }
 
