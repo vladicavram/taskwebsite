@@ -179,6 +179,28 @@ export default function ApplyButton({
   const requiredCredits = calculateRequiredCredits(currentPrice)
   const hasEnoughCredits = credits >= requiredCredits && currentPrice > 0 && requiredCredits > 0
 
+  if (!canApply) {
+    return (
+      <div style={{ padding: '24px', background: '#fee2e2', border: '2px solid #ef4444', borderRadius: '8px' }}>
+        <div style={{ marginBottom: '16px' }}>
+          <h4 style={{ margin: '0 0 8px 0', color: '#991b1b' }}>
+            {t('taskDetail.notAllowed.title') || '🚫 Not Allowed to Apply'}
+          </h4>
+          <p style={{ margin: 0, fontSize: '0.95rem', color: '#7f1d1d', marginBottom: '12px' }}>
+            {t('taskDetail.notAllowed.description') || 'You are not allowed to apply for tasks. This may be due to account restrictions or pending verification.'}
+          </p>
+        </div>
+        <button
+          onClick={() => router.push(`/${locale}/support`)}
+          className="btn"
+          style={{ width: '100%', background: '#ef4444' }}
+        >
+          {t('taskDetail.notAllowed.contactSupport') || 'Contact Support'}
+        </button>
+      </div>
+    )
+  }
+
   if (isPosterOnly) {
     return (
       <div style={{ padding: '24px', background: '#fef3c7', border: '2px solid #f59e0b', borderRadius: '8px' }}>
@@ -213,26 +235,6 @@ export default function ApplyButton({
         marginTop: '8px'
       }}>
         {t('taskDetail.apply.alreadyApplied') || '✓ You have already applied for this task'}
-      </div>
-    )
-  }
-
-  if (!canApply) {
-    return (
-      <div style={{
-        padding: '16px',
-        background: '#fef3c7',
-        border: '1px solid #f59e0b',
-        borderRadius: '8px',
-        color: '#92400e',
-        marginTop: '8px'
-      }}>
-        <div style={{ fontWeight: 600, marginBottom: '4px' }}>
-          ⏳ {t('taskDetail.apply.pendingTitle') || 'Pending Approval'}
-        </div>
-        <p style={{ margin: 0, fontSize: '0.9rem' }}>
-          {t('taskDetail.apply.pendingBody') || 'Your account is being reviewed by our team. You will be able to apply for tasks once approved.'}
-        </p>
       </div>
     )
   }
