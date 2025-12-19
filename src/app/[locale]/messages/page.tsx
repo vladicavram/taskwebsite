@@ -92,12 +92,13 @@ export default function MessagesPage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {conversations.map((conv, idx) => {
               // Handle both task-based and direct conversations
-              let otherUser, conversationLink, taskTitle
+              let otherUser, conversationLink, taskTitle, isClickable
               
               if (conv.type === 'direct') {
                 otherUser = conv.partner
-                conversationLink = `/${locale}/messages/direct/${conv.partner.id}`
+                conversationLink = '#'  // Direct messages not yet implemented with chat UI
                 taskTitle = t('messages.supportConversation') || 'Support Request'
+                isClickable = false
               } else {
                 const isApplicant = !!(session?.user?.email && conv.application.applicant?.email === session.user.email)
                 otherUser = isApplicant 
@@ -105,29 +106,32 @@ export default function MessagesPage() {
                   : conv.application.applicant
                 conversationLink = `/${locale}/applications/${conv.application.id}`
                 taskTitle = conv.application.task.title
+                isClickable = true
               }
 
+              const CardWrapper = isClickable ? Link : 'div'
+
               return (
-                <Link
+                <CardWrapper
                   key={conv.type === 'direct' ? `direct-${conv.partner.id}` : `task-${conv.application.id}`}
-                  href={conversationLink}
+                  href={isClickable ? conversationLink : undefined}
                   className="card"
                   style={{
                     padding: '20px',
                     textDecoration: 'none',
-                    cursor: 'pointer',
+                    cursor: isClickable ? 'pointer' : 'default',
                     transition: 'transform 0.2s, box-shadow 0.2s',
                     position: 'relative',
                     background: conv.unreadCount > 0 ? 'var(--accent-light)' : 'white'
                   }}
-                  onMouseEnter={(e) => {
+                  onMouseEnter={isClickable ? (e) => {
                     e.currentTarget.style.transform = 'translateY(-2px)'
                     e.currentTarget.style.boxShadow = 'var(--shadow)'
-                  }}
-                  onMouseLeave={(e) => {
+                  } : undefined}
+                  onMouseLeave={isClickable ? (e) => {
                     e.currentTarget.style.transform = 'translateY(0)'
                     e.currentTarget.style.boxShadow = 'var(--shadow-sm)'
-                  }}
+                  } : undefined}
                 >
                   <div style={{ display: 'flex', gap: '16px', alignItems: 'start' }}>
                     <div style={{
@@ -195,7 +199,7 @@ export default function MessagesPage() {
                       </div>
                     )}
                   </div>
-                </Link>
+                </CardWrapper>
               )
             })}
           </div>

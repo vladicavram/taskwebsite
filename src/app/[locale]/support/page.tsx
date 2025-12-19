@@ -45,9 +45,7 @@ export default function SupportPage() {
         setSuccess(true)
         setSubject('')
         setMessage('')
-        setTimeout(() => {
-          router.push(`/${locale}/messages`)
-        }, 2000)
+        // Don't redirect - just show success message
       } else {
         const data = await response.json()
         throw new Error(data.error || 'Failed to send message')
