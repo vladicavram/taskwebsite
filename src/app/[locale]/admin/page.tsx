@@ -363,6 +363,7 @@ export default function AdminPage() {
                               background: user.canApply ? '#10b981' : '#ef4444',
                               color: 'white'
                             }}
+                            title={`canApply: ${user.canApply}`}
                           >
                             {user.canApply ? '✅ Yes' : '❌ No'}
                           </button>
