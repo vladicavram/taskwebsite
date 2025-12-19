@@ -31,26 +31,13 @@ export default function SupportPage() {
     setSuccess(false)
 
     try {
-      // Find admin user
-      const adminRes = await fetch('/api/admin/users')
-      if (!adminRes.ok) {
-        throw new Error('Failed to find admin')
-      }
-      
-      const users = await adminRes.json()
-      const admin = users.find((u: any) => u.role === 'admin' || u.isAdmin)
-      
-      if (!admin) {
-        throw new Error('No admin found')
-      }
-
-      // Send message to admin
-      const response = await fetch('/api/messages', {
+      // Send message to admin - the backend will find the admin
+      const response = await fetch('/api/messages/support', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          receiverId: admin.id,
-          content: `[SUPPORT REQUEST]\nSubject: ${subject}\n\n${message}`
+          subject,
+          content: message
         })
       })
 

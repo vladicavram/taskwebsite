@@ -364,7 +364,7 @@ export default function AdminPage() {
                               color: 'white'
                             }}
                           >
-                            {user.canApply ? '✅ Approved' : '❌ Pending'}
+                            {user.canApply ? '✅ Yes' : '❌ No'}
                           </button>
                         </td>
                         <td style={{ padding: 12, textAlign: 'right' }}>{user.credits.toFixed(1)}</td>
