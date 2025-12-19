@@ -993,7 +993,7 @@ export default function Header() {
                       fontWeight: '500'
                     }}
                   >
-                    <span>{t('header.messages') || 'Messages'}</span>
+                    <span>{t('header.messages') || 'Chat'}</span>
                     {unreadMessagesCount > 0 && (
                       <span style={{
                         background: 'var(--error)',
@@ -1022,7 +1022,7 @@ export default function Header() {
                       fontWeight: '500'
                     }}
                   >
-                    {t('header.buyCredits') || 'Buy Credits'}
+                    {t('header.buyCredits') || 'Add Credits'}
                   </Link>
                   {isAdmin && (
                     <Link
