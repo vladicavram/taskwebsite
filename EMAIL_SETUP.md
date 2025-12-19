@@ -1,69 +1,67 @@
 # Email Service Configuration
 
-This application uses nodemailer to send emails. You need to configure SMTP settings.
+This application uses **Resend** for sending emails - a modern email API with a generous free tier.
 
-## Quick Setup with Gmail
+## Quick Setup (Free - 5 minutes)
 
-1. **Enable 2-Factor Authentication** on your Google account
-2. **Generate an App Password**:
-   - Go to https://myaccount.google.com/apppasswords
-   - Select "Mail" and your device
-   - Copy the generated 16-character password
+### 1. Create a Resend Account
 
-3. **Add to Vercel Environment Variables**:
+1. Go to https://resend.com
+2. Sign up for a free account (no credit card required)
+3. Free tier includes:
+   - **100 emails per day**
+   - **3,000 emails per month**
+   - Perfect for getting started!
+
+### 2. Get Your API Key
+
+1. After signing up, go to https://resend.com/api-keys
+2. Click "Create API Key"
+3. Give it a name (e.g., "TaskWebsite Production")
+4. Copy the API key (starts with `re_`)
+
+### 3. Add to Vercel
+
+1. Go to your Vercel project → Settings → Environment Variables
+2. Add:
    ```
-   SMTP_HOST=smtp.gmail.com
-   SMTP_PORT=587
-   SMTP_SECURE=false
-   SMTP_USER=your-email@gmail.com
-   SMTP_PASSWORD=your-16-char-app-password
-   SMTP_FROM="TaskWebsite" <noreply@yourdomain.com>
+   RESEND_API_KEY=re_your_actual_api_key_here
    ```
+3. Optional - Set custom from address:
+   ```
+   RESEND_FROM=TaskWebsite <noreply@yourdomain.com>
+   ```
+   (Default is `onboarding@resend.dev` which works immediately)
 
-## Alternative Providers
+4. Redeploy your application
 
-### SendGrid
-```
-SMTP_HOST=smtp.sendgrid.net
-SMTP_PORT=587
-SMTP_USER=apikey
-SMTP_PASSWORD=your-sendgrid-api-key
-```
+### 4. (Optional) Add Your Own Domain
 
-### Mailgun
-```
-SMTP_HOST=smtp.mailgun.org
-SMTP_PORT=587
-SMTP_USER=postmaster@your-domain.mailgun.org
-SMTP_PASSWORD=your-mailgun-password
-```
+To send from `noreply@dozo.md` instead of `onboarding@resend.dev`:
 
-### AWS SES
-```
-SMTP_HOST=email-smtp.us-east-1.amazonaws.com
-SMTP_PORT=587
-SMTP_USER=your-ses-smtp-username
-SMTP_PASSWORD=your-ses-smtp-password
-```
+1. In Resend dashboard, go to Domains
+2. Add your domain: `dozo.md`
+3. Add the provided DNS records to your domain
+4. Once verified, update `RESEND_FROM` in Vercel:
+   ```
+   RESEND_FROM=TaskWebsite <noreply@dozo.md>
+   ```
 
 ## Features
 
 - **Password Reset Emails**: Sent when users request password reset
 - **Welcome Emails**: Sent when new users register
 - **Professional HTML Templates**: Branded emails with responsive design
-- **Fallback Text**: Plain text version for email clients that don't support HTML
+- **Reliable Delivery**: Resend handles all the infrastructure
 
 ## Testing Locally
 
-For local development, you can use:
-- Gmail with App Password
-- Mailtrap.io (email testing service)
-- Ethereal Email (fake SMTP service for testing)
+Add to your `.env.local`:
+```
+RESEND_API_KEY=re_your_test_api_key
+```
 
-## Production Deployment
+## That's It!
 
-1. Add all SMTP environment variables to Vercel
-2. Redeploy the application
-3. Test by requesting a password reset
-
-The system will gracefully handle email failures without breaking the application.
+The email system will work immediately with the default `onboarding@resend.dev` sender.
+No complex SMTP configuration needed!

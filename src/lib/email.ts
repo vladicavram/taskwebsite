@@ -1,35 +1,36 @@
-import nodemailer from 'nodemailer'
+import { Resend } from 'resend'
 
-// Create reusable transporter
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'smtp.gmail.com',
-  port: parseInt(process.env.SMTP_PORT || '587'),
-  secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASSWORD,
-  },
-})
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 interface SendEmailOptions {
   to: string
   subject: string
   html: string
-  text?: string
 }
 
-export async function sendEmail({ to, subject, html, text }: SendEmailOptions) {
+export async function sendEmail({ to, subject, html }: SendEmailOptions) {
   try {
-    const info = await transporter.sendMail({
-      from: process.env.SMTP_FROM || '"TaskWebsite" <noreply@taskwebsite.com>',
+    if (!process.env.RESEND_API_KEY) {
+      console.log('RESEND_API_KEY not set, skipping email send')
+      console.log('Email would be sent to:', to)
+      console.log('Subject:', subject)
+      return { success: false, error: 'No API key configured' }
+    }
+
+    const { data, error } = await resend.emails.send({
+      from: process.env.RESEND_FROM || 'TaskWebsite <onboarding@resend.dev>',
       to,
       subject,
-      text: text || html.replace(/<[^>]*>/g, ''), // Strip HTML for text version
       html,
     })
 
-    console.log('Email sent: %s', info.messageId)
-    return { success: true, messageId: info.messageId }
+    if (error) {
+      console.error('Email send error:', error)
+      return { success: false, error }
+    }
+
+    console.log('Email sent successfully:', data?.id)
+    return { success: true, messageId: data?.id }
   } catch (error) {
     console.error('Email send error:', error)
     return { success: false, error }
