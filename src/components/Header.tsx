@@ -850,7 +850,16 @@ export default function Header() {
             </button>
 
             {/* Logo */}
-            <div style={{ marginBottom: '32px', marginTop: '8px' }}>
+            <Link 
+              href={session?.user ? `/${locale}/tasks` : `/${locale}`}
+              onClick={() => setShowMobileMenu(false)}
+              style={{ 
+                marginBottom: '32px', 
+                marginTop: '8px',
+                display: 'block',
+                textDecoration: 'none'
+              }}
+            >
               <img
                 src="/logo-dozo-text.svg?v=3"
                 alt="Dozo"
@@ -858,7 +867,7 @@ export default function Header() {
                 height="40"
                 style={{ height: 'auto', width: '140px' }}
               />
-            </div>
+            </Link>
 
             {session?.user ? (
               <>
@@ -900,7 +909,7 @@ export default function Header() {
                         {session.user.name || session.user.email}
                       </div>
                       <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-                        {credits} {t('header.credits') || 'credits'}
+                        {credits} {t('header.credits.unit') || 'credits'}
                       </div>
                     </div>
                   </div>
