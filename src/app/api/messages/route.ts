@@ -83,6 +83,17 @@ export async function POST(req: Request) {
       }
     })
 
+    // Create notification for receiver
+    await prisma.notification.create({
+      data: {
+        userId: receiverId,
+        type: 'message',
+        content: `New message from ${user.name || user.email}`,
+        link: `/messages`,
+        taskId
+      }
+    })
+
     return NextResponse.json(message)
   } catch (error) {
     console.error('Error sending message:', error)
