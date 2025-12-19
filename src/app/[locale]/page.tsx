@@ -79,7 +79,7 @@ export default function HomePage() {
                 fontWeight: 600,
                 fontSize: '1.1rem'
               }}>
-                {t('home.project.startingAt') || 'Starting at'} ${project.price}
+                {t('home.project.startingAt') || 'Starting at'} {project.price} MDL
               </div>
             </Link>
           ))}
