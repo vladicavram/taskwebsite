@@ -4,7 +4,7 @@ import { prisma } from '../../../../lib/prisma'
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
-export async function POST(req: Request) {
+export async function GET(req: Request) {
   try {
     console.log('Running all missing migrations...')
     
@@ -17,9 +17,13 @@ export async function POST(req: Request) {
     // Add password reset fields if missing
     await prisma.$executeRawUnsafe(`
       ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "resetToken" TEXT;
+    `)
+    console.log('✓ resetToken column added')
+    
+    await prisma.$executeRawUnsafe(`
       ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "resetTokenExpiry" TIMESTAMP(3);
     `)
-    console.log('✓ Password reset columns added')
+    console.log('✓ resetTokenExpiry column added')
 
     // Verify columns exist
     const columns = await prisma.$queryRaw`
@@ -41,4 +45,8 @@ export async function POST(req: Request) {
       { status: 500 }
     )
   }
+}
+
+export async function POST(req: Request) {
+  return GET(req)
 }
