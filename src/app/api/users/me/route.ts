@@ -20,7 +20,7 @@ export async function GET() {
     isAdmin: user.isAdmin, 
     role: user.role,
     canApply: user.canApply,
-    openForHire: user.openForHire,
+    openForHire: (user as any).openForHire,
     userType: user.userType,
     idPhotoUrl: user.idPhotoUrl
   })

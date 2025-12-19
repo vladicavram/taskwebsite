@@ -79,17 +79,14 @@ export default function AccountPage() {
       setForm(prev => ({ ...prev, image: base64 }))
     }
     reader.readAsDataURL(file)
+  }
+
   async function submit(e: React.FormEvent) {
     e.preventDefault()
     setSaving(true)
     setError('')
     setSuccess('')
-    const payload: any = { 
-      username: form.username, 
-      name: form.name, 
-      image: form.image,
-      openForHire: openForHire
-    }
+    const payload: any = { username: form.username, name: form.name, image: form.image, openForHire: openForHire }
     if (form.password) payload.password = form.password
     const res = await fetch('/api/users/me', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
     setSaving(false)
@@ -103,8 +100,6 @@ export default function AccountPage() {
     try {
       router.refresh()
       setTimeout(() => {
-        if (typeof window !== 'undefined') window.location.reload()
-      }, 200)out(() => {
         if (typeof window !== 'undefined') window.location.reload()
       }, 200)
     } catch {}
@@ -209,9 +204,10 @@ export default function AccountPage() {
           <div>
             <label style={{ display: 'block', fontWeight: 600, marginBottom: 8 }}>Full Name</label>
             <input name="name" value={form.name} onChange={onChange} required />
+          </div>
           <div>
-            <label style={{ display: 'block', fontWeight: 600, marginBottom: 8 }}>New Password (optional)</label>
-            <input type="password" name="password" value={form.password} onChange={onChange} minLength={8} placeholder="••••••••" />
+            <label style={{ display: 'block', fontWeight: 600, marginBottom: 8 }}>Email</label>
+            <input type="email" name="email" value={form.email} readOnly required />
           </div>
           
           {/* Show openForHire checkbox for taskers */}
@@ -255,7 +251,6 @@ export default function AccountPage() {
             </div>
           )}
           
-          <div style={{ display: 'flex', gap: 12 }}>
           <div>
             <label style={{ display: 'block', fontWeight: 600, marginBottom: 8 }}>New Password (optional)</label>
             <input type="password" name="password" value={form.password} onChange={onChange} minLength={8} placeholder="••••••••" />
