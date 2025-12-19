@@ -29,6 +29,8 @@ model User {
   applications          Application[]
   notifications         Notification[]
   creditTransactions    CreditTransaction[]
+  messagesSent          Message[]       @relation("MessageSender")
+  messagesReceived      Message[]       @relation("MessageReceiver")
   createdAt             DateTime        @default(now())
   blocked               Boolean         @default(false)
 }
@@ -119,7 +121,9 @@ model Notification {
 model Message {
   id            String      @id @default(cuid())
   content       String
+  sender        User        @relation("MessageSender", fields: [senderId], references: [id])
   senderId      String
+  receiver      User        @relation("MessageReceiver", fields: [receiverId], references: [id])
   receiverId    String
   taskId        String?
   applicationId String?

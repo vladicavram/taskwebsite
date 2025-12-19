@@ -90,16 +90,27 @@ export default function MessagesPage() {
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            {conversations.map((conv) => {
-              const isApplicant = !!(session?.user?.email && conv.application.applicant?.email === session.user.email)
-              const otherUser = isApplicant 
-                ? conv.application.task.creator 
-                : conv.application.applicant
+            {conversations.map((conv, idx) => {
+              // Handle both task-based and direct conversations
+              let otherUser, conversationLink, taskTitle
+              
+              if (conv.type === 'direct') {
+                otherUser = conv.partner
+                conversationLink = `/${locale}/messages/direct/${conv.partner.id}`
+                taskTitle = t('messages.supportConversation') || 'Support Request'
+              } else {
+                const isApplicant = !!(session?.user?.email && conv.application.applicant?.email === session.user.email)
+                otherUser = isApplicant 
+                  ? conv.application.task.creator 
+                  : conv.application.applicant
+                conversationLink = `/${locale}/applications/${conv.application.id}`
+                taskTitle = conv.application.task.title
+              }
 
               return (
                 <Link
-                  key={conv.application.id}
-                  href={`/${locale}/applications/${conv.application.id}`}
+                  key={conv.type === 'direct' ? `direct-${conv.partner.id}` : `task-${conv.application.id}`}
+                  href={conversationLink}
                   className="card"
                   style={{
                     padding: '20px',
@@ -153,7 +164,7 @@ export default function MessagesPage() {
                       </div>
 
                       <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '8px' }}>
-                        {conv.application.task.title}
+                        {taskTitle}
                       </div>
 
                       {conv.lastMessage && (
