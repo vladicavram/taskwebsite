@@ -118,62 +118,61 @@ export default function MessagesPage() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     fontSize: '1.5rem',
-                      fontWeight: 600,
-                      color: 'var(--accent)',
-                      flexShrink: 0,
-                      overflow: 'hidden'
-                    }}>
-                      {otherUser?.image ? (
-                        <img src={otherUser.image} alt={otherUser.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                      ) : (
-                        (otherUser?.name || otherUser?.email || 'U')[0].toUpperCase()
-                      )}
-                    </div>
+                    fontWeight: 600,
+                    color: 'var(--accent)',
+                    flexShrink: 0,
+                    overflow: 'hidden'
+                  }}>
+                    {otherUser?.image ? (
+                      <img src={otherUser.image} alt={otherUser.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    ) : (
+                      (otherUser?.name || otherUser?.email || 'U')[0].toUpperCase()
+                    )}
+                  </div>
 
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '4px' }}>
-                        <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 600 }}>
-                          {otherUser?.name || 'Anonymous'}
-                        </h3>
-                        {conv.lastMessage && (
-                          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
-                            {formatTime(conv.lastMessage.createdAt)}
-                          </span>
-                        )}
-                      </div>
-
-                      <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '8px' }}>
-                        {taskTitle}
-                      </div>
-
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '4px' }}>
+                      <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 600 }}>
+                        {otherUser?.name || 'Anonymous'}
+                      </h3>
                       {conv.lastMessage && (
-                        <div style={{ 
-                          fontSize: '0.875rem', 
-                          color: 'var(--text-muted)',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap'
-                        }}>
-                          {conv.lastMessage.content}
-                        </div>
+                        <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
+                          {formatTime(conv.lastMessage.createdAt)}
+                        </span>
                       )}
                     </div>
 
-                    {conv.unreadCount > 0 && (
-                      <div style={{
-                        background: 'var(--danger)',
-                        color: 'var(--danger-contrast)',
-                        borderRadius: '12px',
-                        padding: '4px 8px',
-                        fontSize: '0.75rem',
-                        fontWeight: 700,
-                        minWidth: '24px',
-                        textAlign: 'center'
+                    <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '8px' }}>
+                      {taskTitle}
+                    </div>
+
+                    {conv.lastMessage && (
+                      <div style={{ 
+                        fontSize: '0.875rem', 
+                        color: 'var(--text-muted)',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap'
                       }}>
-                        {conv.unreadCount}
+                        {conv.lastMessage.content}
                       </div>
                     )}
                   </div>
+
+                  {conv.unreadCount > 0 && (
+                    <div style={{
+                      background: 'var(--danger)',
+                      color: 'var(--danger-contrast)',
+                      borderRadius: '12px',
+                      padding: '4px 8px',
+                      fontSize: '0.75rem',
+                      fontWeight: 700,
+                      minWidth: '24px',
+                      textAlign: 'center'
+                    }}>
+                      {conv.unreadCount}
+                    </div>
+                  )}
                 </div>
               )
 
