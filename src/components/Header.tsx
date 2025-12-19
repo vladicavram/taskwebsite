@@ -926,7 +926,7 @@ export default function Header() {
                       marginBottom: '8px',
                       borderRadius: '8px',
                       textDecoration: 'none',
-                      color: 'var(--text)',
+                      color: pathname?.includes('/tasks') && !pathname?.includes('/tasks/create') ? 'white' : 'var(--text)',
                       background: pathname?.includes('/tasks') && !pathname?.includes('/tasks/create') ? 'var(--accent)' : 'transparent',
                       fontWeight: pathname?.includes('/tasks') && !pathname?.includes('/tasks/create') ? '600' : '500'
                     }}
@@ -942,7 +942,7 @@ export default function Header() {
                       marginBottom: '8px',
                       borderRadius: '8px',
                       textDecoration: 'none',
-                      color: 'var(--text)',
+                      color: pathname?.includes('/hire') ? 'white' : 'var(--text)',
                       background: pathname?.includes('/hire') ? 'var(--accent)' : 'transparent',
                       fontWeight: pathname?.includes('/hire') ? '600' : '500'
                     }}
@@ -958,7 +958,7 @@ export default function Header() {
                       marginBottom: '8px',
                       borderRadius: '8px',
                       textDecoration: 'none',
-                      color: 'var(--text)',
+                      color: pathname?.includes('/tasks/create') ? 'white' : 'var(--text)',
                       background: pathname?.includes('/tasks/create') ? 'var(--accent)' : 'transparent',
                       fontWeight: pathname?.includes('/tasks/create') ? '600' : '500'
                     }}
