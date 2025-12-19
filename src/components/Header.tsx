@@ -1071,6 +1071,15 @@ export default function Header() {
                   >
                     {t('auth.logout') || 'Logout'}
                   </button>
+                  
+                  {/* Language Switcher */}
+                  <div style={{ 
+                    marginTop: '20px',
+                    paddingTop: '20px',
+                    borderTop: '1px solid var(--border)'
+                  }}>
+                    <LanguageSwitcher />
+                  </div>
                 </div>
               </>
             ) : (
@@ -1116,6 +1125,15 @@ export default function Header() {
                   >
                     {t('auth.signup') || 'Sign Up'}
                   </button>
+                  
+                  {/* Language Switcher */}
+                  <div style={{ 
+                    marginTop: '20px',
+                    paddingTop: '20px',
+                    borderTop: '1px solid var(--border)'
+                  }}>
+                    <LanguageSwitcher />
+                  </div>
                 </div>
               </>
             )}
