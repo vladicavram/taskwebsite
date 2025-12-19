@@ -66,8 +66,12 @@ export async function POST(req: Request) {
     })
 
     return NextResponse.json({ success: true, message })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Support message error:', error)
-    return NextResponse.json({ error: 'Failed to send support message' }, { status: 500 })
+    const errorMessage = error?.message || 'Failed to send support message'
+    return NextResponse.json({ 
+      error: errorMessage,
+      details: process.env.NODE_ENV === 'development' ? error?.stack : undefined
+    }, { status: 500 })
   }
 }
