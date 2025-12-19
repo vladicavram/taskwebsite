@@ -23,6 +23,8 @@ model User {
   openForHire           Boolean         @default(true) // Whether user appears in hire list (only for taskers)
   userType              String          @default("poster") // poster, tasker, both
   role                  String          @default("user") // user, moderator, admin
+  resetToken            String?         // Password reset token
+  resetTokenExpiry      DateTime?       // Reset token expiration
   profile               Profile?
   tasks                 Task[]
   reviews               Review[]        @relation("ReviewAuthor")

@@ -204,7 +204,13 @@ function LoginContent() {
               {loading ? (t('login.signingIn') || 'Signing in...') : (t('login.signIn') || 'Sign In')}
             </button>
 
-            <p style={{ textAlign: 'center', color: 'var(--text-secondary)' }}>
+            <div style={{ textAlign: 'center', marginTop: '16px' }}>
+              <a href="/forgot-password" style={{ color: 'var(--accent)', textDecoration: 'none', fontSize: '0.9rem' }}>
+                {t('login.forgotPassword') || 'Forgot your password?'}
+              </a>
+            </div>
+
+            <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginTop: '20px' }}>
               {t('login.noAccount') || "Don't have an account?"}{' '}
               <a href={`/${locale}/profile/register`} style={{ color: 'var(--accent)', textDecoration: 'underline' }}>
                 {t('login.createAccount') || 'Create one now'}
