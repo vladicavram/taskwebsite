@@ -1,5 +1,6 @@
 "use client"
 import { usePathname } from 'next/navigation'
+import { useState, useEffect } from 'react'
 import messagesEn from '../../messages/en.json'
 import messagesRo from '../../messages/ro.json'
 import messagesRu from '../../messages/ru.json'
@@ -15,7 +16,12 @@ export function detectLocale(pathname: string | null | undefined) {
 
 export default function useLocale() {
   const pathname = usePathname()
-  const locale = detectLocale(pathname)
+  const [locale, setLocale] = useState('ro')
+  
+  useEffect(() => {
+    setLocale(detectLocale(pathname))
+  }, [pathname])
+  
   const messages = locale === 'ro' ? messagesRo : locale === 'ru' ? messagesRu : messagesEn
 
   function t(key: string) {
