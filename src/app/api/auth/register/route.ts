@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '../../../../lib/prisma'
+import { sendWelcomeEmail } from '../../../../lib/email'
 import bcrypt from 'bcryptjs'
 
 export const runtime = 'nodejs'
@@ -79,6 +80,11 @@ export async function POST(req: NextRequest) {
         userType: userType || 'poster',
         canApply: false // All users need admin approval to apply for tasks
       }
+    })
+
+    // Send welcome email (don't await - send in background)
+    sendWelcomeEmail(user.email, user.username || user.name || 'there').catch(err => {
+      console.error('Failed to send welcome email:', err)
     })
 
     // Return user data (without password)
