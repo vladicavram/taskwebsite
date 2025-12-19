@@ -29,8 +29,8 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 })
     }
 
-    // Find admin user
-    const admin = await prisma.user.findFirst({
+    // Find ALL admin users
+    const admins = await prisma.user.findMany({
       where: {
         OR: [
           { role: 'admin' },
@@ -39,7 +39,7 @@ export async function POST(req: Request) {
       }
     })
 
-    if (!admin) {
+    if (admins.length === 0) {
       return NextResponse.json({ error: 'Admin not found' }, { status: 404 })
     }
 
@@ -48,22 +48,29 @@ export async function POST(req: Request) {
       ? `[SUPPORT REQUEST]\nSubject: ${subject}\n\n${content}`
       : `[SUPPORT REQUEST]\n\n${content}`
 
-    const message = await prisma.message.create({
-      data: {
-        senderId: sender.id,
-        receiverId: admin.id,
-        content: messageContent
-      }
-    })
+    // Create messages and notifications for ALL admins
+    await Promise.all(admins.map(async (admin) => {
+      // Create message
+      await prisma.message.create({
+        data: {
+          senderId: sender.id,
+          receiverId: admin.id,
+          content: messageContent
+        }
+      })
 
-    // Create notification for admin
-    await prisma.notification.create({
-      data: {
-        userId: admin.id,
-        type: 'message',
-        content: `New support request from ${sender.name || sender.email}: ${subject || 'No subject'}`
-      }
-    })
+      // Create notification
+      await prisma.notification.create({
+        data: {
+          userId: admin.id,
+          type: 'message',
+          content: `New support request from ${sender.name || sender.email}: ${subject || 'No subject'}`
+        }
+      })
+    }))
+
+    // Return success with first admin's message for backwards compatibility
+    const message = { success: true }
 
     return NextResponse.json({ success: true, message })
   } catch (error: any) {
