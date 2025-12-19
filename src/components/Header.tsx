@@ -616,13 +616,23 @@ export default function Header() {
                     ) : (
                       <div>
                         {conversations.map((conv) => {
-                          if (!conv?.application?.id || !conv?.application?.task?.title) {
-                            return null
-                          }
+                          if (!conv) return null
+                          
+                          // Handle both task-based and direct conversations
+                          const isDirectMessage = conv.type === 'direct'
+                          const title = isDirectMessage 
+                            ? (t('messages.supportConversation') || 'Support Request')
+                            : conv.application?.task?.title
+                          const conversationId = isDirectMessage 
+                            ? `direct-${conv.partner?.id}`
+                            : conv.application?.id
+                          
+                          if (!title || !conversationId) return null
+                          
                           return (
                           <Link
-                            key={conv.application.id}
-                            href={`/${locale}/messages?conversation=${conv.application.id}`}
+                            key={conversationId}
+                            href={`/${locale}/messages`}
                             onClick={() => setShowMessages(false)}
                             style={{
                               display: 'block',
@@ -643,7 +653,7 @@ export default function Header() {
                               marginBottom: '4px'
                             }}>
                               <div style={{ fontWeight: 600, fontSize: '0.9rem' }}>
-                                {conv.application.task.title}
+                                {title}
                               </div>
                               {conv.unreadCount > 0 && (
                                 <span style={{

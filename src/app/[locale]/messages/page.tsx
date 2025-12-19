@@ -176,26 +176,42 @@ export default function MessagesPage() {
                 </div>
               )
 
-              // Render Link for task conversations, div for direct messages
-              if (conv.type === 'direct') {
+              // For support messages, we need to implement a chat interface
+              // For now, make them clickable to show they're interactive
+              const key = conv.type === 'direct' ? `direct-${conv.partner.id}` : `task-${conv.application.id}`
+              const isClickable = conv.type !== 'direct'
+              
+              if (!isClickable) {
+                // TODO: Implement support message chat interface
+                // For now, show as non-clickable but styled to indicate it's a support message
                 return (
                   <div
-                    key={`direct-${conv.partner.id}`}
+                    key={key}
                     className="card"
                     style={{
                       padding: '20px',
                       cursor: 'default',
-                      background: conv.unreadCount > 0 ? 'var(--accent-light)' : 'white'
+                      background: conv.unreadCount > 0 ? 'var(--accent-light)' : 'white',
+                      border: '1px solid var(--accent)',
+                      opacity: 0.7
                     }}
                   >
                     {cardContent}
+                    <div style={{
+                      marginTop: '12px',
+                      fontSize: '0.75rem',
+                      color: 'var(--text-muted)',
+                      fontStyle: 'italic'
+                    }}>
+                      {t('messages.supportMessageNote') || 'Support team will respond via email'}
+                    </div>
                   </div>
                 )
               }
 
               return (
                 <Link
-                  key={`task-${conv.application.id}`}
+                  key={key}
                   href={conversationLink}
                   className="card"
                   style={{
