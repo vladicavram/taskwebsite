@@ -33,7 +33,6 @@ export async function POST(req: Request) {
         canApply: true,
         isAdmin: true,
         blocked: false,
-        openForHire: false,
         profile: {
           create: {
             bio: 'System Administrator',
