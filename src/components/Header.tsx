@@ -127,6 +127,9 @@ export default function Header() {
     setShowNotifications(false)
     if (notification.applicationId) {
       router.push(`/${locale}/applications/${notification.applicationId}`)
+    } else if (notification.type === 'message') {
+      // Support message notification - redirect to messages page
+      router.push(`/${locale}/messages`)
     }
   }
 
