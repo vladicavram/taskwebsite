@@ -12,18 +12,20 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
     const body = await req.json()
     const { name, email, username, credits, isAdmin, role, blocked, canApply } = body
     
+    // Only update fields that are explicitly provided
+    const updateData: any = {}
+    if (name !== undefined) updateData.name = name
+    if (email !== undefined) updateData.email = email
+    if (username !== undefined) updateData.username = username
+    if (credits !== undefined) updateData.credits = credits
+    if (isAdmin !== undefined) updateData.isAdmin = isAdmin
+    if (role !== undefined) updateData.role = role
+    if (blocked !== undefined) updateData.blocked = !!blocked
+    if (canApply !== undefined) updateData.canApply = !!canApply
+    
     const user = await prisma.user.update({
       where: { id: params.id },
-      data: {
-        name,
-        email,
-        username: username || null,
-        credits,
-        isAdmin,
-        role: role || 'user',
-        blocked: blocked === undefined ? undefined : !!blocked,
-        canApply: canApply === undefined ? undefined : !!canApply
-      }
+      data: updateData
     })
     
     return NextResponse.json(user)
