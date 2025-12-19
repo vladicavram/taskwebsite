@@ -97,8 +97,14 @@ export async function POST(req: NextRequest) {
 
   } catch (error) {
     console.error('Registration error:', error)
+    // Return detailed error in development
+    const errorMessage = error instanceof Error ? error.message : 'Internal server error'
+    console.error('Detailed error:', errorMessage)
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { 
+        error: 'Internal server error',
+        ...(process.env.NODE_ENV !== 'production' && { details: errorMessage })
+      },
       { status: 500 }
     )
   }
