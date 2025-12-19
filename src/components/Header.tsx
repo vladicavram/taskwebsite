@@ -938,7 +938,7 @@ export default function Header() {
                       fontWeight: pathname?.includes('/hire') ? '600' : '500'
                     }}
                   >
-                    {t('header.hire') || 'Hire'}
+                    {t('header.hire') || 'Find Workers'}
                   </Link>
                   <Link
                     href={`/${locale}/tasks/create`}
@@ -976,7 +976,7 @@ export default function Header() {
                       fontWeight: '500'
                     }}
                   >
-                    {t('header.account') || 'Account'}
+                    {t('header.account') || 'My Profile'}
                   </Link>
                   <Link
                     href={`/${locale}/messages`}
