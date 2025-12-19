@@ -283,7 +283,7 @@ export default function ApplyButton({
               width: '120px'
             }}
           />
-          <span style={{ color: 'var(--text-muted)' }}>{t('taskDetail.apply.usd') || 'USD'}</span>
+          <span style={{ color: 'var(--text-muted)' }}>{t('taskDetail.apply.mdl') || 'MDL'}</span>
         </label>
         
         <button
