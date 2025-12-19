@@ -30,33 +30,6 @@ export default function Header() {
   const creditsRef = useRef<HTMLDivElement>(null)
   const userMenuRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    if (session?.user) {
-      fetchNotifications().catch(err => console.error('Initial notifications fetch failed:', err))
-      fetchUnreadMessages().catch(err => console.error('Initial messages fetch failed:', err))
-      fetchCredits().catch(err => console.error('Initial credits fetch failed:', err))
-      checkAdmin().catch(err => console.error('Initial admin check failed:', err))
-      
-      // Poll for new data every 30 seconds
-      const interval = setInterval(() => {
-        fetchNotifications().catch(err => console.error('Polling notifications failed:', err))
-        fetchUnreadMessages().catch(err => console.error('Polling messages failed:', err))
-        fetchCredits().catch(err => console.error('Polling credits failed:', err))
-      }, 30000)
-      
-      // Listen for credit update events
-      const handleCreditsUpdate = () => {
-        fetchCredits().catch(err => console.error('Credits update failed:', err))
-      }
-      window.addEventListener('creditsUpdated', handleCreditsUpdate)
-      
-      return () => {
-        clearInterval(interval)
-        window.removeEventListener('creditsUpdated', handleCreditsUpdate)
-      }
-    }
-  }, [session])
-
   // No click-outside handler needed for hover-based menus
 
   const fetchCredits = async () => {
@@ -186,6 +159,33 @@ export default function Header() {
         return notification.content || ''
     }
   }
+
+  useEffect(() => {
+    if (session?.user) {
+      fetchNotifications().catch(err => console.error('Initial notifications fetch failed:', err))
+      fetchUnreadMessages().catch(err => console.error('Initial messages fetch failed:', err))
+      fetchCredits().catch(err => console.error('Initial credits fetch failed:', err))
+      checkAdmin().catch(err => console.error('Initial admin check failed:', err))
+      
+      // Poll for new data every 30 seconds
+      const interval = setInterval(() => {
+        fetchNotifications().catch(err => console.error('Polling notifications failed:', err))
+        fetchUnreadMessages().catch(err => console.error('Polling messages failed:', err))
+        fetchCredits().catch(err => console.error('Polling credits failed:', err))
+      }, 30000)
+      
+      // Listen for credit update events
+      const handleCreditsUpdate = () => {
+        fetchCredits().catch(err => console.error('Credits update failed:', err))
+      }
+      window.addEventListener('creditsUpdated', handleCreditsUpdate)
+      
+      return () => {
+        clearInterval(interval)
+        window.removeEventListener('creditsUpdated', handleCreditsUpdate)
+      }
+    }
+  }, [session])
 
   return (
     <>
