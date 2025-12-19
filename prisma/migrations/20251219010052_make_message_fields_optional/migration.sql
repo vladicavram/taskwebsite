@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Message" ALTER COLUMN "taskId" DROP NOT NULL;
+ALTER TABLE "Message" ALTER COLUMN "applicationId" DROP NOT NULL;
