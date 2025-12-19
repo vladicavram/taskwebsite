@@ -134,29 +134,35 @@ export default function Header() {
   }
 
   function translatedNotificationContent(notification: any): string {
-    const taskTitle = notification.application?.task?.title || ''
-    const applicantName = notification.application?.applicant?.name || notification.application?.applicant?.email || ''
-    const senderName = notification.application?.lastProposedBy === notification.application?.task?.creatorId
-      ? notification.application?.task?.creator?.name || notification.application?.task?.creator?.email || ''
-      : notification.application?.applicant?.name || notification.application?.applicant?.email || ''
-    const proposedPrice = notification.application?.proposedPrice || ''
-    switch (notification.type) {
-      case 'application_received':
-        return interpolate(t('notification.applicationReceived'), { user: applicantName, task: taskTitle })
-      case 'job_offer':
-        return interpolate(t('notification.jobOffer'), { task: taskTitle, price: proposedPrice })
-      case 'application_accepted':
-        return interpolate(t('notification.applicationAccepted'), { task: taskTitle })
-      case 'application_declined':
-        return interpolate(t('notification.applicationDeclined'), { task: taskTitle })
-      case 'price_counter_offer': {
-        const variantKey = notification.application?.lastProposedBy === notification.application?.task?.creatorId
-          ? 'notification.priceCounterOffer.creator'
-          : 'notification.priceCounterOffer.applicant'
-        return interpolate(t(variantKey), { sender: senderName, price: proposedPrice, task: taskTitle })
+    try {
+      if (!notification) return ''
+      const taskTitle = notification.application?.task?.title || ''
+      const applicantName = notification.application?.applicant?.name || notification.application?.applicant?.email || ''
+      const senderName = notification.application?.lastProposedBy === notification.application?.task?.creatorId
+        ? notification.application?.task?.creator?.name || notification.application?.task?.creator?.email || ''
+        : notification.application?.applicant?.name || notification.application?.applicant?.email || ''
+      const proposedPrice = notification.application?.proposedPrice || ''
+      switch (notification.type) {
+        case 'application_received':
+          return interpolate(t('notification.applicationReceived'), { user: applicantName, task: taskTitle })
+        case 'job_offer':
+          return interpolate(t('notification.jobOffer'), { task: taskTitle, price: proposedPrice })
+        case 'application_accepted':
+          return interpolate(t('notification.applicationAccepted'), { task: taskTitle })
+        case 'application_declined':
+          return interpolate(t('notification.applicationDeclined'), { task: taskTitle })
+        case 'price_counter_offer': {
+          const variantKey = notification.application?.lastProposedBy === notification.application?.task?.creatorId
+            ? 'notification.priceCounterOffer.creator'
+            : 'notification.priceCounterOffer.applicant'
+          return interpolate(t(variantKey), { sender: senderName, price: proposedPrice, task: taskTitle })
+        }
+        default:
+          return notification.content || ''
       }
-      default:
-        return notification.content || ''
+    } catch (error) {
+      console.error('Error translating notification:', error)
+      return notification?.content || ''
     }
   }
 
@@ -609,7 +615,11 @@ export default function Header() {
                       </div>
                     ) : (
                       <div>
-                        {conversations.map((conv) => (
+                        {conversations.map((conv) => {
+                          if (!conv?.application?.id || !conv?.application?.task?.title) {
+                            return null
+                          }
+                          return (
                           <Link
                             key={conv.application.id}
                             href={`/${locale}/messages?conversation=${conv.application.id}`}
@@ -660,7 +670,7 @@ export default function Header() {
                               </div>
                             )}
                           </Link>
-                        ))}
+                        )})}
                       </div>
                     )}
                   </div>
