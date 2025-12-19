@@ -77,7 +77,7 @@ export async function POST(req: NextRequest) {
         name,
         phone: phone || null,
         userType: userType || 'poster',
-        canApply: userType === 'tasker' || userType === 'both' ? false : true // Taskers need approval
+        canApply: false // All users need admin approval to apply for tasks
       }
     })
 
