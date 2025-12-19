@@ -172,6 +172,8 @@
   "footer.legal": "Правовая информация",
   "footer.doNotSell": "Не продавайте мои данные"
   ,"header.account": "Аккаунт"
+  ,"header.messages": "Чат"
+  ,"header.buyCredits": "Добавить Кредиты"
   ,"header.logout": "Выйти"
   ,"header.credits.title": "Ваши Кредиты"
   ,"header.credits.unit": "кредитов"

@@ -173,6 +173,8 @@
   "footer.legal": "Legal",
   "footer.doNotSell": "Do Not Sell My Info"
   ,"header.account": "Account"
+  ,"header.messages": "Chat"
+  ,"header.buyCredits": "Add Credits"
   ,"header.logout": "Log out"
   ,"header.credits.title": "Your Credits"
   ,"header.credits.unit": "Credits"
