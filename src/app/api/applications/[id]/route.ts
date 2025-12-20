@@ -64,10 +64,11 @@ export async function PATCH(
       return NextResponse.json({ error: 'Only the task creator can accept or remove applications' }, { status: 403 })
     }
 
-    // For direct hire, applicant must have at least 1 credit to accept
+    // For direct hire, applicant must have enough credits to cover the task price
+    const requiredCredits = ((application.proposedPrice ?? application.task.price) || 0) / 100
     if (isDirectHire && isApplicant && status === 'accepted') {
-      if (user.credits < 1) {
-        return NextResponse.json({ error: 'You need at least 1 credit to accept this hire request.' }, { status: 400 })
+      if (user.credits < requiredCredits) {
+        return NextResponse.json({ error: `Insufficient credits. Required ${requiredCredits.toFixed(2)}, you have ${user.credits}.` }, { status: 400 })
       }
     }
 
@@ -130,6 +131,17 @@ export async function PATCH(
       
       // If accepting, close the task and refund credits to other pending applicants
       if (status === 'accepted') {
+        // For direct-hire where applicant is accepting now (credits weren't deducted on apply),
+        // deduct the required credits from the applicant inside the transaction to avoid races.
+        if (isDirectHire && application.status === 'pending') {
+          const freshApplicant = await tx.user.findUnique({ where: { id: application.applicantId } })
+          const deduct = ((application.proposedPrice ?? application.task.price) || 0) / 100
+          if (!freshApplicant || freshApplicant.credits < deduct) {
+            throw new Error(`Insufficient credits. Required ${deduct.toFixed(2)}, you have ${freshApplicant?.credits || 0}.`)
+          }
+          await tx.user.update({ where: { id: application.applicantId }, data: { credits: { decrement: deduct } } })
+        }
+
         // Update this application to accepted
         const updated = await tx.application.update({
           where: { id: params.id },

@@ -220,6 +220,7 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                     <HireRequestActions 
                       applicationId={userApplication.id}
                       taskPrice={task.price || 0}
+                      proposedPrice={userApplication.proposedPrice}
                       locale={params.locale}
                       userCredits={currentUser?.credits || 0}
                     />
