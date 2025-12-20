@@ -182,19 +182,19 @@ export default function ApplicationDetailPage() {
             {application.task.price && (
               <div>
                 <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginBottom: '4px' }}>
-                  Original Price
+                  {application.proposedPrice && application.proposedPrice !== application.task.price ? 'Original Price' : 'Price'}
                 </div>
                 <div style={{ 
-                  fontSize: '1.5rem',
+                  fontSize: application.proposedPrice && application.proposedPrice !== application.task.price ? '1.5rem' : '1.75rem',
                   fontWeight: 700,
-                  color: 'var(--text-muted)',
-                  textDecoration: application.proposedPrice ? 'line-through' : 'none'
+                  color: application.proposedPrice && application.proposedPrice !== application.task.price ? 'var(--text-muted)' : 'var(--accent)',
+                  textDecoration: application.proposedPrice && application.proposedPrice !== application.task.price ? 'line-through' : 'none'
                 }}>
                   {application.task.price} {CURRENCY_SYMBOL}
                 </div>
               </div>
             )}
-            {application.proposedPrice && (
+            {application.proposedPrice && application.proposedPrice !== application.task.price && (
               <div>
                 <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginBottom: '4px' }}>
                   Proposed Price
