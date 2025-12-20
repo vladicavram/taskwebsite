@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic'
 
 export async function GET(req: Request) {
   try {
-    const session = await getServerSession(authOptions)
+    const session: any = await getServerSession(authOptions as any)
     const currentUserId = session?.user?.id
 
     // Get all users who are approved to apply for tasks (workers)
