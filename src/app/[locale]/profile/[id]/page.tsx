@@ -490,7 +490,7 @@ export default function ProfilePage() {
 
           {/* Sidebar */}
           <div style={{ position: 'sticky', top: '100px' }}>
-            {!isOwnProfile && (
+            {!isOwnProfile && user.canApply && !user.blocked && (
               <div className="card" style={{ padding: '24px', marginBottom: '24px' }}>
                 <button 
                   className="btn" 

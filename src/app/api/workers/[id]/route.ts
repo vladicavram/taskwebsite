@@ -14,6 +14,7 @@ export async function GET(
         id: params.id,
         canApply: true,
         blocked: false,
+        openForHire: true,
         userType: {
           in: ['tasker', 'both']
         }
