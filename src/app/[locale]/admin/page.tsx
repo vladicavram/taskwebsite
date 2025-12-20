@@ -17,6 +17,9 @@ export default function AdminPage() {
   const [editingUser, setEditingUser] = useState<any>(null)
   const [editingTask, setEditingTask] = useState<any>(null)
   const [messagingUser, setMessagingUser] = useState<any>(null)
+  const [viewingUserProfile, setViewingUserProfile] = useState<any>(null)
+  const [userChatHistory, setUserChatHistory] = useState<any[]>([])
+  const [loadingChatHistory, setLoadingChatHistory] = useState(false)
   const [messageText, setMessageText] = useState('')
   const [userSearch, setUserSearch] = useState('')
   const [taskSearch, setTaskSearch] = useState('')
@@ -183,6 +186,31 @@ export default function AdminPage() {
     } catch (err) {
       alert(t('admin.error.messageSend') || 'Error sending message')
     }
+  }
+
+  async function loadUserChatHistory(userId: string) {
+    setLoadingChatHistory(true)
+    try {
+      const res = await fetch(`/api/admin/users/${userId}/messages`)
+      const data = await res.json()
+      if (Array.isArray(data)) {
+        setUserChatHistory(data)
+      } else {
+        setUserChatHistory([])
+        if (data && data.error) {
+          alert((t('admin.error.loadChatHistory') || 'Failed to load chat history:') + ' ' + data.error)
+        }
+      }
+    } catch (err) {
+      console.error('Failed to load chat history:', err)
+      setUserChatHistory([])
+    }
+    setLoadingChatHistory(false)
+  }
+
+  function viewUserProfile(user: any) {
+    setViewingUserProfile(user)
+    loadUserChatHistory(user.id)
   }
 
   // Filter users based on search
@@ -382,6 +410,13 @@ export default function AdminPage() {
                           </span>
                         </td>
                         <td style={{ padding: 12, textAlign: 'center' }}>
+                          <button
+                            onClick={() => viewUserProfile(user)}
+                            className="btn"
+                            style={{ padding: '4px 8px', fontSize: '0.85rem', marginRight: 4, background: '#8b5cf6' }}
+                          >
+                            View Profile
+                          </button>
                           <button
                             onClick={() => setMessagingUser(user)}
                             className="btn"
@@ -687,6 +722,199 @@ export default function AdminPage() {
             <div style={{ display: 'flex', gap: 8, marginTop: 20 }}>
               <button onClick={sendMessage} className="btn">Send</button>
               <button onClick={() => { setMessagingUser(null); setMessageText('') }} className="btn btn-secondary">Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* View User Profile Modal */}
+      {viewingUserProfile && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0,0,0,0.7)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000,
+          padding: 20,
+          overflowY: 'auto'
+        }}>
+          <div className="card" style={{ padding: 24, maxWidth: 900, width: '100%', maxHeight: '90vh', overflowY: 'auto' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: 20 }}>
+              <div>
+                <h2 style={{ margin: 0, marginBottom: 8 }}>
+                  {viewingUserProfile.name || viewingUserProfile.email}
+                </h2>
+                <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+                  User Profile & Chat History
+                </p>
+              </div>
+              <button 
+                onClick={() => { setViewingUserProfile(null); setUserChatHistory([]) }} 
+                className="btn btn-secondary"
+                style={{ padding: '6px 12px', fontSize: '0.9rem' }}
+              >
+                Close
+              </button>
+            </div>
+
+            {/* User Info Section */}
+            <div style={{ 
+              background: 'var(--bg-secondary)', 
+              padding: 16, 
+              borderRadius: 8, 
+              marginBottom: 24,
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: 12
+            }}>
+              <div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: 4 }}>Email</div>
+                <div style={{ fontWeight: 500 }}>{viewingUserProfile.email}</div>
+              </div>
+              <div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: 4 }}>Username</div>
+                <div style={{ fontWeight: 500 }}>{viewingUserProfile.username || '-'}</div>
+              </div>
+              <div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: 4 }}>Credits</div>
+                <div style={{ fontWeight: 500 }}>{viewingUserProfile.credits?.toFixed(1) || '0.0'}</div>
+              </div>
+              <div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: 4 }}>Role</div>
+                <div style={{ fontWeight: 500 }}>
+                  {viewingUserProfile.role === 'admin' ? '👑 Admin' : viewingUserProfile.role === 'moderator' ? '🛡️ Moderator' : '👤 User'}
+                </div>
+              </div>
+            </div>
+
+            {/* Chat History Section */}
+            <div>
+              <h3 style={{ marginTop: 0, marginBottom: 16, fontSize: '1.3rem' }}>
+                💬 Chat History ({userChatHistory.length})
+              </h3>
+              
+              {loadingChatHistory ? (
+                <div style={{ textAlign: 'center', padding: 40, color: 'var(--text-secondary)' }}>
+                  Loading chat history...
+                </div>
+              ) : userChatHistory.length === 0 ? (
+                <div style={{ 
+                  textAlign: 'center', 
+                  padding: 40,
+                  background: 'var(--bg-secondary)',
+                  borderRadius: 8,
+                  color: 'var(--text-secondary)'
+                }}>
+                  No chat history found for this user
+                </div>
+              ) : (
+                <div style={{ 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  gap: 12,
+                  maxHeight: '500px',
+                  overflowY: 'auto',
+                  padding: 12,
+                  background: 'var(--bg-secondary)',
+                  borderRadius: 8
+                }}>
+                  {userChatHistory.map((message) => (
+                    <div 
+                      key={message.id} 
+                      style={{
+                        padding: 14,
+                        background: 'var(--bg)',
+                        border: '1px solid var(--border)',
+                        borderRadius: 8,
+                        position: 'relative'
+                      }}
+                    >
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: 8 }}>
+                        <div style={{ display: 'flex', gap: 12, alignItems: 'center', flex: 1 }}>
+                          <div style={{
+                            padding: '4px 10px',
+                            borderRadius: 4,
+                            fontSize: '0.75rem',
+                            fontWeight: 600,
+                            background: message.senderId === viewingUserProfile.id ? '#3b82f6' : '#10b981',
+                            color: 'white'
+                          }}>
+                            {message.senderId === viewingUserProfile.id ? '📤 SENT' : '📥 RECEIVED'}
+                          </div>
+                          <div style={{ fontSize: '0.85rem' }}>
+                            <span style={{ fontWeight: 600 }}>
+                              {message.senderId === viewingUserProfile.id 
+                                ? (message.receiver?.name || message.receiver?.email || 'Unknown')
+                                : (message.sender?.name || message.sender?.email || 'Unknown')
+                              }
+                            </span>
+                            <span style={{ color: 'var(--text-secondary)', marginLeft: 8 }}>
+                              ({message.senderId === viewingUserProfile.id ? 'To' : 'From'})
+                            </span>
+                          </div>
+                        </div>
+                        <div style={{ 
+                          fontSize: '0.75rem', 
+                          color: 'var(--text-secondary)',
+                          whiteSpace: 'nowrap',
+                          marginLeft: 12
+                        }}>
+                          {new Date(message.createdAt).toLocaleString()}
+                        </div>
+                      </div>
+                      
+                      <div style={{ 
+                        padding: '10px 12px',
+                        background: 'var(--bg-secondary)',
+                        borderRadius: 6,
+                        fontSize: '0.9rem',
+                        lineHeight: 1.5,
+                        marginBottom: 8
+                      }}>
+                        {message.content}
+                      </div>
+
+                      <div style={{ 
+                        display: 'flex', 
+                        gap: 16, 
+                        fontSize: '0.75rem',
+                        color: 'var(--text-secondary)',
+                        paddingTop: 8,
+                        borderTop: '1px solid var(--border)'
+                      }}>
+                        {message.taskId && (
+                          <div>
+                            <span style={{ fontWeight: 500 }}>Task:</span>{' '}
+                            <Link 
+                              href={`/${locale}/tasks/${message.taskId}`}
+                              style={{ color: 'var(--accent)', textDecoration: 'underline' }}
+                              target="_blank"
+                            >
+                              View Task
+                            </Link>
+                          </div>
+                        )}
+                        {message.applicationId && (
+                          <div>
+                            <span style={{ fontWeight: 500 }}>Application:</span> {message.applicationId.substring(0, 8)}...
+                          </div>
+                        )}
+                        <div>
+                          <span style={{ fontWeight: 500 }}>Status:</span>{' '}
+                          <span style={{ color: message.read ? '#10b981' : '#f59e0b' }}>
+                            {message.read ? '✓ Read' : '○ Unread'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
