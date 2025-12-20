@@ -17,6 +17,7 @@ export default function ApplicationDetailPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [actionLoading, setActionLoading] = useState(false)
+  const [userCredits, setUserCredits] = useState<number | null>(null)
   const [counterOfferPrice, setCounterOfferPrice] = useState('')
   const [showCounterOffer, setShowCounterOffer] = useState(false)
   const [offerSent, setOfferSent] = useState(false)
@@ -24,6 +25,18 @@ export default function ApplicationDetailPage() {
 
   useEffect(() => {
     fetchApplication()
+    // fetch current user's credits for client-side checks
+    ;(async () => {
+      try {
+        const res = await fetch('/api/users/credits')
+        if (res.ok) {
+          const data = await res.json()
+          setUserCredits(data.credits || 0)
+        }
+      } catch (e) {
+        // ignore
+      }
+    })()
   }, [applicationId])
 
   const fetchApplication = async () => {
@@ -507,19 +520,31 @@ export default function ApplicationDetailPage() {
                   <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
                     {receivedCounterOffer ? (
                       <>
-                        <button
-                          onClick={() => handleAction('accepted')}
-                          disabled={actionLoading}
-                          className="btn"
-                          style={{ 
-                            flex: 1,
-                            padding: '14px',
-                            fontSize: '1.1rem',
-                            opacity: actionLoading ? 0.6 : 1
-                          }}
-                        >
-                          ✓ Accept {application.proposedPrice} {CURRENCY_SYMBOL}
-                        </button>
+                        {(() => {
+                          const requiredCredits = ((application.proposedPrice ?? application.task.price) || 0) / 100
+                          const insufficient = userCredits !== null && userCredits < requiredCredits
+                          return (
+                            <button
+                              onClick={() => handleAction('accepted')}
+                              disabled={actionLoading || insufficient}
+                              className="btn"
+                              style={{ 
+                                flex: 1,
+                                padding: '14px',
+                                fontSize: '1.1rem',
+                                opacity: (actionLoading || insufficient) ? 0.6 : 1,
+                                cursor: insufficient ? 'not-allowed' : 'pointer'
+                              }}
+                            >
+                              ✓ Accept {application.proposedPrice} {CURRENCY_SYMBOL}
+                            </button>
+                          )
+                        })()}
+                        {userCredits !== null && userCredits < (((application.proposedPrice ?? application.task.price) || 0) / 100) && (
+                          <div style={{ color: '#ef4444', fontWeight: 600, marginTop: '8px', width: '100%' }}>
+                            ⚠️ You need at least {(((application.proposedPrice ?? application.task.price) || 0) / 100)} credit(s) to accept this offer.
+                          </div>
+                        )}
                         <button
                           onClick={() => setShowCounterOffer(true)}
                           disabled={actionLoading}
