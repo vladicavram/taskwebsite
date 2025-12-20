@@ -155,20 +155,27 @@ export async function PATCH(
         const totalRequired = Math.max(1, (((currentApp.proposedPrice ?? currentApp.task.price) || 0) / 100))
         const alreadyCharged = (currentApp as any).chargedCredits ?? 0
 
-        // Refund all previously charged credits
-        if (alreadyCharged > 0) {
-          await tx.user.update({ where: { id: currentApp.applicantId }, data: { credits: { increment: alreadyCharged } } })
-        }
-
-        // Charge the full required credits for the final price; if applicant lacks funds, throw.
+        // Validate applicant has enough funds including any previously charged (reserved) credits
         const freshApplicant = await tx.user.findUnique({ where: { id: currentApp.applicantId } })
         if (!freshApplicant) throw new Error('Applicant not found')
 
-        if (freshApplicant.credits < totalRequired) {
-          throw new Error(`Insufficient credits. Required ${totalRequired.toFixed(2)}, you have ${freshApplicant.credits}.`)
+        // availableIncludingReserved = current wallet credits + alreadyCharged (reserved on this application)
+        const availableIncludingReserved = (freshApplicant.credits || 0) + (alreadyCharged || 0)
+        if (availableIncludingReserved < totalRequired) {
+          throw new Error(`Insufficient credits. Required ${totalRequired.toFixed(2)}, available ${availableIncludingReserved.toFixed(2)}.`)
         }
-        await tx.user.update({ where: { id: currentApp.applicantId }, data: { credits: { decrement: totalRequired } } })
-        // record chargedCredits on the application
+
+        // Compute delta to charge (or refund) relative to alreadyCharged
+        const delta = totalRequired - (alreadyCharged || 0)
+        if (delta > 0) {
+          // Need to deduct additional credits from user's wallet
+          await tx.user.update({ where: { id: currentApp.applicantId }, data: { credits: { decrement: delta } } })
+        } else if (delta < 0) {
+          // Overcharged previously: refund the difference
+          await tx.user.update({ where: { id: currentApp.applicantId }, data: { credits: { increment: -delta } } })
+        }
+
+        // record chargedCredits on the application as the final total required
         await tx.application.update({ where: { id: params.id }, data: { chargedCredits: totalRequired } })
 
         // Update this application to accepted

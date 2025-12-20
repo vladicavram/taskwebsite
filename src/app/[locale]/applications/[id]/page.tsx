@@ -71,7 +71,17 @@ export default function ApplicationDetailPage() {
 
       if (response.ok) {
         alert(`Application ${status}!`)
-        fetchApplication()
+        // Refresh application and current user's credits after actions
+        await fetchApplication()
+        try {
+          const creditsRes = await fetch('/api/users/credits')
+          if (creditsRes.ok) {
+            const creditsData = await creditsRes.json()
+            setUserCredits(creditsData.credits || 0)
+          }
+        } catch (e) {
+          // ignore
+        }
       } else {
         const data = await response.json()
         alert(data.error || 'Failed to update application')
@@ -102,7 +112,17 @@ export default function ApplicationDetailPage() {
         setShowCounterOffer(false)
         setCounterOfferPrice('')
         setTimeout(() => setOfferSent(false), 3000)
-        fetchApplication()
+        // Refresh application and current user's credits after making a counter-offer
+        await fetchApplication()
+        try {
+          const creditsRes = await fetch('/api/users/credits')
+          if (creditsRes.ok) {
+            const creditsData = await creditsRes.json()
+            setUserCredits(creditsData.credits || 0)
+          }
+        } catch (e) {
+          // ignore
+        }
       } else {
         const data = await response.json()
         alert(data.error || 'Failed to send counter-offer')
