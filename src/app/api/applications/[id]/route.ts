@@ -57,9 +57,18 @@ export async function PATCH(
       return NextResponse.json({ error: 'Invalid status' }, { status: 400 })
     }
 
-    // Only the task creator can accept or remove an application
-    if ((status === 'accepted' || status === 'removed') && !isTaskCreator) {
+
+    // Only the task creator can accept or remove an application (EXCEPT direct hire: applicant can accept)
+    const isDirectHire = application.task.isDirectHire === true;
+    if ((status === 'accepted' || status === 'removed') && !isTaskCreator && !(isDirectHire && isApplicant && status === 'accepted')) {
       return NextResponse.json({ error: 'Only the task creator can accept or remove applications' }, { status: 403 })
+    }
+
+    // For direct hire, applicant must have at least 1 credit to accept
+    if (isDirectHire && isApplicant && status === 'accepted') {
+      if (user.credits < 1) {
+        return NextResponse.json({ error: 'You need at least 1 credit to accept this hire request.' }, { status: 400 })
+      }
     }
 
     // Perform updates in a transaction
