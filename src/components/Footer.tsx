@@ -30,17 +30,8 @@ export default function Footer() {
               <Link href={`/${locale}/tasks`} style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.95rem' }}>
                 {t('footer.browseTasks') || 'Browse Tasks'}
               </Link>
-              <Link href={`/${locale}/tasks`} style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.95rem' }}>
+              <Link href={`/${locale}/profile/register`} style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.95rem' }}>
                 {t('footer.becomeTasker') || 'Become a Tasker'}
-              </Link>
-              <Link href={`/${locale}/tasks`} style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.95rem' }}>
-                {t('footer.servicesByCity') || 'Services by City'}
-              </Link>
-              <Link href={`/${locale}/tasks`} style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.95rem' }}>
-                {t('footer.allServices') || 'All Services'}
-              </Link>
-              <Link href={`/${locale}/tasks`} style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.95rem' }}>
-                {t('footer.eliteTaskers') || 'Elite Taskers'}
               </Link>
             </div>
           </div>
@@ -49,19 +40,16 @@ export default function Footer() {
           <div>
             <h4 style={{ marginBottom: '20px', color: 'white', fontSize: '1rem' }}>{t('footer.company') || 'Company'}</h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <Link href={`/${locale}/tasks`} style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.95rem' }}>
+              <Link href={`/${locale}/about`} style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.95rem' }}>
                 {t('footer.aboutUs') || 'About Us'}
               </Link>
-              <Link href={`/${locale}/tasks`} style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.95rem' }}>
+              <Link href={`/${locale}/careers`} style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.95rem' }}>
                 {t('footer.careers') || 'Careers'}
               </Link>
-              <Link href={`/${locale}/tasks`} style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.95rem' }}>
+              <Link href={`/${locale}/contact`} style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.95rem' }}>
                 {t('footer.press') || 'Press'}
               </Link>
-              <Link href={`/${locale}/tasks`} style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.95rem' }}>
-                {t('footer.blog') || 'Blog'}
-              </Link>
-              <Link href={`/${locale}/tasks`} style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.95rem' }}>
+              <Link href={`/${locale}/contact`} style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.95rem' }}>
                 {t('footer.partnerWithUs') || 'Partner with Us'}
               </Link>
             </div>
@@ -71,19 +59,16 @@ export default function Footer() {
           <div>
             <h4 style={{ marginBottom: '20px', color: 'white', fontSize: '1rem' }}>{t('footer.support') || 'Support'}</h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <Link href={`/${locale}/tasks`} style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.95rem' }}>
+              <Link href={`/${locale}/help`} style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.95rem' }}>
                 {t('footer.helpCenter') || 'Help Center'}
               </Link>
-              <Link href={`/${locale}/tasks`} style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.95rem' }}>
-                {t('footer.safety') || 'Safety'}
-              </Link>
-              <Link href={`/${locale}/tasks`} style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.95rem' }}>
+              <Link href={`/${locale}/contact`} style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.95rem' }}>
                 {t('footer.contactUs') || 'Contact Us'}
               </Link>
-              <Link href={`/${locale}/tasks`} style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.95rem' }}>
+              <Link href={`/${locale}/community-guidelines`} style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.95rem' }}>
                 {t('footer.communityGuidelines') || 'Community Guidelines'}
               </Link>
-              <Link href={`/${locale}/tasks`} style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.95rem' }}>
+              <Link href={`/${locale}/trust-safety`} style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none', fontSize: '0.95rem' }}>
                 {t('footer.trustSafety') || 'Trust & Safety'}
               </Link>
             </div>
