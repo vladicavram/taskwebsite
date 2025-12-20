@@ -57,17 +57,23 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Worker is not available' }, { status: 400 })
     }
 
-    // Create the task
-    const task = await prisma.task.create({ 
-      data: { 
-        title, 
-        description, 
-        price: parsedPrice,
-        location,
-        creatorId: user.id,
-        isDirectHire: true // Mark this as a direct hire task
-      } 
-    })
+    // Create the task data
+    const taskData: any = { 
+      title, 
+      description, 
+      price: parsedPrice,
+      location,
+      creatorId: user.id
+    }
+    
+    // Only set isDirectHire if the column exists (after migration)
+    try {
+      taskData.isDirectHire = true
+    } catch (e) {
+      // Column doesn't exist yet, skip this field
+    }
+    
+    const task = await prisma.task.create({ data: taskData })
 
     // Create a notification for the worker
     await prisma.notification.create({

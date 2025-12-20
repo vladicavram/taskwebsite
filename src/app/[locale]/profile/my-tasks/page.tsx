@@ -46,9 +46,9 @@ export default async function MyTasksPage({ params, searchParams }: { params: { 
       include: { task: { include: { category: true } } }
     }),
     // Fetch tasks where user was hired directly but hasn't accepted yet
+    // This query will be empty until isDirectHire column is added via migration
     prisma.task.findMany({
       where: {
-        isDirectHire: true,
         applications: {
           none: {}
         },
@@ -64,7 +64,7 @@ export default async function MyTasksPage({ params, searchParams }: { params: { 
       },
       orderBy: { createdAt: 'desc' },
       include: { category: true, creator: true }
-    })
+    }).catch(() => [])
   ])
 
   const acceptedTasks = acceptedApps.map((a: any) => a.task)

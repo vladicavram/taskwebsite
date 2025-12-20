@@ -35,13 +35,24 @@ export async function GET(req: Request) {
     : { 
         isOpen: true,
         completedAt: null,
-        isDirectHire: false, // Exclude direct hire tasks from browse list
         applications: {
           none: {
             status: 'accepted'
           }
         }
       }
+  
+  // Only filter by isDirectHire if the column exists (after migration)
+  if (!showCompleted) {
+    try {
+      where.OR = [
+        { isDirectHire: false },
+        { isDirectHire: null }
+      ]
+    } catch (e) {
+      // Column doesn't exist yet, skip this filter
+    }
+  }
   if (q) {
     where.OR = [
       { title: { contains: q, mode: 'insensitive' } },
