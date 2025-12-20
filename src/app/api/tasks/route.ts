@@ -35,13 +35,13 @@ export async function GET(req: Request) {
     : { 
         isOpen: true,
         completedAt: null,
+        isDirectHire: false,
         applications: {
           none: {
             status: 'accepted'
           }
         }
       }
-  // Note: isDirectHire filter will be added after database migration
   if (q) {
     where.OR = [
       { title: { contains: q, mode: 'insensitive' } },

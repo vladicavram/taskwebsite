@@ -64,8 +64,8 @@ export async function POST(req: Request) {
         description, 
         price: parsedPrice,
         location,
-        creatorId: user.id
-        // Note: isDirectHire will be set to true after database migration
+        creatorId: user.id,
+        isDirectHire: true
       } 
     })
 

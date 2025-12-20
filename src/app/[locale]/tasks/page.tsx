@@ -18,9 +18,9 @@ export default async function TasksPage({ params }: { params: { locale: string }
     const where: any = {
       isOpen: true,
       completedAt: null,
+      isDirectHire: false,
       applications: { none: { status: 'accepted' } }
     }
-    // Note: isDirectHire filter will be added after database migration
     const tasks = await prisma.task.findMany({ 
       where, 
       include: {
