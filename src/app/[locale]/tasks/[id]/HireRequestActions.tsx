@@ -26,6 +26,7 @@ export default function HireRequestActions({
     const requiredCredits = (proposedPrice || taskPrice) / 100
 
     if (userCredits < requiredCredits) {
+      // Show inline message instead of alert; keep button disabled in UI.
       alert(`You need at least ${requiredCredits} credits to accept this hire request. Please purchase credits first.`)
       return
     }
@@ -117,20 +118,28 @@ export default function HireRequestActions({
 
       {!showCounterOffer ? (
         <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-          <button
-            onClick={handleAccept}
-            disabled={loading || userCredits < ((proposedPrice || taskPrice) / 100)}
-            className="btn"
-            style={{ 
-              flex: 1,
-              padding: '14px',
-              fontSize: '1.1rem',
-              opacity: (loading || userCredits < ((proposedPrice || taskPrice) / 100)) ? 0.6 : 1,
-              cursor: (userCredits < ((proposedPrice || taskPrice) / 100)) ? 'not-allowed' : 'pointer'
-            }}
-          >
-            ✓ Accept {taskPrice} {CURRENCY_SYMBOL}
-          </button>
+          <div style={{ flex: 1 }}>
+            <button
+              onClick={handleAccept}
+              disabled={loading || userCredits < ((proposedPrice || taskPrice) / 100)}
+              className="btn"
+              style={{ 
+                width: '100%',
+                padding: '14px',
+                fontSize: '1.1rem',
+                opacity: (loading || userCredits < ((proposedPrice || taskPrice) / 100)) ? 0.6 : 1,
+                cursor: (userCredits < ((proposedPrice || taskPrice) / 100)) ? 'not-allowed' : 'pointer'
+              }}
+            >
+              ✓ Accept {taskPrice} {CURRENCY_SYMBOL}
+            </button>
+            {userCredits < ((proposedPrice || taskPrice) / 100) && (
+              <div style={{ marginTop: 8, fontSize: '0.95rem', color: 'var(--text-muted)', display: 'flex', gap: 12, alignItems: 'center' }}>
+                <div>Insufficient credits to accept this hire request.</div>
+                <a href={`/${locale}/profile/credits/purchase`} className="btn btn-secondary" style={{ padding: '6px 10px', fontSize: '0.9rem' }}>Buy Credits</a>
+              </div>
+            )}
+          </div>
           <button
             onClick={() => setShowCounterOffer(true)}
             disabled={loading}

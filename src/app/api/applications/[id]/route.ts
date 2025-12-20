@@ -278,7 +278,9 @@ export async function PATCH(
     return NextResponse.json(result)
   } catch (error) {
     console.error('Application update error:', error)
-    return NextResponse.json({ error: 'Failed to update application' }, { status: 500 })
+    const message = (error as any)?.message || 'Failed to update application'
+    // Return client-friendly errors as 400 so UI can show actionable messages
+    return NextResponse.json({ error: message }, { status: 400 })
   }
 }
 

@@ -525,20 +525,28 @@ export default function ApplicationDetailPage() {
                           const requiredCredits = ((application.proposedPrice ?? application.task.price) || 0) / 100
                           const insufficient = userCredits !== null && userCredits < requiredCredits
                           return (
-                            <button
-                              onClick={() => handleAction('accepted')}
-                              disabled={actionLoading || insufficient}
-                              className="btn"
-                              style={{ 
-                                flex: 1,
-                                padding: '14px',
-                                fontSize: '1.1rem',
-                                opacity: (actionLoading || insufficient) ? 0.6 : 1,
-                                cursor: insufficient ? 'not-allowed' : 'pointer'
-                              }}
-                            >
-                              ✓ Accept {application.proposedPrice} {CURRENCY_SYMBOL}
-                            </button>
+                            <div style={{ flex: 1 }}>
+                              <button
+                                onClick={() => handleAction('accepted')}
+                                disabled={actionLoading || insufficient}
+                                className="btn"
+                                style={{ 
+                                  width: '100%',
+                                  padding: '14px',
+                                  fontSize: '1.1rem',
+                                  opacity: (actionLoading || insufficient) ? 0.6 : 1,
+                                  cursor: insufficient ? 'not-allowed' : 'pointer'
+                                }}
+                              >
+                                ✓ Accept {application.proposedPrice} {CURRENCY_SYMBOL}
+                              </button>
+                              {insufficient && (
+                                <div style={{ marginTop: 8, fontSize: '0.95rem', color: 'var(--text-muted)', display: 'flex', gap: 12, alignItems: 'center' }}>
+                                  <div>{`You need at least ${( (application.proposedPrice ?? application.task.price) / 100 ).toFixed(2)} credits to accept.`}</div>
+                                  <a href={`/${locale}/profile/credits/purchase`} className="btn btn-secondary" style={{ padding: '6px 10px', fontSize: '0.9rem' }}>Buy Credits</a>
+                                </div>
+                              )}
+                            </div>
                           )
                         })()}
                         {/* Credit warning removed: do not display required-credit message here */}
