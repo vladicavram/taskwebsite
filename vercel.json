@@ -3,11 +3,5 @@
     "env": {},
     "command": "npm run vercel-build"
   },
-  "env": {
-    "DATABASE_URL": "@taskwebsite_database_url",
-    "NEXTAUTH_SECRET": "@taskwebsite_nextauth_secret",
-    "SMTP_HOST": "@taskwebsite_smtp_host",
-    "SMTP_USER": "@taskwebsite_smtp_user",
-    "SMTP_PASS": "@taskwebsite_smtp_pass"
-  }
+  "env": {}
 }
