@@ -13,12 +13,15 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    // Use the logged-in user as the applicant (do not trust provided userId)
+    // Use the logged-in user as the applicant by default (do not trust provided userId)
     const applicant = await prisma.user.findUnique({ where: { email: session.user.email } })
     if (!applicant) return NextResponse.json({ error: 'User not found' }, { status: 404 })
 
     const body = await req.json()
-    const { taskId, proposedPrice, message } = body
+    // The front-end sometimes posts { userId } when the task creator is creating a task and hiring someone.
+    // Allow this only when the logged-in user is the task creator for the provided taskId — create an application
+    // on behalf of that hired user without deducting credits (the hired worker will accept later and be charged).
+    const { taskId, proposedPrice, message, userId: offeredUserId } = body
     if (!taskId) return NextResponse.json({ error: 'Task ID required' }, { status: 400 })
 
     // Fetch task and basic guards
@@ -27,7 +30,43 @@ export async function POST(req: Request) {
     if (task.creatorId === applicant.id) return NextResponse.json({ error: 'You cannot apply to your own task' }, { status: 400 })
     if ((task as any).completedAt) return NextResponse.json({ error: 'Cannot apply to a completed task' }, { status: 400 })
 
-    // If direct-hire, block other users from creating applications (only the hired worker should have the pending application)
+    // If the logged-in user is the task creator and passed an offeredUserId, allow creating an
+    // application record on behalf of that offered user (this is used by the create-task -> hire flow).
+    if (offeredUserId && task.creatorId === applicant.id) {
+      // Ensure we don't overwrite existing active application for that user
+      const existingForOffered = await prisma.application.findUnique({
+        where: { taskId_applicantId: { taskId, applicantId: offeredUserId } }
+      })
+      if (existingForOffered && existingForOffered.status !== 'declined' && existingForOffered.status !== 'removed') {
+        return NextResponse.json({ error: 'The offered user already has an application for this task' }, { status: 400 })
+      }
+
+      const application = await prisma.application.create({
+        data: {
+          taskId,
+          applicantId: offeredUserId,
+          proposedPrice: typeof proposedPrice === 'number' && proposedPrice > 0 ? proposedPrice : task.price || null,
+          message: message || null,
+          lastProposedBy: applicant.id,
+          status: 'pending'
+        }
+      })
+
+      await prisma.notification.create({
+        data: {
+          userId: offeredUserId,
+          type: 'hire_request',
+          taskId,
+          applicationId: application.id,
+          content: `You received a job offer: ${task.title}`
+        }
+      })
+
+      return NextResponse.json(application)
+    }
+
+    // Normal applicant-driven application flow: ensure the user hasn't already applied
+    // If direct-hire, block other users from creating applications
     if ((task as any).isDirectHire === true) {
       const activeForTask = await prisma.application.findFirst({ where: { taskId, status: { in: ['pending', 'accepted'] } } })
       if (activeForTask && activeForTask.applicantId !== applicant.id) {
@@ -35,7 +74,6 @@ export async function POST(req: Request) {
       }
     }
 
-    // Check if user already applied
     const existingApplication = await prisma.application.findUnique({
       where: { taskId_applicantId: { taskId, applicantId: applicant.id } }
     })
@@ -52,7 +90,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: `Insufficient credits. Required ${requiredCredits.toFixed(2)}, you have ${applicant.credits}.` }, { status: 400 })
     }
 
-    // Create application and deduct credits in a transaction (mirrors /apply behavior)
+    // Create application and deduct credits in a transaction (mirrors /tasks/[id]/apply behavior)
     const application = await prisma.$transaction(async (tx: any) => {
       const freshUser = await tx.user.findUnique({ where: { id: applicant.id } })
       if (!freshUser || freshUser.credits < requiredCredits) throw new Error('Insufficient credits')
@@ -69,7 +107,6 @@ export async function POST(req: Request) {
       })
     })
 
-    // Create notification for applicant
     await prisma.notification.create({
       data: {
         userId: applicant.id,
