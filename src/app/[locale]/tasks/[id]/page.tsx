@@ -169,7 +169,7 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                       <DeleteTaskButton taskId={params.id} locale={params.locale} />
                     </div>
                   )}
-                  {!completedAt && <ApplicantsList applications={(task as any).applications} locale={params.locale} />}
+                  {!completedAt && <ApplicantsList applications={(task as any).applications} locale={params.locale} taskPrice={task.price} />}
                 </div>
               ) : (
                 <div>
@@ -349,6 +349,7 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
               )}
             </div>
 
+            {!isCreator && (
             <div className="card" style={{ padding: '24px' }}>
               <h4 style={{ marginBottom: '16px' }}>{getTranslation(params.locale, 'taskDetail.postedBy') || 'Posted By'}</h4>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
@@ -387,6 +388,7 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                 {getTranslation(params.locale, 'taskDetail.viewProfile') || 'View Profile'}
               </Link>
             </div>
+            )}
           </div>
         </div>
       </div>

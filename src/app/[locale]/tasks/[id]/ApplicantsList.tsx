@@ -3,6 +3,7 @@ import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import useLocale from '../../../../lib/locale'
 import { CURRENCY_SYMBOL } from '../../../../lib/constants'
+import Chat from '../../../../components/Chat'
 
 type Applicant = {
   id: string
@@ -20,10 +21,12 @@ type Applicant = {
 
 export default function ApplicantsList({
   applications,
-  locale
+  locale,
+  taskPrice
 }: {
   applications: Applicant[]
   locale: string
+  taskPrice?: number | null
 }) {
   const { t } = useLocale()
   const [items, setItems] = useState(applications)
@@ -83,17 +86,20 @@ export default function ApplicantsList({
               padding: '16px',
               background: '#d1fae5',
               border: '2px solid #10b981',
-              borderRadius: 'var(--radius-sm)'
+              borderRadius: 'var(--radius-sm)',
+              marginBottom: '16px'
             }}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '12px' }}>
               <div>
                 <div style={{ fontWeight: 600, fontSize: '1.1rem', marginBottom: '4px' }}>
                   {acceptedApp.applicant.name || acceptedApp.applicant.email}
                 </div>
-                <div style={{ fontSize: '0.9rem', color: '#065f46' }}>
-                  {acceptedApp.proposedPrice ? `${t('taskDetail.applicants.agreedPrice') || 'Agreed price:'} ${acceptedApp.proposedPrice} ${CURRENCY_SYMBOL}` : ''}
-                </div>
+                {acceptedApp.proposedPrice && taskPrice && acceptedApp.proposedPrice !== taskPrice && (
+                  <div style={{ fontSize: '0.9rem', color: '#065f46' }}>
+                    {t('taskDetail.applicants.agreedPrice') || 'Agreed price:'} {acceptedApp.proposedPrice} {CURRENCY_SYMBOL}
+                  </div>
+                )}
               </div>
               <button
                 className="btn"
@@ -104,6 +110,13 @@ export default function ApplicantsList({
                 {t('taskDetail.applicants.remove') || 'Remove'}
               </button>
             </div>
+          </div>
+          
+          {/* Chat with accepted applicant */}
+          <div style={{ marginTop: '16px' }}>
+            <Chat 
+              partnerId={acceptedApp.applicant.id}
+            />
           </div>
         </div>
       )}
