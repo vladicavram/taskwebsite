@@ -1,14 +1,20 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '../../../lib/prisma'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '../auth/[...nextauth]/authOptions'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
 export async function GET(req: Request) {
   try {
+    const session = await getServerSession(authOptions)
+    const currentUserId = session?.user?.id
+
     // Get all users who are approved to apply for tasks (workers)
     // Only include users with userType 'tasker' or 'both' (not 'poster')
     // And who have openForHire set to true
+    // Exclude the current user from the list
     const workers = await prisma.user.findMany({
       where: {
         canApply: true,
@@ -16,7 +22,9 @@ export async function GET(req: Request) {
         openForHire: true,
         userType: {
           in: ['tasker', 'both']
-        }
+        },
+        // Exclude current user if logged in
+        ...(currentUserId ? { id: { not: currentUserId } } : {})
       },
       select: {
         id: true,

@@ -521,6 +521,8 @@
   ,"hire.viewProfile": "Vezi Profilul"
   ,"hire.workerNotFound": "Lucrătorul nu a fost găsit"
   ,"hire.backToList": "Înapoi la Lucrători"
+  ,"hire.cannotHireSelf": "Nu te poți angaja pe tine însuți"
+  ,"hire.cannotHireSelfDescription": "Vizualizezi propriul profil. Poți angaja doar alți lucrători."
   ,"hire.hireButton": "Angajează"
   ,"hire.about": "Despre"
   ,"hire.skills": "Abilități"

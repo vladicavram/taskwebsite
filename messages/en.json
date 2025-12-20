@@ -539,6 +539,8 @@
   ,"hire.viewProfile": "View Profile"
   ,"hire.workerNotFound": "Worker not found"
   ,"hire.backToList": "Back to Workers"
+  ,"hire.cannotHireSelf": "You cannot hire yourself"
+  ,"hire.cannotHireSelfDescription": "You are viewing your own profile. You can only hire other workers."
   ,"hire.hireButton": "Hire"
   ,"hire.about": "About"
   ,"hire.skills": "Skills"

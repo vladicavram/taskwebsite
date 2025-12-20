@@ -103,6 +103,30 @@ export default function WorkerProfilePage({ params }: { params: { id: string } }
     )
   }
 
+  // Prevent users from hiring themselves
+  if (session?.user && (session.user as any).id === worker.id) {
+    return (
+      <div className="container" style={{ paddingTop: 60, textAlign: 'center' }}>
+        <div style={{
+          padding: 40,
+          background: 'var(--bg-secondary)',
+          borderRadius: 'var(--radius-md)',
+          maxWidth: 500,
+          margin: '0 auto'
+        }}>
+          <div style={{ fontSize: '4rem', marginBottom: 16 }}>🚫</div>
+          <h2>{t('hire.cannotHireSelf') || 'You cannot hire yourself'}</h2>
+          <p style={{ color: 'var(--text-secondary)', marginTop: 12 }}>
+            {t('hire.cannotHireSelfDescription') || 'You are viewing your own profile. You can only hire other workers.'}
+          </p>
+          <Link href={`/${locale}/hire`} className="btn" style={{ marginTop: 24, display: 'inline-block' }}>
+            {t('hire.backToList') || 'Back to Workers'}
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="container" style={{ paddingTop: 24, maxWidth: 900 }}>
       <div style={{ marginBottom: 24 }}>

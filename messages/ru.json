@@ -521,6 +521,8 @@
   ,"hire.viewProfile": "Посмотреть Профиль"
   ,"hire.workerNotFound": "Работник не найден"
   ,"hire.backToList": "Вернуться к Работникам"
+  ,"hire.cannotHireSelf": "Вы не можете нанять себя"
+  ,"hire.cannotHireSelfDescription": "Вы просматриваете свой собственный профиль. Вы можете нанять только других работников."
   ,"hire.hireButton": "Нанять"
   ,"hire.about": "О себе"
   ,"hire.skills": "Навыки"
