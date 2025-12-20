@@ -74,7 +74,7 @@ export default function TaskCard({ id, title, description, price, category, imag
                 {category}
               </span>
             )}
-            {applicantCount && applicantCount > 0 && (
+            {applicantCount !== undefined && applicantCount > 0 && (
               <span style={{
                 width: '24px',
                 height: '24px',
