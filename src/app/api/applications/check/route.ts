@@ -23,6 +23,7 @@ export async function POST(req: Request) {
     const existing = await prisma.application.findUnique({
       where: { taskId_applicantId: { taskId, applicantId: user.id } }
     })
+    console.log('[APPLICATIONS/CHECK] user=', user.email, 'taskId=', taskId, 'found=', !!existing, existing?.status)
 
     if (!existing) {
       return NextResponse.json({ exists: false })
