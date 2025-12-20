@@ -613,16 +613,32 @@ export default function ApplicationDetailPage() {
         )}
 
         {!isTaskCreator && application.status === 'declined' && (
-          <div style={{
-            padding: '16px',
-            background: '#fee2e2',
-            borderRadius: 'var(--radius-sm)',
-            border: '1px solid #ef4444',
-            color: '#991b1b',
-            fontWeight: 500,
-            textAlign: 'center'
-          }}>
-            Unfortunately, your application was declined
+          <div className="card" style={{ padding: '32px', marginBottom: '24px' }}>
+            <div style={{
+              padding: '16px',
+              background: '#fee2e2',
+              borderRadius: 'var(--radius-sm)',
+              border: '1px solid #ef4444',
+              color: '#991b1b',
+              fontWeight: 500,
+              textAlign: 'center',
+              marginBottom: '24px'
+            }}>
+              Unfortunately, your application was declined
+            </div>
+            
+            <div style={{ textAlign: 'center' }}>
+              <Link 
+                href={`/${locale}/tasks/${application.task.id}`} 
+                className="btn"
+                style={{ 
+                  padding: '14px 24px',
+                  fontSize: '1.1rem'
+                }}
+              >
+                Apply Again
+              </Link>
+            </div>
           </div>
         )}
 
