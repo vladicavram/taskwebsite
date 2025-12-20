@@ -1,0 +1,12 @@
+.postTaskWrapper {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .postTaskWrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+}

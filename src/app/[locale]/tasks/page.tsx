@@ -4,6 +4,7 @@ import TasksBrowser from './TasksBrowser'
 import PostTaskButton from '../../../components/PostTaskButton'
 import { getTranslation } from '../../../lib/locale-server'
 import { prisma } from '../../../lib/prisma'
+import styles from './page.module.css'
 
 export const dynamic = 'force-dynamic'
 
@@ -45,7 +46,7 @@ export default async function TasksPage({ params }: { params: { locale: string }
 
   return (
     <div className="container" style={{ padding: '24px 0' }}>
-      <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBottom: 24 }}>
+      <div className={styles.postTaskWrapper}>
         <PostTaskButton />
       </div>
 
