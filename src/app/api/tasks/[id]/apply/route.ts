@@ -88,9 +88,9 @@ export async function POST(
       return NextResponse.json({ error: 'Agreement acceptance and contract text are required' }, { status: 400 })
     }
 
-    // Enforce fractional credits: required = price/100 (1 credit = 100 MDL)
+    // Enforce fractional credits with a minimum of 1 credit: required = max(1, price/100) (1 credit = 100 MDL)
     const effectivePrice = typeof proposedPrice === 'number' && proposedPrice > 0 ? proposedPrice : (task.price || 0)
-    const requiredCredits = effectivePrice / 100
+    const requiredCredits = Math.max(1, effectivePrice / 100)
     
     console.log('[APPLY] Credit check:', { 
       applicantEmail: applicant.email, 
@@ -111,7 +111,7 @@ export async function POST(
         throw new Error(`Insufficient credits. Required ${requiredCredits.toFixed(2)}, you have ${freshUser?.credits || 0}.`)
       }
 
-      // Deduct credits from applicant
+      // Deduct credits from applicant (minimum 1 credit)
       const updatedUser = await tx.user.update({
         where: { id: applicant.id },
         data: { credits: { decrement: requiredCredits } }

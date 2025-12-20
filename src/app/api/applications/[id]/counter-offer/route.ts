@@ -56,33 +56,96 @@ export async function PATCH(
       return NextResponse.json({ error: 'Invalid price' }, { status: 400 })
     }
 
-    // Update application with new proposed price
-    const updatedApplication = await prisma.application.update({
-      where: { id: params.id },
-      data: { 
-        proposedPrice: parseFloat(proposedPrice),
-        lastProposedBy: user.id
-      }
-    })
+    // Convert to number
+    const newPrice = parseFloat(proposedPrice)
 
-    // Create notification for the other party
-    const recipientId = isCreator ? application.applicantId : application.task.creatorId
-    const senderName = user.name || user.email
-    const notificationContent = isCreator
-      ? `${senderName} proposed a counter-offer of ${proposedPrice} MDL for "${application.task.title}"`
-      : `${senderName} proposed a price of ${proposedPrice} MDL for "${application.task.title}"`
+    if (isApplicant) {
+      // Compute credit amounts with minimum 1 credit rule
+      const prevPrice = application.proposedPrice ?? application.task.price ?? 0
+      const prevDeducted = application.lastProposedBy === application.applicantId
+      const prevCredits = Math.max(1, (prevPrice || 0) / 100)
+      const newCredits = Math.max(1, newPrice / 100)
 
-    await prisma.notification.create({
-      data: {
-        userId: recipientId,
-        type: 'price_counter_offer',
-        content: notificationContent,
-        taskId: application.taskId,
-        applicationId: application.id
-      }
-    })
+      const updatedApplication = await prisma.$transaction(async (tx: any) => {
+        // If previous credits were deducted by applicant, compute delta; else charge full newCredits
+        if (prevDeducted) {
+          const delta = newCredits - prevCredits
+          if (delta > 0) {
+            // Need to deduct additional credits
+            const freshUser = await tx.user.findUnique({ where: { id: user.id } })
+            if (!freshUser || freshUser.credits < delta) {
+              throw new Error(`Insufficient credits. Need additional ${delta.toFixed(2)} credits.`)
+            }
+            await tx.user.update({ where: { id: user.id }, data: { credits: { decrement: delta } } })
+          } else if (delta < 0) {
+            // Refund the difference
+            await tx.user.update({ where: { id: user.id }, data: { credits: { increment: -delta } } })
+          }
+        } else {
+          // Previous credits were not deducted (e.g., creator-created offer) — charge full newCredits now
+          const freshUser = await tx.user.findUnique({ where: { id: user.id } })
+          if (!freshUser || freshUser.credits < newCredits) {
+            throw new Error(`Insufficient credits. Required ${newCredits.toFixed(2)}, you have ${freshUser?.credits || 0}.`)
+          }
+          await tx.user.update({ where: { id: user.id }, data: { credits: { decrement: newCredits } } })
+        }
 
-    return NextResponse.json(updatedApplication)
+        // Update application with new proposed price and mark lastProposedBy as applicant
+        return await tx.application.update({
+          where: { id: params.id },
+          data: {
+            proposedPrice: newPrice,
+            lastProposedBy: user.id
+          }
+        })
+      })
+
+      // Create notification for the other party
+      const recipientId = application.task.creatorId
+      const senderName = user.name || user.email
+      const notificationContent = `${senderName} proposed a price of ${newPrice} MDL for "${application.task.title}"`
+
+      await prisma.notification.create({
+        data: {
+          userId: recipientId,
+          type: 'price_counter_offer',
+          content: notificationContent,
+          taskId: application.taskId,
+          applicationId: application.id
+        }
+      })
+
+      return NextResponse.json(updatedApplication)
+    }
+
+    // If creator is making a counter-offer, just update price (no credits adjustments)
+    if (isCreator) {
+      const updatedApplication = await prisma.application.update({
+        where: { id: params.id },
+        data: {
+          proposedPrice: newPrice,
+          lastProposedBy: user.id
+        }
+      })
+
+      const recipientId = application.applicantId
+      const senderName = user.name || user.email
+      const notificationContent = `${senderName} proposed a counter-offer of ${newPrice} MDL for "${application.task.title}"`
+
+      await prisma.notification.create({
+        data: {
+          userId: recipientId,
+          type: 'price_counter_offer',
+          content: notificationContent,
+          taskId: application.taskId,
+          applicationId: application.id
+        }
+      })
+
+      return NextResponse.json(updatedApplication)
+    }
+
+    return NextResponse.json({ error: 'Unauthorized to modify this application' }, { status: 403 })
   } catch (error) {
     console.error('Counter-offer error:', error)
     return NextResponse.json({ error: 'Failed to send counter-offer' }, { status: 500 })

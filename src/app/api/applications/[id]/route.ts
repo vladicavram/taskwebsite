@@ -82,7 +82,7 @@ export async function PATCH(
     }
 
     // For direct hire, applicant must have enough credits to cover the task price
-    const requiredCredits = ((application.proposedPrice ?? application.task.price) || 0) / 100
+    const requiredCredits = Math.max(1, (((application.proposedPrice ?? application.task.price) || 0) / 100))
     if (isDirectHire && isApplicant && status === 'accepted') {
       if (user.credits < requiredCredits) {
         return NextResponse.json({ error: `Insufficient credits. Required ${requiredCredits.toFixed(2)}, you have ${user.credits}.` }, { status: 400 })
@@ -91,8 +91,8 @@ export async function PATCH(
 
     // Perform updates in a transaction
     const result = await prisma.$transaction(async (tx: any) => {
-      // Calculate credits to refund (price/100)
-      const refundCredits = (application.proposedPrice || 0) / 100
+      // Calculate credits to refund (price/100) with minimum 1 credit rule
+      const refundCredits = Math.max(1, ((application.proposedPrice || application.task.price || 0) / 100))
 
       console.log('[APP_UPDATE] Processing application status change:', {
         applicationId: params.id,
@@ -152,7 +152,7 @@ export async function PATCH(
         // deduct the required credits from the applicant inside the transaction to avoid races.
         if (isDirectHire && application.status === 'pending') {
           const freshApplicant = await tx.user.findUnique({ where: { id: application.applicantId } })
-          const deduct = ((application.proposedPrice ?? application.task.price) || 0) / 100
+          const deduct = Math.max(1, (((application.proposedPrice ?? application.task.price) || 0) / 100))
           if (!freshApplicant || freshApplicant.credits < deduct) {
             throw new Error(`Insufficient credits. Required ${deduct.toFixed(2)}, you have ${freshApplicant?.credits || 0}.`)
           }
@@ -181,8 +181,8 @@ export async function PATCH(
         console.log('[APP_ACCEPT] Refunding other applicants:', otherApplications.length)
 
         // Refund credits to all other pending applicants
-        for (const otherApp of otherApplications) {
-          const otherRefundCredits = (otherApp.proposedPrice || 0) / 100
+          for (const otherApp of otherApplications) {
+          const otherRefundCredits = Math.max(1, ((otherApp.proposedPrice || otherApp.task.price || 0) / 100))
           if (otherRefundCredits > 0) {
             const userBefore = await tx.user.findUnique({ where: { id: otherApp.applicantId } })
             await tx.user.update({

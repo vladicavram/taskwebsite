@@ -83,7 +83,7 @@ export async function POST(req: Request) {
 
     // Determine effective price and required credits
     const effectivePrice = typeof proposedPrice === 'number' && proposedPrice > 0 ? proposedPrice : (task.price || 0)
-    const requiredCredits = effectivePrice / 100
+    const requiredCredits = Math.max(1, effectivePrice / 100)
 
     // Check credits
     if (applicant.credits < requiredCredits) {
