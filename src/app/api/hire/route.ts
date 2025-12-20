@@ -69,6 +69,17 @@ export async function POST(req: Request) {
       } 
     })
 
+    // Create a pending application from the worker
+    await prisma.application.create({
+      data: {
+        taskId: task.id,
+        applicantId: workerId,
+        status: 'pending',
+        proposedPrice: parsedPrice,
+        message: 'Direct hire request'
+      }
+    })
+
     // Create a notification for the worker
     await prisma.notification.create({
       data: {

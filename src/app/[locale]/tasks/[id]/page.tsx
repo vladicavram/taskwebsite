@@ -14,6 +14,9 @@ import ReviewSection from './ReviewSection'
 import { revalidatePath } from 'next/cache'
 import MarkCompleteButton from './MarkCompleteButton'
 import CancelApplicationButton from './CancelApplicationButton'
+import HireRequestActions from './HireRequestActions'
+import CancelHireButton from './CancelHireButton'
+import Chat from '../../../../components/Chat'
 
 type Props = { params: { id: string; locale: string } }
 
@@ -21,11 +24,15 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
   const session: any = await getServerSession(authOptions as any)
   
   // Fetch current user's data to check userType
-  let currentUser = null
+  let currentUser: { id: string; userType: string; credits: number } | null = null
   if (session?.user?.email) {
     currentUser = await prisma.user.findUnique({
       where: { email: session.user.email },
-      select: { userType: true }
+      select: { 
+        id: true,
+        userType: true,
+        credits: true
+      }
     })
   }
   
@@ -55,9 +62,10 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
   }
 
   const isCreator = session?.user?.email === task.creator.email
+  const isDirectHire = (task as any).isDirectHire === true
   const acceptedApps = (task as any).applications.filter((app: any) => app.status === 'accepted')
-  const isAcceptedApplicantServer = !!acceptedApps.find((app: any) => app.applicant.id === session?.user?.id)
-  const userApplication = (task as any).applications.find((app: any) => app.applicant.id === session?.user?.id)
+  const isAcceptedApplicantServer = !!acceptedApps.find((app: any) => app.applicant.id === currentUser?.id)
+  const userApplication = (task as any).applications.find((app: any) => app.applicant.id === currentUser?.id)
   const hasPendingApplication = userApplication?.status === 'pending'
   // Only consider as "already applied" if status is pending or accepted (not declined/removed)
   const hasAlreadyApplied = !!userApplication && (userApplication.status === 'pending' || userApplication.status === 'accepted')
@@ -66,6 +74,9 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
   const completedAt = (task as any).completedAt as Date | undefined
   // Only show review forms if task has accepted applicant or is completed
   const showReviewForms = (isCreator || isAcceptedApplicantServer) && (acceptedApps.length > 0 || !!completedAt)
+  
+  // For direct hire, the hired worker is the one with the application
+  const isHiredWorker = isDirectHire && !!userApplication && currentUser?.id === userApplication.applicantId
 
   return (
     <div>
@@ -164,12 +175,81 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
 
               {isCreator ? (
                 <div>
-                  {!completedAt && (
-                    <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '16px' }}>
-                      <DeleteTaskButton taskId={params.id} locale={params.locale} />
+                  {!completedAt && isDirectHire ? (
+                    <div className="card" style={{ padding: '24px', marginBottom: '16px' }}>
+                      <h3 style={{ marginBottom: '12px' }}>Direct Hire Request</h3>
+                      {acceptedApps.length > 0 ? (
+                        <>
+                          <div style={{
+                            padding: '16px',
+                            background: '#d1fae5',
+                            border: '2px solid #10b981',
+                            borderRadius: '8px',
+                            marginBottom: '16px'
+                          }}>
+                            <div style={{ fontWeight: 600, fontSize: '1.1rem', color: '#065f46', marginBottom: '4px' }}>
+                              ✓ Hire Request Accepted
+                            </div>
+                            <p style={{ color: '#065f46', margin: 0 }}>
+                              {acceptedApps[0].applicant.name || acceptedApps[0].applicant.email} has accepted your hire request.
+                            </p>
+                          </div>
+                          <Chat partnerId={acceptedApps[0].applicantId} />
+                        </>
+                      ) : (
+                        <>
+                          <p style={{ color: 'var(--text-secondary)', marginBottom: '16px' }}>
+                            Waiting for {(task as any).applications[0]?.applicant?.name || 'the worker'} to accept your hire request.
+                          </p>
+                          <CancelHireButton taskId={params.id} locale={params.locale} />
+                        </>
+                      )}
                     </div>
-                  )}
-                  {!completedAt && <ApplicantsList applications={(task as any).applications} locale={params.locale} taskPrice={task.price} />}
+                  ) : !completedAt ? (
+                    <>
+                      <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '16px' }}>
+                        <DeleteTaskButton taskId={params.id} locale={params.locale} />
+                      </div>
+                      <ApplicantsList applications={(task as any).applications} locale={params.locale} taskPrice={task.price} />
+                    </>
+                  ) : null}
+                </div>
+              ) : isHiredWorker ? (
+                <div>
+                  {hasPendingApplication && userApplication ? (
+                    <HireRequestActions 
+                      applicationId={userApplication.id}
+                      taskPrice={task.price || 0}
+                      locale={params.locale}
+                      userCredits={currentUser?.credits || 0}
+                    />
+                  ) : isAcceptedApplicantServer && !completedAt ? (
+                    <>
+                      <div style={{
+                        padding: '16px',
+                        background: '#d1fae5',
+                        border: '2px solid #10b981',
+                        borderRadius: '8px',
+                        marginBottom: '24px'
+                      }}>
+                        <div style={{ fontWeight: 600, fontSize: '1.1rem', color: '#065f46', marginBottom: '12px' }}>
+                          ✓ Hire Request Accepted
+                        </div>
+                        <p style={{ color: '#065f46', marginBottom: '16px' }}>
+                          You can now communicate with the task creator below.
+                        </p>
+                        <MarkCompleteButton taskId={params.id} locale={params.locale} />
+                      </div>
+                      <Chat partnerId={task.creatorId} />
+                    </>
+                  ) : null}
+                </div>
+              ) : isDirectHire ? (
+                <div className="card" style={{ padding: '24px', textAlign: 'center' }}>
+                  <div style={{ fontSize: '3rem', marginBottom: '16px' }}>🔒</div>
+                  <p style={{ color: 'var(--text-secondary)' }}>
+                    This is a private hire request.
+                  </p>
                 </div>
               ) : (
                 <div>
