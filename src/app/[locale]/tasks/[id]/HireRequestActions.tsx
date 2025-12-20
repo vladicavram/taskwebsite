@@ -30,7 +30,7 @@ export default function HireRequestActions({
       return
     }
 
-    if (!confirm(`Accept this hire request for ${taskPrice} ${CURRENCY_SYMBOL}? This will deduct ${requiredCredits} credit(s) from your account.`)) {
+    if (!confirm(`Accept this hire request for ${taskPrice} ${CURRENCY_SYMBOL}?`)) {
       return
     }
 
@@ -111,19 +111,9 @@ export default function HireRequestActions({
   return (
     <div className="card" style={{ padding: '24px', marginBottom: '24px' }}>
       <h3 style={{ marginBottom: '16px' }}>Hire Request</h3>
-      {(() => {
-        const requiredCredits = (proposedPrice || taskPrice) / 100
-        return (
-          <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>
-            You've been hired for this task at {taskPrice} {CURRENCY_SYMBOL}. 
-            {userCredits < requiredCredits && (
-              <span style={{ display: 'block', marginTop: '8px', color: '#ef4444', fontWeight: 600 }}>
-                ⚠️ You need at least {requiredCredits} credit(s) to accept this request.
-              </span>
-            )}
-          </p>
-        )
-      })()}
+      <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>
+        You've been hired for this task at {taskPrice} {CURRENCY_SYMBOL}.
+      </p>
 
       {!showCounterOffer ? (
         <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>

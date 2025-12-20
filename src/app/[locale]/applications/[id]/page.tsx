@@ -540,11 +540,7 @@ export default function ApplicationDetailPage() {
                             </button>
                           )
                         })()}
-                        {userCredits !== null && userCredits < (((application.proposedPrice ?? application.task.price) || 0) / 100) && (
-                          <div style={{ color: '#ef4444', fontWeight: 600, marginTop: '8px', width: '100%' }}>
-                            ⚠️ You need at least {(((application.proposedPrice ?? application.task.price) || 0) / 100)} credit(s) to accept this offer.
-                          </div>
-                        )}
+                        {/* Credit warning removed: do not display required-credit message here */}
                         <button
                           onClick={() => setShowCounterOffer(true)}
                           disabled={actionLoading}
