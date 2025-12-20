@@ -154,20 +154,22 @@ export async function PATCH(
         // Recompute values from the transaction-scoped application
         const totalRequired = Math.max(1, (((currentApp.proposedPrice ?? currentApp.task.price) || 0) / 100))
         const alreadyCharged = (currentApp as any).chargedCredits ?? 0
-        const deductRemaining = Math.max(0, totalRequired - alreadyCharged)
 
-        // Charge any remaining credits atomically; if applicant lacks funds, throw.
-        if (deductRemaining > 0) {
-          const freshApplicant = await tx.user.findUnique({ where: { id: currentApp.applicantId } })
-          if (!freshApplicant) throw new Error('Applicant not found')
-
-          if (freshApplicant.credits < deductRemaining) {
-            throw new Error(`Insufficient credits. Required ${deductRemaining.toFixed(2)}, you have ${freshApplicant?.credits || 0}.`)
-          }
-          await tx.user.update({ where: { id: currentApp.applicantId }, data: { credits: { decrement: deductRemaining } } })
-          // record chargedCredits on the application
-          await tx.application.update({ where: { id: params.id }, data: { chargedCredits: alreadyCharged + deductRemaining } })
+        // Refund all previously charged credits
+        if (alreadyCharged > 0) {
+          await tx.user.update({ where: { id: currentApp.applicantId }, data: { credits: { increment: alreadyCharged } } })
         }
+
+        // Charge the full required credits for the final price; if applicant lacks funds, throw.
+        const freshApplicant = await tx.user.findUnique({ where: { id: currentApp.applicantId } })
+        if (!freshApplicant) throw new Error('Applicant not found')
+
+        if (freshApplicant.credits < totalRequired) {
+          throw new Error(`Insufficient credits. Required ${totalRequired.toFixed(2)}, you have ${freshApplicant.credits}.`)
+        }
+        await tx.user.update({ where: { id: currentApp.applicantId }, data: { credits: { decrement: totalRequired } } })
+        // record chargedCredits on the application
+        await tx.application.update({ where: { id: params.id }, data: { chargedCredits: totalRequired } })
 
         // Update this application to accepted
         const updated = await tx.application.update({
