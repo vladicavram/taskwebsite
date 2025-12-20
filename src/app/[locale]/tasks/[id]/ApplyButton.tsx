@@ -103,17 +103,37 @@ export default function ApplyButton({
   const startApply = (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+    ;(async () => {
+      // First: check with server if user already has an active application for this task
+      try {
+        const checkRes = await fetch('/api/applications/check', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ taskId })
+        })
+        if (checkRes.ok) {
+          const data = await checkRes.json()
+          if (data.exists) {
+            setError(t('taskDetail.apply.alreadyApplied') || 'You have already applied for this task')
+            return
+          }
+        }
+      } catch (err) {
+        // ignore check errors and proceed to normal validation
+      }
 
-    // Validate credits before showing contract
-    const requiredCredits = calculateRequiredCredits(effectivePriceNumber)
-    if (requiredCredits > credits) {
-      const reqStr = requiredCredits.toFixed(2)
-      const requiredPlural = requiredCredits >= 2 ? 's' : ''
-      const template = t('taskDetail.apply.insufficientCredits') || 'Insufficient credits. You need {{required}} credit{{requiredPlural}} but only have {{current}}. Purchase more credits to apply.'
-      setError(interpolate(template, { required: reqStr, requiredPlural, current: String(credits) }))
-      return
-    }
-    setShowContract(true)
+      // Validate credits before showing contract
+      const requiredCredits = calculateRequiredCredits(effectivePriceNumber)
+      if (requiredCredits > credits) {
+        const reqStr = requiredCredits.toFixed(2)
+        const requiredPlural = requiredCredits >= 2 ? 's' : ''
+        const template = t('taskDetail.apply.insufficientCredits') || 'Insufficient credits. You need {{required}} credit{{requiredPlural}} but only have {{current}}. Purchase more credits to apply.'
+        setError(interpolate(template, { required: reqStr, requiredPlural, current: String(credits) }))
+        return
+      }
+
+      setShowContract(true)
+    })()
   }
 
   useEffect(() => {
