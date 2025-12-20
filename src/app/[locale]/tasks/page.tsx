@@ -45,8 +45,7 @@ export default async function TasksPage({ params }: { params: { locale: string }
 
   return (
     <div className="container" style={{ padding: '24px 0' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-        <h1>{getTranslation(locale, 'tasks.browse.title') || 'Browse Tasks'}</h1>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBottom: 24 }}>
         <PostTaskButton />
       </div>
 
