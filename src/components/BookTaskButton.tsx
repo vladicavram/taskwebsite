@@ -17,7 +17,7 @@ export default function BookTaskButton() {
   return (
     <button 
       onClick={handleClick}
-      className="btn" 
+      className="btn btn-secondary" 
       style={{ 
         fontSize: '1.1rem',
         padding: '16px 40px',
