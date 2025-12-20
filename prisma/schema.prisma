@@ -95,6 +95,7 @@ model Application {
   taskId        String
   applicant     User           @relation(fields: [applicantId], references: [id])
   applicantId   String
+  chargedCredits Float?        // amount of credits already charged for this application
   status        String         @default("pending") // pending, accepted, declined, removed
   message       String?
   proposedPrice Float?

@@ -85,7 +85,7 @@ export async function POST(req: Request) {
     const effectivePrice = typeof proposedPrice === 'number' && proposedPrice > 0 ? proposedPrice : (task.price || 0)
     const requiredCredits = Math.max(1, effectivePrice / 100)
 
-    // Check credits
+    // Check credits (client-friendly guard)
     if (applicant.credits < requiredCredits) {
       return NextResponse.json({ error: `Insufficient credits. Required ${requiredCredits.toFixed(2)}, you have ${applicant.credits}.` }, { status: 400 })
     }
@@ -102,7 +102,8 @@ export async function POST(req: Request) {
           proposedPrice: effectivePrice || null,
           message: message || null,
           lastProposedBy: applicant.id,
-          status: 'pending'
+          status: 'pending',
+          chargedCredits: requiredCredits
         }
       })
     })

@@ -81,26 +81,29 @@ export async function PATCH(
       }
     }
 
-    // For direct hire, applicant must have enough credits to cover the task price
-    const requiredCredits = Math.max(1, (((application.proposedPrice ?? application.task.price) || 0) / 100))
-    if (isDirectHire && isApplicant && status === 'accepted') {
-      if (user.credits < requiredCredits) {
-        return NextResponse.json({ error: `Insufficient credits. Required ${requiredCredits.toFixed(2)}, you have ${user.credits}.` }, { status: 400 })
-      }
-    }
+    // NOTE: credits are validated and charged inside the transaction below using the latest application state.
 
     // Perform updates in a transaction
     const result = await prisma.$transaction(async (tx: any) => {
-      // Calculate credits to refund (price/100) with minimum 1 credit rule
-      const refundCredits = Math.max(1, ((application.proposedPrice || application.task.price || 0) / 100))
+      // Re-fetch the latest application inside the transaction to avoid race conditions
+      const currentApp = await tx.application.findUnique({
+        where: { id: params.id },
+        include: { task: true }
+      })
+
+      if (!currentApp) throw new Error('Application not found inside transaction')
+
+      // Calculate credits to refund (use chargedCredits if present, otherwise fallback to price/100)
+      const priceBasedCredits = Math.max(1, ((currentApp.proposedPrice || currentApp.task.price || 0) / 100))
+      const refundCredits = (currentApp as any).chargedCredits ?? priceBasedCredits
 
       console.log('[APP_UPDATE] Processing application status change:', {
         applicationId: params.id,
-        currentStatus: application.status,
+        currentStatus: currentApp.status,
         newStatus: status,
-        proposedPrice: application.proposedPrice,
+        proposedPrice: currentApp.proposedPrice,
         refundCredits,
-        applicantId: application.applicantId
+        applicantId: currentApp.applicantId
       })
 
       // If removing an accepted applicant
@@ -147,16 +150,25 @@ export async function PATCH(
       }
       
       // If accepting, close the task and refund credits to other pending applicants
-      if (status === 'accepted') {
-        // For direct-hire where applicant is accepting now (credits weren't deducted on apply),
-        // deduct the required credits from the applicant inside the transaction to avoid races.
-        if (isDirectHire && application.status === 'pending') {
-          const freshApplicant = await tx.user.findUnique({ where: { id: application.applicantId } })
-          const deduct = Math.max(1, (((application.proposedPrice ?? application.task.price) || 0) / 100))
-          if (!freshApplicant || freshApplicant.credits < deduct) {
-            throw new Error(`Insufficient credits. Required ${deduct.toFixed(2)}, you have ${freshApplicant?.credits || 0}.`)
+        if (status === 'accepted') {
+        // Recompute values from the transaction-scoped application
+        const totalRequired = Math.max(1, (((currentApp.proposedPrice ?? currentApp.task.price) || 0) / 100))
+        const alreadyCharged = (currentApp as any).chargedCredits ?? 0
+        const deductRemaining = Math.max(0, totalRequired - alreadyCharged)
+
+        // For direct hire, charge any remaining amount atomically; if applicant lacks funds, throw.
+        if (isDirectHire) {
+          const freshApplicant = await tx.user.findUnique({ where: { id: currentApp.applicantId } })
+          if (!freshApplicant) throw new Error('Applicant not found')
+
+          if (deductRemaining > 0) {
+            if (freshApplicant.credits < deductRemaining) {
+              throw new Error(`Insufficient credits. Required ${deductRemaining.toFixed(2)}, you have ${freshApplicant?.credits || 0}.`)
+            }
+            await tx.user.update({ where: { id: currentApp.applicantId }, data: { credits: { decrement: deductRemaining } } })
+            // record chargedCredits on the application
+            await tx.application.update({ where: { id: params.id }, data: { chargedCredits: alreadyCharged + deductRemaining } })
           }
-          await tx.user.update({ where: { id: application.applicantId }, data: { credits: { decrement: deduct } } })
         }
 
         // Update this application to accepted
@@ -323,8 +335,9 @@ export async function DELETE(
 
     // Delete the application and refund credits in a transaction
     await prisma.$transaction(async (tx: any) => {
-      // Calculate credits to refund (price/100)
-      const refundCredits = (application.proposedPrice || 0) / 100
+      // Calculate credits to refund (use chargedCredits if present, otherwise fallback to price/100 with minimum 1)
+      const priceBased = Math.max(1, ((application.proposedPrice || application.task.price || 0) / 100))
+      const refundCredits = (application as any).chargedCredits ?? priceBased
 
       console.log('[APP_CANCEL] User cancelling application:', {
         applicationId: params.id,

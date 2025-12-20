@@ -65,11 +65,14 @@ export async function PATCH(
       const prevDeducted = application.lastProposedBy === application.applicantId
       const prevCredits = Math.max(1, (prevPrice || 0) / 100)
       const newCredits = Math.max(1, newPrice / 100)
+      // Track previously charged credits (new schema field `chargedCredits`)
+      const prevCharged = (application as any).chargedCredits ?? (prevDeducted ? prevCredits : 0)
 
       const updatedApplication = await prisma.$transaction(async (tx: any) => {
         // If previous credits were deducted by applicant, compute delta; else charge full newCredits
         if (prevDeducted) {
-          const delta = newCredits - prevCredits
+          // Use previously charged amount (if available) to compute delta
+          const delta = newCredits - (prevCharged || prevCredits)
           if (delta > 0) {
             // Need to deduct additional credits
             const freshUser = await tx.user.findUnique({ where: { id: user.id } })
@@ -77,9 +80,12 @@ export async function PATCH(
               throw new Error(`Insufficient credits. Need additional ${delta.toFixed(2)} credits.`)
             }
             await tx.user.update({ where: { id: user.id }, data: { credits: { decrement: delta } } })
+            // update chargedCredits to reflect additional amount charged
+            await tx.application.update({ where: { id: params.id }, data: { chargedCredits: (prevCharged || prevCredits) + delta } })
           } else if (delta < 0) {
-            // Refund the difference
+            // Refund the difference and reduce chargedCredits
             await tx.user.update({ where: { id: user.id }, data: { credits: { increment: -delta } } })
+            await tx.application.update({ where: { id: params.id }, data: { chargedCredits: Math.max(0, (prevCharged || prevCredits) + delta) } })
           }
         } else {
           // Previous credits were not deducted (e.g., creator-created offer) — charge full newCredits now
@@ -88,6 +94,8 @@ export async function PATCH(
             throw new Error(`Insufficient credits. Required ${newCredits.toFixed(2)}, you have ${freshUser?.credits || 0}.`)
           }
           await tx.user.update({ where: { id: user.id }, data: { credits: { decrement: newCredits } } })
+          // record chargedCredits on application
+          await tx.application.update({ where: { id: params.id }, data: { chargedCredits: newCredits } })
         }
 
         // Update application with new proposed price and mark lastProposedBy as applicant
