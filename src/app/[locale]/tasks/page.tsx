@@ -11,35 +11,43 @@ export const dynamic = 'force-dynamic'
 export default async function TasksPage({ params }: { params: { locale: string } }) {
   const { locale } = params
 
-  // Fetch initial public tasks server-side to avoid client-side flicker
-  const where: any = {
-    isOpen: true,
-    completedAt: null,
-    applications: { none: { status: 'accepted' } }
-  }
-  // Note: isDirectHire filter will be added after database migration
-  const tasks = await prisma.task.findMany({ 
-    where, 
-    include: {
-      applications: {
-        where: {
-          status: { in: ['pending', 'accepted'] }
-        }
-      }
-    },
-    orderBy: { createdAt: 'desc' }, 
-    take: 100 
-  })
+  let initialTasks: any[] = []
   
-  // Map tasks to include applicant count
-  const initialTasks = tasks.map(task => {
-    const applicantCount = task.applications?.length || 0
-    const { applications, ...taskWithoutApplications } = task
-    return {
-      ...taskWithoutApplications,
-      applicantCount
+  try {
+    // Fetch initial public tasks server-side to avoid client-side flicker
+    const where: any = {
+      isOpen: true,
+      completedAt: null,
+      applications: { none: { status: 'accepted' } }
     }
-  })
+    // Note: isDirectHire filter will be added after database migration
+    const tasks = await prisma.task.findMany({ 
+      where, 
+      include: {
+        applications: {
+          where: {
+            status: { in: ['pending', 'accepted'] }
+          }
+        }
+      },
+      orderBy: { createdAt: 'desc' }, 
+      take: 100 
+    })
+    
+    // Map tasks to include applicant count
+    initialTasks = tasks.map(task => {
+      const applicantCount = task.applications?.length || 0
+      const { applications, ...taskWithoutApplications } = task
+      return {
+        ...taskWithoutApplications,
+        applicantCount
+      }
+    })
+  } catch (error) {
+    console.error('Error fetching tasks:', error)
+    // Return empty array on error - client will fetch via API
+    initialTasks = []
+  }
 
   function ServerFallback({ tasks }: { tasks: any[] }) {
     return (
