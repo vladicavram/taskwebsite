@@ -15,6 +15,7 @@ export default async function TasksPage({ params }: { params: { locale: string }
   const where: any = {
     isOpen: true,
     completedAt: null,
+    isDirectHire: false, // Exclude direct hire tasks from browse list
     applications: { none: { status: 'accepted' } }
   }
   const tasks = await prisma.task.findMany({ 

@@ -35,6 +35,7 @@ export async function GET(req: Request) {
     : { 
         isOpen: true,
         completedAt: null,
+        isDirectHire: false, // Exclude direct hire tasks from browse list
         applications: {
           none: {
             status: 'accepted'

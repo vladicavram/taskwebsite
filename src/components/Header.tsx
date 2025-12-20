@@ -126,6 +126,9 @@ export default function Header() {
     } else if (notification.type === 'message') {
       // Support message notification - redirect to messages page
       router.push(`/${locale}/messages`)
+    } else if (notification.type === 'hire_request' && notification.taskId) {
+      // Hire request - redirect to the task detail page
+      router.push(`/${locale}/tasks/${notification.taskId}`)
     }
   }
 

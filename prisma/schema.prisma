@@ -62,12 +62,14 @@ model Task {
   location     String?
   imageUrl     String?       // URL to task image stored in Vercel Blob
   isOpen       Boolean       @default(true)
+  isDirectHire Boolean       @default(false) // True if task was created via direct hire (not shown in browse list)
   creator      User          @relation(fields: [creatorId], references: [id])
   creatorId    String
   category     Category?     @relation(fields: [categoryId], references: [id])
   categoryId   String?
   reviews      Review[]
   applications Application[]
+  notifications Notification[]
   createdAt    DateTime      @default(now())
   completedAt  DateTime?
 }
@@ -112,8 +114,9 @@ model Notification {
   id            String       @id @default(cuid())
   user          User         @relation(fields: [userId], references: [id])
   userId        String
-  type          String       // application_received, application_accepted, application_declined
+  type          String       // application_received, application_accepted, application_declined, hire_request
   content       String
+  task          Task?        @relation(fields: [taskId], references: [id])
   taskId        String?
   application   Application? @relation(fields: [applicationId], references: [id])
   applicationId String?

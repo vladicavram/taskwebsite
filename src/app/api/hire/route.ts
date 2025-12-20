@@ -64,7 +64,8 @@ export async function POST(req: Request) {
         description, 
         price: parsedPrice,
         location,
-        creatorId: user.id 
+        creatorId: user.id,
+        isDirectHire: true // Mark this as a direct hire task
       } 
     })
 
