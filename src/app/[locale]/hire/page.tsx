@@ -146,9 +146,22 @@ export default function HireWorkersPage() {
                   justifyContent: 'center',
                   fontSize: '1.2rem',
                   fontWeight: 600,
-                  flexShrink: 0
+                  flexShrink: 0,
+                  overflow: 'hidden'
                 }}>
-                  {worker.name?.charAt(0).toUpperCase() || '?'}
+                  {worker.image ? (
+                    <img 
+                      src={worker.image} 
+                      alt={worker.name || 'Worker'} 
+                      style={{ 
+                        width: '100%', 
+                        height: '100%', 
+                        objectFit: 'cover' 
+                      }} 
+                    />
+                  ) : (
+                    worker.name?.charAt(0).toUpperCase() || '?'
+                  )}
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>

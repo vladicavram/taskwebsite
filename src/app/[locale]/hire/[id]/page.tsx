@@ -154,9 +154,22 @@ export default function WorkerProfilePage({ params }: { params: { id: string } }
             justifyContent: 'center',
             fontSize: '3rem',
             fontWeight: 600,
-            flexShrink: 0
+            flexShrink: 0,
+            overflow: 'hidden'
           }}>
-            {worker.name?.charAt(0).toUpperCase() || '?'}
+            {worker.image ? (
+              <img 
+                src={worker.image} 
+                alt={worker.name || 'Worker'} 
+                style={{ 
+                  width: '100%', 
+                  height: '100%', 
+                  objectFit: 'cover' 
+                }} 
+              />
+            ) : (
+              worker.name?.charAt(0).toUpperCase() || '?'
+            )}
           </div>
           <div style={{ flex: 1 }}>
             <h1 style={{ margin: 0, fontSize: '2rem' }}>{worker.name || 'Anonymous'}</h1>
