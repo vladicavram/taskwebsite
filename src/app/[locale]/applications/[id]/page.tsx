@@ -18,6 +18,7 @@ export default function ApplicationDetailPage() {
   const [error, setError] = useState('')
   const [actionLoading, setActionLoading] = useState(false)
   const [userCredits, setUserCredits] = useState<number | null>(null)
+  const [applicantCredits, setApplicantCredits] = useState<number | null>(null)
   const [counterOfferPrice, setCounterOfferPrice] = useState('')
   const [showCounterOffer, setShowCounterOffer] = useState(false)
   const [offerSent, setOfferSent] = useState(false)
@@ -47,6 +48,18 @@ export default function ApplicationDetailPage() {
         const notification = notifications.find((n: any) => n.applicationId === applicationId)
         if (notification?.application) {
           setApplication(notification.application)
+          // fetch the applicant's live credits for creator views
+          try {
+            if (notification.application?.applicantId) {
+              const res = await fetch(`/api/users/${notification.application.applicantId}/credits`)
+              if (res.ok) {
+                const d = await res.json()
+                setApplicantCredits(d.credits ?? 0)
+              }
+            }
+          } catch (e) {
+            // ignore
+          }
         } else {
           setError('Application not found')
         }
@@ -73,6 +86,18 @@ export default function ApplicationDetailPage() {
         alert(`Application ${status}!`)
         // Refresh application and current user's credits after actions
         await fetchApplication()
+        // refresh applicant credits if current user is the creator
+        try {
+          if (isTaskCreator && application?.applicantId) {
+            const res = await fetch(`/api/users/${application.applicantId}/credits`)
+            if (res.ok) {
+              const d = await res.json()
+              setApplicantCredits(d.credits ?? 0)
+            }
+          }
+        } catch (e) {
+          // ignore
+        }
         try {
           const creditsRes = await fetch('/api/users/credits')
           if (creditsRes.ok) {
@@ -114,6 +139,18 @@ export default function ApplicationDetailPage() {
         setTimeout(() => setOfferSent(false), 3000)
         // Refresh application and current user's credits after making a counter-offer
         await fetchApplication()
+        // refresh applicant credits if current user is the creator
+        try {
+          if (isTaskCreator && application?.applicantId) {
+            const res = await fetch(`/api/users/${application.applicantId}/credits`)
+            if (res.ok) {
+              const d = await res.json()
+              setApplicantCredits(d.credits ?? 0)
+            }
+          }
+        } catch (e) {
+          // ignore
+        }
         try {
           const creditsRes = await fetch('/api/users/credits')
           if (creditsRes.ok) {
@@ -162,7 +199,7 @@ export default function ApplicationDetailPage() {
   const receivedCounterOffer = application.lastProposedBy && application.lastProposedBy !== userEmail
   const isDirectHire = application.task.isDirectHire === true
   const requiredCreditsForCreator = ((application.proposedPrice ?? application.task.price) || 0) / 100
-  const applicantCreditsAvailable = application.applicant?.credits ?? null
+  const applicantCreditsAvailable = applicantCredits
   const applicantInsufficientForCreator = applicantCreditsAvailable !== null && applicantCreditsAvailable < requiredCreditsForCreator
 
   return (
