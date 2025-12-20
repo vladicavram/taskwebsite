@@ -71,11 +71,14 @@ export async function GET(req: Request) {
   })
   
   // Map tasks to include applicant count
-  const tasksWithCount = tasks.map(task => ({
-    ...task,
-    applicantCount: task.applications.length,
-    applications: undefined // Remove applications array from response
-  }))
+  const tasksWithCount = tasks.map(task => {
+    const applicantCount = task.applications?.length || 0
+    const { applications, ...taskWithoutApplications } = task
+    return {
+      ...taskWithoutApplications,
+      applicantCount
+    }
+  })
   
   return NextResponse.json(tasksWithCount)
 }

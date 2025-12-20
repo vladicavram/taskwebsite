@@ -32,11 +32,14 @@ export default async function TasksPage({ params }: { params: { locale: string }
   })
   
   // Map tasks to include applicant count
-  const initialTasks = tasks.map(task => ({
-    ...task,
-    applicantCount: task.applications.length,
-    applications: undefined
-  }))
+  const initialTasks = tasks.map(task => {
+    const applicantCount = task.applications?.length || 0
+    const { applications, ...taskWithoutApplications } = task
+    return {
+      ...taskWithoutApplications,
+      applicantCount
+    }
+  })
 
   function ServerFallback({ tasks }: { tasks: any[] }) {
     return (
