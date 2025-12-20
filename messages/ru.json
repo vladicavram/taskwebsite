@@ -130,6 +130,8 @@
   "account.completedTasks": "Завершенные Задачи",
   "account.saveChanges": "Сохранить Изменения",
   "account.saving": "Сохранение...",
+  "account.openForHire": "Я Доступен для Работы",
+  "account.openForHireDesc": "Позволить клиентам находить и нанимать меня напрямую из каталога работников",
   "profile.location": "Местоположение",
   "profile.create.selectCity": "Выберите город",
   "profile.bio": "Биография",

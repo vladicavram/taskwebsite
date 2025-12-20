@@ -130,6 +130,8 @@
   "account.completedTasks": "Sarcini Completate",
   "account.saveChanges": "Salvează Modificările",
   "account.saving": "Se salvează...",
+  "account.openForHire": "Sunt Disponibil pentru Angajare",
+  "account.openForHireDesc": "Permite clienților să mă găsească și să mă angajeze direct din directorul de lucrători",
   "profile.location": "Locație",
   "profile.create.selectCity": "Selectează un oraș",
   "profile.bio": "Biografie",

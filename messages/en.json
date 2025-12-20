@@ -148,6 +148,8 @@
   "account.completedTasks": "Completed Tasks",
   "account.saveChanges": "Save Changes",
   "account.saving": "Saving...",
+  "account.openForHire": "I'm Available for Work",
+  "account.openForHireDesc": "Let clients find and hire me directly from the workers directory",
   "profile.location": "Location",
   "profile.create.selectCity": "Select a city",
   "profile.bio": "Bio",
