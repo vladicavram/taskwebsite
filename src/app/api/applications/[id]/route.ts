@@ -156,19 +156,17 @@ export async function PATCH(
         const alreadyCharged = (currentApp as any).chargedCredits ?? 0
         const deductRemaining = Math.max(0, totalRequired - alreadyCharged)
 
-        // For direct hire, charge any remaining amount atomically; if applicant lacks funds, throw.
-        if (isDirectHire) {
+        // Charge any remaining credits atomically; if applicant lacks funds, throw.
+        if (deductRemaining > 0) {
           const freshApplicant = await tx.user.findUnique({ where: { id: currentApp.applicantId } })
           if (!freshApplicant) throw new Error('Applicant not found')
 
-          if (deductRemaining > 0) {
-            if (freshApplicant.credits < deductRemaining) {
-              throw new Error(`Insufficient credits. Required ${deductRemaining.toFixed(2)}, you have ${freshApplicant?.credits || 0}.`)
-            }
-            await tx.user.update({ where: { id: currentApp.applicantId }, data: { credits: { decrement: deductRemaining } } })
-            // record chargedCredits on the application
-            await tx.application.update({ where: { id: params.id }, data: { chargedCredits: alreadyCharged + deductRemaining } })
+          if (freshApplicant.credits < deductRemaining) {
+            throw new Error(`Insufficient credits. Required ${deductRemaining.toFixed(2)}, you have ${freshApplicant?.credits || 0}.`)
           }
+          await tx.user.update({ where: { id: currentApp.applicantId }, data: { credits: { decrement: deductRemaining } } })
+          // record chargedCredits on the application
+          await tx.application.update({ where: { id: params.id }, data: { chargedCredits: alreadyCharged + deductRemaining } })
         }
 
         // Update this application to accepted
