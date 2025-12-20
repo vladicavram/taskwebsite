@@ -141,6 +141,9 @@ export default function ApplicationDetailPage() {
   const userEmail = session?.user?.email
   const receivedCounterOffer = application.lastProposedBy && application.lastProposedBy !== userEmail
   const isDirectHire = application.task.isDirectHire === true
+  const requiredCreditsForCreator = ((application.proposedPrice ?? application.task.price) || 0) / 100
+  const applicantCreditsAvailable = application.applicant?.credits ?? null
+  const applicantInsufficientForCreator = applicantCreditsAvailable !== null && applicantCreditsAvailable < requiredCreditsForCreator
 
   return (
     <div>
@@ -297,19 +300,27 @@ export default function ApplicationDetailPage() {
                 
                 {!showCounterOffer ? (
                   <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                    <button
-                      onClick={() => handleAction('accepted')}
-                      disabled={actionLoading}
-                      className="btn"
-                      style={{ 
-                        flex: 1,
-                        padding: '14px',
-                        fontSize: '1.1rem',
-                        opacity: actionLoading ? 0.6 : 1
-                      }}
-                    >
-                      ✓ Accept {application.proposedPrice || application.task.price} {CURRENCY_SYMBOL}
-                    </button>
+                    <div style={{ flex: 1 }}>
+                      <button
+                        onClick={() => handleAction('accepted')}
+                        disabled={actionLoading || applicantInsufficientForCreator}
+                        className="btn"
+                        style={{ 
+                          width: '100%',
+                          padding: '14px',
+                          fontSize: '1.1rem',
+                          opacity: (actionLoading || applicantInsufficientForCreator) ? 0.6 : 1,
+                          cursor: applicantInsufficientForCreator ? 'not-allowed' : 'pointer'
+                        }}
+                      >
+                        ✓ Accept {application.proposedPrice || application.task.price} {CURRENCY_SYMBOL}
+                      </button>
+                      {applicantInsufficientForCreator && (
+                        <div style={{ marginTop: 8, fontSize: '0.95rem', color: 'var(--text-muted)' }}>
+                          Applicant has insufficient credits ({applicantCreditsAvailable} credits). Ask them to top up before accepting.
+                        </div>
+                      )}
+                    </div>
                     <button
                       onClick={() => setShowCounterOffer(true)}
                       disabled={actionLoading}
