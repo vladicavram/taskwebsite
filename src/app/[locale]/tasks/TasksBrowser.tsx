@@ -23,6 +23,7 @@ export default function TasksBrowser({ locale, initialTasks }: { locale: string,
 	const [showCompleted, setShowCompleted] = useState(false)
 	const [tasks, setTasks] = useState<Task[]>(initialTasks || [])
 	const [loading, setLoading] = useState(false)
+	const [displayCount, setDisplayCount] = useState(16) // 4 rows * 4 columns = 16 items
 
 	const firstRender = useRef(true)
 
@@ -55,6 +56,14 @@ export default function TasksBrowser({ locale, initialTasks }: { locale: string,
 		// If there are no initial tasks passed from server, fetch on mount
 		if (!initialTasks) fetchTasks()
 	}, [])
+
+	// Reset display count when filters change
+	useEffect(() => {
+		setDisplayCount(16)
+	}, [q, priceMin, priceMax, location, showCompleted])
+
+	const displayedTasks = tasks.slice(0, displayCount)
+	const hasMore = tasks.length > displayCount
 
 	return (
 		<div>
@@ -121,18 +130,19 @@ export default function TasksBrowser({ locale, initialTasks }: { locale: string,
 							onChange={(e) => setShowCompleted(e.target.checked)}
 							style={{ width: '16px', height: '16px' }}
 						/>
-						{t('tasks.browse.showCompleted') || 'Show completed tasks only'}
-					</label>
-				</div>
+			{t('tasks.browse.showCompleted') || 'Show completed tasks only'}
+				</label>
 			</div>
+		</div>
 
-			{loading ? (
-				<div className="card" style={{ padding: 24 }}>{t('tasks.browse.loading') || 'Loading...'}</div>
-			) : tasks.length === 0 ? (
-				<div className="card" style={{ padding: 24 }}>{t('tasks.browse.noResults') || 'No tasks match your filters.'}</div>
-			) : (
+		{loading ? (
+			<div className="card" style={{ padding: 24 }}>{t('tasks.browse.loading') || 'Loading...'}</div>
+		) : displayedTasks.length === 0 ? (
+			<div className="card" style={{ padding: 24 }}>{t('tasks.browse.noResults') || 'No tasks match your filters.'}</div>
+		) : (
+			<>
 				<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 16 }}>
-					{tasks.map((t) => (
+					{displayedTasks.map((t) => (
 						<TaskCard
 							key={t.id}
 							id={t.id}
@@ -144,8 +154,19 @@ export default function TasksBrowser({ locale, initialTasks }: { locale: string,
 						/>
 					))}
 				</div>
-			)}
-		</div>
-	)
+				{hasMore && (
+					<div style={{ textAlign: 'center', padding: '20px 0' }}>
+						<button
+							onClick={() => setDisplayCount(prev => prev + 16)}
+							className="btn btn-secondary"
+							style={{ minWidth: '150px' }}
+						>
+							{t('common.viewMore')}
+						</button>
+					</div>
+				)}
+			</>
+		)}
+	</div>
+)
 }
-

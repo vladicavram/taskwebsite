@@ -14,6 +14,7 @@ export default function HireWorkersPage() {
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
   const [locationFilter, setLocationFilter] = useState('')
+  const [displayCount, setDisplayCount] = useState(16) // 4 rows * 4 columns = 16 items
 
   useEffect(() => {
     loadWorkers()
@@ -44,6 +45,14 @@ export default function HireWorkersPage() {
     
     return matchesSearch && matchesLocation
   })
+
+  // Reset display count when filters change
+  useEffect(() => {
+    setDisplayCount(16)
+  }, [searchQuery, locationFilter])
+
+  const displayedWorkers = filteredWorkers.slice(0, displayCount)
+  const hasMore = filteredWorkers.length > displayCount
 
   return (
     <div className="container" style={{ paddingTop: 24, maxWidth: 1200 }}>
@@ -103,12 +112,13 @@ export default function HireWorkersPage() {
           </p>
         </div>
       ) : (
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
-          gap: 16
-        }}>
-          {filteredWorkers.map((worker) => (
+        <>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+            gap: 16
+          }}>
+            {displayedWorkers.map((worker) => (
             <Link
               key={worker.id}
               href={`/${locale}/hire/${worker.id}`}
@@ -236,6 +246,18 @@ export default function HireWorkersPage() {
             </Link>
           ))}
         </div>
+        {hasMore && (
+          <div style={{ textAlign: 'center', padding: '20px 0' }}>
+            <button
+              onClick={() => setDisplayCount(prev => prev + 16)}
+              className="btn btn-secondary"
+              style={{ minWidth: '150px' }}
+            >
+              {t('common.viewMore')}
+            </button>
+          </div>
+        )}
+      </>
       )}
     </div>
   )
