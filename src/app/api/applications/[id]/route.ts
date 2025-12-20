@@ -58,10 +58,27 @@ export async function PATCH(
     }
 
 
-    // Only the task creator can accept or remove an application (EXCEPT direct hire: applicant can accept)
+    // Only the task creator can accept or remove an application, except:
+    // - For direct-hire tasks the hired applicant must be the one to accept (creator cannot accept on their behalf).
+    // - The task creator is still allowed to remove applications.
     const isDirectHire = application.task.isDirectHire === true;
-    if ((status === 'accepted' || status === 'removed') && !isTaskCreator && !(isDirectHire && isApplicant && status === 'accepted')) {
-      return NextResponse.json({ error: 'Only the task creator can accept or remove applications' }, { status: 403 })
+    if (status === 'accepted') {
+      if (isDirectHire) {
+        // For direct hires only the applicant may accept
+        if (!isApplicant) {
+          return NextResponse.json({ error: 'Only the hired applicant can accept direct-hire requests' }, { status: 403 })
+        }
+      } else {
+        // For normal tasks only the creator can accept
+        if (!isTaskCreator) {
+          return NextResponse.json({ error: 'Only the task creator can accept applications' }, { status: 403 })
+        }
+      }
+    } else if (status === 'removed') {
+      // Only task creator can remove an application
+      if (!isTaskCreator) {
+        return NextResponse.json({ error: 'Only the task creator can remove applications' }, { status: 403 })
+      }
     }
 
     // For direct hire, applicant must have enough credits to cover the task price
