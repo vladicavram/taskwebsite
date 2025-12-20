@@ -64,19 +64,17 @@ export default function TasksBrowser({ locale, initialTasks }: { locale: string,
 					grid-template-columns: 2fr 1fr 1fr 1fr;
 					gap: 12px;
 				}
-				.filters-row {
-					display: grid;
-					grid-template-columns: repeat(3, 1fr);
-					gap: 12px;
-					grid-column: span 3;
-				}
 				@media (max-width: 768px) {
 					.search-grid {
 						grid-template-columns: 1fr;
 					}
-					.filters-row {
-						grid-column: span 1;
-						grid-template-columns: 1fr;
+					.search-grid input[type="text"] {
+						grid-column: 1;
+					}
+					.search-grid .price-location-row {
+						display: grid;
+						grid-template-columns: 1fr 1fr 1fr;
+						gap: 12px;
 					}
 				}
 			`}</style>
@@ -89,7 +87,7 @@ export default function TasksBrowser({ locale, initialTasks }: { locale: string,
 						onChange={(e) => setQ(e.target.value)}
 						style={{ width: '100%' }}
 					/>
-					<div className="filters-row">
+					<div className="price-location-row" style={{ display: 'contents' }}>
 						<input
 							type="number"
 							placeholder={t('tasks.browse.minPrice') || 'Min price'}
