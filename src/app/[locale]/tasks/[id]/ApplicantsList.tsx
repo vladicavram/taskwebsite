@@ -149,7 +149,9 @@ export default function ApplicantsList({
                     {app.applicant.name || app.applicant.email}
                   </div>
                   <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                    {app.proposedPrice ? `${t('taskDetail.applicants.proposed') || 'Proposed:'} ${app.proposedPrice} ${CURRENCY_SYMBOL}` : (t('taskDetail.applicants.noPrice') || 'No price proposed')}
+                    {app.proposedPrice && (!taskPrice || app.proposedPrice !== taskPrice) 
+                      ? `${t('taskDetail.applicants.proposed') || 'Proposed:'} ${app.proposedPrice} ${CURRENCY_SYMBOL}` 
+                      : !app.proposedPrice && (t('taskDetail.applicants.noPrice') || 'No price proposed')}
                   </div>
                   {app.message && (
                     <div style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginTop: 4 }}>
