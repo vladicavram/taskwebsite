@@ -11,9 +11,10 @@ type Props = {
   price?: number | null
   category?: string
   imageUrl?: string | null
+  applicantCount?: number
 }
 
-export default function TaskCard({ id, title, description, price, category, imageUrl }: Props) {
+export default function TaskCard({ id, title, description, price, category, imageUrl, applicantCount }: Props) {
   const { data: session } = useSession()
   const router = useRouter()
   const pathname = usePathname()
@@ -57,7 +58,8 @@ export default function TaskCard({ id, title, description, price, category, imag
           display: 'flex', 
           justifyContent: 'space-between', 
           alignItems: 'center',
-          marginBottom: '12px'
+          marginBottom: '12px',
+          position: 'relative'
         }}>
           {category && (
             <span style={{
@@ -71,19 +73,38 @@ export default function TaskCard({ id, title, description, price, category, imag
               {category}
             </span>
           )}
-          {price && (
-            <span style={{
-              fontSize: '0.75rem',
-              fontWeight: 700,
-              color: '#FFFFFF',
-              background: 'linear-gradient(135deg, #C8996F 0%, #B8895F 100%)',
-              padding: '6px 12px',
-              borderRadius: '16px',
-              boxShadow: '0 2px 8px rgba(200, 153, 111, 0.3)'
-            }}>
-              {price} MDL
-            </span>
-          )}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            {applicantCount && applicantCount > 0 && (
+              <span style={{
+                width: '24px',
+                height: '24px',
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, #C8996F 0%, #B8895F 100%)',
+                color: '#FFFFFF',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '0.7rem',
+                fontWeight: 700,
+                boxShadow: '0 2px 6px rgba(200, 153, 111, 0.4)'
+              }}>
+                {applicantCount}
+              </span>
+            )}
+            {price && (
+              <span style={{
+                fontSize: '0.75rem',
+                fontWeight: 700,
+                color: '#FFFFFF',
+                background: 'linear-gradient(135deg, #C8996F 0%, #B8895F 100%)',
+                padding: '6px 12px',
+                borderRadius: '16px',
+                boxShadow: '0 2px 8px rgba(200, 153, 111, 0.3)'
+              }}>
+                {price} MDL
+              </span>
+            )}
+          </div>
         </div>
         
         <h3 style={{ 

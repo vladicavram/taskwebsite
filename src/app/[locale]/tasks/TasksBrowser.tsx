@@ -11,6 +11,7 @@ type Task = {
 	price?: number | null
 	location?: string | null
 	imageUrl?: string | null
+	applicantCount?: number
 	[key: string]: any
 }
 
@@ -151,6 +152,7 @@ export default function TasksBrowser({ locale, initialTasks }: { locale: string,
 							price={t.price}
 							category={t.category}
 							imageUrl={t.imageUrl}
+							applicantCount={t.applicantCount}
 						/>
 					))}
 				</div>

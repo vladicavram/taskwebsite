@@ -58,10 +58,25 @@ export async function GET(req: Request) {
 
   const tasks = await prisma.task.findMany({
     where,
+    include: {
+      applications: {
+        where: {
+          status: { in: ['pending', 'accepted'] }
+        }
+      }
+    },
     orderBy: { createdAt: 'desc' },
     take: 100
   })
-  return NextResponse.json(tasks)
+  
+  // Map tasks to include applicant count
+  const tasksWithCount = tasks.map(task => ({
+    ...task,
+    applicantCount: task.applications.length,
+    applications: undefined // Remove applications array from response
+  }))
+  
+  return NextResponse.json(tasksWithCount)
 }
 
 export async function POST(req: Request) {

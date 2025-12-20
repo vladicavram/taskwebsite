@@ -17,7 +17,25 @@ export default async function TasksPage({ params }: { params: { locale: string }
     completedAt: null,
     applications: { none: { status: 'accepted' } }
   }
-  const initialTasks = await prisma.task.findMany({ where, orderBy: { createdAt: 'desc' }, take: 100 })
+  const tasks = await prisma.task.findMany({ 
+    where, 
+    include: {
+      applications: {
+        where: {
+          status: { in: ['pending', 'accepted'] }
+        }
+      }
+    },
+    orderBy: { createdAt: 'desc' }, 
+    take: 100 
+  })
+  
+  // Map tasks to include applicant count
+  const initialTasks = tasks.map(task => ({
+    ...task,
+    applicantCount: task.applications.length,
+    applications: undefined
+  }))
 
   function ServerFallback({ tasks }: { tasks: any[] }) {
     return (
