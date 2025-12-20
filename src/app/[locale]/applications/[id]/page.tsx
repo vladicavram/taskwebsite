@@ -140,6 +140,7 @@ export default function ApplicationDetailPage() {
   const isTaskCreator = session?.user?.email === application.task.creator?.email
   const userEmail = session?.user?.email
   const receivedCounterOffer = application.lastProposedBy && application.lastProposedBy !== userEmail
+  const isDirectHire = application.task.isDirectHire === true
 
   return (
     <div>
@@ -520,7 +521,7 @@ export default function ApplicationDetailPage() {
                   <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
                     {receivedCounterOffer ? (
                       <>
-                        {(() => {
+                        {isDirectHire && (() => {
                           const requiredCredits = ((application.proposedPrice ?? application.task.price) || 0) / 100
                           const insufficient = userCredits !== null && userCredits < requiredCredits
                           return (
