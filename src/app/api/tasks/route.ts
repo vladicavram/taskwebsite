@@ -41,18 +41,7 @@ export async function GET(req: Request) {
           }
         }
       }
-  
-  // Only filter by isDirectHire if the column exists (after migration)
-  if (!showCompleted) {
-    try {
-      where.OR = [
-        { isDirectHire: false },
-        { isDirectHire: null }
-      ]
-    } catch (e) {
-      // Column doesn't exist yet, skip this filter
-    }
-  }
+  // Note: isDirectHire filter will be added after database migration
   if (q) {
     where.OR = [
       { title: { contains: q, mode: 'insensitive' } },

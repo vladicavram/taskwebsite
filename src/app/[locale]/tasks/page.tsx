@@ -17,16 +17,7 @@ export default async function TasksPage({ params }: { params: { locale: string }
     completedAt: null,
     applications: { none: { status: 'accepted' } }
   }
-  
-  // Only filter by isDirectHire if the column exists (after migration)
-  try {
-    where.OR = [
-      { isDirectHire: false },
-      { isDirectHire: null }
-    ]
-  } catch (e) {
-    // Column doesn't exist yet, skip this filter
-  }
+  // Note: isDirectHire filter will be added after database migration
   const tasks = await prisma.task.findMany({ 
     where, 
     include: {
