@@ -30,32 +30,31 @@ export default function ContactPage() {
     setSending(true)
 
     try {
-      // Get all admins
-      const adminsRes = await fetch('/api/admin/users?role=admin')
-      const admins = await adminsRes.json()
-
-      // Send message to each admin
-      for (const admin of admins) {
-        await fetch('/api/messages', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            recipientId: admin.id,
-            content: `**${subject}**\n\nFrom: ${name || session.user?.name} (${email || session.user?.email})\n\n${message}`
-          })
+      const res = await fetch('/api/messages/support', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          subject: subject,
+          content: `From: ${name || session.user?.name} (${email || session.user?.email})\n\n${message}`
         })
-      }
+      })
 
-      setSuccess(true)
-      setSubject('')
-      setMessage('')
-      
-      setTimeout(() => {
-        router.push(`/${locale}/messages`)
-      }, 2000)
-    } catch (error) {
+      const data = await res.json()
+
+      if (res.ok) {
+        setSuccess(true)
+        setSubject('')
+        setMessage('')
+        
+        setTimeout(() => {
+          router.push(`/${locale}/messages`)
+        }, 2000)
+      } else {
+        throw new Error(data.error || 'Failed to send message')
+      }
+    } catch (error: any) {
       console.error('Failed to send message:', error)
-      alert('Failed to send message. Please try again.')
+      alert(error.message || 'Failed to send message. Please try again.')
     } finally {
       setSending(false)
     }
