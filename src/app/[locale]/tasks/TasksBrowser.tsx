@@ -30,16 +30,25 @@ export default function TasksBrowser({ locale, initialTasks }: { locale: string,
 
 	const fetchTasks = async () => {
 		setLoading(true)
-		const params = new URLSearchParams()
-		if (q) params.set('q', q)
-		if (priceMin) params.set('priceMin', priceMin)
-		if (priceMax) params.set('priceMax', priceMax)
-		if (location) params.set('location', location)
-		if (showCompleted) params.set('completed', 'true')
-		const res = await fetch(`/api/tasks?${params.toString()}`)
-		const data = await res.json()
-		setTasks(data)
-		setLoading(false)
+		try {
+			const params = new URLSearchParams()
+			if (q) params.set('q', q)
+			if (priceMin) params.set('priceMin', priceMin)
+			if (priceMax) params.set('priceMax', priceMax)
+			if (location) params.set('location', location)
+			if (showCompleted) params.set('completed', 'true')
+			const res = await fetch(`/api/tasks?${params.toString()}`)
+			if (!res.ok) {
+				throw new Error(`HTTP ${res.status}: ${res.statusText}`)
+			}
+			const data = await res.json()
+			setTasks(data)
+		} catch (error) {
+			console.error('Error fetching tasks:', error)
+			setTasks([])
+		} finally {
+			setLoading(false)
+		}
 	}
 
 	useEffect(() => {
