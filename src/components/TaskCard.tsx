@@ -57,23 +57,23 @@ export default function TaskCard({ id, title, description, price, category, imag
         <div style={{ 
           display: 'flex', 
           justifyContent: 'space-between', 
-          alignItems: 'center',
+          alignItems: 'start',
           marginBottom: '12px',
           position: 'relative'
         }}>
-          {category && (
-            <span style={{
-              fontSize: '0.75rem',
-              fontWeight: 500,
-              color: 'var(--accent)',
-              background: 'var(--accent-light)',
-              padding: '4px 12px',
-              borderRadius: '12px'
-            }}>
-              {category}
-            </span>
-          )}
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            {category && (
+              <span style={{
+                fontSize: '0.75rem',
+                fontWeight: 500,
+                color: 'var(--accent)',
+                background: 'var(--accent-light)',
+                padding: '4px 12px',
+                borderRadius: '12px'
+              }}>
+                {category}
+              </span>
+            )}
             {applicantCount && applicantCount > 0 && (
               <span style={{
                 width: '24px',
@@ -91,20 +91,20 @@ export default function TaskCard({ id, title, description, price, category, imag
                 {applicantCount}
               </span>
             )}
-            {price && (
-              <span style={{
-                fontSize: '0.75rem',
-                fontWeight: 700,
-                color: '#FFFFFF',
-                background: 'linear-gradient(135deg, #C8996F 0%, #B8895F 100%)',
-                padding: '6px 12px',
-                borderRadius: '16px',
-                boxShadow: '0 2px 8px rgba(200, 153, 111, 0.3)'
-              }}>
-                {price} MDL
-              </span>
-            )}
           </div>
+          {price && (
+            <span style={{
+              fontSize: '0.75rem',
+              fontWeight: 700,
+              color: '#FFFFFF',
+              background: 'linear-gradient(135deg, #C8996F 0%, #B8895F 100%)',
+              padding: '6px 12px',
+              borderRadius: '16px',
+              boxShadow: '0 2px 8px rgba(200, 153, 111, 0.3)'
+            }}>
+              {price} MDL
+            </span>
+          )}
         </div>
         
         <h3 style={{ 
