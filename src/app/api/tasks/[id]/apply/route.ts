@@ -42,6 +42,20 @@ export async function POST(
       return NextResponse.json({ error: 'Cannot apply to a completed task' }, { status: 400 })
     }
 
+    // Defensive: If this is a direct-hire task, only the hired worker (the existing application applicant)
+    // should be allowed to interact with it. Block other users from creating new applications for this task.
+    if ((task as any).isDirectHire === true) {
+      // Find any existing active application for this task
+      const activeForTask = await prisma.application.findFirst({
+        where: { taskId: params.id, status: { in: ['pending', 'accepted'] } }
+      })
+
+      // If there's an active application and it's for a different user, block applying
+      if (activeForTask && activeForTask.applicantId !== applicant.id) {
+        return NextResponse.json({ error: 'This task is a direct hire request and you are not the hired worker' }, { status: 403 })
+      }
+    }
+
     const body = await req.json()
     const { message, proposedPrice, agree, agreementText } = body
     if (process.env.NODE_ENV !== 'production') {
