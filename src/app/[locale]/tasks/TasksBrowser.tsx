@@ -66,15 +66,12 @@ export default function TasksBrowser({ locale, initialTasks }: { locale: string,
 				}
 				@media (max-width: 768px) {
 					.search-grid {
-						grid-template-columns: 1fr;
-					}
-					.search-grid input[type="text"] {
-						grid-column: 1;
-					}
-					.search-grid .price-location-row {
 						display: grid;
 						grid-template-columns: 1fr 1fr 1fr;
 						gap: 12px;
+					}
+					.search-grid input[type="text"] {
+						grid-column: 1 / -1;
 					}
 				}
 			`}</style>
@@ -87,36 +84,34 @@ export default function TasksBrowser({ locale, initialTasks }: { locale: string,
 						onChange={(e) => setQ(e.target.value)}
 						style={{ width: '100%' }}
 					/>
-					<div className="price-location-row" style={{ display: 'contents' }}>
-						<input
-							type="number"
-							placeholder={t('tasks.browse.minPrice') || 'Min price'}
-							value={priceMin}
-							onChange={(e) => setPriceMin(e.target.value)}
-							min="0"
-							step="0.01"
-							style={{ width: '100%' }}
-						/>
-						<input
-							type="number"
-							placeholder={t('tasks.browse.maxPrice') || 'Max price'}
-							value={priceMax}
-							onChange={(e) => setPriceMax(e.target.value)}
-							min="0"
-							step="0.01"
-							style={{ width: '100%' }}
-						/>
-						<select
-							value={location}
-							onChange={(e) => setLocation(e.target.value)}
-							style={{ padding: '12px', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--bg-secondary)', width: '100%' }}
-						>
-							<option value="">Location</option>
-							{MOLDOVA_CITIES.map(city => (
-								<option key={city} value={city}>{city}</option>
-							))}
-						</select>
-					</div>
+					<input
+						type="number"
+						placeholder={t('tasks.browse.minPrice') || 'Min price'}
+						value={priceMin}
+						onChange={(e) => setPriceMin(e.target.value)}
+						min="0"
+						step="0.01"
+						style={{ width: '100%' }}
+					/>
+					<input
+						type="number"
+						placeholder={t('tasks.browse.maxPrice') || 'Max price'}
+						value={priceMax}
+						onChange={(e) => setPriceMax(e.target.value)}
+						min="0"
+						step="0.01"
+						style={{ width: '100%' }}
+					/>
+					<select
+						value={location}
+						onChange={(e) => setLocation(e.target.value)}
+						style={{ padding: '12px', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--bg-secondary)', width: '100%' }}
+					>
+						<option value="">Location</option>
+						{MOLDOVA_CITIES.map(city => (
+							<option key={city} value={city}>{city}</option>
+						))}
+					</select>
 				</div>
 				<div style={{ marginTop: '12px' }}>
 					<label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '0.9rem' }}>
