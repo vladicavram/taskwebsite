@@ -372,9 +372,13 @@ export default function ApplicationDetailPage() {
                       >
                         ✓ Accept {application.proposedPrice || application.task.price} {CURRENCY_SYMBOL}
                       </button>
-                      {applicantInsufficientForCreator && (
+                        {applicantInsufficientForCreator && (
                         <div style={{ marginTop: 8, fontSize: '0.95rem', color: 'var(--text-muted)' }}>
-                          Applicant has insufficient credits ({applicantCreditsAvailable} credits). Ask them to top up before accepting.
+                          {applicantCreditsAvailable === null ? (
+                            'Checking applicant credits…'
+                          ) : (
+                            `Applicant has insufficient credits (${applicantCreditsAvailable} credits). Ask them to top up before accepting.`
+                          )}
                         </div>
                       )}
                     </div>
@@ -591,7 +595,8 @@ export default function ApplicationDetailPage() {
                       <>
                         {isDirectHire && (() => {
                           const requiredCredits = ((application.proposedPrice ?? application.task.price) || 0) / 100
-                          const insufficient = userCredits !== null && userCredits < requiredCredits
+                          // Treat unknown credits as insufficient to avoid enabling Accept while loading
+                          const insufficient = userCredits === null || userCredits < requiredCredits
                           return (
                             <div style={{ flex: 1 }}>
                               <button
@@ -610,8 +615,14 @@ export default function ApplicationDetailPage() {
                               </button>
                               {insufficient && (
                                 <div style={{ marginTop: 8, fontSize: '0.95rem', color: 'var(--text-muted)', display: 'flex', gap: 12, alignItems: 'center' }}>
-                                  <div>{`You need at least ${( (application.proposedPrice ?? application.task.price) / 100 ).toFixed(2)} credits to accept.`}</div>
-                                  <a href={`/${locale}/profile/credits/purchase`} className="btn btn-secondary" style={{ padding: '6px 10px', fontSize: '0.9rem' }}>Buy Credits</a>
+                                  {userCredits === null ? (
+                                    <div>Checking your credits…</div>
+                                  ) : (
+                                    <>
+                                      <div>{`You need at least ${( (application.proposedPrice ?? application.task.price) / 100 ).toFixed(2)} credits to accept.`}</div>
+                                      <a href={`/${locale}/profile/credits/purchase`} className="btn btn-secondary" style={{ padding: '6px 10px', fontSize: '0.9rem' }}>Buy Credits</a>
+                                    </>
+                                  )}
                                 </div>
                               )}
                             </div>

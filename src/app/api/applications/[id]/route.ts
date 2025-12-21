@@ -161,15 +161,39 @@ export async function PATCH(
 
         // availableIncludingReserved = current wallet credits + alreadyCharged (reserved on this application)
         const availableIncludingReserved = (freshApplicant.credits || 0) + (alreadyCharged || 0)
-        if (availableIncludingReserved < totalRequired) {
-          throw new Error(`Insufficient credits. Required ${totalRequired.toFixed(2)}, available ${availableIncludingReserved.toFixed(2)}.`)
+
+        // Extra guard: if the applicant was the last one to propose the price and there are no
+        // previously charged/reserved credits recorded for this application, require that the
+        // applicant have the entire required amount in their wallet (do not allow relying on
+        // previously-reserved credits that don't exist). This prevents the case where a
+        // tasker sends a counter-offer (no funds reserved) and then immediately accepts
+        // without actually having the funds.
+        const lastProposedByApplicant = currentApp.lastProposedBy === currentApp.applicantId
+        const hasReserved = (currentApp as any).chargedCredits && (currentApp as any).chargedCredits > 0
+
+        if (lastProposedByApplicant && !hasReserved) {
+          if ((freshApplicant.credits || 0) < totalRequired) {
+            throw new Error(`Insufficient credits to accept after your own counter-offer. Required ${totalRequired.toFixed(2)}, you have ${(freshApplicant.credits || 0).toFixed(2)}.`)
+          }
+        } else {
+          if (availableIncludingReserved < totalRequired) {
+            throw new Error(`Insufficient credits. Required ${totalRequired.toFixed(2)}, available ${availableIncludingReserved.toFixed(2)}.`)
+          }
         }
 
         // Compute delta to charge (or refund) relative to alreadyCharged
         const delta = totalRequired - (alreadyCharged || 0)
         if (delta > 0) {
-          // Need to deduct additional credits from user's wallet
-          await tx.user.update({ where: { id: currentApp.applicantId }, data: { credits: { decrement: delta } } })
+          // Need to deduct additional credits from user's wallet.
+          // Use a conditional update to avoid overdrawing due to race conditions.
+          const rows: any = await tx.$queryRaw`
+            UPDATE "User" SET credits = credits - ${delta}
+            WHERE id = ${currentApp.applicantId} AND credits >= ${delta}
+            RETURNING credits
+          `
+          if (!rows || rows.length === 0) {
+            throw new Error(`Insufficient credits to complete acceptance. Required additional ${delta.toFixed(2)} credits.`)
+          }
         } else if (delta < 0) {
           // Overcharged previously: refund the difference
           await tx.user.update({ where: { id: currentApp.applicantId }, data: { credits: { increment: -delta } } })
@@ -186,6 +210,19 @@ export async function PATCH(
             selectedAt: new Date()
           }
         })
+
+        // Post-condition checks: ensure applicant credits are non-negative and chargedCredits recorded
+        const applicantAfter = await tx.user.findUnique({ where: { id: currentApp.applicantId } })
+        const refreshedApp = await tx.application.findUnique({ where: { id: params.id } })
+        if (!applicantAfter) throw new Error('Applicant missing after accept')
+        if ((applicantAfter.credits || 0) < 0) {
+          console.error('[ACCEPT_INVARIANT_VIOLATION] Negative credits after accept', { applicationId: params.id, applicantId: currentApp.applicantId, credits: applicantAfter.credits })
+          throw new Error('Accept failed due to credit accounting inconsistency')
+        }
+        if ((refreshedApp as any).chargedCredits !== totalRequired) {
+          console.error('[ACCEPT_INVARIANT_VIOLATION] chargedCredits mismatch', { applicationId: params.id, expected: totalRequired, actual: (refreshedApp as any).chargedCredits })
+          throw new Error('Accept failed due to chargedCredits mismatch')
+        }
 
         // Get all other pending applications for this task
         const otherApplications = await tx.application.findMany({

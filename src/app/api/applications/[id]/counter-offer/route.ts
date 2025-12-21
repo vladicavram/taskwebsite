@@ -45,10 +45,11 @@ export async function PATCH(
     // Applicant flow: allow lowering without charging, require funds when increasing
     if (isApplicant) {
       const prevPrice = application.proposedPrice ?? application.task.price ?? 0
-      const prevDeducted = application.lastProposedBy === application.applicantId
       const prevCredits = Math.max(1, (prevPrice || 0) / 100)
       const newCredits = Math.max(1, newPrice / 100)
-      const prevCharged = (application as any).chargedCredits ?? (prevDeducted ? prevCredits : 0)
+      // Only consider previously recorded chargedCredits as reserved funds.
+      // Do NOT assume a previous deduction based on who proposed the price — that could lead to incorrect refunds.
+      const prevCharged = (application as any).chargedCredits ?? 0
 
       const updatedApplication = await prisma.$transaction(async (tx: any) => {
         if (newPrice < prevPrice) {
@@ -59,15 +60,23 @@ export async function PATCH(
             await tx.application.update({ where: { id: params.id }, data: { chargedCredits: newCredits } })
           }
         } else if (newPrice > prevPrice) {
-          // Increasing: require additional funds for the delta
-          const delta = newCredits - (prevCharged || prevCredits)
+          // Increasing: require additional funds for the delta. Only use previously recorded charged amount.
+          const delta = newCredits - prevCharged
           if (delta > 0) {
             const freshUser = await tx.user.findUnique({ where: { id: user.id } })
             if (!freshUser || freshUser.credits < delta) {
               throw new Error(`Insufficient credits. Need additional ${delta.toFixed(2)} credits.`)
             }
-            await tx.user.update({ where: { id: user.id }, data: { credits: { decrement: delta } } })
-            await tx.application.update({ where: { id: params.id }, data: { chargedCredits: (prevCharged || prevCredits) + delta } })
+            // Conditional update to avoid overdrawing in races
+            const updated: any = await tx.$queryRaw`
+              UPDATE "User" SET credits = credits - ${delta}
+              WHERE id = ${user.id} AND credits >= ${delta}
+              RETURNING credits
+            `
+            if (!updated || updated.length === 0) {
+              throw new Error(`Insufficient credits. Need additional ${delta.toFixed(2)} credits.`)
+            }
+            await tx.application.update({ where: { id: params.id }, data: { chargedCredits: prevCharged + delta } })
           }
         }
 
