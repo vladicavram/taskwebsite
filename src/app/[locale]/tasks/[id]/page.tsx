@@ -221,6 +221,7 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                       applicationId={userApplication.id}
                       taskPrice={task.price || 0}
                       proposedPrice={userApplication.proposedPrice}
+                        lastProposedByIsApplicant={userApplication.lastProposedBy === userApplication.applicantId}
                       locale={params.locale}
                       userCredits={currentUser?.credits || 0}
                     />

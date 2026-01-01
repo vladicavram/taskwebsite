@@ -51,7 +51,7 @@ export async function PATCH(
     }
 
     const body = await req.json()
-    const { status } = body
+    const { status, confirm } = body
 
     if (!['accepted', 'declined', 'removed'].includes(status)) {
       return NextResponse.json({ error: 'Invalid status' }, { status: 400 })
@@ -63,10 +63,22 @@ export async function PATCH(
     // - The task creator is still allowed to remove applications.
     const isDirectHire = application.task.isDirectHire === true;
     if (status === 'accepted') {
+      // Require explicit confirmation marker from the client to avoid accidental/automated accepts
+      if (!confirm) {
+        return NextResponse.json({ error: 'Missing confirmation for accept. Please confirm the accept action in the UI.' }, { status: 400 })
+      }
       if (isDirectHire) {
-        // For direct hires only the applicant may accept
-        if (!isApplicant) {
-          return NextResponse.json({ error: 'Only the hired applicant can accept direct-hire requests' }, { status: 403 })
+        // If the applicant was the last to propose a counter-offer, the creator must accept that counter-offer.
+        // Otherwise, for direct hires, the applicant may accept the original hire request.
+        if (application.lastProposedBy === application.applicantId) {
+          if (!isTaskCreator) {
+            return NextResponse.json({ error: 'Only the task creator can accept this counter-offer' }, { status: 403 })
+          }
+        } else {
+          // For direct hires where the applicant didn't last propose, only the applicant may accept
+          if (!isApplicant) {
+            return NextResponse.json({ error: 'Only the hired applicant can accept direct-hire requests' }, { status: 403 })
+          }
         }
       } else {
         // For normal tasks only the creator can accept
@@ -194,20 +206,55 @@ export async function PATCH(
           if (!rows || rows.length === 0) {
             throw new Error(`Insufficient credits to complete acceptance. Required additional ${delta.toFixed(2)} credits.`)
           }
+          // Record spent transaction for the delta (or for the full amount - record delta here to track incremental change)
+          await tx.creditTransaction.create({
+            data: {
+              userId: currentApp.applicantId,
+              amount: delta,
+              type: 'spent',
+              description: `Charge for application ${currentApp.id} (accept)`,
+              relatedTaskId: currentApp.taskId
+            }
+          })
         } else if (delta < 0) {
           // Overcharged previously: refund the difference
           await tx.user.update({ where: { id: currentApp.applicantId }, data: { credits: { increment: -delta } } })
+          await tx.creditTransaction.create({
+            data: {
+              userId: currentApp.applicantId,
+              amount: -delta,
+              type: 'refund',
+              description: `Refund for application ${currentApp.id} (accept overcharge)`,
+              relatedTaskId: currentApp.taskId
+            }
+          })
         }
 
         // record chargedCredits on the application as the final total required
         await tx.application.update({ where: { id: params.id }, data: { chargedCredits: totalRequired } })
+        // create a spent transaction for the final required amount if not already recorded (for transparency create the remainder)
+        if (delta > 0) {
+          // we already recorded delta above; no-op
+        } else if (delta === 0) {
+          // No delta charged during this accept, but ensure we record a spent tx if not present
+          await tx.creditTransaction.create({
+            data: {
+              userId: currentApp.applicantId,
+              amount: totalRequired,
+              type: 'spent',
+              description: `Charge for application ${currentApp.id} (accept)`,
+              relatedTaskId: currentApp.taskId
+            }
+          })
+        }
 
         // Update this application to accepted
         const updated = await tx.application.update({
           where: { id: params.id },
           data: { 
             status: 'accepted',
-            selectedAt: new Date()
+            selectedAt: new Date(),
+            acceptedBy: user.id
           }
         })
 
@@ -283,33 +330,46 @@ export async function PATCH(
 
         return updated
       } else {
-        // Decline this application and refund credits
+        // Decline this application. If there are reserved/charged credits that haven't been finalized (i.e., application not accepted), refund them.
+        // Use the transaction-scoped currentApp to decide how much to refund.
         const updated = await tx.application.update({
           where: { id: params.id },
           data: { status: 'declined' }
         })
 
-        // Only refund credits if the application was pending (credits were deducted)
-        if (refundCredits > 0 && application.status === 'pending') {
+        const currentCharged = (currentApp as any).chargedCredits ?? 0
+        // Refund reserved credits if they exist and application was not accepted
+        if (currentCharged > 0 && application.status !== 'accepted') {
           const userBefore = await tx.user.findUnique({ where: { id: application.applicantId } })
           await tx.user.update({
             where: { id: application.applicantId },
-            data: { credits: { increment: refundCredits } }
+            data: { credits: { increment: currentCharged } }
+          })
+          await tx.creditTransaction.create({
+            data: {
+              userId: application.applicantId,
+              amount: currentCharged,
+              type: 'refund',
+              description: `Refund for application ${application.id} after decline`,
+              relatedTaskId: application.taskId
+            }
           })
           const userAfter = await tx.user.findUnique({ where: { id: application.applicantId } })
           console.log('[CREDIT_REFUND] Declined applicant:', {
             userId: application.applicantId,
             before: userBefore.credits,
-            refunded: refundCredits,
+            refunded: currentCharged,
             after: userAfter.credits
           })
+          // clear chargedCredits on application to indicate no reservation
+          await tx.application.update({ where: { id: params.id }, data: { chargedCredits: 0 } })
         }
 
         await tx.notification.create({
           data: {
             userId: application.applicantId,
             type: 'application_declined',
-            content: `Your application for "${application.task.title}" was declined.${refundCredits > 0 ? ` ${refundCredits.toFixed(2)} credits have been refunded.` : ''}`,
+            content: `Your application for "${application.task.title}" was declined.${currentCharged > 0 ? ` ${currentCharged.toFixed(2)} credits have been refunded.` : ''}`,
             taskId: application.taskId,
             applicationId: application.id
           }

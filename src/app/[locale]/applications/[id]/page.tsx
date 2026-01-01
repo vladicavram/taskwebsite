@@ -76,10 +76,11 @@ export default function ApplicationDetailPage() {
   const handleAction = async (status: 'accepted' | 'declined') => {
     setActionLoading(true)
     try {
-      const response = await fetch(`/api/applications/${applicationId}`, {
+      const body = status === 'accepted' ? { status, confirm: true } : { status }
+      const response = await fetch(`/api/hires/${applicationId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status })
+        body: JSON.stringify(body)
       })
 
       if (response.ok) {
@@ -595,25 +596,30 @@ export default function ApplicationDetailPage() {
                       <>
                         {isDirectHire && (() => {
                           const requiredCredits = ((application.proposedPrice ?? application.task.price) || 0) / 100
-                          // Treat unknown credits as insufficient to avoid enabling Accept while loading
+                          // Treat unknown credits as insufficient so the applicant can't accept until we know their balance
                           const insufficient = userCredits === null || userCredits < requiredCredits
+                          const lastProposedByApplicant = application.lastProposedBy === application.applicantId
                           return (
                             <div style={{ flex: 1 }}>
                               <button
                                 onClick={() => handleAction('accepted')}
-                                disabled={actionLoading || insufficient}
+                                disabled={actionLoading || insufficient || lastProposedByApplicant}
                                 className="btn"
                                 style={{ 
                                   width: '100%',
                                   padding: '14px',
                                   fontSize: '1.1rem',
-                                  opacity: (actionLoading || insufficient) ? 0.6 : 1,
-                                  cursor: insufficient ? 'not-allowed' : 'pointer'
+                                  opacity: (actionLoading || insufficient || lastProposedByApplicant) ? 0.6 : 1,
+                                  cursor: (insufficient || lastProposedByApplicant) ? 'not-allowed' : 'pointer'
                                 }}
                               >
-                                ✓ Accept {application.proposedPrice} {CURRENCY_SYMBOL}
+                                ✓ Accept {application.proposedPrice || application.task.price} {CURRENCY_SYMBOL}
                               </button>
-                              {insufficient && (
+                              {lastProposedByApplicant ? (
+                                <div style={{ marginTop: 8, fontSize: '0.95rem', color: 'var(--text-muted)' }}>
+                                  You cannot accept your own counter-offer — only the task creator can accept the counter-offer.
+                                </div>
+                              ) : insufficient && (
                                 <div style={{ marginTop: 8, fontSize: '0.95rem', color: 'var(--text-muted)', display: 'flex', gap: 12, alignItems: 'center' }}>
                                   {userCredits === null ? (
                                     <div>Checking your credits…</div>

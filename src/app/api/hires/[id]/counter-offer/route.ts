@@ -1,10 +1,10 @@
-export const runtime = 'nodejs'
-export const dynamic = 'force-dynamic'
-
 import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../../../auth/[...nextauth]/authOptions'
 import { prisma } from '../../../../../lib/prisma'
+
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 
 export async function PATCH(
   req: Request,
@@ -12,116 +12,58 @@ export async function PATCH(
 ) {
   try {
     const session: any = await getServerSession(authOptions as any)
-    if (!session?.user?.email) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-
+    if (!session?.user?.email) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     const user = await prisma.user.findUnique({ where: { email: session.user.email } })
     if (!user) return NextResponse.json({ error: 'User not found' }, { status: 404 })
 
-    const application = await prisma.application.findUnique({
-      where: { id: params.id },
-      include: { task: { include: { creator: true } }, applicant: true }
-    })
-
+    const application = await prisma.application.findUnique({ where: { id: params.id }, include: { task: { include: { creator: true } }, applicant: true } })
     if (!application) return NextResponse.json({ error: 'Application not found' }, { status: 404 })
+
+    const body = await req.json()
+    const { proposedPrice } = body
+    if (!proposedPrice || proposedPrice <= 0) return NextResponse.json({ error: 'Invalid price' }, { status: 400 })
+    const newPrice = parseFloat(proposedPrice)
 
     const isCreator = application.task.creatorId === user.id
     const isApplicant = application.applicantId === user.id
 
-    if (!isCreator && !isApplicant) {
-      return NextResponse.json({ error: 'Unauthorized to modify this application' }, { status: 403 })
-    }
-
-    const body = await req.json()
-    const { proposedPrice } = body
-
-    if (!proposedPrice || proposedPrice <= 0) {
-      return NextResponse.json({ error: 'Invalid price' }, { status: 400 })
-    }
-
-    const newPrice = parseFloat(proposedPrice)
-
-    // Applicant flow: reserve credits when proposing a counter-offer.
-    // - If lowering: refund any previously reserved amount above the new required amount.
-    // - If increasing: charge the delta (only using previously recorded chargedCredits as reserved funds), creating a 'spent' tx for the charged delta.
-    // Set application status to 'counter_proposed' so creator knows it's an applicant-originated counter.
+    // Applicant flow: reserve funds when proposing
     if (isApplicant) {
       const prevPrice = application.proposedPrice ?? application.task.price ?? 0
       const prevCredits = Math.max(1, (prevPrice || 0) / 100)
       const newCredits = Math.max(1, newPrice / 100)
-      // Only consider previously recorded chargedCredits as reserved funds.
-      // Do NOT assume a previous deduction based on who proposed the price — that could lead to incorrect refunds.
       const prevCharged = (application as any).chargedCredits ?? 0
 
       const updatedApplication = await prisma.$transaction(async (tx: any) => {
         if (newPrice < prevPrice) {
-          // Lowering: refund any overcharged amount
+          // refund overcharged amount
           if (prevCharged > newCredits) {
             const refund = prevCharged - newCredits
             await tx.user.update({ where: { id: user.id }, data: { credits: { increment: refund } } })
-            await tx.creditTransaction.create({
-              data: {
-                userId: user.id,
-                amount: refund,
-                type: 'refund',
-                description: `Refund for counter-offer on application ${params.id}`,
-                relatedTaskId: application.taskId
-              }
-            })
+            await tx.creditTransaction.create({ data: { userId: user.id, amount: refund, type: 'refund', description: `Refund for counter-offer on application ${params.id}`, relatedTaskId: application.taskId } })
             await tx.application.update({ where: { id: params.id }, data: { chargedCredits: newCredits } })
           }
         } else if (newPrice > prevPrice) {
-          // Increasing: require additional funds for the delta. Only use previously recorded charged amount.
           const delta = newCredits - prevCharged
           if (delta > 0) {
             const freshUser = await tx.user.findUnique({ where: { id: user.id } })
-            if (!freshUser || freshUser.credits < delta) {
-              throw new Error(`Insufficient credits. Need additional ${delta.toFixed(2)} credits.`)
-            }
-            // Conditional update to avoid overdrawing in races
-            const updated: any = await tx.$queryRaw`
-              UPDATE "User" SET credits = credits - ${delta}
-              WHERE id = ${user.id} AND credits >= ${delta}
-              RETURNING credits
-            `
-            if (!updated || updated.length === 0) {
-              throw new Error(`Insufficient credits. Need additional ${delta.toFixed(2)} credits.`)
-            }
+            if (!freshUser || freshUser.credits < delta) throw new Error(`Insufficient credits. Need additional ${delta.toFixed(2)} credits.`)
+            const updated: any = await tx.$queryRaw`UPDATE "User" SET credits = credits - ${delta} WHERE id = ${user.id} AND credits >= ${delta} RETURNING credits`
+            if (!updated || updated.length === 0) throw new Error(`Insufficient credits. Need additional ${delta.toFixed(2)} credits.`)
             await tx.application.update({ where: { id: params.id }, data: { chargedCredits: prevCharged + delta } })
-            // record spent transaction for charged delta
-            await tx.creditTransaction.create({
-              data: {
-                userId: user.id,
-                amount: delta,
-                type: 'spent',
-                description: `Charge for counter-offer on application ${params.id}`,
-                relatedTaskId: application.taskId
-              }
-            })
+            await tx.creditTransaction.create({ data: { userId: user.id, amount: delta, type: 'spent', description: `Charge for counter-offer on application ${params.id}`, relatedTaskId: application.taskId } })
           }
         }
-        // Update application with new proposed price and mark lastProposedBy as applicant
-        return await tx.application.update({
-          where: { id: params.id },
-          data: { proposedPrice: newPrice, lastProposedBy: user.id, status: 'counter_proposed' }
-        })
+
+        return await tx.application.update({ where: { id: params.id }, data: { proposedPrice: newPrice, lastProposedBy: user.id, status: 'counter_proposed' } })
       })
-      // Notify creator
-      await prisma.notification.create({
-        data: {
-          userId: application.task.creatorId,
-          type: 'price_counter_offer',
-          content: `${user.name || user.email} proposed a price of ${newPrice} MDL for "${application.task.title}"`,
-          taskId: application.taskId,
-          applicationId: application.id
-        }
-      })
+
+      await prisma.notification.create({ data: { userId: application.task.creatorId, type: 'price_counter_offer', content: `${user.name || user.email} proposed a price of ${newPrice} MDL for "${application.task.title}"`, taskId: application.taskId, applicationId: application.id } })
 
       return NextResponse.json(updatedApplication)
     }
 
-    // Creator flow: update proposed price and adjust chargedCredits
+    // Creator flow: update proposed price, adjust chargedCredits, and notify applicant
     if (isCreator) {
       const prevPrice = application.proposedPrice ?? application.task.price ?? 0
       const newCredits = Math.max(1, newPrice / 100)
@@ -150,7 +92,7 @@ export async function PATCH(
               userId: application.applicantId,
               amount: delta,
               type: 'spent',
-              description: `Charge for creator counter-offer on application ${params.id}`,
+              description: `Charge for creator counter-offer on hire ${params.id}`,
               relatedTaskId: application.taskId
             }
           })
@@ -163,35 +105,23 @@ export async function PATCH(
               userId: application.applicantId,
               amount: -delta,
               type: 'refund',
-              description: `Refund for creator counter-offer on application ${params.id}`,
+              description: `Refund for creator counter-offer on hire ${params.id}`,
               relatedTaskId: application.taskId
             }
           })
           await tx.application.update({ where: { id: params.id }, data: { chargedCredits: newCredits } })
         }
 
-        return await tx.application.update({
-          where: { id: params.id },
-          data: { proposedPrice: newPrice, lastProposedBy: user.id }
-        })
+        return await tx.application.update({ where: { id: params.id }, data: { proposedPrice: newPrice, lastProposedBy: user.id, status: 'offered' } })
       })
 
-      await prisma.notification.create({
-        data: {
-          userId: application.applicantId,
-          type: 'price_counter_offer',
-          content: `${user.name || user.email} proposed a counter-offer of ${newPrice} MDL for "${application.task.title}"`,
-          taskId: application.taskId,
-          applicationId: application.id
-        }
-      })
-
+      await prisma.notification.create({ data: { userId: application.applicantId, type: 'price_counter_offer', content: `${user.name || user.email} proposed a counter-offer of ${newPrice} MDL for "${application.task.title}"`, taskId: application.taskId, applicationId: application.id } })
       return NextResponse.json(updatedApplication)
     }
 
     return NextResponse.json({ error: 'Unauthorized to modify this application' }, { status: 403 })
   } catch (error) {
-    console.error('Counter-offer error:', error)
+    console.error('Hires counter-offer error:', error)
     const message = (error as any)?.message || 'Failed to send counter-offer'
     return NextResponse.json({ error: message }, { status: 400 })
   }

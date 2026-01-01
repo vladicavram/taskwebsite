@@ -9,13 +9,15 @@ export default function HireRequestActions({
   taskPrice, 
   locale,
   userCredits,
-  proposedPrice
+  proposedPrice,
+  lastProposedByIsApplicant
 }: { 
   applicationId: string
   taskPrice: number
   locale: string
   userCredits: number
   proposedPrice?: number
+  lastProposedByIsApplicant?: boolean
 }) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
@@ -24,6 +26,13 @@ export default function HireRequestActions({
 
   async function handleAccept() {
     const requiredCredits = (proposedPrice || taskPrice) / 100
+
+    // If the applicant themselves last proposed the price (they sent a counter-offer), they cannot
+    // accept that counter-offer themselves; only the creator may accept a counter-offer. Block here.
+    if (lastProposedByIsApplicant) {
+      alert('You cannot accept your own counter-offer; only the task creator can accept a counter-offer.')
+      return
+    }
 
     if (userCredits < requiredCredits) {
       // Show inline message instead of alert; keep button disabled in UI.
@@ -37,10 +46,10 @@ export default function HireRequestActions({
 
     setLoading(true)
     try {
-      const res = await fetch(`/api/applications/${applicationId}`, {
+      const res = await fetch(`/api/hires/${applicationId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'accepted' })
+        body: JSON.stringify({ status: 'accepted', confirm: true })
       })
 
       if (res.ok) {
@@ -62,7 +71,7 @@ export default function HireRequestActions({
 
     setLoading(true)
     try {
-      const res = await fetch(`/api/applications/${applicationId}`, {
+      const res = await fetch(`/api/hires/${applicationId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: 'declined' })
@@ -89,7 +98,7 @@ export default function HireRequestActions({
 
     setLoading(true)
     try {
-      const res = await fetch(`/api/applications/${applicationId}/counter-offer`, {
+      const res = await fetch(`/api/hires/${applicationId}/counter-offer`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ proposedPrice: price })
@@ -117,6 +126,24 @@ export default function HireRequestActions({
       </p>
 
       {!showCounterOffer ? (
+        lastProposedByIsApplicant ? (
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ fontWeight: 600, marginBottom: 8 }}>Counter-offer sent</div>
+            <div style={{ marginBottom: 12, color: 'var(--text-muted)' }}>
+              You proposed {proposedPrice ?? taskPrice} {CURRENCY_SYMBOL}. Waiting for the creator to accept or respond.
+            </div>
+            <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
+              <button
+                onClick={() => setShowCounterOffer(true)}
+                disabled={loading}
+                className="btn"
+                style={{ padding: '10px 16px' }}
+              >
+                ✏️ Send another counter-offer
+              </button>
+            </div>
+          </div>
+        ) : (
         <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
           <div style={{ flex: 1 }}>
             <button
@@ -131,7 +158,7 @@ export default function HireRequestActions({
                 cursor: (userCredits < ((proposedPrice || taskPrice) / 100)) ? 'not-allowed' : 'pointer'
               }}
             >
-              ✓ Accept {taskPrice} {CURRENCY_SYMBOL}
+              ✓ Accept {proposedPrice || taskPrice} {CURRENCY_SYMBOL}
             </button>
             {userCredits < ((proposedPrice || taskPrice) / 100) && (
               <div style={{ marginTop: 8, fontSize: '0.95rem', color: 'var(--text-muted)', display: 'flex', gap: 12, alignItems: 'center' }}>
@@ -166,6 +193,7 @@ export default function HireRequestActions({
             ✗ Decline
           </button>
         </div>
+        )
       ) : (
         <div>
           <label style={{ 

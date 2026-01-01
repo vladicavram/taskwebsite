@@ -32,6 +32,7 @@ model User {
   applications          Application[]
   notifications         Notification[]
   creditTransactions    CreditTransaction[]
+  acceptedApplications  Application[]  @relation("AcceptedBy")
   messagesSent          Message[]       @relation("MessageSender")
   messagesReceived      Message[]       @relation("MessageReceiver")
   createdAt             DateTime        @default(now())
@@ -103,6 +104,8 @@ model Application {
   agreementText String?
   agreementAcceptedAt DateTime?
   selectedAt    DateTime?      // When this applicant was selected by task creator
+  acceptedBy     String?        // userId of who performed the accept action (creator)
+  acceptedByUser User?          @relation("AcceptedBy", fields: [acceptedBy], references: [id])
   removedAt     DateTime?      // When this applicant was removed
   notifications Notification[]
   createdAt     DateTime       @default(now())
