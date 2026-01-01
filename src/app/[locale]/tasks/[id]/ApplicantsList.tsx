@@ -103,7 +103,10 @@ export default function ApplicantsList({
               </div>
               <button
                 className="btn"
-                style={{ background: '#ef4444' }}
+                style={{ 
+                  background: 'linear-gradient(180deg, #ef4444 0%, #dc2626 100%)',
+                  borderColor: '#dc2626'
+                }}
                 disabled={isPending}
                 onClick={() => removeApplicant(acceptedApp.id)}
               >

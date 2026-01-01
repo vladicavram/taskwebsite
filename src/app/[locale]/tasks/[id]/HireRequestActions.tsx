@@ -136,8 +136,7 @@ export default function HireRequestActions({
               <button
                 onClick={() => setShowCounterOffer(true)}
                 disabled={loading}
-                className="btn"
-                style={{ padding: '10px 16px' }}
+                className="btn btn-secondary"
               >
                 ✏️ Send another counter-offer
               </button>
@@ -152,9 +151,9 @@ export default function HireRequestActions({
               className="btn"
               style={{ 
                 width: '100%',
-                padding: '14px',
-                fontSize: '1.1rem',
-                opacity: (loading || userCredits < ((proposedPrice || taskPrice) / 100)) ? 0.6 : 1,
+                background: 'linear-gradient(180deg, #10b981 0%, #059669 100%)',
+                borderColor: '#059669',
+                opacity: (loading || userCredits < ((proposedPrice || taskPrice) / 100)) ? 0.5 : 1,
                 cursor: (userCredits < ((proposedPrice || taskPrice) / 100)) ? 'not-allowed' : 'pointer'
               }}
             >
@@ -171,11 +170,7 @@ export default function HireRequestActions({
             onClick={() => setShowCounterOffer(true)}
             disabled={loading}
             className="btn btn-secondary"
-            style={{ 
-              flex: 1,
-              padding: '14px',
-              fontSize: '1.1rem'
-            }}
+            style={{ flex: 1 }}
           >
             💬 Counter-Offer
           </button>
@@ -185,9 +180,8 @@ export default function HireRequestActions({
             className="btn"
             style={{ 
               flex: 1,
-              padding: '14px',
-              fontSize: '1.1rem',
-              background: '#ef4444'
+              background: 'linear-gradient(180deg, #ef4444 0%, #dc2626 100%)',
+              borderColor: '#dc2626'
             }}
           >
             ✗ Decline
@@ -224,7 +218,7 @@ export default function HireRequestActions({
               className="btn"
               style={{ 
                 flex: 1,
-                opacity: loading ? 0.6 : 1
+                opacity: loading ? 0.5 : 1
               }}
             >
               Send Counter-Offer
