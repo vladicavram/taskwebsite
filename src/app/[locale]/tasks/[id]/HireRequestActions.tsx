@@ -137,7 +137,6 @@ export default function HireRequestActions({
                 onClick={() => setShowCounterOffer(true)}
                 disabled={loading}
                 className="btn btn-secondary"
-                style={{ padding: '8px 16px', fontSize: '0.9rem' }}
               >
                 ✏️ Send another counter-offer
               </button>
@@ -152,8 +151,6 @@ export default function HireRequestActions({
               className="btn"
               style={{ 
                 width: '100%',
-                padding: '10px 16px',
-                fontSize: '0.95rem',
                 background: 'linear-gradient(180deg, #10b981 0%, #059669 100%)',
                 borderColor: '#059669',
                 opacity: (loading || userCredits < ((proposedPrice || taskPrice) / 100)) ? 0.5 : 1,
@@ -173,7 +170,7 @@ export default function HireRequestActions({
             onClick={() => setShowCounterOffer(true)}
             disabled={loading}
             className="btn btn-secondary"
-            style={{ flex: 1, padding: '10px 16px', fontSize: '0.95rem' }}
+            style={{ flex: 1 }}
           >
             💬 Counter-Offer
           </button>
@@ -183,8 +180,6 @@ export default function HireRequestActions({
             className="btn"
             style={{ 
               flex: 1,
-              padding: '10px 16px',
-              fontSize: '0.95rem',
               background: 'linear-gradient(180deg, #ef4444 0%, #dc2626 100%)',
               borderColor: '#dc2626'
             }}
@@ -223,8 +218,6 @@ export default function HireRequestActions({
               className="btn"
               style={{ 
                 flex: 1,
-                padding: '10px 16px',
-                fontSize: '0.95rem',
                 opacity: loading ? 0.5 : 1
               }}
             >
@@ -236,7 +229,7 @@ export default function HireRequestActions({
                 setCounterPrice('')
               }}
               className="btn btn-secondary"
-              style={{ flex: 1, padding: '10px 16px', fontSize: '0.95rem' }}
+              style={{ flex: 1 }}
             >
               Cancel
             </button>
