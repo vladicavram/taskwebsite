@@ -60,12 +60,7 @@ export default function TasksBrowser({ locale, initialTasks }: { locale: string,
 		const id = setTimeout(fetchTasks, 250)
 		firstRender.current = false
 		return () => clearTimeout(id)
-	}, [q, priceMin, priceMax, location, showCompleted, initialTasks])
-
-	useEffect(() => {
-		// If there are no initial tasks passed from server, fetch on mount
-		if (!initialTasks) fetchTasks()
-	}, [])
+	}, [q, priceMin, priceMax, location, showCompleted])
 
 	// Reset display count when filters change
 	useEffect(() => {
