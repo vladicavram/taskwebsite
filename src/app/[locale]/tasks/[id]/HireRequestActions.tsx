@@ -137,13 +137,14 @@ export default function HireRequestActions({
                 onClick={() => setShowCounterOffer(true)}
                 disabled={loading}
                 className="btn btn-secondary"
+                style={{ padding: '8px 16px', fontSize: '0.9rem' }}
               >
                 ✏️ Send another counter-offer
               </button>
             </div>
           </div>
         ) : (
-        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
           <div style={{ flex: 1 }}>
             <button
               onClick={handleAccept}
@@ -151,6 +152,8 @@ export default function HireRequestActions({
               className="btn"
               style={{ 
                 width: '100%',
+                padding: '10px 16px',
+                fontSize: '0.95rem',
                 background: 'linear-gradient(180deg, #10b981 0%, #059669 100%)',
                 borderColor: '#059669',
                 opacity: (loading || userCredits < ((proposedPrice || taskPrice) / 100)) ? 0.5 : 1,
@@ -170,7 +173,7 @@ export default function HireRequestActions({
             onClick={() => setShowCounterOffer(true)}
             disabled={loading}
             className="btn btn-secondary"
-            style={{ flex: 1 }}
+            style={{ flex: 1, padding: '10px 16px', fontSize: '0.95rem' }}
           >
             💬 Counter-Offer
           </button>
@@ -180,6 +183,8 @@ export default function HireRequestActions({
             className="btn"
             style={{ 
               flex: 1,
+              padding: '10px 16px',
+              fontSize: '0.95rem',
               background: 'linear-gradient(180deg, #ef4444 0%, #dc2626 100%)',
               borderColor: '#dc2626'
             }}
@@ -211,13 +216,15 @@ export default function HireRequestActions({
               marginBottom: '12px'
             }}
           />
-          <div style={{ display: 'flex', gap: '12px' }}>
+          <div style={{ display: 'flex', gap: '8px' }}>
             <button
               onClick={handleCounterOffer}
               disabled={loading}
               className="btn"
               style={{ 
                 flex: 1,
+                padding: '10px 16px',
+                fontSize: '0.95rem',
                 opacity: loading ? 0.5 : 1
               }}
             >
@@ -229,7 +236,7 @@ export default function HireRequestActions({
                 setCounterPrice('')
               }}
               className="btn btn-secondary"
-              style={{ flex: 1 }}
+              style={{ flex: 1, padding: '10px 16px', fontSize: '0.95rem' }}
             >
               Cancel
             </button>
