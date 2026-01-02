@@ -143,14 +143,13 @@ export default function HireRequestActions({
             </div>
           </div>
         ) : (
-        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-          <div style={{ flex: 1 }}>
+        <>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
             <button
               onClick={handleAccept}
               disabled={loading || userCredits < ((proposedPrice || taskPrice) / 100)}
               className="btn"
               style={{ 
-                width: '100%',
                 background: 'linear-gradient(180deg, #10b981 0%, #059669 100%)',
                 borderColor: '#059669',
                 opacity: (loading || userCredits < ((proposedPrice || taskPrice) / 100)) ? 0.5 : 1,
@@ -159,34 +158,31 @@ export default function HireRequestActions({
             >
               ✓ Accept {proposedPrice || taskPrice} {CURRENCY_SYMBOL}
             </button>
-            {userCredits < ((proposedPrice || taskPrice) / 100) && (
-              <div style={{ marginTop: 8, fontSize: '0.95rem', color: 'var(--text-muted)', display: 'flex', gap: 12, alignItems: 'center' }}>
-                <div>Insufficient credits to accept this hire request.</div>
-                <a href={`/${locale}/profile/credits/purchase`} className="btn btn-secondary" style={{ padding: '6px 10px', fontSize: '0.9rem' }}>Buy Credits</a>
-              </div>
-            )}
+            <button
+              onClick={() => setShowCounterOffer(true)}
+              disabled={loading}
+              className="btn btn-secondary"
+            >
+              💬 Counter-Offer
+            </button>
+            <button
+              onClick={handleDecline}
+              disabled={loading}
+              className="btn"
+              style={{ 
+                background: 'linear-gradient(180deg, #ef4444 0%, #dc2626 100%)',
+                borderColor: '#dc2626'
+              }}
+            >
+              ✗ Decline
+            </button>
           </div>
-          <button
-            onClick={() => setShowCounterOffer(true)}
-            disabled={loading}
-            className="btn btn-secondary"
-            style={{ flex: 1 }}
-          >
-            💬 Counter-Offer
-          </button>
-          <button
-            onClick={handleDecline}
-            disabled={loading}
-            className="btn"
-            style={{ 
-              flex: 1,
-              background: 'linear-gradient(180deg, #ef4444 0%, #dc2626 100%)',
-              borderColor: '#dc2626'
-            }}
-          >
-            ✗ Decline
-          </button>
-        </div>
+          {userCredits < ((proposedPrice || taskPrice) / 100) && (
+            <div style={{ marginTop: 12, fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+              Insufficient credits to accept this hire request. <a href={`/${locale}/profile/credits/purchase`} className="link" style={{ textDecoration: 'underline' }}>Buy Credits</a>
+            </div>
+          )}
+        </>
         )
       ) : (
         <div>
