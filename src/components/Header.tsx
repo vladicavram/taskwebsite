@@ -1085,7 +1085,8 @@ export default function Header() {
                       border: 'none',
                       cursor: 'pointer',
                       textAlign: 'left',
-                      position: 'relative'
+                      position: 'relative',
+                      fontSize: '1rem'
                     }}
                   >
                     <span>Notifications</span>
