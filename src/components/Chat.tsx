@@ -28,6 +28,7 @@ export default function Chat({ applicationId, taskId, receiverId, receiverName, 
   const [loading, setLoading] = useState(false)
   const [currentUserId, setCurrentUserId] = useState<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const previousMessageCountRef = useRef<number>(0)
   
   const isDirectMessage = !!partnerId
 
@@ -71,8 +72,14 @@ export default function Chat({ applicationId, taskId, receiverId, receiverName, 
       const res = await fetch(url)
       if (res.ok) {
         const data = await res.json()
+        const previousCount = previousMessageCountRef.current
         setMessages(data)
-        scrollToBottom()
+        previousMessageCountRef.current = data.length
+        
+        // Only scroll if there are new messages or it's the first load
+        if (previousCount === 0 || data.length > previousCount) {
+          scrollToBottom()
+        }
       }
     } catch (error) {
       console.error('Error fetching messages:', error)
