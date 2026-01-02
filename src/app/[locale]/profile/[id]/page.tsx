@@ -113,7 +113,7 @@ export default function ProfilePage() {
         marginBottom: '48px'
       }}>
         <div className="container" style={{ maxWidth: '1000px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '32px', flexWrap: 'wrap' }}>
+          <div className="profile-hero" style={{ display: 'flex', alignItems: 'center', gap: '32px', flexWrap: 'wrap' }}>
             {/* Avatar */}
             <div style={{
               width: '120px',
@@ -132,7 +132,7 @@ export default function ProfilePage() {
             </div>
 
             {/* User Info */}
-            <div style={{ flex: 1, minWidth: '300px' }}>
+            <div style={{ flex: 1, minWidth: '200px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px', flexWrap: 'wrap' }}>
                 <h1 style={{ fontSize: '2.5rem', color: 'var(--text)', margin: 0 }}>
                   {user.name || 'Anonymous User'}
@@ -200,7 +200,7 @@ export default function ProfilePage() {
       </section>
 
       <div className="container" style={{ maxWidth: '1000px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '32px', alignItems: 'start' }}>
+        <div className="profile-layout" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '32px', alignItems: 'start' }}>
           {/* Main Content */}
           <div>
             {/* Personal Information Section - Only visible to admin */}
@@ -489,7 +489,7 @@ export default function ProfilePage() {
           </div>
 
           {/* Sidebar */}
-          <div style={{ position: 'sticky', top: '100px' }}>
+          <div className="profile-sidebar" style={{ position: 'sticky', top: '100px' }}>
             {!isOwnProfile && user.canApply && !user.blocked && (
               <div className="card" style={{ padding: '24px', marginBottom: '24px' }}>
                 <button 

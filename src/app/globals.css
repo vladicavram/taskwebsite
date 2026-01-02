@@ -287,4 +287,31 @@ p {
   header img[alt="Dozo"] {
     width: 110px !important;
   }
+
+  /* Profile page mobile layout */
+  .profile-layout {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  .profile-sidebar {
+    position: static !important;
+    order: -1; /* Move sidebar to top on mobile */
+  }
+
+  .profile-hero {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px !important;
+  }
+
+  .profile-hero h1 {
+    font-size: 2rem !important;
+  }
+
+  .profile-hero > div:first-child {
+    width: 100px !important;
+    height: 100px !important;
+    font-size: 2.5rem !important;
+  }
 }
