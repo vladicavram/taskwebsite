@@ -66,7 +66,7 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
   const acceptedApps = (task as any).applications.filter((app: any) => app.status === 'accepted')
   const isAcceptedApplicantServer = !!acceptedApps.find((app: any) => app.applicant.id === currentUser?.id)
   const userApplication = (task as any).applications.find((app: any) => app.applicant.id === currentUser?.id)
-  const hasPendingApplication = userApplication?.status === 'pending'
+  const hasPendingApplication = userApplication?.status === 'pending' || userApplication?.status === 'counter_proposed'
   // Only consider as "already applied" if status is pending or accepted (not declined/removed)
   const hasAlreadyApplied = !!userApplication && (userApplication.status === 'pending' || userApplication.status === 'accepted')
   // Count only pending and accepted applications (exclude declined and removed)
