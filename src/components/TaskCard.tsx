@@ -42,6 +42,7 @@ export default function TaskCard({ id, title, description, price, category, imag
           display: 'flex',
           flexDirection: 'column',
           height: '100%',
+          minHeight: '180px',
           cursor: 'pointer',
           transition: 'transform 0.2s, box-shadow 0.2s'
         }}

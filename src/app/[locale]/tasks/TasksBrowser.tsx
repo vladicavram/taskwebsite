@@ -146,7 +146,12 @@ export default function TasksBrowser({ locale, initialTasks }: { locale: string,
 			<div className="card" style={{ padding: 24 }}>{t('tasks.browse.noResults') || 'No tasks match your filters.'}</div>
 		) : (
 			<>
-				<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 16 }}>
+				<div style={{ 
+					display: 'grid', 
+					gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', 
+					gap: 16,
+					alignItems: 'stretch'
+				}}>
 					{displayedTasks.map((t) => (
 						<TaskCard
 							key={t.id}
