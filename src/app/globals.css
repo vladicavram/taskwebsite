@@ -5,39 +5,39 @@
 }
 
 :root {
-  --bg: #f5f1ea;
-  --bg-secondary: #ede6dc;
-  /* Palette inspired by Moldova tourism mark */
+  --bg: #f0f9ff;
+  --bg-secondary: #e0f2fe;
+  /* Sky blue palette */
   --pattern-rose: #e54c70;
   --pattern-red: #e63946;
   --pattern-green: #4caf50;
-  --pattern-teal: #2e9ca0;
-  --pattern-blue: #2d7dd2;
-  --pattern-gold: #f2a541;
-  --pattern-deep: #1a1a1a;
-  --text: #111111;
-  --text-secondary: #3a3a3a;
-  --text-muted: #6a6a6a;
-  --border: #e0d7c9;
-  --border-light: #ece4d8;
-  --accent: #111111;
-  --accent-hover: #000000;
-  --accent-light: #d7ccbd;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
-  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.12);
+  --pattern-teal: #0ea5e9;
+  --pattern-blue: #3b82f6;
+  --pattern-gold: #f59e0b;
+  --pattern-deep: #0c4a6e;
+  --text: #0c4a6e;
+  --text-secondary: #075985;
+  --text-muted: #0284c7;
+  --border: #bae6fd;
+  --border-light: #e0f2fe;
+  --accent: #0ea5e9;
+  --accent-hover: #0284c7;
+  --accent-light: #bae6fd;
+  --shadow-sm: 0 1px 2px rgba(14, 165, 233, 0.08);
+  --shadow: 0 4px 12px rgba(14, 165, 233, 0.12);
+  --shadow-lg: 0 12px 24px rgba(14, 165, 233, 0.16);
   --radius: 10px;
   --radius-sm: 8px;
-  /* Monochrome cross-stitch medallion inspired by the provided motif */
+  /* Sky blue cross-stitch pattern */
   --bg-pattern:
-    url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27160%27%20height%3D%27160%27%20viewBox%3D%270%200%20160%20160%27%3E%3Cg%20stroke%3D%27%23111111%27%20stroke-width%3D%276%27%20stroke-linecap%3D%27square%27%20stroke-opacity%3D%27.14%27%3E%3Cpath%20d%3D%27M70%2070%20L90%2090%20M90%2070%20L70%2090%20M50%2050%20L70%2070%20M70%2050%20L50%2070%20M90%2050%20L110%2070%20M110%2050%20L90%2070%20M50%2090%20L70%20110%20M70%2090%20L50%20110%20M90%2090%20L110%20110%20M110%2090%20L90%20110%20M30%2070%20L50%2090%20M50%2070%20L30%2090%20M110%2070%20L130%2090%20M130%2070%20L110%2090%20M70%2030%20L90%2050%20M90%2030%20L70%2050%20M70%20110%20L90%20130%20M90%20110%20L70%20130%20M30%2030%20L50%2050%20M50%2030%20L30%2050%20M110%2030%20L130%2050%20M130%2030%20L110%2050%20M30%20110%20L50%20130%20M50%20110%20L30%20130%20M110%20110%20L130%20130%20M130%20110%20L110%20130%20M10%2070%20L30%2090%20M30%2070%20L10%2090%20M70%2010%20L90%2030%20M90%2010%20L70%2030%20M70%20130%20L90%20150%20M90%20130%20L70%20150%20M130%2070%20L150%2090%20M150%2070%20L130%2090%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"),
-    radial-gradient(circle at 18% 16%, rgba(242, 165, 65, 0.18) 0, rgba(242, 165, 65, 0) 46%),
-    radial-gradient(circle at 82% 18%, rgba(46, 156, 160, 0.12) 0, rgba(46, 156, 160, 0) 52%),
-    radial-gradient(circle at 50% 82%, rgba(45, 125, 210, 0.10) 0, rgba(45, 125, 210, 0) 50%);
-  /* Liquid hero background (updated to match palette) */
-  --hero-bg: radial-gradient(1200px 800px at 10% -10%, rgba(245,241,234,0.8) 0%, rgba(245,241,234,0) 40%),
-              radial-gradient(900px 600px at 90% 0%, rgba(185,149,86,0.18) 0%, rgba(185,149,86,0) 45%),
-              linear-gradient(180deg, #f6f1e7 0%, #ebe2d6 100%);
+    url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27160%27%20height%3D%27160%27%20viewBox%3D%270%200%20160%20160%27%3E%3Cg%20stroke%3D%27%230ea5e9%27%20stroke-width%3D%276%27%20stroke-linecap%3D%27square%27%20stroke-opacity%3D%27.12%27%3E%3Cpath%20d%3D%27M70%2070%20L90%2090%20M90%2070%20L70%2090%20M50%2050%20L70%2070%20M70%2050%20L50%2070%20M90%2050%20L110%2070%20M110%2050%20L90%2070%20M50%2090%20L70%20110%20M70%2090%20L50%20110%20M90%2090%20L110%20110%20M110%2090%20L90%20110%20M30%2070%20L50%2090%20M50%2070%20L30%2090%20M110%2070%20L130%2090%20M130%2070%20L110%2090%20M70%2030%20L90%2050%20M90%2030%20L70%2050%20M70%20110%20L90%20130%20M90%20110%20L70%20130%20M30%2030%20L50%2050%20M50%2030%20L30%2050%20M110%2030%20L130%2050%20M130%2030%20L110%2050%20M30%20110%20L50%20130%20M50%20110%20L30%20130%20M110%20110%20L130%20130%20M130%20110%20L110%20130%20M10%2070%20L30%2090%20M30%2070%20L10%2090%20M70%2010%20L90%2030%20M90%2010%20L70%2030%20M70%20130%20L90%20150%20M90%20130%20L70%20150%20M130%2070%20L150%2090%20M150%2070%20L130%2090%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"),
+    radial-gradient(circle at 18% 16%, rgba(56, 189, 248, 0.15) 0, rgba(56, 189, 248, 0) 46%),
+    radial-gradient(circle at 82% 18%, rgba(14, 165, 233, 0.12) 0, rgba(14, 165, 233, 0) 52%),
+    radial-gradient(circle at 50% 82%, rgba(59, 130, 246, 0.10) 0, rgba(59, 130, 246, 0) 50%);
+  /* Liquid hero background - sky blue theme */
+  --hero-bg: radial-gradient(1200px 800px at 10% -10%, rgba(240,249,255,0.9) 0%, rgba(240,249,255,0) 40%),
+              radial-gradient(900px 600px at 90% 0%, rgba(56,189,248,0.15) 0%, rgba(56,189,248,0) 45%),
+              linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%);
 }
 
 html, body { 
@@ -66,7 +66,7 @@ body {
   color: var(--text);
   position: relative;
   overflow: hidden;
-  border-bottom: 1px solid rgba(17,17,17,0.1);
+  border-bottom: 1px solid rgba(14,165,233,0.15);
 }
 
 /* High-contrast badge colors */
@@ -108,7 +108,7 @@ body {
 
 /* Dark fixed CTA background with contrast overlay */
 .fixed-cta-dark {
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #0c4a6e 0%, #075985 100%);
   background-attachment: fixed;
   color: #ffffff;
   position: relative;
@@ -119,7 +119,7 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(14, 165, 233, 0.1);
   pointer-events: none;
 }
 .link { 
@@ -150,7 +150,7 @@ body {
   padding: 12px 24px; 
   border-radius: 9999px; 
   border: 1px solid var(--accent);
-  background: linear-gradient(180deg, #111 0%, #000 100%); 
+  background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%); 
   color: #ffffff;
   font-weight: 500;
   text-decoration: none;
@@ -172,7 +172,7 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.18);
+  background: rgba(14,165,233,0.2);
   opacity: 0;
   transition: opacity 160ms ease;
   border-radius: 9999px;
@@ -183,9 +183,9 @@ body {
 }
 
 .btn-secondary {
-  background: rgba(255,255,255,0.65);
+  background: rgba(255,255,255,0.75);
   color: var(--text);
-  border: 1px solid rgba(17,17,17,0.2);
+  border: 1px solid rgba(14,165,233,0.3);
   box-shadow: var(--shadow-sm);
   backdrop-filter: saturate(180%) blur(12px);
   -webkit-backdrop-filter: saturate(180%) blur(12px);
@@ -193,7 +193,7 @@ body {
 
 .btn-secondary:hover {
   background: var(--bg-secondary);
-  border-color: var(--text);
+  border-color: var(--accent);
   box-shadow: var(--shadow);
 }
 
