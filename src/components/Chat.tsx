@@ -113,9 +113,17 @@ export default function Chat({ applicationId, taskId, receiverId, receiverName, 
       if (isDirectMessage && partnerId) {
         payload.receiverId = partnerId
       } else {
+        // For application-based messages
         payload.receiverId = receiverId
-        payload.taskId = taskId
-        payload.applicationId = applicationId
+        if (taskId) payload.taskId = taskId
+        if (applicationId) payload.applicationId = applicationId
+      }
+      
+      if (!payload.receiverId) {
+        console.error('receiverId is required')
+        alert('Unable to send message: missing receiver information')
+        setLoading(false)
+        return
       }
       
       const res = await fetch('/api/messages', {
@@ -129,9 +137,14 @@ export default function Chat({ applicationId, taskId, receiverId, receiverName, 
         setMessages([...messages, message])
         setNewMessage('')
         scrollToBottom()
+      } else {
+        const error = await res.json()
+        console.error('Failed to send message:', error)
+        alert(`Failed to send message: ${error.error || 'Unknown error'}`)
       }
     } catch (error) {
       console.error('Error sending message:', error)
+      alert('Failed to send message')
     } finally {
       setLoading(false)
     }

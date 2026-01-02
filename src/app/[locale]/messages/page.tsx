@@ -8,7 +8,7 @@ import { MessageCircle, Check, X } from 'lucide-react'
 import Chat from '../../../components/Chat'
 
 export default function MessagesPage() {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const router = useRouter()
   const { locale, t } = useLocale()
   const [conversations, setConversations] = useState<any[]>([])
@@ -17,12 +17,13 @@ export default function MessagesPage() {
   const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
+    if (status === 'loading') return // Wait for session to load
     if (!session?.user) {
       router.push(`/${locale}/login`)
       return
     }
     fetchConversations()
-  }, [session])
+  }, [session, status])
 
   const fetchConversations = async () => {
     try {
@@ -362,9 +363,25 @@ export default function MessagesPage() {
             {/* Modal Body - Chat Component */}
             <div style={{ flex: 1, overflow: 'hidden' }}>
               {selectedConversation.type === 'direct' ? (
-                <Chat partnerId={selectedConversation.partner.id} />
+                <Chat 
+                  partnerId={selectedConversation.partner.id}
+                  receiverName={selectedConversation.partner.name || selectedConversation.partner.email}
+                />
               ) : (
-                <Chat applicationId={selectedConversation.application.id} />
+                <Chat 
+                  applicationId={selectedConversation.application.id}
+                  taskId={selectedConversation.application.task.id}
+                  receiverId={
+                    session?.user?.email === selectedConversation.application.applicant?.email
+                      ? selectedConversation.application.task.creator.id
+                      : selectedConversation.application.applicant.id
+                  }
+                  receiverName={
+                    session?.user?.email === selectedConversation.application.applicant?.email
+                      ? selectedConversation.application.task.creator.name || selectedConversation.application.task.creator.email
+                      : selectedConversation.application.applicant.name || selectedConversation.application.applicant.email
+                  }
+                />
               )}
             </div>
           </div>
