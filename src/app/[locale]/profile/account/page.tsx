@@ -18,6 +18,7 @@ export default function AccountPage() {
   const [openForHire, setOpenForHire] = useState(true)
   const [userId, setUserId] = useState<string>('')
   const [showUpgradeMessage, setShowUpgradeMessage] = useState(false)
+  const [accountInfo, setAccountInfo] = useState<any>(null)
   const [form, setForm] = useState({
     username: '',
     name: '',
@@ -47,6 +48,7 @@ export default function AccountPage() {
       const res = await fetch('/api/users/me')
       if (res.ok) {
         const data = await res.json()
+        setAccountInfo(data)
         setForm({
           username: data.username || '',
           name: data.name || '',
@@ -139,6 +141,56 @@ export default function AccountPage() {
 
       {activeTab === 'profile' && (
       <>
+        {/* Account Information Card */}
+        {accountInfo && (
+          <div className="card" style={{ padding: '24px', marginBottom: '24px', background: 'linear-gradient(135deg, var(--bg-secondary) 0%, white 100%)' }}>
+            <h3 style={{ marginBottom: '20px', fontSize: '1.3rem', color: 'var(--text)' }}>📊 Account Overview</h3>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+              <div style={{ padding: '16px', background: 'white', borderRadius: '8px', border: '1px solid var(--border)' }}>
+                <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>Account Type</div>
+                <div style={{ fontSize: '1.25rem', fontWeight: '600', color: 'var(--accent)', textTransform: 'capitalize' }}>
+                  {accountInfo.userType === 'both' ? 'Poster & Tasker' : accountInfo.userType || 'Poster'}
+                </div>
+              </div>
+              
+              <div style={{ padding: '16px', background: 'white', borderRadius: '8px', border: '1px solid var(--border)' }}>
+                <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>Credits Balance</div>
+                <div style={{ fontSize: '1.25rem', fontWeight: '600', color: '#10b981' }}>
+                  {accountInfo.credits || 0} Credits
+                </div>
+              </div>
+              
+              <div style={{ padding: '16px', background: 'white', borderRadius: '8px', border: '1px solid var(--border)' }}>
+                <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>Member Since</div>
+                <div style={{ fontSize: '1rem', fontWeight: '600', color: 'var(--text)' }}>
+                  {accountInfo.createdAt ? new Date(accountInfo.createdAt).toLocaleDateString(locale, { year: 'numeric', month: 'short' }) : 'N/A'}
+                </div>
+              </div>
+              
+              <div style={{ padding: '16px', background: 'white', borderRadius: '8px', border: '1px solid var(--border)' }}>
+                <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>Account Status</div>
+                <div style={{ fontSize: '1rem', fontWeight: '600', color: accountInfo.canApply ? '#10b981' : '#f59e0b' }}>
+                  {accountInfo.blocked ? '🔒 Blocked' : accountInfo.canApply ? '✓ Active' : '⏳ Pending'}
+                </div>
+              </div>
+            </div>
+            
+            {accountInfo.isAdmin && (
+              <div style={{ 
+                marginTop: '16px', 
+                padding: '12px 16px', 
+                background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', 
+                color: 'white',
+                borderRadius: '8px',
+                fontWeight: '600',
+                textAlign: 'center'
+              }}>
+                👑 Administrator Account
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Show upgrade banner for poster-only users */}
         {userType === 'poster' && (
           <div style={{
