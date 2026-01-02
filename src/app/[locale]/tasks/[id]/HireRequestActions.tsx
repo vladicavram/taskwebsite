@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { CURRENCY_SYMBOL } from '../../../../lib/constants'
+import useLocale from '../../../../lib/locale'
 
 export default function HireRequestActions({ 
   applicationId, 
@@ -19,6 +20,7 @@ export default function HireRequestActions({
   proposedPrice?: number
   lastProposedByIsApplicant?: boolean
 }) {
+  const { t } = useLocale()
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [showCounterOffer, setShowCounterOffer] = useState(false)
@@ -35,12 +37,11 @@ export default function HireRequestActions({
     }
 
     if (userCredits < requiredCredits) {
-      // Show inline message instead of alert; keep button disabled in UI.
-      alert(`You need at least ${requiredCredits} credits to accept this hire request. Please purchase credits first.`)
+      alert(t('hireRequest.insufficientCredits', { credits: requiredCredits.toString() }) || `You need at least ${requiredCredits} credits to accept this hire request. Please purchase credits first.`)
       return
     }
 
-    if (!confirm(`Accept this hire request for ${taskPrice} ${CURRENCY_SYMBOL}?`)) {
+    if (!confirm(t('hireRequest.acceptConfirm', { price: taskPrice.toString(), currency: CURRENCY_SYMBOL }) || `Accept this hire request for ${taskPrice} ${CURRENCY_SYMBOL}?`)) {
       return
     }
 
@@ -56,16 +57,16 @@ export default function HireRequestActions({
         router.refresh()
       } else {
         const data = await res.json()
-        alert(data.error || 'Failed to accept hire request')
+        alert(data.error || t('hireRequest.acceptError') || 'Failed to accept hire request')
       }
     } catch (error) {
-      alert('Failed to accept hire request')
+      alert(t('hireRequest.acceptError') || 'Failed to accept hire request')
     }
     setLoading(false)
   }
 
   async function handleDecline() {
-    if (!confirm('Decline this hire request?')) {
+    if (!confirm(t('hireRequest.declineConfirm') || 'Decline this hire request?')) {
       return
     }
 
@@ -81,10 +82,10 @@ export default function HireRequestActions({
         router.push(`/${locale}/tasks`)
       } else {
         const data = await res.json()
-        alert(data.error || 'Failed to decline hire request')
+        alert(data.error || t('hireRequest.declineError') || 'Failed to decline hire request')
       }
     } catch (error) {
-      alert('Failed to decline hire request')
+      alert(t('hireRequest.declineError') || 'Failed to decline hire request')
     }
     setLoading(false)
   }
@@ -120,17 +121,17 @@ export default function HireRequestActions({
 
   return (
     <div className="card" style={{ padding: '24px', marginBottom: '24px' }}>
-      <h3 style={{ marginBottom: '16px' }}>Hire Request</h3>
+      <h3 style={{ marginBottom: '16px' }}>{t('hireRequest.title') || 'Hire Request'}</h3>
       <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>
-        You've been hired for this task at {taskPrice} {CURRENCY_SYMBOL}.
+        {t('hireRequest.description', { price: taskPrice.toString(), currency: CURRENCY_SYMBOL }) || `You've been hired for this task at ${taskPrice} ${CURRENCY_SYMBOL}.`}
       </p>
 
       {!showCounterOffer ? (
         lastProposedByIsApplicant ? (
           <div style={{ textAlign: 'center' }}>
-            <div style={{ fontWeight: 600, marginBottom: 8 }}>Counter-offer sent</div>
+            <div style={{ fontWeight: 600, marginBottom: 8 }}>{t('hireRequest.counterOfferSent') || 'Counter-offer sent'}</div>
             <div style={{ marginBottom: 12, color: 'var(--text-muted)' }}>
-              You proposed {proposedPrice ?? taskPrice} {CURRENCY_SYMBOL}. Waiting for the creator to accept or respond.
+              {t('hireRequest.counterOfferWaiting', { price: (proposedPrice ?? taskPrice).toString(), currency: CURRENCY_SYMBOL }) || `You proposed ${proposedPrice ?? taskPrice} ${CURRENCY_SYMBOL}. Waiting for the creator to accept or respond.`}
             </div>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
               <button
@@ -138,7 +139,7 @@ export default function HireRequestActions({
                 disabled={loading}
                 className="btn btn-secondary"
               >
-                ✏️ Send another counter-offer
+                {t('hireRequest.sendAnotherCounter') || '✏️ Send another counter-offer'}
               </button>
             </div>
           </div>
@@ -156,14 +157,14 @@ export default function HireRequestActions({
                 cursor: (userCredits < ((proposedPrice || taskPrice) / 100)) ? 'not-allowed' : 'pointer'
               }}
             >
-              ✓ Accept {proposedPrice || taskPrice} {CURRENCY_SYMBOL}
+              ✓ {t('hireRequest.accept') || 'Accept'} {proposedPrice || taskPrice} {CURRENCY_SYMBOL}
             </button>
             <button
               onClick={() => setShowCounterOffer(true)}
               disabled={loading}
               className="btn btn-secondary"
             >
-              💬 Counter-Offer
+              💬 {t('hireRequest.counterOffer') || 'Counter-Offer'}
             </button>
             <button
               onClick={handleDecline}
@@ -174,7 +175,7 @@ export default function HireRequestActions({
                 borderColor: '#dc2626'
               }}
             >
-              ✗ Decline
+              ✗ {t('hireRequest.decline') || 'Decline'}
             </button>
           </div>
           {userCredits < ((proposedPrice || taskPrice) / 100) && (
@@ -191,7 +192,7 @@ export default function HireRequestActions({
             fontWeight: 600,
             marginBottom: '8px'
           }}>
-            Your Counter-Offer Price
+            {t('hireRequest.priceLabel') || 'Counter-offer price:'}
           </label>
           <input
             type="number"
@@ -217,7 +218,7 @@ export default function HireRequestActions({
                 opacity: loading ? 0.5 : 1
               }}
             >
-              Send Counter-Offer
+              {t('hireRequest.sendCounterOffer') || 'Send Counter-Offer'}
             </button>
             <button
               onClick={() => {
@@ -227,7 +228,7 @@ export default function HireRequestActions({
               className="btn btn-secondary"
               style={{ flex: 1 }}
             >
-              Cancel
+              {t('common.cancel') || 'Cancel'}
             </button>
           </div>
         </div>

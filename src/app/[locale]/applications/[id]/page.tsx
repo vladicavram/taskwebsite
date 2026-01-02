@@ -205,20 +205,6 @@ export default function ApplicationDetailPage() {
 
   return (
     <div>
-      <section className="liquid-hero" style={{
-        padding: '48px 24px',
-        marginBottom: '48px'
-      }}>
-        <div className="container">
-          <h1 style={{ fontSize: '2.5rem', marginBottom: '12px', color: 'var(--text)' }}>
-            Task Application
-          </h1>
-          <p style={{ fontSize: '1.1rem', opacity: 0.95 }}>
-            Review applicant details
-          </p>
-        </div>
-      </section>
-
       <div className="container" style={{ maxWidth: '900px' }}>
         <div style={{
           padding: '16px 24px',

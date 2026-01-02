@@ -144,17 +144,17 @@ export default function AccountPage() {
         {/* Account Information Card */}
         {accountInfo && (
           <div className="card" style={{ padding: '24px', marginBottom: '24px', background: 'linear-gradient(135deg, var(--bg-secondary) 0%, white 100%)' }}>
-            <h3 style={{ marginBottom: '20px', fontSize: '1.3rem', color: 'var(--text)' }}>📊 Account Overview</h3>
+            <h3 style={{ marginBottom: '20px', fontSize: '1.3rem', color: 'var(--text)' }}>📊 {t('account.overview.title') || 'Account Overview'}</h3>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
               <div style={{ padding: '16px', background: 'white', borderRadius: '8px', border: '1px solid var(--border)' }}>
-                <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>Account Type</div>
+                <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>{t('account.overview.accountType') || 'Account Type'}</div>
                 <div style={{ fontSize: '1.25rem', fontWeight: '600', color: 'var(--accent)', textTransform: 'capitalize' }}>
-                  {accountInfo.userType === 'both' ? 'Poster & Tasker' : accountInfo.userType || 'Poster'}
+                  {accountInfo.userType === 'both' ? (t('account.overview.userType.both') || 'Poster & Tasker') : accountInfo.userType === 'tasker' ? (t('account.overview.userType.tasker') || 'Tasker') : (t('account.overview.userType.poster') || 'Poster')}
                 </div>
               </div>
               
               <div style={{ padding: '16px', background: 'white', borderRadius: '8px', border: '1px solid var(--border)' }}>
-                <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>Credits Balance</div>
+                <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>{t('account.overview.creditsBalance') || 'Credits Balance'}</div>
                 <div style={{ fontSize: '1.25rem', fontWeight: '600', color: '#10b981' }}>
                   {accountInfo.credits?.toFixed(2) || '0.00'}
                 </div>
@@ -162,7 +162,7 @@ export default function AccountPage() {
               
               {accountInfo.reviewCount > 0 && (
                 <div style={{ padding: '16px', background: 'white', borderRadius: '8px', border: '1px solid var(--border)' }}>
-                  <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>Average Rating</div>
+                  <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>{t('account.overview.averageRating') || 'Average Rating'}</div>
                   <div style={{ fontSize: '1.25rem', fontWeight: '600', color: '#f59e0b', display: 'flex', alignItems: 'center', gap: '6px' }}>
                     ⭐ {accountInfo.averageRating?.toFixed(1) || '0.0'}
                     <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', fontWeight: 'normal' }}>
@@ -197,7 +197,7 @@ export default function AccountPage() {
                 fontWeight: '600',
                 textAlign: 'center'
               }}>
-                👑 Administrator Account
+                👑 {t('account.overview.adminAccount') || 'Administrator Account'}
               </div>
             )}
           </div>
@@ -217,9 +217,9 @@ export default function AccountPage() {
             gap: '20px'
           }}>
             <div style={{ flex: 1 }}>
-              <h3 style={{ margin: '0 0 8px 0', fontSize: '1.3rem' }}>🌟 Want to Offer Your Services?</h3>
+              <h3 style={{ margin: '0 0 8px 0', fontSize: '1.3rem' }}>🌟 {t('account.upgrade.title') || 'Want to Offer Your Services?'}</h3>
               <p style={{ margin: 0, opacity: 0.95, fontSize: '1rem' }}>
-                Upgrade to a Tasker account to apply for tasks and start earning money
+                {t('account.upgrade.description') || 'Upgrade to a Tasker account to apply for tasks and start earning money'}
               </p>
             </div>
             <button
@@ -233,7 +233,7 @@ export default function AccountPage() {
                 whiteSpace: 'nowrap'
               }}
             >
-              Become a Tasker →
+              {t('account.upgrade.button') || 'Become a Tasker →'}
             </button>
           </div>
         )}
@@ -252,25 +252,25 @@ export default function AccountPage() {
                 <img src={form.image} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               ) : (
                 <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)' }}>
-                  No photo
+                  {t('account.noPhoto') || 'No photo'}
                 </div>
               )}
             </div>
             <div>
-              <label style={{ display: 'block', fontWeight: 600, marginBottom: 8 }}>Profile Picture</label>
+              <label style={{ display: 'block', fontWeight: 600, marginBottom: 8 }}>{t('account.profilePicture') || 'Profile Picture'}</label>
               <input type="file" accept="image/*" onChange={onImageChange} />
             </div>
           </div>
           <div>
-            <label style={{ display: 'block', fontWeight: 600, marginBottom: 8 }}>Username</label>
+            <label style={{ display: 'block', fontWeight: 600, marginBottom: 8 }}>{t('account.username') || 'Username'}</label>
             <input name="username" value={form.username} onChange={onChange} pattern="[a-zA-Z0-9_]{3,20}" required />
           </div>
           <div>
-            <label style={{ display: 'block', fontWeight: 600, marginBottom: 8 }}>Full Name</label>
+            <label style={{ display: 'block', fontWeight: 600, marginBottom: 8 }}>{t('account.fullName') || 'Full Name'}</label>
             <input name="name" value={form.name} onChange={onChange} required />
           </div>
           <div>
-            <label style={{ display: 'block', fontWeight: 600, marginBottom: 8 }}>Email</label>
+            <label style={{ display: 'block', fontWeight: 600, marginBottom: 8 }}>{t('account.email') || 'Email'}</label>
             <input type="email" name="email" value={form.email} readOnly required />
           </div>
           
@@ -316,12 +316,12 @@ export default function AccountPage() {
           )}
           
           <div>
-            <label style={{ display: 'block', fontWeight: 600, marginBottom: 8 }}>New Password (optional)</label>
-            <input type="password" name="password" value={form.password} onChange={onChange} minLength={8} placeholder="••••••••" />
+            <label style={{ display: 'block', fontWeight: 600, marginBottom: 8 }}>{t('account.newPassword') || 'New Password (optional)'}</label>
+            <input type="password" name="password" value={form.password} onChange={onChange} minLength={8} placeholder={t('account.passwordPlaceholder') || '••••••••'} />
           </div>
           <div style={{ display: 'flex', gap: 12 }}>
-            <button type="submit" className="btn" disabled={saving} style={{ opacity: saving ? 0.7 : 1 }}>{saving ? 'Saving...' : 'Save Changes'}</button>
-            <button type="button" className="btn btn-secondary" onClick={() => router.push(`/${locale}`)}>Cancel</button>
+            <button type="submit" className="btn" disabled={saving} style={{ opacity: saving ? 0.7 : 1 }}>{saving ? (t('account.saving') || 'Saving...') : (t('account.saveChanges') || 'Save Changes')}</button>
+            <button type="button" className="btn btn-secondary" onClick={() => router.push(`/${locale}`)}>{t('account.cancel') || 'Cancel'}</button>
           </div>
         </form>
       </div>

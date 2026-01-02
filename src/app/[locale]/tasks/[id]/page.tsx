@@ -177,7 +177,7 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                 <div>
                   {!completedAt && isDirectHire ? (
                     <div className="card" style={{ padding: '24px', marginBottom: '16px' }}>
-                      <h3 style={{ marginBottom: '12px' }}>Direct Hire Request</h3>
+                      <h3 style={{ marginBottom: '12px' }}>{t('directHire.title') || 'Direct Hire Request'}</h3>
                       {acceptedApps.length > 0 ? (
                         <>
                           <div style={{
@@ -188,10 +188,10 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                             marginBottom: '16px'
                           }}>
                             <div style={{ fontWeight: 600, fontSize: '1.1rem', color: '#065f46', marginBottom: '4px' }}>
-                              ✓ Hire Request Accepted
+                              ✓ {t('directHire.accepted') || 'Hire Request Accepted'}
                             </div>
                             <p style={{ color: '#065f46', margin: 0 }}>
-                              {acceptedApps[0].applicant.name || acceptedApps[0].applicant.email} has accepted your hire request.
+                              {t('directHire.acceptedDescription', { name: acceptedApps[0].applicant.name || acceptedApps[0].applicant.email }) || `${acceptedApps[0].applicant.name || acceptedApps[0].applicant.email} has accepted your hire request.`}
                             </p>
                           </div>
                           <Chat partnerId={acceptedApps[0].applicantId} />
@@ -199,7 +199,7 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                       ) : (
                         <>
                           <p style={{ color: 'var(--text-secondary)', marginBottom: '16px' }}>
-                            Waiting for {(task as any).applications[0]?.applicant?.name || 'the worker'} to accept your hire request.
+                            {t('directHire.waiting', { name: (task as any).applications[0]?.applicant?.name || 'the worker' }) || `Waiting for ${(task as any).applications[0]?.applicant?.name || 'the worker'} to accept your hire request.`}
                           </p>
                           <CancelHireButton taskId={params.id} locale={params.locale} />
                         </>
@@ -235,10 +235,10 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                         marginBottom: '24px'
                       }}>
                         <div style={{ fontWeight: 600, fontSize: '1.1rem', color: '#065f46', marginBottom: '12px' }}>
-                          ✓ Hire Request Accepted
+                          ✓ {t('directHire.accepted') || 'Hire Request Accepted'}
                         </div>
                         <p style={{ color: '#065f46', marginBottom: '16px' }}>
-                          You can now communicate with the task creator below.
+                          {t('directHire.youAccepted') || 'You can now communicate with the task creator below.'}
                         </p>
                         <MarkCompleteButton taskId={params.id} locale={params.locale} />
                       </div>

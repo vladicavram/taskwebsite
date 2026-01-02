@@ -143,7 +143,7 @@ export default async function MyTasksPage({ params, searchParams }: { params: { 
             className={activeTab === 'new' ? 'btn' : 'btn btn-secondary'}
             style={{ flex: 1, textAlign: 'center', padding: '6px 10px', fontSize: '0.9rem', minWidth: '120px' }}
           >
-            {(t('myTasks.new.title') || 'New Tasks') + ` (${counts.newTasks})`}
+            {(t('myTasks.new.title') || 'New Hire Requests') + ` (${counts.newTasks})`}
           </Link>
           <Link
             href={`/${params.locale}/profile/my-tasks?tab=accepted`}
