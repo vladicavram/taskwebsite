@@ -121,9 +121,14 @@ export default function TaskCard({ id, title, description, price, category, imag
         <p style={{ 
           color: 'var(--text-secondary)',
           lineHeight: '1.5',
-          fontSize: '0.875rem'
+          fontSize: '0.875rem',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          display: '-webkit-box',
+          WebkitLineClamp: 3,
+          WebkitBoxOrient: 'vertical'
         }}>
-          {description.length > 80 ? description.substring(0, 80) + '...' : description}
+          {description}
         </p>
       </article>
     </Link>

@@ -150,7 +150,7 @@ export default function TasksBrowser({ locale, initialTasks }: { locale: string,
 					display: 'grid', 
 					gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', 
 					gap: 16,
-					alignItems: 'stretch'
+					gridAutoRows: '1fr'
 				}}>
 					{displayedTasks.map((t) => (
 						<TaskCard
