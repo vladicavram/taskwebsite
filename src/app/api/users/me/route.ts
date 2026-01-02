@@ -9,8 +9,24 @@ import bcrypt from 'bcryptjs'
 export async function GET() {
   const session: any = await getServerSession(authOptions as any)
   if (!session?.user?.email) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  const user = await prisma.user.findUnique({ where: { email: session.user.email } })
+  const user = await prisma.user.findUnique({ 
+    where: { email: session.user.email },
+    include: {
+      reviewsReceived: {
+        select: {
+          rating: true
+        }
+      }
+    }
+  })
   if (!user) return NextResponse.json({ error: 'Not found' }, { status: 404 })
+  
+  // Calculate average rating
+  const reviews = user.reviewsReceived || []
+  const averageRating = reviews.length > 0
+    ? reviews.reduce((acc: number, r: any) => acc + r.rating, 0) / reviews.length
+    : 0
+  
   return NextResponse.json({ 
     id: user.id, 
     username: user.username, 
@@ -22,7 +38,12 @@ export async function GET() {
     canApply: user.canApply,
     openForHire: (user as any).openForHire,
     userType: user.userType,
-    idPhotoUrl: user.idPhotoUrl
+    idPhotoUrl: user.idPhotoUrl,
+    credits: user.credits,
+    createdAt: user.createdAt,
+    blocked: user.blocked,
+    averageRating: averageRating,
+    reviewCount: reviews.length
   })
 }
 

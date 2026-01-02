@@ -156,14 +156,26 @@ export default function AccountPage() {
               <div style={{ padding: '16px', background: 'white', borderRadius: '8px', border: '1px solid var(--border)' }}>
                 <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>Credits Balance</div>
                 <div style={{ fontSize: '1.25rem', fontWeight: '600', color: '#10b981' }}>
-                  {accountInfo.credits || 0} Credits
+                  {accountInfo.credits?.toFixed(2) || '0.00'}
                 </div>
               </div>
+              
+              {accountInfo.reviewCount > 0 && (
+                <div style={{ padding: '16px', background: 'white', borderRadius: '8px', border: '1px solid var(--border)' }}>
+                  <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>Average Rating</div>
+                  <div style={{ fontSize: '1.25rem', fontWeight: '600', color: '#f59e0b', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    ⭐ {accountInfo.averageRating?.toFixed(1) || '0.0'}
+                    <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', fontWeight: 'normal' }}>
+                      ({accountInfo.reviewCount})
+                    </span>
+                  </div>
+                </div>
+              )}
               
               <div style={{ padding: '16px', background: 'white', borderRadius: '8px', border: '1px solid var(--border)' }}>
                 <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>Member Since</div>
                 <div style={{ fontSize: '1rem', fontWeight: '600', color: 'var(--text)' }}>
-                  {accountInfo.createdAt ? new Date(accountInfo.createdAt).toLocaleDateString(locale, { year: 'numeric', month: 'short' }) : 'N/A'}
+                  {accountInfo.createdAt ? new Date(accountInfo.createdAt).toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' }) : 'N/A'}
                 </div>
               </div>
               
