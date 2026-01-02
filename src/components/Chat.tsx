@@ -29,11 +29,20 @@ export default function Chat({ applicationId, taskId, receiverId, receiverName, 
   const [currentUserId, setCurrentUserId] = useState<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const previousMessageCountRef = useRef<number>(0)
+  const isFirstLoadRef = useRef(true)
+  const chatContainerRef = useRef<HTMLDivElement>(null)
   
   const isDirectMessage = !!partnerId
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const isUserNearBottom = () => {
+    if (!chatContainerRef.current) return true
+    const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current
+    const threshold = 100 // pixels from bottom
+    return scrollHeight - scrollTop - clientHeight < threshold
   }
 
   useEffect(() => {
@@ -76,8 +85,13 @@ export default function Chat({ applicationId, taskId, receiverId, receiverName, 
         setMessages(data)
         previousMessageCountRef.current = data.length
         
-        // Only scroll if there are new messages or it's the first load
-        if (previousCount === 0 || data.length > previousCount) {
+        // Only scroll if:
+        // 1. It's the very first load, OR
+        // 2. New messages arrived AND user is near the bottom
+        if (isFirstLoadRef.current) {
+          isFirstLoadRef.current = false
+          setTimeout(scrollToBottom, 100)
+        } else if (data.length > previousCount && isUserNearBottom()) {
           scrollToBottom()
         }
       }
@@ -160,14 +174,17 @@ export default function Chat({ applicationId, taskId, receiverId, receiverName, 
       </div>
 
       {/* Messages Area */}
-      <div style={{
-        flex: 1,
-        overflowY: 'auto',
-        padding: '20px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '12px'
-      }}>
+      <div 
+        ref={chatContainerRef}
+        style={{
+          flex: 1,
+          overflowY: 'auto',
+          padding: '20px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '12px'
+        }}
+      >
         {messages.length === 0 ? (
           <div style={{
             textAlign: 'center',
