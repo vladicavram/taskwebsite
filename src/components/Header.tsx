@@ -24,6 +24,7 @@ export default function Header() {
   const [showUserMenu, setShowUserMenu] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
+  const [showMobileNotifications, setShowMobileNotifications] = useState(false)
   
   const messagesRef = useRef<HTMLDivElement>(null)
   const notificationsRef = useRef<HTMLDivElement>(null)
@@ -1067,6 +1068,118 @@ export default function Header() {
                       </span>
                     )}
                   </Link>
+                  <button
+                    onClick={() => setShowMobileNotifications(!showMobileNotifications)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '14px 16px',
+                      marginBottom: '8px',
+                      borderRadius: '8px',
+                      textDecoration: 'none',
+                      color: 'var(--text)',
+                      fontWeight: '500',
+                      width: '100%',
+                      background: showMobileNotifications ? 'var(--bg-secondary)' : 'transparent',
+                      border: 'none',
+                      cursor: 'pointer',
+                      textAlign: 'left'
+                    }}
+                  >
+                    <span>{t('header.notifications') || 'Notifications'}</span>
+                    {unreadCount > 0 && (
+                      <span style={{
+                        background: 'var(--error)',
+                        color: 'white',
+                        borderRadius: '12px',
+                        padding: '2px 8px',
+                        fontSize: '0.75rem',
+                        fontWeight: '600',
+                        minWidth: '20px',
+                        textAlign: 'center'
+                      }}>
+                        {unreadCount}
+                      </span>
+                    )}
+                  </button>
+
+                  {/* Mobile Notifications List */}
+                  {showMobileNotifications && (
+                    <div style={{
+                      marginBottom: '16px',
+                      background: 'var(--bg-secondary)',
+                      borderRadius: '8px',
+                      padding: '8px',
+                      maxHeight: '300px',
+                      overflowY: 'auto'
+                    }}>
+                      {notifications.length === 0 ? (
+                        <div style={{ 
+                          padding: '24px 16px', 
+                          textAlign: 'center', 
+                          color: 'var(--text-muted)',
+                          fontSize: '0.875rem'
+                        }}>
+                          {t('header.notifications.empty') || 'No notifications yet'}
+                        </div>
+                      ) : (
+                        <>
+                          {unreadCount > 0 && (
+                            <button
+                              onClick={async () => {
+                                await fetch('/api/notifications', {
+                                  method: 'PATCH',
+                                  headers: { 'Content-Type': 'application/json' },
+                                  body: JSON.stringify({ markAllRead: true })
+                                })
+                                fetchNotifications()
+                              }}
+                              style={{
+                                width: '100%',
+                                background: 'transparent',
+                                border: 'none',
+                                color: 'var(--accent)',
+                                cursor: 'pointer',
+                                fontSize: '0.8rem',
+                                padding: '8px',
+                                textAlign: 'right',
+                                fontWeight: '500'
+                              }}
+                            >
+                              {t('header.notifications.markAllRead') || 'Mark all read'}
+                            </button>
+                          )}
+                          {notifications.map((notification) => (
+                            <div
+                              key={notification.id}
+                              onClick={() => {
+                                handleNotificationClick(notification)
+                                setShowMobileMenu(false)
+                                setShowMobileNotifications(false)
+                              }}
+                              style={{
+                                padding: '10px 12px',
+                                marginBottom: '4px',
+                                borderRadius: '6px',
+                                cursor: 'pointer',
+                                background: notification.read ? 'white' : 'var(--accent-light)',
+                                fontSize: '0.85rem'
+                              }}
+                            >
+                              <div style={{ marginBottom: '4px' }}>
+                                {translatedNotificationContent(notification)}
+                              </div>
+                              <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
+                                {new Date(notification.createdAt).toLocaleDateString()}
+                              </div>
+                            </div>
+                          ))}
+                        </>
+                      )}
+                    </div>
+                  )}
+
                   <Link
                     href={`/${locale}/profile/credits/purchase`}
                     onClick={() => setShowMobileMenu(false)}
