@@ -21,6 +21,7 @@ import Chat from '../../../../components/Chat'
 type Props = { params: { id: string; locale: string } }
 
 export default async function TaskDetail({ params, searchParams }: Props & { searchParams?: Record<string, string> }) {
+  const t = (key: string) => getTranslation(params.locale, key)
   const session: any = await getServerSession(authOptions as any)
   
   // Fetch current user's data to check userType
@@ -191,7 +192,7 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                               ✓ {t('directHire.accepted') || 'Hire Request Accepted'}
                             </div>
                             <p style={{ color: '#065f46', margin: 0 }}>
-                              {t('directHire.acceptedDescription', { name: acceptedApps[0].applicant.name || acceptedApps[0].applicant.email }) || `${acceptedApps[0].applicant.name || acceptedApps[0].applicant.email} has accepted your hire request.`}
+                              {(t('directHire.acceptedDescription') || '{{name}} has accepted your hire request.').replace('{{name}}', acceptedApps[0].applicant.name || acceptedApps[0].applicant.email)}
                             </p>
                           </div>
                           <Chat partnerId={acceptedApps[0].applicantId} />
@@ -199,7 +200,7 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                       ) : (
                         <>
                           <p style={{ color: 'var(--text-secondary)', marginBottom: '16px' }}>
-                            {t('directHire.waiting', { name: (task as any).applications[0]?.applicant?.name || 'the worker' }) || `Waiting for ${(task as any).applications[0]?.applicant?.name || 'the worker'} to accept your hire request.`}
+                            {(t('directHire.waiting') || 'Waiting for {{name}} to accept your hire request.').replace('{{name}}', (task as any).applications[0]?.applicant?.name || 'the worker')}
                           </p>
                           <CancelHireButton taskId={params.id} locale={params.locale} />
                         </>
