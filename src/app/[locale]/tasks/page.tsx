@@ -14,6 +14,7 @@ export default async function TasksPage({ params }: { params: { locale: string }
   let initialTasks: any[] = []
   
   try {
+    console.log('[TasksPage] Starting server-side task fetch...')
     // Fetch initial public tasks server-side to avoid client-side flicker
     const where: any = {
       isOpen: true,
@@ -34,6 +35,8 @@ export default async function TasksPage({ params }: { params: { locale: string }
       take: 100 
     })
     
+    console.log(`[TasksPage] Fetched ${tasks.length} tasks successfully`)
+    
     // Map tasks to include applicant count
     initialTasks = tasks.map(task => {
       const applicantCount = task.applications?.length || 0
@@ -44,7 +47,7 @@ export default async function TasksPage({ params }: { params: { locale: string }
       }
     })
   } catch (error) {
-    console.error('Error fetching tasks:', error)
+    console.error('[TasksPage] Error fetching tasks:', error)
     // Return empty array on error - client will fetch via API
     initialTasks = []
   }
