@@ -37,11 +37,13 @@ export default function HireRequestActions({
     }
 
     if (userCredits < requiredCredits) {
-      alert(t('hireRequest.insufficientCredits', { credits: requiredCredits.toString() }) || `You need at least ${requiredCredits} credits to accept this hire request. Please purchase credits first.`)
+      const msg = t('hireRequest.insufficientCredits') || `You need at least {{credits}} credits to accept this hire request. Please purchase credits first.`
+      alert(msg.replace('{{credits}}', requiredCredits.toString()))
       return
     }
 
-    if (!confirm(t('hireRequest.acceptConfirm', { price: taskPrice.toString(), currency: CURRENCY_SYMBOL }) || `Accept this hire request for ${taskPrice} ${CURRENCY_SYMBOL}?`)) {
+    const confirmMsg = t('hireRequest.acceptConfirm') || `Accept this hire request for {{price}} {{currency}}?`
+    if (!confirm(confirmMsg.replace('{{price}}', taskPrice.toString()).replace('{{currency}}', CURRENCY_SYMBOL))) {
       return
     }
 
@@ -123,7 +125,7 @@ export default function HireRequestActions({
     <div className="card" style={{ padding: '24px', marginBottom: '24px' }}>
       <h3 style={{ marginBottom: '16px' }}>{t('hireRequest.title') || 'Hire Request'}</h3>
       <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>
-        {t('hireRequest.description', { price: taskPrice.toString(), currency: CURRENCY_SYMBOL }) || `You've been hired for this task at ${taskPrice} ${CURRENCY_SYMBOL}.`}
+        {(t('hireRequest.description') || `You've been hired for this task at {{price}} {{currency}}.`).replace('{{price}}', taskPrice.toString()).replace('{{currency}}', CURRENCY_SYMBOL)}
       </p>
 
       {!showCounterOffer ? (
@@ -131,7 +133,7 @@ export default function HireRequestActions({
           <div style={{ textAlign: 'center' }}>
             <div style={{ fontWeight: 600, marginBottom: 8 }}>{t('hireRequest.counterOfferSent') || 'Counter-offer sent'}</div>
             <div style={{ marginBottom: 12, color: 'var(--text-muted)' }}>
-              {t('hireRequest.counterOfferWaiting', { price: (proposedPrice ?? taskPrice).toString(), currency: CURRENCY_SYMBOL }) || `You proposed ${proposedPrice ?? taskPrice} ${CURRENCY_SYMBOL}. Waiting for the creator to accept or respond.`}
+              {(t('hireRequest.counterOfferWaiting') || `You proposed {{price}} {{currency}}. Waiting for the creator to accept or respond.`).replace('{{price}}', (proposedPrice ?? taskPrice).toString()).replace('{{currency}}', CURRENCY_SYMBOL)}
             </div>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
               <button
