@@ -1023,6 +1023,22 @@ export default function Header() {
                   paddingTop: '20px'
                 }}>
                   <Link
+                    href={`/${locale}/profile/my-tasks`}
+                    onClick={() => setShowMobileMenu(false)}
+                    style={{
+                      display: 'block',
+                      padding: '14px 16px',
+                      marginBottom: '8px',
+                      borderRadius: '8px',
+                      textDecoration: 'none',
+                      color: pathname?.includes('/profile/my-tasks') ? 'white' : 'var(--text)',
+                      background: pathname?.includes('/profile/my-tasks') ? 'var(--accent)' : 'transparent',
+                      fontWeight: pathname?.includes('/profile/my-tasks') ? '600' : '500'
+                    }}
+                  >
+                    {t('header.myTasks') || 'My Tasks'}
+                  </Link>
+                  <Link
                     href={`/${locale}/profile/account`}
                     onClick={() => setShowMobileMenu(false)}
                     style={{
