@@ -1084,23 +1084,36 @@ export default function Header() {
                       background: showMobileNotifications ? 'var(--bg-secondary)' : 'transparent',
                       border: 'none',
                       cursor: 'pointer',
-                      textAlign: 'left'
+                      textAlign: 'left',
+                      position: 'relative'
                     }}
                   >
-                    <span>{t('header.notifications') || 'Notifications'}</span>
+                    <span>Notifications</span>
                     {unreadCount > 0 && (
-                      <span style={{
-                        background: 'var(--error)',
-                        color: 'white',
-                        borderRadius: '12px',
-                        padding: '2px 8px',
-                        fontSize: '0.75rem',
-                        fontWeight: '600',
-                        minWidth: '20px',
-                        textAlign: 'center'
-                      }}>
-                        {unreadCount}
-                      </span>
+                      <>
+                        <span style={{
+                          position: 'absolute',
+                          left: '10px',
+                          top: '14px',
+                          width: '8px',
+                          height: '8px',
+                          background: '#ef4444',
+                          borderRadius: '50%',
+                          border: '2px solid white'
+                        }} />
+                        <span style={{
+                          background: 'var(--error)',
+                          color: 'white',
+                          borderRadius: '12px',
+                          padding: '2px 8px',
+                          fontSize: '0.75rem',
+                          fontWeight: '600',
+                          minWidth: '20px',
+                          textAlign: 'center'
+                        }}>
+                          {unreadCount}
+                        </span>
+                      </>
                     )}
                   </button>
 
