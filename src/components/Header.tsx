@@ -466,13 +466,13 @@ export default function Header() {
                     background: 'transparent',
                     border: 'none',
                     borderRadius: '50%',
-                    width: '40px',
-                    height: '40px',
+                    width: '36px',
+                    height: '36px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     cursor: 'pointer',
-                    fontSize: '2.5rem',
+                    fontSize: '2.2rem',
                     color: '#000',
                     transition: 'transform 0.2s'
                   }}
@@ -499,15 +499,19 @@ export default function Header() {
                     zIndex: 1000,
                     padding: '20px'
                   }}>
-                    <div style={{ marginBottom: '16px' }}>
-                      <h4 style={{ marginBottom: '8px', fontSize: '1.125rem' }}>{t('header.credits.title') || 'Your Credits'}</h4>
+                    <div style={{ marginBottom: '20px', textAlign: 'center' }}>
+                      <h4 style={{ marginBottom: '12px', fontSize: '1rem', color: 'var(--text-muted)', fontWeight: 500 }}>{t('header.credits.title') || 'Your Balance'}</h4>
                       <div style={{ 
-                        fontSize: '2rem', 
+                        fontSize: '3rem', 
                         fontWeight: 700, 
-                        color: 'var(--accent)',
-                        marginBottom: '8px'
+                        color: '#000',
+                        marginBottom: '8px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '8px'
                       }}>
-                        {credits.toFixed(0)} <span style={{ fontSize: '4rem', color: '#000' }}>Ⓓ</span>
+                        {credits.toFixed(0)} <span style={{ fontSize: '3rem' }}>Ⓓ</span>
                       </div>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>

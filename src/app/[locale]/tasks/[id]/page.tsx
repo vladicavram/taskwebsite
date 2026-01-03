@@ -251,7 +251,7 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                 <div className="card" style={{ padding: '24px', textAlign: 'center' }}>
                   <div style={{ fontSize: '3rem', marginBottom: '16px' }}>🔒</div>
                   <p style={{ color: 'var(--text-secondary)' }}>
-                    This is a private hire request.
+                    {t('taskDetail.privateTask') || 'This task is only visible to invited workers.'}
                   </p>
                 </div>
               ) : (
@@ -374,12 +374,10 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                   : (getTranslation(params.locale, 'taskDetail.taskBudget') || 'Task Budget')
                 }
               </div>
-              <div style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--accent)', marginBottom: '16px' }}>
-                {task.price ? (
-                  currentUser?.userType === 'tasker' || currentUser?.userType === 'both' 
-                    ? (<>{Math.max(1, Math.ceil(task.price / 100))} <span style={{ fontSize: '5rem', color: '#000' }}>Ⓓ</span></>)
-                    : `${task.price} MDL`
-                ) : (getTranslation(params.locale, 'taskDetail.negotiable') || 'Negotiable')}
+              <div style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--accent)', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                {currentUser?.userType === 'tasker' || currentUser?.userType === 'both' 
+                  ? (<>{Math.max(1, Math.ceil((task.price || 100) / 100))} <span style={{ fontSize: '5rem', color: '#000' }}>Ⓓ</span></>)
+                  : task.price ? `${task.price} MDL` : '100 MDL'}
               </div>
               
               {/* Task Status */}
