@@ -88,7 +88,7 @@ export async function POST(
       return NextResponse.json({ error: 'Agreement acceptance and contract text are required' }, { status: 400 })
     }
 
-    // Use task price directly - credit calculation: ≤100 MDL = 1 credit, >100 MDL = price/100 credits
+    // Use task price directly - credit calculation based on task price
     const effectivePrice = task.price || 0
     const requiredCredits = effectivePrice <= 100 ? 1 : Math.max(1, effectivePrice / 100)
     

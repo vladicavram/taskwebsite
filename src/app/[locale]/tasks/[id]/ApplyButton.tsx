@@ -61,7 +61,7 @@ export default function ApplyButton({
   }
 
   const calculateRequiredCredits = (price: number) => {
-    // 100 MDL or less = 1 credit, otherwise price/100
+    // Tasks ≤100 cost 1 credit, otherwise price/100
     if (price <= 100) return 1
     return Math.max(1, price / 100)
   }

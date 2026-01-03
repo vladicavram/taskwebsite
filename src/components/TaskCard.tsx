@@ -102,7 +102,7 @@ export default function TaskCard({ id, title, description, price, category, imag
             borderRadius: '16px',
             boxShadow: '0 2px 8px rgba(200, 153, 111, 0.3)'
           }}>
-            {price ? `${price} MDL` : t('tasks.negotiable') || 'Negotiable'}
+            {price ? `${price <= 100 ? 1 : (price / 100).toFixed(1)} ${price <= 100 || price / 100 === 1 ? (t('taskDetail.credit') || 'credit') : (t('taskDetail.credits') || 'credits')}` : t('tasks.negotiable') || 'Negotiable'}
           </span>
         </div>        <h3 style={{ 
           fontWeight: 600, 

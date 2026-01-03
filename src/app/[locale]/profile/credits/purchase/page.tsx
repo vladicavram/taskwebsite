@@ -152,7 +152,7 @@ export default function PurchaseCreditsPage() {
             {t('purchaseCredits.title') || 'Purchase Credits'}
           </h1>
           <p style={{ fontSize: '1.1rem', opacity: 0.95 }}>
-            {interpolate(t('purchaseCredits.subtitle') || 'Buy credits to apply for tasks (1 credit = 100 {{currency}} task value)', { currency: CURRENCY_SYMBOL })}
+            {interpolate(t('purchaseCredits.subtitle') || 'Buy credits to apply for tasks', { currency: CURRENCY_SYMBOL })}
           </p>
         </div>
       </section>
