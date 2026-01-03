@@ -616,6 +616,7 @@
   ,"account.username": "Nume utilizator"
   ,"account.fullName": "Nume Complet"
   ,"account.email": "Email"
+  ,"account.phone": "Număr de telefon"
   ,"account.newPassword": "Parolă Nouă (opțional)"
   ,"account.passwordPlaceholder": "••••••••"
   ,"account.cancel": "Anulează"

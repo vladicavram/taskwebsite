@@ -24,7 +24,8 @@ export default function AccountPage() {
     name: '',
     email: '',
     password: '',
-    image: ''
+    image: '',
+    phone: ''
   })
 
   useEffect(() => {
@@ -54,7 +55,8 @@ export default function AccountPage() {
           name: data.name || '',
           email: data.email || '',
           password: '',
-          image: data.image || ''
+          image: data.image || '',
+          phone: data.phone || ''
         })
         setUserType(data.userType || 'poster')
         setCanApply(data.canApply || false)
@@ -88,7 +90,7 @@ export default function AccountPage() {
     setSaving(true)
     setError('')
     setSuccess('')
-    const payload: any = { username: form.username, name: form.name, image: form.image, openForHire: openForHire }
+    const payload: any = { username: form.username, name: form.name, image: form.image, openForHire: openForHire, phone: form.phone }
     if (form.password) payload.password = form.password
     const res = await fetch('/api/users/me', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
     setSaving(false)
@@ -267,6 +269,10 @@ export default function AccountPage() {
           <div>
             <label style={{ display: 'block', fontWeight: 600, marginBottom: 8 }}>{t('account.email') || 'Email'}</label>
             <input type="email" name="email" value={form.email} readOnly required />
+          </div>
+          <div>
+            <label style={{ display: 'block', fontWeight: 600, marginBottom: 8 }}>{t('account.phone') || 'Phone Number'}</label>
+            <input type="tel" name="phone" value={form.phone} onChange={onChange} required />
           </div>
           
           {/* Show openForHire checkbox for taskers */}

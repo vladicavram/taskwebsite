@@ -39,13 +39,8 @@ function RegisterContent() {
     setError('')
     
     // Validation
-    if (!formData.username || !formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+    if (!formData.username || !formData.name || !formData.email || !formData.password || !formData.confirmPassword || !formData.phone) {
       setError('Please fill in all required fields.')
-      return
-    }
-    
-    if (userType === 'poster' && !formData.phone) {
-      setError('Phone number is required.')
       return
     }
     
@@ -199,7 +194,7 @@ function RegisterContent() {
               />
             </div>
 
-            {/* Phone field - required for posters */}
+            {/* Phone field - required for all users */}
             <div>
               <label style={{ 
                 display: 'block', 
@@ -207,7 +202,7 @@ function RegisterContent() {
                 marginBottom: '8px',
                 color: 'var(--text)'
               }}>
-                Phone Number {userType === 'poster' ? '*' : '(Optional)'}
+                Phone Number *
               </label>
               <input 
                 type="tel"
@@ -215,13 +210,8 @@ function RegisterContent() {
                 value={formData.phone}
                 onChange={handleInputChange}
                 placeholder="+1234567890"
-                required={userType === 'poster'}
+                required
               />
-              {userType === 'poster' && (
-                <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-                  Required for task posting
-                </p>
-              )}
             </div>
 
             <div>

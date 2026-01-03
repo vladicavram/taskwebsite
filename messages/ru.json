@@ -616,6 +616,7 @@
   ,"account.username": "Имя пользователя"
   ,"account.fullName": "Полное Имя"
   ,"account.email": "Email"
+  ,"account.phone": "Номер телефона"
   ,"account.newPassword": "Новый Пароль (необязательно)"
   ,"account.passwordPlaceholder": "••••••••"
   ,"account.cancel": "Отмена"

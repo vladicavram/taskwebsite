@@ -51,7 +51,7 @@ export async function PUT(req: Request) {
   const session: any = await getServerSession(authOptions as any)
   if (!session?.user?.email) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   const body = await req.json()
-  const { username, name, password, image, openForHire } = body
+  const { username, name, password, image, openForHire, phone } = body
 
   // Validate username format
   if (username && !/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
@@ -71,6 +71,7 @@ export async function PUT(req: Request) {
   if (typeof username === 'string') data.username = username
   if (typeof name === 'string') data.name = name
   if (typeof openForHire === 'boolean') data.openForHire = openForHire
+  if (typeof phone === 'string') data.phone = phone
   // Do not update email here
   if (typeof password === 'string' && password.length >= 8) {
     data.password = bcrypt.hashSync(password, 10)

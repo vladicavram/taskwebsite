@@ -634,6 +634,7 @@
   ,"account.username": "Username"
   ,"account.fullName": "Full Name"
   ,"account.email": "Email"
+  ,"account.phone": "Phone Number"
   ,"account.newPassword": "New Password (optional)"
   ,"account.passwordPlaceholder": "••••••••"
   ,"account.cancel": "Cancel"
