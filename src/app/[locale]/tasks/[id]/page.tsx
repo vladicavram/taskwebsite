@@ -284,7 +284,6 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                     </>
                   ) : !isAcceptedApplicantServer ? (
                     <>
-                      <h3 style={{ marginBottom: '12px' }}>{getTranslation(params.locale, 'taskDetail.applyForTask') || 'Apply for this Task'}</h3>
                       <ApplyButton 
                         taskId={params.id} 
                         locale={params.locale} 
@@ -374,7 +373,7 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                   : (getTranslation(params.locale, 'taskDetail.taskBudget') || 'Task Budget')
                 }
               </div>
-              <div style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--accent)', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ fontSize: '5rem', fontWeight: 700, color: '#000', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
                 {currentUser?.userType === 'tasker' || currentUser?.userType === 'both' 
                   ? (<>{Math.max(1, Math.ceil((task.price || 100) / 100))} <span style={{ fontSize: '5rem', color: '#000' }}>Ⓓ</span></>)
                   : task.price ? `${task.price} MDL` : '100 MDL'}
