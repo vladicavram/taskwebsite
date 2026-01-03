@@ -169,7 +169,7 @@ export default function ProfilePage() {
                   fontWeight: 600,
                   color: 'var(--accent)'
                 }}>
-                  <span>⭐</span>
+                  <span>☆</span>
                   <span>{averageRating}</span>
                 </div>
                 <span style={{
@@ -471,7 +471,7 @@ export default function ProfilePage() {
                           color: 'var(--accent)',
                           fontWeight: 600
                         }}>
-                          <span className="icon-styled">{'⭐'.repeat(review.rating)}</span>
+                          <span className="icon-styled">{'☆'.repeat(review.rating)}</span>
                         </div>
                       </div>
                       <p style={{ 

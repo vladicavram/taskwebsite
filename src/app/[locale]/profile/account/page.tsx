@@ -144,7 +144,7 @@ export default function AccountPage() {
         {/* Account Information Card */}
         {accountInfo && (
           <div className="card" style={{ padding: '24px', marginBottom: '24px', background: 'linear-gradient(135deg, var(--bg-secondary) 0%, white 100%)' }}>
-            <h3 style={{ marginBottom: '20px', fontSize: '1.3rem', color: 'var(--text)' }}>📊 {t('account.overview.title') || 'Account Overview'}</h3>
+            <h3 style={{ marginBottom: '20px', fontSize: '1.3rem', color: 'var(--text)' }}><span className="icon-styled">◯</span> {t('account.overview.title') || 'Account Overview'}</h3>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
               <div style={{ padding: '16px', background: 'white', borderRadius: '8px', border: '1px solid var(--border)' }}>
                 <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>{t('account.overview.accountType') || 'Account Type'}</div>
@@ -164,7 +164,7 @@ export default function AccountPage() {
                 <div style={{ padding: '16px', background: 'white', borderRadius: '8px', border: '1px solid var(--border)' }}>
                   <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>{t('account.overview.averageRating') || 'Average Rating'}</div>
                   <div style={{ fontSize: '1.25rem', fontWeight: '600', color: '#f59e0b', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <span className="icon-styled">⭐</span> {accountInfo.averageRating?.toFixed(1) || '0.0'}
+                    <span className="icon-styled">☆</span> {accountInfo.averageRating?.toFixed(1) || '0.0'}}
                     <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', fontWeight: 'normal' }}>
                       ({accountInfo.reviewCount})
                     </span>
@@ -182,7 +182,7 @@ export default function AccountPage() {
               <div style={{ padding: '16px', background: 'white', borderRadius: '8px', border: '1px solid var(--border)' }}>
                 <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>Account Status</div>
                 <div style={{ fontSize: '1rem', fontWeight: '600', color: accountInfo.canApply ? '#10b981' : '#f59e0b' }}>
-                  {accountInfo.blocked ? '🔒 Blocked' : accountInfo.canApply ? '✓ Active' : '⏳ Pending'}
+                  {accountInfo.blocked ? <><span className="icon-styled">○</span> Blocked</> : accountInfo.canApply ? <><span className="icon-styled">○</span> Active</> : <><span className="icon-styled">○</span> Pending</>}
                 </div>
               </div>
             </div>
@@ -217,7 +217,7 @@ export default function AccountPage() {
             gap: '20px'
           }}>
             <div style={{ flex: 1 }}>
-              <h3 style={{ margin: '0 0 8px 0', fontSize: '1.3rem', color: 'var(--text)' }}>🌟 {t('account.upgrade.title') || 'Want to Offer Your Services?'}</h3>
+              <h3 style={{ margin: '0 0 8px 0', fontSize: '1.3rem', color: 'var(--text)' }}><span className="icon-styled">◯</span> {t('account.upgrade.title') || 'Want to Offer Your Services?'}</h3>
               <p style={{ margin: 0, fontSize: '1rem', color: 'var(--text-secondary)' }}>
                 {t('account.upgrade.description') || 'Upgrade to a Tasker account to apply for tasks and start earning money'}
               </p>

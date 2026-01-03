@@ -1241,7 +1241,7 @@ export default function CreateProfilePage() {
               </p>
             </div>
             <div>
-              <div style={{ fontSize: '2rem', marginBottom: '8px' }}>⭐</div>
+              <div style={{ fontSize: '2rem', marginBottom: '8px' }}>☆</div>
               <h4 style={{ fontSize: '1rem', marginBottom: '8px' }}>{t('profileCreate.why.trust.title') || 'Build Trust'}</h4>
               <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', margin: 0 }}>
                 {t('profileCreate.why.trust.text') || 'Verified profiles get more bookings and higher ratings from clients'}
