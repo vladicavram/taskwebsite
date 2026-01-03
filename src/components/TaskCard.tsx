@@ -91,24 +91,20 @@ export default function TaskCard({ id, title, description, price, category, imag
               }}>
                 {applicantCount}
               </span>
-            )}
-          </div>
-          {price && (
-            <span style={{
-              fontSize: '0.75rem',
-              fontWeight: 700,
-              color: '#FFFFFF',
-              background: 'linear-gradient(135deg, #C8996F 0%, #B8895F 100%)',
-              padding: '6px 12px',
-              borderRadius: '16px',
-              boxShadow: '0 2px 8px rgba(200, 153, 111, 0.3)'
-            }}>
-              {price} MDL
-            </span>
           )}
         </div>
-        
-        <h3 style={{ 
+          <span style={{
+            fontSize: '0.75rem',
+            fontWeight: 700,
+            color: '#FFFFFF',
+            background: 'linear-gradient(135deg, #C8996F 0%, #B8895F 100%)',
+            padding: '6px 12px',
+            borderRadius: '16px',
+            boxShadow: '0 2px 8px rgba(200, 153, 111, 0.3)'
+          }}>
+            {price ? `${price} MDL` : t('tasks.negotiable') || 'Negotiable'}
+          </span>
+        </div>        <h3 style={{ 
           fontWeight: 600, 
           fontSize: '1rem', 
           marginBottom: '8px',
