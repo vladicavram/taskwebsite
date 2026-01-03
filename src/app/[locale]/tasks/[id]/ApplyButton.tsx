@@ -280,7 +280,7 @@ export default function ApplyButton({
             margin: 0,
             fontWeight: hasEnoughCredits ? 400 : 600
           }}>
-            {`${t('taskDetail.apply.required') || 'Required'}: ${requiredCredits} 🪙`}
+            {`${t('taskDetail.apply.required') || 'Required'}: ${requiredCredits} Ⓓ`}
           </p>
         )}
         {session?.user && (
@@ -289,7 +289,7 @@ export default function ApplyButton({
             margin: 0,
             fontWeight: hasEnoughCredits ? 400 : 600
           }}>
-            {`${t('taskDetail.apply.yourBalance') || 'Your balance'}: ${credits.toFixed(0)} 🪙`}
+            {`${t('taskDetail.apply.yourBalance') || 'Your balance'}: ${credits.toFixed(0)} Ⓓ`}
           </p>
         )}
         {!hasEnoughCredits && currentPrice > 0 && (

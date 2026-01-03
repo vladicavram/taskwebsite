@@ -482,7 +482,7 @@ export default function Header() {
                     e.currentTarget.style.transform = 'scale(1)'
                   }}
                 >
-                  🪙
+                  Ⓓ
                 </button>
                 {showCredits && (
                   <div style={{
@@ -506,7 +506,7 @@ export default function Header() {
                         color: 'var(--accent)',
                         marginBottom: '8px'
                       }}>
-                        {credits.toFixed(0)} 🪙
+                        {credits.toFixed(0)} Ⓓ
                       </div>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>

@@ -102,7 +102,7 @@ export default function TaskCard({ id, title, description, price, category, imag
             borderRadius: '16px',
             boxShadow: '0 2px 8px rgba(200, 153, 111, 0.3)'
           }}>
-            {price ? `${Math.max(1, Math.ceil(price / 100))} 🪙` : t('tasks.negotiable') || 'Negotiable'}
+            {price ? `${Math.max(1, Math.ceil(price / 100))} Ⓓ` : t('tasks.negotiable') || 'Negotiable'}
           </span>
         </div>        <h3 style={{ 
           fontWeight: 600, 
