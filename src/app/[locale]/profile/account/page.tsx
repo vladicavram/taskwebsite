@@ -206,8 +206,8 @@ export default function AccountPage() {
         {/* Show upgrade banner for poster-only users */}
         {userType === 'poster' && (
           <div style={{
-            background: 'linear-gradient(135deg, #007bff 0%, #0056b3 100%)',
-            color: 'white',
+            background: 'white',
+            border: '2px solid #007bff',
             padding: '24px',
             borderRadius: 'var(--radius)',
             marginBottom: '24px',
@@ -217,8 +217,8 @@ export default function AccountPage() {
             gap: '20px'
           }}>
             <div style={{ flex: 1 }}>
-              <h3 style={{ margin: '0 0 8px 0', fontSize: '1.3rem' }}>🌟 {t('account.upgrade.title') || 'Want to Offer Your Services?'}</h3>
-              <p style={{ margin: 0, opacity: 0.95, fontSize: '1rem' }}>
+              <h3 style={{ margin: '0 0 8px 0', fontSize: '1.3rem', color: 'var(--text)' }}>🌟 {t('account.upgrade.title') || 'Want to Offer Your Services?'}</h3>
+              <p style={{ margin: 0, fontSize: '1rem', color: 'var(--text-secondary)' }}>
                 {t('account.upgrade.description') || 'Upgrade to a Tasker account to apply for tasks and start earning money'}
               </p>
             </div>
@@ -226,8 +226,8 @@ export default function AccountPage() {
               onClick={() => router.push(`/${locale}/profile/create?userType=both&userId=${userId}`)}
               className="btn"
               style={{
-                background: 'white',
-                color: '#007bff',
+                background: '#007bff',
+                color: 'white',
                 fontWeight: 600,
                 padding: '12px 24px',
                 whiteSpace: 'nowrap'
