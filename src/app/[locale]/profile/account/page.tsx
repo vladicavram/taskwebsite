@@ -164,7 +164,7 @@ export default function AccountPage() {
                 <div style={{ padding: '16px', background: 'white', borderRadius: '8px', border: '1px solid var(--border)' }}>
                   <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>{t('account.overview.averageRating') || 'Average Rating'}</div>
                   <div style={{ fontSize: '1.25rem', fontWeight: '600', color: '#f59e0b', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <span className="icon-styled">☆</span> {accountInfo.averageRating?.toFixed(1) || '0.0'}}
+                    <span className="icon-styled">☆</span> {accountInfo.averageRating?.toFixed(1) || '0.0'}
                     <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', fontWeight: 'normal' }}>
                       ({accountInfo.reviewCount})
                     </span>
