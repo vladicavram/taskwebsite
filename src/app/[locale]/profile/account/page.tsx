@@ -145,7 +145,7 @@ export default function AccountPage() {
         {accountInfo && (
           <div className="card" style={{ padding: '24px', marginBottom: '24px', background: 'linear-gradient(135deg, var(--bg-secondary) 0%, white 100%)' }}>
             <h3 style={{ marginBottom: '20px', fontSize: '1.3rem', color: 'var(--text)' }}>{t('account.overview.title') || 'Account Overview'}</h3>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
               <div style={{ padding: '16px', background: 'white', borderRadius: '8px', border: '1px solid var(--border)' }}>
                 <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>{t('account.overview.accountType') || 'Account Type'}</div>
                 <div style={{ fontSize: '1.25rem', fontWeight: '600', color: 'var(--accent)', textTransform: 'capitalize' }}>
