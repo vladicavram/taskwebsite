@@ -189,7 +189,7 @@ export default function ApplyButton({
     }
   }
 
-  const currentPrice = proposedPrice ? parseFloat(proposedPrice) : 0
+  const currentPrice = taskPrice || 0
   const requiredCredits = calculateRequiredCredits(currentPrice)
   const hasEnoughCredits = credits >= requiredCredits && currentPrice > 0 && requiredCredits > 0
 
