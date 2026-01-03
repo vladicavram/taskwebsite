@@ -23,6 +23,7 @@ export default function Header() {
   const [credits, setCredits] = useState(0)
   const [showUserMenu, setShowUserMenu] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false)
+  const [userType, setUserType] = useState<string | null>(null)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [showMobileNotifications, setShowMobileNotifications] = useState(false)
   
@@ -54,12 +55,15 @@ export default function Header() {
       if (response.ok) {
         const data = await response.json()
         setIsAdmin(data.isAdmin || data.role === 'admin' || data.role === 'moderator')
+        setUserType(data.userType || null)
       } else {
         setIsAdmin(false)
+        setUserType(null)
       }
     } catch (error) {
       console.error('Failed to check admin status:', error)
       setIsAdmin(false)
+      setUserType(null)
     }
   }
 
@@ -449,7 +453,8 @@ export default function Header() {
                 )}
               </div>
 
-              {/* Credits Coin (swapped after avatar) */}
+              {/* Credits Coin (swapped after avatar) - only show for taskers */}
+              {(userType === 'tasker' || userType === 'both') && (
               <div 
                 ref={creditsRef} 
                 style={{ position: 'relative' }}
@@ -532,6 +537,7 @@ export default function Header() {
                   </div>
                 )}
               </div>
+              )}
 
               {/* Messages Dropdown (moved after avatar) */}
               <div 
