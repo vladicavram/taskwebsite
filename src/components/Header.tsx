@@ -472,7 +472,8 @@ export default function Header() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     cursor: 'pointer',
-                    fontSize: '1.5rem',
+                    fontSize: '3rem',
+                    color: '#000',
                     transition: 'transform 0.2s'
                   }}
                   onMouseEnter={(e) => {
@@ -506,7 +507,7 @@ export default function Header() {
                         color: 'var(--accent)',
                         marginBottom: '8px'
                       }}>
-                        {credits.toFixed(0)} Ⓓ
+                        {credits.toFixed(0)} <span style={{ fontSize: '4rem', color: '#000' }}>Ⓓ</span>
                       </div>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>

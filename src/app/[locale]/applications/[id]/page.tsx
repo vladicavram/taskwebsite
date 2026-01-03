@@ -611,7 +611,7 @@ export default function ApplicationDetailPage() {
                                     <div>Checking your credits…</div>
                                   ) : (
                                     <>
-                                      <div>{`You need at least ${Math.max(1, Math.ceil((application.proposedPrice ?? application.task.price) / 100))} Ⓓ to accept.`}</div>
+                                      <div>You need at least {Math.max(1, Math.ceil((application.proposedPrice ?? application.task.price) / 100))} <span style={{ fontSize: '1.75rem', color: '#000' }}>Ⓓ</span> to accept.</div>
                                       <a href={`/${locale}/profile/credits/purchase`} className="btn btn-secondary" style={{ padding: '6px 10px', fontSize: '0.9rem' }}>Buy Credits</a>
                                     </>
                                   )}

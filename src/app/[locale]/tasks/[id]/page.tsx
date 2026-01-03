@@ -377,7 +377,7 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
               <div style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--accent)', marginBottom: '16px' }}>
                 {task.price ? (
                   currentUser?.userType === 'tasker' || currentUser?.userType === 'both' 
-                    ? `${Math.max(1, Math.ceil(task.price / 100))} Ⓓ`
+                    ? (<>{Math.max(1, Math.ceil(task.price / 100))} <span style={{ fontSize: '5rem', color: '#000' }}>Ⓓ</span></>)
                     : `${task.price} MDL`
                 ) : (getTranslation(params.locale, 'taskDetail.negotiable') || 'Negotiable')}
               </div>
