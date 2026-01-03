@@ -57,9 +57,9 @@ export async function POST(
     }
 
     const body = await req.json()
-    const { message, proposedPrice, agree, agreementText } = body
+    const { message, agree, agreementText } = body
     if (process.env.NODE_ENV !== 'production') {
-      console.log('[APPLY] Incoming body', { message, proposedPrice, agree, agreementTextLen: agreementText?.length })
+      console.log('[APPLY] Incoming body', { message, agree, agreementTextLen: agreementText?.length })
     }
 
     // Check if user already applied
@@ -88,9 +88,9 @@ export async function POST(
       return NextResponse.json({ error: 'Agreement acceptance and contract text are required' }, { status: 400 })
     }
 
-    // Enforce fractional credits with a minimum of 1 credit: required = max(1, price/100) (1 credit = 100 MDL)
-    const effectivePrice = typeof proposedPrice === 'number' && proposedPrice > 0 ? proposedPrice : (task.price || 0)
-    const requiredCredits = Math.max(1, effectivePrice / 100)
+    // Use task price directly - credit calculation: ≤100 MDL = 1 credit, >100 MDL = price/100 credits
+    const effectivePrice = task.price || 0
+    const requiredCredits = effectivePrice <= 100 ? 1 : Math.max(1, effectivePrice / 100)
     
     console.log('[APPLY] Credit check:', { 
       applicantEmail: applicant.email, 

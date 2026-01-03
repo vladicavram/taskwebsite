@@ -23,7 +23,6 @@ export default function ApplyButton({
 }) {
   const { t } = useLocale()
   const { data: session } = useSession()
-  const [proposedPrice, setProposedPrice] = useState(taskPrice?.toString() || '')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [credits, setCredits] = useState(0)
@@ -34,6 +33,9 @@ export default function ApplyButton({
   const agreeRef = useRef<HTMLInputElement>(null)
   const [shake, setShake] = useState(false)
   const router = useRouter()
+
+  // Use task price directly, no custom offers
+  const effectivePriceNumber = taskPrice || 0
 
   useEffect(() => {
     if (session?.user) {
@@ -59,14 +61,10 @@ export default function ApplyButton({
   }
 
   const calculateRequiredCredits = (price: number) => {
-    // 1 credit = 100 MDL, fractional credits allowed
-    return price / 100
+    // 100 MDL or less = 1 credit, otherwise price/100
+    if (price <= 100) return 1
+    return Math.max(1, price / 100)
   }
-
-  const effectivePriceNumber = (() => {
-    const n = proposedPrice ? parseFloat(proposedPrice) : (taskPrice || 0)
-    return isNaN(n) ? 0 : n
-  })()
 
   const buildAgreementText = (includeSignature: boolean) => {
     const amountStr = effectivePriceNumber.toFixed(2)
@@ -158,7 +156,6 @@ export default function ApplyButton({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-          proposedPrice: effectivePriceNumber,
           agree: true,
           agreementText: buildAgreementText(true)
         })
@@ -252,43 +249,16 @@ export default function ApplyButton({
 
       <div style={{ 
         display: 'flex', 
-        gap: '12px', 
-        alignItems: 'center',
-        flexWrap: 'wrap'
+        flexDirection: 'column',
+        gap: '12px'
       }}>
-        <label style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          gap: '8px',
-          fontWeight: 600
-        }}>
-          {t('taskDetail.apply.yourOffer') || 'Your Offer:'}
-          <input
-            type="number"
-            value={proposedPrice}
-            onChange={(e) => setProposedPrice(e.target.value)}
-            placeholder={t('taskDetail.apply.pricePlaceholder') || 'Price'}
-            min="0"
-            step="0.01"
-            required
-            style={{
-              padding: '10px 12px',
-              border: '2px solid var(--border)',
-              borderRadius: 'var(--radius-sm)',
-              fontSize: '16px',
-              fontWeight: 600,
-              width: '120px'
-            }}
-          />
-          <span style={{ color: 'var(--text-muted)' }}>{t('taskDetail.apply.mdl') || 'MDL'}</span>
-        </label>
-        
         <button
           type="submit"
           disabled={loading || !hasEnoughCredits}
           className="btn"
           style={{
-            padding: '10px 24px',
+            padding: '12px 24px',
+            width: '100%',
             opacity: (loading || !hasEnoughCredits) ? 0.6 : 1,
             cursor: (loading || !hasEnoughCredits) ? 'not-allowed' : 'pointer'
           }}
@@ -304,18 +274,13 @@ export default function ApplyButton({
         flexDirection: 'column',
         gap: '4px'
       }}>
-        {taskPrice && (
-          <p style={{ color: 'var(--text-muted)', margin: 0 }}>
-            {t('taskDetail.apply.originalPrice') || 'Original price:'} {taskPrice} MDL
-          </p>
-        )}
         {currentPrice > 0 && (
           <p style={{ 
             color: hasEnoughCredits ? 'var(--text-muted)' : 'var(--danger)', 
             margin: 0,
             fontWeight: hasEnoughCredits ? 400 : 600
           }}>
-            {interpolate(t('taskDetail.apply.requiredCredits') || 'Required credits: {{credits}} (1 credit = 100 MDL)', { credits: requiredCredits.toFixed(1) })}
+            {interpolate(t('taskDetail.apply.requiredCredits') || 'Required: {{credits}} credit{{plural}}', { credits: requiredCredits.toFixed(requiredCredits === 1 ? 0 : 1), plural: requiredCredits !== 1 ? 's' : '' })}
           </p>
         )}
         {session?.user && (

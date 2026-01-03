@@ -269,9 +269,6 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                           <div style={{ fontWeight: 600, fontSize: '1.1rem', color: '#92400e', marginBottom: '4px' }}>
                             ⏳ {getTranslation(params.locale, 'taskDetail.pendingApplication') || 'Application Pending'}
                           </div>
-                          <div style={{ fontSize: '0.9rem', color: '#92400e' }}>
-                            {getTranslation(params.locale, 'taskDetail.proposedPrice') || 'Your offer:'} {userApplication.proposedPrice} MDL
-                          </div>
                           {userApplication.message && (
                             <div style={{ fontSize: '0.9rem', color: '#78350f', marginTop: '8px', fontStyle: 'italic' }}>
                               "{userApplication.message}"
@@ -371,9 +368,18 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
 
           <div style={{ position: 'sticky', top: '100px' }}>
             <div className="card" style={{ padding: '24px', marginBottom: '24px' }}>
-              <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginBottom: '8px' }}>{getTranslation(params.locale, 'taskDetail.taskBudget') || 'Task Budget'}</div>
+              <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginBottom: '8px' }}>
+                {currentUser?.userType === 'tasker' || currentUser?.userType === 'both' 
+                  ? (getTranslation(params.locale, 'taskDetail.creditsRequired') || 'Credits Required')
+                  : (getTranslation(params.locale, 'taskDetail.taskBudget') || 'Task Budget')
+                }
+              </div>
               <div style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--accent)', marginBottom: '16px' }}>
-                {task.price ? `${task.price} MDL` : (getTranslation(params.locale, 'taskDetail.negotiable') || 'Negotiable')}
+                {task.price ? (
+                  currentUser?.userType === 'tasker' || currentUser?.userType === 'both' 
+                    ? `${task.price <= 100 ? 1 : (task.price / 100).toFixed(1)} ${(task.price <= 100 ? 1 : task.price / 100) === 1 ? (getTranslation(params.locale, 'taskDetail.credit') || 'credit') : (getTranslation(params.locale, 'taskDetail.credits') || 'credits')}`
+                    : `${task.price} MDL`
+                ) : (getTranslation(params.locale, 'taskDetail.negotiable') || 'Negotiable')}
               </div>
               
               {/* Task Status */}
