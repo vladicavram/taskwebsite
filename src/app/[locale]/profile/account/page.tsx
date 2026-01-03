@@ -153,12 +153,14 @@ export default function AccountPage() {
                 </div>
               </div>
               
-              <div style={{ padding: '16px', background: 'white', borderRadius: '8px', border: '1px solid var(--border)' }}>
-                <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>{t('account.overview.creditsBalance') || 'Credits Balance'}</div>
-                <div style={{ fontSize: '1.25rem', fontWeight: '600', color: '#10b981' }}>
-                  {accountInfo.credits?.toFixed(2) || '0.00'}
+              {(accountInfo.userType === 'tasker' || accountInfo.userType === 'both') && (
+                <div style={{ padding: '16px', background: 'white', borderRadius: '8px', border: '1px solid var(--border)' }}>
+                  <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>{t('account.overview.creditsBalance') || 'Credits Balance'}</div>
+                  <div style={{ fontSize: '1.25rem', fontWeight: '600', color: '#10b981' }}>
+                    {accountInfo.credits?.toFixed(2) || '0.00'}
+                  </div>
                 </div>
-              </div>
+              )}
               
               {accountInfo.reviewCount > 0 && (
                 <div style={{ padding: '16px', background: 'white', borderRadius: '8px', border: '1px solid var(--border)' }}>
@@ -176,13 +178,6 @@ export default function AccountPage() {
                 <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>Member Since</div>
                 <div style={{ fontSize: '1rem', fontWeight: '600', color: 'var(--text)' }}>
                   {accountInfo.createdAt ? new Date(accountInfo.createdAt).toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' }) : 'N/A'}
-                </div>
-              </div>
-              
-              <div style={{ padding: '16px', background: 'white', borderRadius: '8px', border: '1px solid var(--border)' }}>
-                <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>Account Status</div>
-                <div style={{ fontSize: '1rem', fontWeight: '600', color: accountInfo.canApply ? '#10b981' : '#f59e0b' }}>
-                  {accountInfo.blocked ? 'Blocked' : accountInfo.canApply ? 'Active' : 'Pending'}
                 </div>
               </div>
             </div>
