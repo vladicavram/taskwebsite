@@ -176,7 +176,7 @@ export default function WorkerProfilePage({ params }: { params: { id: string } }
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 8 }}>
               {worker.averageRating > 0 ? (
                 <>
-                  <span style={{ color: '#f59e0b', fontSize: '1.5rem' }}>★</span>
+                  <span style={{ fontSize: '1.5rem' }} className="icon-styled">★</span>
                   <span style={{ fontSize: '1.2rem', fontWeight: 600 }}>
                     {worker.averageRating.toFixed(1)}
                   </span>
@@ -192,7 +192,7 @@ export default function WorkerProfilePage({ params }: { params: { id: string } }
             </div>
             {worker.profile?.location && (
               <div style={{ fontSize: '1rem', color: 'var(--text-secondary)', marginTop: 8 }}>
-                📍 {worker.profile.location}
+                <span className="icon-styled">📍</span> {worker.profile.location}
               </div>
             )}
             <div style={{ marginTop: 16 }}>
@@ -261,7 +261,7 @@ export default function WorkerProfilePage({ params }: { params: { id: string } }
             <div style={{ fontSize: '1.5rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 6 }}>
               {worker.averageRating > 0 ? (
                 <>
-                  <span style={{ color: '#f59e0b' }}>★</span>
+                  <span className="icon-styled">★</span>
                   {worker.averageRating.toFixed(1)}
                 </>
               ) : (

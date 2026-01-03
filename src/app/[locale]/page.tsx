@@ -224,7 +224,7 @@ export default function HomePage() {
                 marginBottom: '12px',
                 fontSize: '1.25rem'
               }}>
-                {'⭐'.repeat(testimonial.rating)}
+                <span className="icon-styled">{'⭐'.repeat(testimonial.rating)}</span>
               </div>
               <p style={{ 
                 color: 'var(--text-secondary)',

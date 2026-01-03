@@ -358,7 +358,7 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                     <div key={r.id} style={{ padding: '20px', background: 'var(--bg-secondary)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-light)' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
                         <div style={{ fontWeight: 600 }}>{r.author.name || r.author.email}</div>
-                        <div style={{ color: 'var(--accent)', fontWeight: 600 }}>{'⭐'.repeat(r.rating)}</div>
+                        <div style={{ color: 'var(--accent)', fontWeight: 600 }}><span className="icon-styled">{'⭐'.repeat(r.rating)}</span></div>
                       </div>
                       <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', margin: 0 }}>{r.comment}</p>
                     </div>
@@ -450,7 +450,7 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
                       const avg = rr.length > 0 ? (rr.reduce((a: number, r: any) => a + r.rating, 0) / rr.length).toFixed(1) : '0.0'
                       return (
                         <span style={{ fontSize: '0.9rem', color: 'var(--accent)', fontWeight: 600 }}>
-                          ⭐ {avg} <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>({rr.length} {rr.length === 1 ? 'review' : 'reviews'})</span>
+                          <span className="icon-styled">⭐</span> {avg} <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>({rr.length} {rr.length === 1 ? 'review' : 'reviews'})</span>
                         </span>
                       )
                     })()}
@@ -460,7 +460,7 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
               {task.creator.profile && (
                 <>
                   {task.creator.profile.location && (
-                    <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '8px' }}>📍 {task.creator.profile.location}</div>
+                    <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '8px' }}><span className="icon-styled">📍</span> {task.creator.profile.location}</div>
                   )}
                   {task.creator.profile.bio && (
                     <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '16px' }}>{task.creator.profile.bio}</p>

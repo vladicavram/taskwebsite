@@ -471,7 +471,7 @@ export default function ProfilePage() {
                           color: 'var(--accent)',
                           fontWeight: 600
                         }}>
-                          {'⭐'.repeat(review.rating)}
+                          <span className="icon-styled">{'⭐'.repeat(review.rating)}</span>
                         </div>
                       </div>
                       <p style={{ 

@@ -126,7 +126,7 @@ export default function ReviewForm({ taskId, recipientId, recipientName, onSucce
                   transform: (hoverRating >= star || rating >= star) ? 'scale(1.1)' : 'scale(1)'
                 }}
               >
-                {(hoverRating >= star || rating >= star) ? '⭐' : '☆'}
+                <span className="icon-styled">{(hoverRating >= star || rating >= star) ? '⭐' : '☆'}</span>
               </button>
             ))}
           </div>

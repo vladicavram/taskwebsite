@@ -180,7 +180,7 @@ export default function HireWorkersPage() {
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2 }}>
                     {worker.averageRating > 0 ? (
                       <>
-                        <span style={{ color: '#f59e0b', fontSize: '0.85rem' }}>★</span>
+                        <span style={{ fontSize: '0.85rem' }} className="icon-styled">★</span>
                         <span style={{ fontSize: '0.75rem', fontWeight: 500 }}>
                           {worker.averageRating.toFixed(1)}
                         </span>
@@ -199,7 +199,7 @@ export default function HireWorkersPage() {
 
               {worker.profile?.location && (
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: 8 }}>
-                  📍 {worker.profile.location}
+                  <span className="icon-styled">📍</span> {worker.profile.location}
                 </div>
               )}
 

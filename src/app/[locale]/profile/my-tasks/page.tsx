@@ -96,9 +96,9 @@ export default async function MyTasksPage({ params, searchParams }: { params: { 
             </h3>
             <p style={{ color: 'var(--text-secondary)', marginTop: 6 }}>{item.description}</p>
             <div style={{ display: 'flex', gap: 16, color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-              {item.price && <span>💰 {item.price} MDL</span>}
-              {item.location && <span>📍 {item.location}</span>}
-              {item.category && <span>🏷️ {item.category.name}</span>}
+              {item.price && <span><span className="icon-styled">💰</span> {item.price} MDL</span>}
+              {item.location && <span><span className="icon-styled">📍</span> {item.location}</span>}
+              {item.category && <span><span className="icon-styled">🏷️</span> {item.category.name}</span>}
               {item.completedAt && <span>✅ {t('myTasks.completed.badge') || 'Completed'}</span>}
             </div>
           </div>
@@ -208,10 +208,10 @@ export default async function MyTasksPage({ params, searchParams }: { params: { 
                         </h3>
                         <p style={{ color: 'var(--text-secondary)', marginTop: 6 }}>{t.description}</p>
                         <div style={{ display: 'flex', gap: 16, color: 'var(--text-muted)', fontSize: '0.9rem', marginTop: 8 }}>
-                          {t.price && <span>💰 {t.price} MDL</span>}
-                          {t.location && <span>📍 {t.location}</span>}
-                          {t.category && <span>🏷️ {t.category.name}</span>}
-                          {t.creator && <span>👤 {t.creator.name || t.creator.email}</span>}
+                          {t.price && <span><span className="icon-styled">💰</span> {t.price} MDL</span>}
+                          {t.location && <span><span className="icon-styled">📍</span> {t.location}</span>}
+                          {t.category && <span><span className="icon-styled">🏷️</span> {t.category.name}</span>}
+                          {t.creator && <span><span className="icon-styled">👤</span> {t.creator.name || t.creator.email}</span>}
                         </div>
                       </div>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'flex-end' }}>
