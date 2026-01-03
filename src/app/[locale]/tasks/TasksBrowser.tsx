@@ -18,8 +18,6 @@ type Task = {
 export default function TasksBrowser({ locale, initialTasks }: { locale: string, initialTasks?: Task[] }) {
 	const { t } = useLocale()
 	const [q, setQ] = useState('')
-	const [priceMin, setPriceMin] = useState('')
-	const [priceMax, setPriceMax] = useState('')
 	const [location, setLocation] = useState('')
 	const [showCompleted, setShowCompleted] = useState(false)
 	const [tasks, setTasks] = useState<Task[]>(initialTasks || [])
@@ -33,8 +31,6 @@ export default function TasksBrowser({ locale, initialTasks }: { locale: string,
 		try {
 			const params = new URLSearchParams()
 			if (q) params.set('q', q)
-			if (priceMin) params.set('priceMin', priceMin)
-			if (priceMax) params.set('priceMax', priceMax)
 			if (location) params.set('location', location)
 			if (showCompleted) params.set('completed', 'true')
 			const res = await fetch(`/api/tasks?${params.toString()}`)
@@ -52,7 +48,7 @@ export default function TasksBrowser({ locale, initialTasks }: { locale: string,
 	}
 
 	useEffect(() => {
-		const shouldSkip = firstRender.current && !q && !priceMin && !priceMax && !location && !showCompleted && initialTasks && initialTasks.length > 0
+		const shouldSkip = firstRender.current && !q && !location && !showCompleted && initialTasks && initialTasks.length > 0
 		if (shouldSkip) {
 			firstRender.current = false
 			return
@@ -60,12 +56,12 @@ export default function TasksBrowser({ locale, initialTasks }: { locale: string,
 		const id = setTimeout(fetchTasks, 250)
 		firstRender.current = false
 		return () => clearTimeout(id)
-	}, [q, priceMin, priceMax, location, showCompleted])
+	}, [q, location, showCompleted])
 
 	// Reset display count when filters change
 	useEffect(() => {
 		setDisplayCount(16)
-	}, [q, priceMin, priceMax, location, showCompleted])
+	}, [q, location, showCompleted])
 
 	const displayedTasks = tasks.slice(0, displayCount)
 	const hasMore = tasks.length > displayCount
@@ -75,17 +71,14 @@ export default function TasksBrowser({ locale, initialTasks }: { locale: string,
 			<style jsx>{`
 				.search-grid {
 					display: grid;
-					grid-template-columns: 2fr 1fr 1fr 1fr;
+					grid-template-columns: 2fr 1fr;
 					gap: 12px;
 				}
 				@media (max-width: 768px) {
 					.search-grid {
 						display: grid;
-						grid-template-columns: 1fr 1fr 1fr;
+						grid-template-columns: 1fr;
 						gap: 12px;
-					}
-					.search-grid input[type="text"] {
-						grid-column: 1 / -1;
 					}
 				}
 			`}</style>
@@ -96,24 +89,6 @@ export default function TasksBrowser({ locale, initialTasks }: { locale: string,
 						placeholder={t('tasks.browse.searchPlaceholder') || 'Search tasks...'}
 						value={q}
 						onChange={(e) => setQ(e.target.value)}
-						style={{ width: '100%' }}
-					/>
-					<input
-						type="number"
-						placeholder={t('tasks.browse.minPrice') || 'Min price'}
-						value={priceMin}
-						onChange={(e) => setPriceMin(e.target.value)}
-						min="0"
-						step="0.01"
-						style={{ width: '100%' }}
-					/>
-					<input
-						type="number"
-						placeholder={t('tasks.browse.maxPrice') || 'Max price'}
-						value={priceMax}
-						onChange={(e) => setPriceMax(e.target.value)}
-						min="0"
-						step="0.01"
 						style={{ width: '100%' }}
 					/>
 					<select
