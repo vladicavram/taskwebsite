@@ -41,7 +41,7 @@ export default function HelpPage() {
               }}
             >
               <h3 style={{ fontSize: '1.3rem', marginBottom: '12px', color: 'var(--text)' }}>
-                <span className="icon-styled">◯</span> {t(faq.q)}
+                {t(faq.q)}
               </h3>
               <p style={{ lineHeight: '1.8', fontSize: '1.05rem', color: 'var(--text-secondary)' }}>
                 {t(faq.a)}

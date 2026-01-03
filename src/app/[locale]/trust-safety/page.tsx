@@ -29,7 +29,6 @@ export default function TrustSafetyPage() {
     <div className="container" style={{ padding: '40px 24px', maxWidth: '900px' }}>
       <div className="card" style={{ padding: '40px' }}>
         <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-          <div style={{ fontSize: '4rem', marginBottom: '16px' }}><span className="icon-styled">◯</span></div>
           <h1 style={{ fontSize: '2.5rem', marginBottom: '16px', color: 'var(--accent)' }}>
             {t('trustSafety.title')}
           </h1>
@@ -55,12 +54,8 @@ export default function TrustSafetyPage() {
               <h3 style={{ 
                 fontSize: '1.4rem', 
                 marginBottom: '12px', 
-                color: 'var(--accent)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px'
+                color: 'var(--accent)'
               }}>
-                <span className="icon-styled" style={{ fontSize: '2rem' }}>◯</span>
                 {t(feature.title)}
               </h3>
               <p style={{ lineHeight: '1.8', fontSize: '1.05rem', color: 'var(--text-secondary)' }}>

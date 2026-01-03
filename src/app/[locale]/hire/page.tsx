@@ -199,7 +199,7 @@ export default function HireWorkersPage() {
 
               {worker.profile?.location && (
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: 8 }}>
-                  <span className="icon-styled">📍</span> {worker.profile.location}
+                  {worker.profile.location}
                 </div>
               )}
 

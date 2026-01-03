@@ -460,7 +460,7 @@ export default async function TaskDetail({ params, searchParams }: Props & { sea
               {task.creator.profile && (
                 <>
                   {task.creator.profile.location && (
-                    <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '8px' }}><span className="icon-styled">📍</span> {task.creator.profile.location}</div>
+                    <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '8px' }}>{task.creator.profile.location}</div>
                   )}
                   {task.creator.profile.bio && (
                     <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '16px' }}>{task.creator.profile.bio}</p>

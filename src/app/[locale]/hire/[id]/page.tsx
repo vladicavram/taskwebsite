@@ -192,7 +192,7 @@ export default function WorkerProfilePage({ params }: { params: { id: string } }
             </div>
             {worker.profile?.location && (
               <div style={{ fontSize: '1rem', color: 'var(--text-secondary)', marginTop: 8 }}>
-                <span className="icon-styled">📍</span> {worker.profile.location}
+                {worker.profile.location}
               </div>
             )}
             <div style={{ marginTop: 16 }}>
