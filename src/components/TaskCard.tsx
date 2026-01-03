@@ -94,18 +94,14 @@ export default function TaskCard({ id, title, description, price, category, imag
           )}
         </div>
           <span style={{
-            fontSize: '0.75rem',
+            fontSize: '1.5rem',
             fontWeight: 700,
-            color: '#FFFFFF',
-            background: 'linear-gradient(135deg, #C8996F 0%, #B8895F 100%)',
-            padding: '6px 12px',
-            borderRadius: '16px',
-            boxShadow: '0 2px 8px rgba(200, 153, 111, 0.3)',
+            color: '#000',
             display: 'flex',
             alignItems: 'center',
             gap: '4px'
           }}>
-            {price ? (<>{Math.max(1, Math.ceil(price / 100))} <span style={{ fontSize: '1.5rem', color: '#000' }}>Ⓓ</span></>) : t('tasks.negotiable') || 'Negotiable'}
+            {price ? (<>{Math.max(1, Math.ceil(price / 100))} Ⓓ</>) : (<>1 Ⓓ</>)}
           </span>
         </div>        <h3 style={{ 
           fontWeight: 600, 
