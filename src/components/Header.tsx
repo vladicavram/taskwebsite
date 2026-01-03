@@ -512,9 +512,6 @@ export default function Header() {
                       }}>
                         {credits.toFixed(1)} {t('header.credits.unit') || 'Credits'}
                       </div>
-                      <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: 0 }}>
-                        {t('header.credits.exchange') || 'Apply for tasks'}
-                      </p>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                       <Link

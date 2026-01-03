@@ -250,15 +250,16 @@ export default function ApplyButton({
       <div style={{ 
         display: 'flex', 
         flexDirection: 'column',
-        gap: '12px'
+        gap: '12px',
+        alignItems: 'center'
       }}>
         <button
           type="submit"
           disabled={loading || !hasEnoughCredits}
           className="btn"
           style={{
-            padding: '12px 24px',
-            width: '100%',
+            padding: '8px 20px',
+            fontSize: '0.875rem',
             opacity: (loading || !hasEnoughCredits) ? 0.6 : 1,
             cursor: (loading || !hasEnoughCredits) ? 'not-allowed' : 'pointer'
           }}
