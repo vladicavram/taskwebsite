@@ -88,9 +88,9 @@ export async function POST(
       return NextResponse.json({ error: 'Agreement acceptance and contract text are required' }, { status: 400 })
     }
 
-    // Use task price directly - credit calculation based on task price
+    // Use task price directly - 1 coin per 100 MDL (whole units)
     const effectivePrice = task.price || 0
-    const requiredCredits = effectivePrice <= 100 ? 1 : Math.max(1, effectivePrice / 100)
+    const requiredCredits = Math.max(1, Math.ceil(effectivePrice / 100))
     
     console.log('[APPLY] Credit check:', { 
       applicantEmail: applicant.email, 

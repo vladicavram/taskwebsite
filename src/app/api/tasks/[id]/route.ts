@@ -123,7 +123,7 @@ export async function DELETE(
       .filter(app => app.status === 'pending' || app.status === 'accepted')
       .map(async (app) => {
         const taskPrice = task.price || 0
-        const refundAmount = taskPrice / 100 // Convert MDL to credits
+        const refundAmount = Math.max(1, Math.ceil(taskPrice / 100)) // Convert MDL to coins
         
         const oldCredits = app.applicant.credits
         const newCredits = oldCredits + refundAmount

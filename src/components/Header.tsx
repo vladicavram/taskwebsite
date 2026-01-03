@@ -463,30 +463,26 @@ export default function Header() {
               >
                 <button
                   style={{
-                    background: 'white',
-                    border: '2px solid var(--text)',
+                    background: 'transparent',
+                    border: 'none',
                     borderRadius: '50%',
-                    width: '28px',
-                    height: '28px',
+                    width: '32px',
+                    height: '32px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     cursor: 'pointer',
-                    fontSize: '0.65rem',
-                    fontWeight: 700,
-                    color: 'var(--text)',
-                    transition: 'transform 0.2s, box-shadow 0.2s'
+                    fontSize: '1.5rem',
+                    transition: 'transform 0.2s'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'scale(1.05)'
-                    e.currentTarget.style.boxShadow = 'var(--shadow)'
+                    e.currentTarget.style.transform = 'scale(1.1)'
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'scale(1)'
-                    e.currentTarget.style.boxShadow = 'none'
                   }}
                 >
-                  {credits.toFixed(1)}
+                  🪙
                 </button>
                 {showCredits && (
                   <div style={{
@@ -510,7 +506,7 @@ export default function Header() {
                         color: 'var(--accent)',
                         marginBottom: '8px'
                       }}>
-                        {credits.toFixed(1)} {t('header.credits.unit') || 'Credits'}
+                        {credits.toFixed(0)} 🪙
                       </div>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>

@@ -61,9 +61,8 @@ export default function ApplyButton({
   }
 
   const calculateRequiredCredits = (price: number) => {
-    // Tasks ≤100 cost 1 credit, otherwise price/100
-    if (price <= 100) return 1
-    return Math.max(1, price / 100)
+    // 1 coin per 100 MDL (whole units only)
+    return Math.max(1, Math.ceil(price / 100))
   }
 
   const buildAgreementText = (includeSignature: boolean) => {
@@ -281,7 +280,7 @@ export default function ApplyButton({
             margin: 0,
             fontWeight: hasEnoughCredits ? 400 : 600
           }}>
-            {interpolate(t('taskDetail.apply.requiredCredits') || 'Required: {{credits}} credit{{plural}}', { credits: requiredCredits.toFixed(requiredCredits === 1 ? 0 : 1), plural: requiredCredits !== 1 ? 's' : '' })}
+            {`${t('taskDetail.apply.required') || 'Required'}: ${requiredCredits} 🪙`}
           </p>
         )}
         {session?.user && (
@@ -290,7 +289,7 @@ export default function ApplyButton({
             margin: 0,
             fontWeight: hasEnoughCredits ? 400 : 600
           }}>
-            {interpolate(t('taskDetail.apply.yourBalance') || 'Your balance: {{credits}} credit{{plural}}', { credits: String(credits.toFixed(1)), plural: credits !== 1 ? 's' : '' })}
+            {`${t('taskDetail.apply.yourBalance') || 'Your balance'}: ${credits.toFixed(0)} 🪙`}
           </p>
         )}
         {!hasEnoughCredits && currentPrice > 0 && (

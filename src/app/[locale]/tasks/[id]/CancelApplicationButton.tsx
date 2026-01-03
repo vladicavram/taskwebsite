@@ -117,7 +117,7 @@ export default function CancelApplicationButton({
       </button>
       {proposedPrice && (
         <div style={{ fontSize: '0.75rem', color: '#78350f', marginTop: '8px' }}>
-          💰 {((proposedPrice / 100).toFixed(1))} {t('taskDetail.cancelApplication.creditsRefund') || 'credits will be refunded'}
+          💰 {Math.max(1, Math.ceil(proposedPrice / 100))} 🪙 {t('taskDetail.cancelApplication.creditsRefund') || 'will be refunded'}
         </div>
       )}
     </div>
