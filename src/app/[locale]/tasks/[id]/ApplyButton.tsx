@@ -274,24 +274,6 @@ export default function ApplyButton({
         flexDirection: 'column',
         gap: '4px'
       }}>
-        {currentPrice > 0 && (
-          <p style={{ 
-            color: hasEnoughCredits ? 'var(--text-muted)' : 'var(--danger)', 
-            margin: 0,
-            fontWeight: hasEnoughCredits ? 400 : 600
-          }}>
-            <span>{t('taskDetail.apply.required') || 'Required'}: {requiredCredits} <span style={{ fontSize: '1.75rem', color: '#000' }}>Ⓓ</span></span>
-          </p>
-        )}
-        {session?.user && (
-          <p style={{ 
-            color: hasEnoughCredits ? 'var(--text-muted)' : '#dc2626',
-            margin: 0,
-            fontWeight: hasEnoughCredits ? 400 : 600
-          }}>
-            <span>{t('taskDetail.apply.yourBalance') || 'Your balance'}: {credits.toFixed(0)} <span style={{ fontSize: '1.75rem', color: '#000' }}>Ⓓ</span></span>
-          </p>
-        )}
         {!hasEnoughCredits && currentPrice > 0 && (
           <p style={{ 
             color: '#dc2626', 
